@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack -p",
+    "dev": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,6 +14,11 @@
   },
   "author": "",
   "license": "Apache-2.0",
+  "devDependencies": {
+    "webpack": "4.19.1",
+    "webpack-cli": "^2.1.5",
+    "webpack-dev-server": "^3.1.4"
+  },
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
