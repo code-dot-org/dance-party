@@ -8,6 +8,11 @@ import initDance from './p5.dance';
 console.log('hello dance');
 
 const p5Inst = new window.p5();
-initDance(p5Inst, createDanceAPI(p5Inst));
+window.nativeAPI = initDance(p5Inst, createDanceAPI(p5Inst));
 
-window.p5Inst = p5Inst;
+p5Inst.preload = nativeAPI.preload;
+p5Inst.setup = nativeAPI.setup;
+p5Inst.draw = nativeAPI.draw;
+
+// Sample user code:
+nativeAPI.setBackgroundEffect('disco');
