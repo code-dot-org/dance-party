@@ -1,0 +1,19 @@
+{
+  "name": "dance-party",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/code-dot-org/dance-party.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/code-dot-org/dance-party/issues"
+  },
+  "homepage": "https://github.com/code-dot-org/dance-party#readme"
+}
