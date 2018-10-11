@@ -3,147 +3,170 @@
 
 import Effects from './Effects';
 
-export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
-  const exports = {};
+function Behavior(func, extraArgs) {
+  if (!extraArgs) {
+    extraArgs = [];
+  }
+  this.func = func;
+  this.extraArgs = extraArgs;
+}
 
-  const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
-  // TODO: const WATCHED_RANGES = [0, 1, 2];
+const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
+// TODO: const WATCHED_RANGES = [0, 1, 2];
 
-  /**
-   * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5.play/pull/42).
-   */
-  window.p5.Renderer2D.prototype._getTintedImageCanvas = function (img) {
-    this._tintCanvas = this._tintCanvas || document.createElement('canvas');
-    this._tintCanvas.width = img.canvas.width;
-    this._tintCanvas.height = img.canvas.height;
-    const tmpCtx = this._tintCanvas.getContext('2d');
-    tmpCtx.fillStyle = 'hsl(' + this._pInst.hue(this._tint) + ', 100%, 50%)';
-    tmpCtx.fillRect(0, 0, this._tintCanvas.width, this._tintCanvas.height);
-    tmpCtx.globalCompositeOperation = 'destination-atop';
-    tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-    tmpCtx.globalCompositeOperation = 'multiply';
-    tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-    return this._tintCanvas;
-  };
+const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
+const SIZE = 300;
+const ANIMATIONS = {};
+const FRAMES = 24;
+const METADATA = {};
 
-  window.p5.disableFriendlyErrors = true;
+const songs = {
+  macklemore: {
+    url: 'https://curriculum.code.org/media/uploads/chu.mp3',
+    bpm: 146,
+    delay: 0.2, // Seconds to delay before calculating measures
+    verse: [26.5, 118.56], // Array of timestamps in seconds where verses occur
+    chorus: [92.25, 158] // Array of timestamps in seconds where choruses occur
+  },
+  macklemore90: {
+    url: 'https://curriculum.code.org/media/uploads/hold.mp3',
+    bpm: 146,
+    delay: 0.0, // Seconds to delay before calculating measures
+    verse: [0, 26.3], // Array of timestamps in seconds where verses occur
+    chorus: [65.75] // Array of timestamps in seconds where choruses occur
+  },
+  hammer: {
+    url: 'https://curriculum.code.org/media/uploads/touch.mp3',
+    bpm: 133,
+    delay: 2.32, // Seconds to delay before calculating measures
+    verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
+    chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
+  },
+  peas: {
+    url: 'https://curriculum.code.org/media/uploads/feeling.mp3',
+    bpm: 128,
+    delay: 0.0, // Seconds to delay before calculating measures
+    verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
+    chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
+  }
+};
 
-  exports.pass = function () {
-    onPuzzleComplete(true);
-  };
+function randomInt(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
-  exports.fail = function (message) {
-    onPuzzleComplete(false, message);
-  };
+export default class DanceParty {
+  constructor(p5, getSelectedSong, playSound, onPuzzleComplete) {
+    /**
+     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/this.p5_.play/pull/42).
+     */
+    window.p5.Renderer2D.prototype._getTintedImageCanvas = function (img) {
+      this._tintCanvas = this._tintCanvas || document.createElement('canvas');
+      this._tintCanvas.width = img.canvas.width;
+      this._tintCanvas.height = img.canvas.height;
+      const tmpCtx = this._tintCanvas.getContext('2d');
+      tmpCtx.fillStyle = 'hsl(' + this._pInst.hue(this._tint) + ', 100%, 50%)';
+      tmpCtx.fillRect(0, 0, this._tintCanvas.width, this._tintCanvas.height);
+      tmpCtx.globalCompositeOperation = 'destination-atop';
+      tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
+      tmpCtx.globalCompositeOperation = 'multiply';
+      tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
+      return this._tintCanvas;
+    };
 
-  var World = {
-    height: 400,
-    cues: {
-      seconds: [],
-      measures: [],
-    },
-    validationCallback: () => {},
-  };
+    window.p5.disableFriendlyErrors = true;
 
-  function randomNumber(min, max) {
-    return Math.floor(p5.random(min, max));
+    this.currentFrameEvents = {
+      'this.p5_.keyWentDown': {},
+      'Dance.fft.isPeak': {},
+      'cue-seconds': {},
+      'cue-measures': {},
+    };
+
+    this.world = {
+      height: 400,
+      cues: {
+        seconds: [],
+        measures: [],
+      },
+      validationCallback: () => {},
+    };
+
+    this.p5_ = p5;
+    this.getSelectedSong_ = getSelectedSong;
+    this.playSound_ = playSound;
+    this.onPuzzleComplete_ = onPuzzleComplete;
+
+    this.bgEffects_ = new Effects(p5, 1);
+    this.fgEffects_ = new Effects(p5, 0.8);
+
+    this.world.bg_effect = this.bgEffects_.none;
+    this.world.fg_effect = this.fgEffects_.none;
+
+    this.sprites_ = this.p5_.createGroup();
+    this.sprites_by_type_ = {};
+
+    this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
+
+    this.world.MOVE_NAMES = [
+      {name: "Rest", mirror: true},
+      {name: "ClapHigh", mirror: true},
+      {name: "Clown", mirror: false},
+      {name: "Dab", mirror: true},
+      {name: "DoubleJam", mirror: false},
+      {name: "Drop", mirror: true},
+      {name: "Floss", mirror: true},
+      {name: "Fresh", mirror: true},
+      {name: "Kick", mirror: true},
+      {name: "Roll", mirror: true},
+      {name: "ThisOrThat", mirror: false},
+      {name: "Thriller", mirror: true},
+    ];
+
+    this.songStartTime_ = 0;
+    this.metadataLoaded_ = false;
   }
 
-// Sprites
-  var sprites = p5.createGroup();
-  var sprites_by_type = {};
+  pass() {
+    this.onPuzzleComplete_(true);
+  };
 
-  World.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
-  var img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
-  var SIZE = 300;
+  fail(message) {
+    this.onPuzzleComplete_(false, message);
+  };
 
-  World.MOVE_NAMES = [
-    {name: "Rest", mirror: true},
-    {name: "ClapHigh", mirror: true},
-    {name: "Clown", mirror: false},
-    {name: "Dab", mirror: true},
-    {name: "DoubleJam", mirror: false},
-    {name: "Drop", mirror: true},
-    {name: "Floss", mirror: true},
-    {name: "Fresh", mirror: true},
-    {name: "Kick", mirror: true},
-    {name: "Roll", mirror: true},
-    {name: "ThisOrThat", mirror: false},
-    {name: "Thriller", mirror: true},
-  ];
+  addCues(timestamps) {
+    this.world.cues = timestamps;
+  };
 
-  var ANIMATIONS = {};
-  var FRAMES = 24;
-  var METADATA = {}
-
-// Songs
-  var songs = {
-    macklemore: {
-      url: 'https://curriculum.code.org/media/uploads/chu.mp3',
-      bpm: 146,
-      delay: 0.2, // Seconds to delay before calculating measures
-      verse: [26.5, 118.56], // Array of timestamps in seconds where verses occur
-      chorus: [92.25, 158] // Array of timestamps in seconds where choruses occur
-    },
-    macklemore90: {
-      url: 'https://curriculum.code.org/media/uploads/hold.mp3',
-      bpm: 146,
-      delay: 0.0, // Seconds to delay before calculating measures
-      verse: [0, 26.3], // Array of timestamps in seconds where verses occur
-      chorus: [65.75] // Array of timestamps in seconds where choruses occur
-    },
-    hammer: {
-      url: 'https://curriculum.code.org/media/uploads/touch.mp3',
-      bpm: 133,
-      delay: 2.32, // Seconds to delay before calculating measures
-      verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
-      chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
-    },
-    peas: {
-      url: 'https://curriculum.code.org/media/uploads/feeling.mp3',
-      bpm: 128,
-      delay: 0.0, // Seconds to delay before calculating measures
-      verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
-      chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
+  reset() {
+    this.songStartTime_ = 0;
+    while (this.p5_.allSprites.length > 0) {
+      this.p5_.allSprites[0].remove();
     }
-  };
-  var song_meta = songs.hammer;
-//Tracks when a song started to play
-  let songStartTime = 0;
-  let metadataLoaded = false;
+    this.currentFrameEvents.any = false;
 
-  exports.addCues = function (timestamps) {
-    World.cues = timestamps;
+    this.world.fg_effect = this.fgEffects_.none;
+    this.world.bg_effect = this.bgEffects_.none;
   };
 
-  exports.reset = function () {
-    songStartTime = 0;
-    while (p5.allSprites.length > 0) {
-      p5.allSprites[0].remove();
-    }
-    events.any = false;
-
-    World.fg_effect = fg_effects.none;
-    World.bg_effect = bg_effects.none;
+  metadataLoaded() {
+    return this.metadataLoaded_;
   };
 
-  exports.metadataLoaded = function () {
-    return metadataLoaded;
-  };
-
-  exports.preload = function preload() {
+  preload() {
     // Retrieves JSON metadata for songs
     // TODO: only load song data when necessary and don't hardcode the dev song
-    loadSongMetadata(() => {metadataLoaded = true});
+    this.loadSongMetadata_(() => {this.metadataLoaded_ = true});
 
     // Load spritesheet JSON files
-    World.SPRITE_NAMES.forEach(this_sprite => {
+    this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
-      World.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
+      this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
         const baseUrl = `${img_base}${this_sprite}_${name}`;
-        p5.loadJSON(`${baseUrl}.json`, jsonData => {
+        this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
           ANIMATIONS[this_sprite][moveIndex] = {
-            spritesheet: p5.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames),
+            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames),
             mirror,
           };
         });
@@ -151,54 +174,42 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     });
   }
 
-  exports.setup = function setup() {
+  setup() {
     // Create animations from spritesheets
-    for (var i = 0; i < World.SPRITE_NAMES.length; i++) {
-      var this_sprite = World.SPRITE_NAMES[i];
-      for (var j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = p5.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
+      let this_sprite = this.world.SPRITE_NAMES[i];
+      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
+        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
       }
     }
-    let songData = songs[getSelectedSong()];
   }
 
-  exports.play = function () {
-    playSound({url: songs[getSelectedSong()].url, callback: () => {songStartTime = new Date()}});
+  play() {
+    this.playSound_({url: songs[this.getSelectedSong_()].url, callback: () => {this.songStartTime_ = new Date()}});
   }
 
-  var bg_effects = new Effects(p5, 1);
-  var fg_effects = new Effects(p5, 0.8);
-
-  World.bg_effect = bg_effects.none;
-  World.fg_effect = fg_effects.none;
-
-  exports.setBackground = function setBackground(color) {
-    World.background_color = color;
+  setBackground(color) {
+    this.world.background_color = color;
   }
 
-  exports.setBackgroundEffect = function setBackgroundEffect(effect) {
-    World.bg_effect = bg_effects[effect];
+  setBackgroundEffect(effect) {
+    this.world.bg_effect = this.bgEffects_[effect];
   }
 
-  exports.setForegroundEffect = function setForegroundEffect(effect) {
-    World.fg_effect = fg_effects[effect];
-  }
-
-  function initialize(setupHandler) {
-    setupHandler();
+  setForegroundEffect(effect) {
+    this.world.fg_effect = this.fgEffects_[effect];
   }
 
 //
 // Block Functions
 //
 
-
-  exports.makeNewDanceSprite = function makeNewDanceSprite(costume, name, location) {
+  makeNewDanceSprite(costume, name, location) {
 
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
-    if (World.SPRITE_NAMES.indexOf(costume) < 0) {
-      costume = World.SPRITE_NAMES[0];
+    if (this.world.SPRITE_NAMES.indexOf(costume) < 0) {
+      costume = this.world.SPRITE_NAMES[0];
     }
 
     if (!location) {
@@ -208,13 +219,13 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
       };
     }
 
-    var sprite = p5.createSprite(location.x, location.y);
+    var sprite = this.p5_.createSprite(location.x, location.y);
 
     sprite.style = costume;
-    if (!sprites_by_type.hasOwnProperty(costume)) {
-      sprites_by_type[costume] = p5.createGroup();
+    if (!this.sprites_by_type_.hasOwnProperty(costume)) {
+      this.sprites_by_type_[costume] = this.p5_.createGroup();
     }
-    sprites_by_type[costume].add(sprite);
+    this.sprites_by_type_[costume].add(sprite);
 
     sprite.mirroring = 1;
     sprite.looping_move = 0;
@@ -226,7 +237,7 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
     }
     sprite.animation.stop();
-    sprites.add(sprite);
+    this.sprites_.add(sprite);
     sprite.speed = 10;
     sprite.sinceLastFrame = 0;
     sprite.dance_speed = 1;
@@ -234,10 +245,10 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     sprite.behaviors = [];
 
     // Add behavior to control animation
-    addBehavior(sprite, function () {
-      var delta = Math.min(100, 1 / (p5.frameRate() + 0.01) * 1000);
+    this.addBehavior_(sprite, () => {
+      var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
-      var msPerBeat = 60 * 1000 / (songs[getSelectedSong()].bpm * (sprite.dance_speed / 2));
+      var msPerBeat = 60 * 1000 / (songs[this.getSelectedSong_()].bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
         sprite.sinceLastFrame -= msPerFrame;
@@ -275,8 +286,8 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
 
     sprite.setPosition = function (position) {
       if (position === "random") {
-        sprite.x = randomNumber(50, 350);
-        sprite.y = randomNumber(50, 350);
+        sprite.x = randomInt(50, 350);
+        sprite.y = randomInt(50, 350);
       } else {
         sprite.x = position.x;
         sprite.y = position.y;
@@ -290,17 +301,17 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
 
 // Dance Moves
 
-  exports.changeMoveLR = function changeMoveLR(sprite, move, dir) {
-    if (!spriteExists(sprite)) return;
-    if (move == "next") {
+  changeMoveLR(sprite, move, dir) {
+    if (!this.spriteExists_(sprite)) return;
+    if (move === "next") {
       move = 1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
-    } else if (move == "prev") {
+    } else if (move === "prev") {
       move = 1 + ((sprite.current_move - 1) % (ANIMATIONS[sprite.style].length - 1));
-    } else if (move == "rand") {
+    } else if (move === "rand") {
       // Make sure random switches to a new move
       move = sprite.current_move;
-      while (move == sprite.current_move) {
-        move = randomNumber(0, ANIMATIONS[sprite.style].length - 1);
+      while (move === sprite.current_move) {
+        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
       }
     }
     sprite.mirroring = dir;
@@ -311,16 +322,16 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     sprite.current_move = move;
   }
 
-  exports.doMoveLR = function doMoveLR(sprite, move, dir) {
-    if (!spriteExists(sprite)) return;
-    if (move == "next") {
+  doMoveLR(sprite, move, dir) {
+    if (!this.spriteExists_(sprite)) return;
+    if (move === "next") {
       move = (sprite.current_move + 1) % ANIMATIONS[sprite.style].length;
-    } else if (move == "prev") {
+    } else if (move === "prev") {
       move = (sprite.current_move - 1) % ANIMATIONS[sprite.style].length;
-    } else if (move == "rand") {
+    } else if (move === "rand") {
       move = sprite.current_move;
-      while (move == sprite.current_move) {
-        move = randomNumber(0, ANIMATIONS[sprite.style].length - 1);
+      while (move === sprite.current_move) {
+        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
       }
     }
     sprite.mirrorX(dir);
@@ -329,42 +340,42 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     sprite.animation.changeFrame(FRAMES / 2);
   }
 
-  exports.getCurrentDance = function (sprite) {
-    if (spriteExists(sprite)) {
+  getCurrentDance(sprite) {
+    if (this.spriteExists_(sprite)) {
       return sprite.current_move;
     }
   }
 
 // Group Blocks
 
-  function getGroupByName(group) {
+  getGroupByName_(group) {
     if (group !== "all") {
-      if (!sprites_by_type.hasOwnProperty(group)) {
+      if (!this.sprites_by_type_.hasOwnProperty(group)) {
         console.log("There is no group of " + group);
         return;
       }
-      return sprites_by_type[group];
+      return this.sprites_by_type_[group];
     }
-    return p5.allSprites;
+    return this.p5_.allSprites;
   }
 
-  exports.changeMoveEachLR = function changeMoveEachLR(group, move, dir) {
-    group = getGroupByName(group);
-    group.forEach(function (sprite) {
-      exports.changeMoveLR(sprite, move, dir);
+  changeMoveEachLR(group, move, dir) {
+    group = this.getGroupByName_(group);
+    group.forEach(sprite => {
+      this.changeMoveLR(sprite, move, dir);
     });
   }
 
-  exports.doMoveEachLR = function doMoveEachLR(group, move, dir) {
-    group = getGroupByName(group);
-    group.forEach(function (sprite) { exports.doMoveLR(sprite, move, dir);});
+  doMoveEachLR(group, move, dir) {
+    group = this.getGroupByName_(group);
+    group.forEach(sprite => { this.doMoveLR(sprite, move, dir);});
   }
 
-  exports.layoutSprites = function layoutSprites(group, format) {
-    group = getGroupByName(group);
+  layoutSprites(group, format) {
+    group = this.getGroupByName_(group);
     var count = group.length;
     var sprite, i, j;
-    if (format == "grid") {
+    if (format === "grid") {
       var cols = Math.ceil(Math.sqrt(count));
       var rows = Math.ceil(count / cols);
       var current = 0;
@@ -386,7 +397,7 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
           }
         }
       }
-    } else if (format == "row") {
+    } else if (format === "row") {
       for (i=0; i<count; i++) {
         sprite = group[i];
         sprite.x = (i+1) * (400 / (count + 1));
@@ -403,137 +414,128 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
 
 // Properties
 
-  exports.setTint = function setTint(sprite, val) {
-    exports.setProp(sprite, "tint", val);
+  setTint(sprite, val) {
+    this.setProp(sprite, "tint", val);
   }
 
-  exports.setProp = function setProp(sprite, property, val) {
-    if (!spriteExists(sprite) || val === undefined) return;
+  setProp(sprite, property, val) {
+    if (!this.spriteExists_(sprite) || val === undefined) return;
 
-    if (property == "scale") {
+    if (property === "scale") {
       sprite.scale = val / 100;
-    } else if (property == "width" || property == "height") {
+    } else if (property === "width" || property === "height") {
       sprite[property] = SIZE * (val / 100);
-    } else if (property=="y") {
-      sprite.y = World.height - val;
-    } else if (property == "costume") {
+    } else if (property === "y") {
+      sprite.y = this.world.height - val;
+    } else if (property === "costume") {
       sprite.setAnimation(val);
-    } else if (property == "tint" && typeof (val) == "number") {
+    } else if (property === "tint" && typeof (val) === "number") {
       sprite.tint = "hsb(" + (Math.round(val) % 360) + ", 100%, 100%)";
     } else {
       sprite[property] = val;
     }
   }
 
-  exports.getProp = function getProp(sprite, property) {
-    if (!spriteExists(sprite)) return;
+  getProp(sprite, property) {
+    if (!this.spriteExists_(sprite)) return;
 
-    if (property == "scale") {
+    if (property === "scale") {
       return sprite.scale * 100;
-    } else if (property == "width" || property == "height") {
+    } else if (property === "width" || property === "height") {
       return (sprite[property] / SIZE) * 100;
-    } else if (property=="y") {
-      return World.height - sprite.y;
-    } else if (property == "costume") {
+    } else if (property === "y") {
+      return this.world.height - sprite.y;
+    } else if (property === "costume") {
       return sprite.getAnimationLabel();
-    } else if (property == "tint") {
-      return p5.color(sprite.tint || 0)._getHue();
+    } else if (property === "tint") {
+      return this.p5_.color(sprite.tint || 0)._getHue();
     } else {
       return sprite[property];
     }
   }
 
-  exports.changePropBy = function changePropBy(sprite,  property, val) {
-    exports.setProp(sprite, property, exports.getProp(sprite, property) + val);
+  changePropBy(sprite,  property, val) {
+    this.setProp(sprite, property, this.getProp(sprite, property) + val);
   }
 
-  exports.jumpTo = function jumpTo(sprite, location) {
-    if (!spriteExists(sprite)) return;
+  jumpTo(sprite, location) {
+    if (!this.spriteExists_(sprite)) return;
     sprite.x = location.x;
     sprite.y = location.y;
   }
 
-  exports.setDanceSpeed = function setDanceSpeed(sprite, speed) {
-    if (!spriteExists(sprite)) return;
+  setDanceSpeed(sprite, speed) {
+    if (!this.spriteExists_(sprite)) return;
     sprite.dance_speed = speed;
   }
 
 // Music Helpers
 
-  exports.getEnergy = function getEnergy(range) {
+  getEnergy(range) {
     // TODO:
     return 100;
   }
 
-  exports.getCurrentTime = function getCurrentTime() {
-    return songStartTime > 0 ? (new Date() - songStartTime) / 1000 : 0;
+  getCurrentTime() {
+    return this.songStartTime_ > 0 ? (new Date() - this.songStartTime_) / 1000 : 0;
   }
 
-  exports.getCurrentMeasure = function () {
-    const songData = songs[getSelectedSong()];
-    return songStartTime > 0 ? songData.bpm * ((exports.getCurrentTime() - songData.delay) / 240) + 1 : 0;
+  getCurrentMeasure() {
+    const songData = songs[this.getSelectedSong_()];
+    return this.songStartTime_ > 0 ? songData.bpm * ((this.getCurrentTime() - songData.delay) / 240) + 1 : 0;
   }
 
-  exports.getTime = function getTime(unit) {
-    let currentTime = this.getCurrentTime();
+  getTime(unit) {
     if (unit === "measures") {
-      return exports.getCurrentMeasure();
+      return this.getCurrentMeasure();
     } else {
-      return currentTime;
+      return this.getCurrentTime;
     }
   }
 
 // Behaviors
 
-  function Behavior(func, extraArgs) {
-    if (!extraArgs) {
-      extraArgs = [];
-    }
-    this.func = func;
-    this.extraArgs = extraArgs;
-  }
+  addBehavior_(sprite, behavior) {
+    if (!this.spriteExists_(sprite) || behavior === undefined) return;
 
-  function addBehavior(sprite, behavior) {
-    if (!spriteExists(sprite) || behavior === undefined) return;
+    behavior = this.normalizeBehavior_(behavior);
 
-    behavior = normalizeBehavior(behavior);
-
-    if (findBehavior(sprite, behavior) !== -1) {
+    if (this.findBehavior_(sprite, behavior) !== -1) {
       return;
     }
     sprite.behaviors.push(behavior);
   }
 
-  function removeBehavior(sprite, behavior) {
-    if (!spriteExists(sprite) || behavior === undefined) return;
+  removeBehavior_(sprite, behavior) {
+    if (!this.spriteExists_(sprite) || behavior === undefined) return;
 
-    behavior = normalizeBehavior(behavior);
+    behavior = this.normalizeBehavior_(behavior);
 
-    var index = findBehavior(sprite, behavior);
+    var index = this.findBehavior_(sprite, behavior);
     if (index === -1) {
       return;
     }
     sprite.behaviors.splice(index, 1);
   }
 
-  function normalizeBehavior(behavior) {
+  normalizeBehavior_(behavior) {
     if (typeof behavior === 'function') {
       return new Behavior(behavior);
     }
     return behavior;
   }
 
-  function findBehavior(sprite, behavior) {
-    for (var i = 0; i < sprite.behaviors.length; i++) {
-      var myBehavior = sprite.behaviors[i];
-      if (behaviorsEqual(behavior, myBehavior)) {
+  findBehavior_(sprite, behavior) {
+    for (let i = 0; i < sprite.behaviors.length; i++) {
+      const myBehavior = sprite.behaviors[i];
+      if (this.behaviorsEqual_(behavior, myBehavior)) {
         return i;
       }
     }
     return -1;
   }
 
-  function behaviorsEqual(behavior1, behavior2) {
+  behaviorsEqual_(behavior1, behavior2) {
     if (behavior1.func.name && behavior2.func.name) {
       // These are legacy behaviors, check for equality based only on the name.
       return behavior1.func.name === behavior2.func.name;
@@ -544,8 +546,8 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     if (behavior2.extraArgs.length !== behavior1.extraArgs.length) {
       return false;
     }
-    var extraArgsEqual = true;
-    for (var j = 0; j < behavior1.extraArgs.length; j++) {
+    let extraArgsEqual = true;
+    for (let j = 0; j < behavior1.extraArgs.length; j++) {
       if (behavior2.extraArgs[j] !== behavior1.extraArgs[j]) {
         extraArgsEqual = false;
         break;
@@ -554,90 +556,90 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     return extraArgsEqual;
   }
 
-  exports.startMapping = function startMapping(sprite, property, range) {
-    var behavior = new Behavior(function (sprite) {
-      var energy = exports.getEnergy(range);
-      if (property == "x") {
-        energy = Math.round(p5.map(energy, 0, 255, 50, 350));
-      } else if (property == "y") {
-        energy = Math.round(p5.map(energy, 0, 255, 350, 50));
-      } else if (property == "scale") {
-        energy = p5.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property == "width" || property == "height") {
-        energy = p5.map(energy, 0, 255, 50, 150);
-      } else if (property == "rotation" || property == "direction") {
-        energy = Math.round(p5.map(energy, 0, 255, -180, 180));
-      } else if (property == "tint") {
-        energy = Math.round(p5.map(energy, 0, 255, 0, 360));
+  startMapping(sprite, property, range) {
+    var behavior = new Behavior(sprite => {
+      var energy = this.getEnergy(range);
+      if (property === "x") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
+      } else if (property === "y") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
+      } else if (property === "scale") {
+        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
+      } else if (property === "width" || property === "height") {
+        energy = this.p5_.map(energy, 0, 255, 50, 150);
+      } else if (property === "rotation" || property === "direction") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
+      } else if (property === "tint") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
     }, [property, range]);
     //behavior.func.name = "mapping" + property + range;
-    addBehavior(sprite, behavior);
+    this.addBehavior_(sprite, behavior);
   }
 
-  exports.stopMapping = function stopMapping(sprite, property, range) {
-    var behavior = new Behavior(function (sprite) {
-      var energy = exports.getEnergy(range);
-      if (property == "x") {
-        energy = Math.round(p5.map(energy, 0, 255, 50, 350));
-      } else if (property == "y") {
-        energy = Math.round(p5.map(energy, 0, 255, 350, 50));
-      } else if (property == "scale") {
-        energy = p5.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property == "width" || property == "height") {
-        energy = p5.map(energy, 0, 255, 50, 159);
-      } else if (property == "rotation" || property == "direction") {
-        energy = Math.round(p5.map(energy, 0, 255, -180, 180));
-      } else if (property == "tint") {
-        energy = Math.round(p5.map(energy, 0, 255, 0, 360));
+  stopMapping(sprite, property, range) {
+    var behavior = new Behavior(sprite => {
+      var energy = this.getEnergy(range);
+      if (property === "x") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
+      } else if (property === "y") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
+      } else if (property === "scale") {
+        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
+      } else if (property === "width" || property === "height") {
+        energy = this.p5_.map(energy, 0, 255, 50, 159);
+      } else if (property === "rotation" || property === "direction") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
+      } else if (property === "tint") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
     }, [property, range]);
     //behavior.func.name = "mapping" + property + range;
-    removeBehavior(sprite, behavior);
+    this.removeBehavior_(sprite, behavior);
   }
 
-  exports.changeColorBy = function changeColorBy(input, method, amount) {
-    p5.push();
-    p5.colorMode(p5.HSB, 100);
-    var c = p5.color(input);
-    var hsb = {
+  changeColorBy(input, method, amount) {
+    this.p5_.push();
+    this.p5_.colorMode(this.p5_.HSB, 100);
+    const c = this.p5_.color(input);
+    const hsb = {
       hue: c._getHue(),
       saturation: c._getSaturation(),
       brightness: c._getBrightness()
     };
     hsb[method] = Math.round((hsb[method] + amount) % 100);
-    var new_c = p5.color(hsb.hue, hsb.saturation, hsb.brightness);
-    p5.pop();
+    const new_c = this.p5_.color(hsb.hue, hsb.saturation, hsb.brightness);
+    this.p5_.pop();
     return new_c.toString('#rrggbb');
   }
 
-  exports.mixColors = function mixColors(color1, color2) {
-    return p5.lerpColor(p5.color(color1), p5.color(color2), 0.5).toString('#rrggbb');
+  mixColors(color1, color2) {
+    return this.p5_.lerpColor(this.p5_.color(color1), this.p5_.color(color2), 0.5).toString('#rrggbb');
   }
 
-  exports.randomColor = function randomColor() {
-    return p5.color('hsb(' + randomNumber(0, 359) + ', 100%, 100%)').toString('#rrggbb');
+  randomColor() {
+    return this.p5_.color('hsb(' + randomInt(0, 359) + ', 100%, 100%)').toString('#rrggbb');
   }
 
-  function spriteExists(sprite) {
-    return p5.allSprites.indexOf(sprite) > -1;
+  spriteExists_(sprite) {
+    return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
-  function loadSongMetadata(callback) {
+  loadSongMetadata_(callback) {
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
     let ids = ['macklemore90', 'hammer', 'peas'];
     $.when(
-      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[0]}.json`, (data) => {
+      $.getJSON(`${songDataPath}/${ids[0]}.json`, (data) => {
         METADATA[ids[0]] = data;
       }),
-      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[1]}.json`, (data) => {
+      $.getJSON(`${songDataPath}/${ids[1]}.json`, (data) => {
         METADATA[ids[1]] = data;
       }),
-      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[2]}.json`, (data) => {
+      $.getJSON(`${songDataPath}/${ids[2]}.json`, (data) => {
         METADATA[ids[2]] = data;
       })
     ).then( () => {
@@ -646,24 +648,18 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     });
   }
 
-  const events = exports.currentFrameEvents = {
-    'p5.keyWentDown': {},
-    'Dance.fft.isPeak': {},
-    'cue-seconds': {},
-    'cue-measures': {},
-  };
-
-  function updateEvents() {
+  updateEvents_() {
+    const events = this.currentFrameEvents;
     events.any = false;
-    events['p5.keyWentDown'] = {};
+    events['this.p5_.keyWentDown'] = {};
     events['Dance.fft.isPeak'] = {};
     events['cue-seconds'] = {};
     events['cue-measures'] = {};
 
     for (let key of WATCHED_KEYS) {
-      if (p5.keyWentDown(key)) {
+      if (this.p5_.keyWentDown(key)) {
         events.any = true;
-        events['p5.keyWentDown'][key] = true;
+        events['this.p5_.keyWentDown'][key] = true;
       }
     }
 
@@ -675,62 +671,61 @@ export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
     //   }
     // }
 
-    while (World.cues.seconds.length > 0 && World.cues.seconds[0] < exports.getCurrentTime()) {
+    while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
       events.any = true;
-      events['cue-seconds'][World.cues.seconds.splice(0, 1)] = true;
+      events['cue-seconds'][this.world.cues.seconds.splice(0, 1)] = true;
     }
 
-    while (World.cues.measures.length > 0 && World.cues.measures[0] < exports.getCurrentMeasure()) {
+    while (this.world.cues.measures.length > 0 && this.world.cues.measures[0] < this.getCurrentMeasure()) {
       events.any = true;
-      events['cue-measures'][World.cues.measures.splice(0, 1)] = true;
+      events['cue-measures'][this.world.cues.measures.splice(0, 1)] = true;
     }
   }
 
-  exports.registerValidation = function (callback) {
-    World.validationCallback = callback;
+  registerValidation(callback) {
+    this.world.validationCallback = callback;
   }
 
-  exports.init = function (callback) {
-    callback(World);
+  init(callback) {
+    callback(this.world);
   }
 
-  exports.draw = function draw() {
+  draw() {
     const context = {
       isPeak: false, // TODO: isPeak(),
       centroid: 0, // TODO: getCentroid(),
-      backgroundColor: World.background_color,
+      backgroundColor: this.world.background_color,
     };
 
-    p5.background("white");
-    (World.bg_effect || bg_effects.none).draw(context);
+    this.p5_.background("white");
+    (this.world.bg_effect || this.bgEffects_.none).draw(context);
 
-    if (p5.frameCount > 2) {
+    if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
-      sprites.forEach(function (sprite) {
+      this.sprites_.forEach(function (sprite) {
         sprite.behaviors.forEach(function (behavior) {
           behavior.func.apply(null, [sprite].concat(behavior.extraArgs));
         });
       });
     }
 
-    updateEvents();
+    this.updateEvents_();
 
-    p5.drawSprites();
+    this.p5_.drawSprites();
 
-    if (World.fg_effect !== fg_effects.none) {
-      p5.push();
-      p5.blendMode(fg_effects.blend);
-      World.fg_effect.draw(context);
-      p5.pop();
+    if (this.world.fg_effect !== this.fgEffects_.none) {
+      this.p5_.push();
+      this.p5_.blendMode(this.fgEffects_.blend);
+      this.world.fg_effect.draw(context);
+      this.p5_.pop();
     }
 
-    p5.fill("black");
-    p5.textStyle(p5.BOLD);
-    p5.textAlign(p5.TOP, p5.LEFT);
-    p5.textSize(20);
+    this.p5_.fill("black");
+    this.p5_.textStyle(this.p5_.BOLD);
+    this.p5_.textAlign(this.p5_.TOP, this.p5_.LEFT);
+    this.p5_.textSize(20);
 
-    World.validationCallback(World, exports, sprites);
-    p5.text("Measure: " + (Math.floor(exports.getCurrentMeasure())), 10, 20);
+    this.world.validationCallback(this.world, this, this.sprites_);
+    this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
   }
-  return exports;
 }
