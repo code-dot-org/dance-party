@@ -3,11 +3,11 @@
 
 import Effects from './Effects';
 
-export default function init(p5, Dance) {
+export default function init(p5, getSelectedSong, playSound, onPuzzleComplete) {
   const exports = {};
 
   const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
-  const WATCHED_RANGES = [0, 1, 2];
+  // TODO: const WATCHED_RANGES = [0, 1, 2];
 
   /**
    * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5.play/pull/42).
@@ -28,9 +28,21 @@ export default function init(p5, Dance) {
 
   window.p5.disableFriendlyErrors = true;
 
+  exports.pass = function () {
+    onPuzzleComplete(true);
+  };
+
+  exports.fail = function (message) {
+    onPuzzleComplete(false, message);
+  };
+
   var World = {
     height: 400,
-    cuesThisFrame: [],
+    cues: {
+      seconds: [],
+      measures: [],
+    },
+    validationCallback: () => {},
   };
 
   function randomNumber(min, max) {
@@ -41,23 +53,11 @@ export default function init(p5, Dance) {
   var sprites = p5.createGroup();
   var sprites_by_type = {};
 
-  var SPRITE_NAMES = [
-    "ALIEN",
-    "BEAR",
-    "CAT",
-    "DOG",
-    "DUCK",
-    "FROG",
-    "MOOSE",
-    "PINEAPPLE",
-    "ROBOT",
-    "SHARK",
-    "UNICORN"
-  ];
-  var img_base = "https://curriculum.code.org/images/sprites/spritesheet_sm/";
+  World.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
+  var img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
   var SIZE = 300;
 
-  var MOVE_NAMES = [
+  World.MOVE_NAMES = [
     {name: "Rest", mirror: true},
     {name: "ClapHigh", mirror: true},
     {name: "Clown", mirror: false},
@@ -74,6 +74,7 @@ export default function init(p5, Dance) {
 
   var ANIMATIONS = {};
   var FRAMES = 24;
+  var METADATA = {}
 
 // Songs
   var songs = {
@@ -107,17 +108,16 @@ export default function init(p5, Dance) {
     }
   };
   var song_meta = songs.hammer;
+//Tracks when a song started to play
+  let songStartTime = 0;
+  let metadataLoaded = false;
 
   exports.addCues = function (timestamps) {
-    timestamps.forEach(timestamp => {
-      Dance.song.addCue(0, timestamp,
-        () => World.cuesThisFrame.push(timestamp));
-    });
+    World.cues = timestamps;
   };
 
   exports.reset = function () {
-    Dance.song.stopAll();
-
+    songStartTime = 0;
     while (p5.allSprites.length > 0) {
       p5.allSprites[0].remove();
     }
@@ -127,45 +127,43 @@ export default function init(p5, Dance) {
     World.bg_effect = bg_effects.none;
   };
 
-  exports.preload = function preload() {
-    // Load song
-    Dance.song.load(song_meta.url);
+  exports.metadataLoaded = function () {
+    return metadataLoaded;
+  };
 
-    // Load spritesheets
-    for (var i = 0; i < SPRITE_NAMES.length; i++) {
-      var this_sprite = SPRITE_NAMES[i];
+  exports.preload = function preload() {
+    // Retrieves JSON metadata for songs
+    // TODO: only load song data when necessary and don't hardcode the dev song
+    loadSongMetadata(() => {metadataLoaded = true});
+
+    // Load spritesheet JSON files
+    World.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
-      for (var j = 0; j < MOVE_NAMES.length; j++) {
-        var url = img_base + this_sprite + "_" + MOVE_NAMES[j].name + ".png";
-        var dance = {
-          spritesheet: p5.loadSpriteSheet(url, SIZE, SIZE, FRAMES),
-          mirror: MOVE_NAMES[j].mirror
-        };
-        ANIMATIONS[this_sprite].push(dance);
-      }
-    }
+      World.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
+        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        p5.loadJSON(`${baseUrl}.json`, jsonData => {
+          ANIMATIONS[this_sprite][moveIndex] = {
+            spritesheet: p5.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames),
+            mirror,
+          };
+        });
+      });
+    });
   }
 
   exports.setup = function setup() {
     // Create animations from spritesheets
-    for (var i = 0; i < SPRITE_NAMES.length; i++) {
-      var this_sprite = SPRITE_NAMES[i];
+    for (var i = 0; i < World.SPRITE_NAMES.length; i++) {
+      var this_sprite = World.SPRITE_NAMES[i];
       for (var j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation =
-          p5.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+        ANIMATIONS[this_sprite][j].animation = p5.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
       }
     }
-
-    Dance.fft.createPeakDetect(20, 200, 0.8,
-      Math.round(60 * 30 / song_meta.bpm));
-    Dance.fft.createPeakDetect(400, 2600, 0.4,
-      Math.round(60 * 30 / song_meta.bpm));
-    Dance.fft.createPeakDetect(2700, 4000, 0.5,
-      Math.round(60 * 30 / song_meta.bpm));
+    let songData = songs[getSelectedSong()];
   }
 
   exports.play = function () {
-    Dance.song.start();
+    playSound({url: songs[getSelectedSong()].url, callback: () => {songStartTime = new Date()}});
   }
 
   var bg_effects = new Effects(p5, 1);
@@ -195,116 +193,109 @@ export default function init(p5, Dance) {
 //
 
 
-  exports.makeNewDanceSprite =
-    function makeNewDanceSprite(costume, name, location) {
+  exports.makeNewDanceSprite = function makeNewDanceSprite(costume, name, location) {
 
-      // Default to first dancer if selected a dancer that doesn't exist
-      // to account for low-bandwidth mode limited character set
-      if (SPRITE_NAMES.indexOf(costume) < 0) {
-        costume = SPRITE_NAMES[0];
-      }
-
-      if (!location) {
-        location = {
-          x: 200,
-          y: 200
-        };
-      }
-
-      var sprite = p5.createSprite(location.x, location.y);
-
-      sprite.style = costume;
-      if (!sprites_by_type.hasOwnProperty(costume)) {
-        sprites_by_type[costume] = p5.createGroup();
-      }
-      sprites_by_type[costume].add(sprite);
-
-      sprite.mirroring = 1;
-      sprite.looping_move = 0;
-      sprite.looping_frame = 0;
-      sprite.current_move = 0;
-      sprite.previous_move = 0;
-
-      for (var i = 0; i < ANIMATIONS[costume].length; i++) {
-        sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
-      }
-      sprite.animation.stop();
-      sprites.add(sprite);
-      sprite.speed = 10;
-      sprite.sinceLastFrame = 0;
-      sprite.dance_speed = 1;
-      sprite.previous_speed = 1;
-      sprite.behaviors = [];
-
-      // Add behavior to control animation
-      addBehavior(sprite, function () {
-        var delta = Math.min(100, 1 / (p5.frameRate() + 0.01) * 1000);
-        sprite.sinceLastFrame += delta;
-        var msPerBeat = 60 * 1000 / (song_meta.bpm * (sprite.dance_speed / 2));
-        var msPerFrame = msPerBeat / FRAMES;
-        while (sprite.sinceLastFrame > msPerFrame) {
-          sprite.sinceLastFrame -= msPerFrame;
-          sprite.looping_frame++;
-          if (sprite.animation.looping) {
-            sprite.animation.changeFrame(sprite.looping_frame %
-              sprite.animation.images.length);
-          } else {
-            sprite.animation.nextFrame();
-          }
-
-          if (sprite.looping_frame % FRAMES === 0) {
-            if (ANIMATIONS[sprite.style][sprite.current_move].mirror) sprite.mirroring *=
-              -1;
-            if (sprite.animation.looping) {
-              sprite.mirrorX(sprite.mirroring);
-            }
-          }
-
-          var currentFrame = sprite.animation.getFrame();
-          if (currentFrame === sprite.animation.getLastFrame() &&
-            !sprite.animation.looping) {
-            //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
-            sprite.changeAnimation("anim" + sprite.current_move);
-            sprite.animation.changeFrame(sprite.looping_frame %
-              sprite.animation.images.length);
-            sprite.mirrorX(sprite.mirroring);
-            sprite.animation.looping = true;
-          }
-        }
-      });
-
-      sprite.setTint = function (color) {
-        sprite.tint = color;
-      };
-      sprite.removeTint = function () {
-        sprite.tint = null;
-      };
-
-      sprite.setPosition = function (position) {
-        if (position === "random") {
-          sprite.x = randomNumber(50, 350);
-          sprite.y = randomNumber(50, 350);
-        } else {
-          sprite.x = position.x;
-          sprite.y = position.y;
-        }
-      };
-      sprite.setScale = function (scale) {
-        sprite.scale = scale;
-      };
-      return sprite;
+    // Default to first dancer if selected a dancer that doesn't exist
+    // to account for low-bandwidth mode limited character set
+    if (World.SPRITE_NAMES.indexOf(costume) < 0) {
+      costume = World.SPRITE_NAMES[0];
     }
+
+    if (!location) {
+      location = {
+        x: 200,
+        y: 200
+      };
+    }
+
+    var sprite = p5.createSprite(location.x, location.y);
+
+    sprite.style = costume;
+    if (!sprites_by_type.hasOwnProperty(costume)) {
+      sprites_by_type[costume] = p5.createGroup();
+    }
+    sprites_by_type[costume].add(sprite);
+
+    sprite.mirroring = 1;
+    sprite.looping_move = 0;
+    sprite.looping_frame = 0;
+    sprite.current_move = 0;
+    sprite.previous_move = 0;
+
+    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
+      sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
+    }
+    sprite.animation.stop();
+    sprites.add(sprite);
+    sprite.speed = 10;
+    sprite.sinceLastFrame = 0;
+    sprite.dance_speed = 1;
+    sprite.previous_speed = 1;
+    sprite.behaviors = [];
+
+    // Add behavior to control animation
+    addBehavior(sprite, function () {
+      var delta = Math.min(100, 1 / (p5.frameRate() + 0.01) * 1000);
+      sprite.sinceLastFrame += delta;
+      var msPerBeat = 60 * 1000 / (songs[getSelectedSong()].bpm * (sprite.dance_speed / 2));
+      var msPerFrame = msPerBeat / FRAMES;
+      while (sprite.sinceLastFrame > msPerFrame) {
+        sprite.sinceLastFrame -= msPerFrame;
+        sprite.looping_frame++;
+        if (sprite.animation.looping) {
+          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+        } else {
+          sprite.animation.nextFrame();
+        }
+
+        if (sprite.looping_frame % FRAMES === 0) {
+          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) sprite.mirroring *= -1;
+          if (sprite.animation.looping) {
+            sprite.mirrorX(sprite.mirroring);
+          }
+        }
+
+        var currentFrame = sprite.animation.getFrame();
+        if (currentFrame === sprite.animation.getLastFrame() && !sprite.animation.looping) {
+          //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
+          sprite.changeAnimation("anim" + sprite.current_move);
+          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+          sprite.mirrorX(sprite.mirroring);
+          sprite.animation.looping = true;
+        }
+      }
+    });
+
+    sprite.setTint = function (color) {
+      sprite.tint = color;
+    };
+    sprite.removeTint = function () {
+      sprite.tint = null;
+    };
+
+    sprite.setPosition = function (position) {
+      if (position === "random") {
+        sprite.x = randomNumber(50, 350);
+        sprite.y = randomNumber(50, 350);
+      } else {
+        sprite.x = position.x;
+        sprite.y = position.y;
+      }
+    };
+    sprite.setScale = function (scale) {
+      sprite.scale = scale;
+    };
+    return sprite;
+  }
 
 // Dance Moves
 
   exports.changeMoveLR = function changeMoveLR(sprite, move, dir) {
     if (!spriteExists(sprite)) return;
     if (move == "next") {
-      move =
-        1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
+      move = 1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
     } else if (move == "prev") {
-      move =
-        1 + ((sprite.current_move - 1) % (ANIMATIONS[sprite.style].length - 1));
+      move = 1 + ((sprite.current_move - 1) % (ANIMATIONS[sprite.style].length - 1));
     } else if (move == "rand") {
       // Make sure random switches to a new move
       move = sprite.current_move;
@@ -366,9 +357,7 @@ export default function init(p5, Dance) {
 
   exports.doMoveEachLR = function doMoveEachLR(group, move, dir) {
     group = getGroupByName(group);
-    group.forEach(function (sprite) {
-      exports.doMoveLR(sprite, move, dir);
-    });
+    group.forEach(function (sprite) { exports.doMoveLR(sprite, move, dir);});
   }
 
   exports.layoutSprites = function layoutSprites(group, format) {
@@ -379,35 +368,35 @@ export default function init(p5, Dance) {
       var cols = Math.ceil(Math.sqrt(count));
       var rows = Math.ceil(count / cols);
       var current = 0;
-      for (i = 0; i < rows; i++) {
+      for (i=0; i<rows; i++) {
         if (count - current >= cols) {
-          for (j = 0; j < cols; j++) {
+          for (j=0; j<cols; j++) {
             sprite = group[current];
-            sprite.x = (j + 1) * (400 / (cols + 1));
-            sprite.y = (i + 1) * (400 / (rows + 1));
+            sprite.x = (j+1) * (400 / (cols + 1));
+            sprite.y = (i+1) * (400 / (rows + 1));
             current++;
           }
         } else {
           var remainder = count - current;
-          for (j = 0; j < remainder; j++) {
+          for (j=0; j<remainder; j++) {
             sprite = group[current];
-            sprite.x = (j + 1) * (400 / (remainder + 1));
-            sprite.y = (i + 1) * (400 / (rows + 1));
+            sprite.x = (j+1) * (400 / (remainder + 1));
+            sprite.y = (i+1) * (400 / (rows + 1));
             current++;
           }
         }
       }
     } else if (format == "row") {
-      for (i = 0; i < count; i++) {
+      for (i=0; i<count; i++) {
         sprite = group[i];
-        sprite.x = (i + 1) * (400 / (count + 1));
+        sprite.x = (i+1) * (400 / (count + 1));
         sprite.y = 200;
       }
     } else {
-      for (i = 0; i < count; i++) {
+      for (i=0; i<count; i++) {
         sprite = group[i];
         sprite.x = 200;
-        sprite.y = (i + 1) * (400 / (count + 1));
+        sprite.y = (i+1) * (400 / (count + 1));
       }
     }
   }
@@ -425,7 +414,7 @@ export default function init(p5, Dance) {
       sprite.scale = val / 100;
     } else if (property == "width" || property == "height") {
       sprite[property] = SIZE * (val / 100);
-    } else if (property == "y") {
+    } else if (property=="y") {
       sprite.y = World.height - val;
     } else if (property == "costume") {
       sprite.setAnimation(val);
@@ -443,7 +432,7 @@ export default function init(p5, Dance) {
       return sprite.scale * 100;
     } else if (property == "width" || property == "height") {
       return (sprite[property] / SIZE) * 100;
-    } else if (property == "y") {
+    } else if (property=="y") {
       return World.height - sprite.y;
     } else if (property == "costume") {
       return sprite.getAnimationLabel();
@@ -454,7 +443,7 @@ export default function init(p5, Dance) {
     }
   }
 
-  exports.changePropBy = function changePropBy(sprite, property, val) {
+  exports.changePropBy = function changePropBy(sprite,  property, val) {
     exports.setProp(sprite, property, exports.getProp(sprite, property) + val);
   }
 
@@ -472,21 +461,25 @@ export default function init(p5, Dance) {
 // Music Helpers
 
   exports.getEnergy = function getEnergy(range) {
-    if (range == "low") {
-      return Dance.fft.getEnergy(20, 200);
-    } else if (range == "mid") {
-      return Dance.fft.getEnergy(400, 2600);
-    } else {
-      return Dance.fft.getEnergy(2700, 4000);
-    }
+    // TODO:
+    return 100;
+  }
+
+  exports.getCurrentTime = function getCurrentTime() {
+    return songStartTime > 0 ? (new Date() - songStartTime) / 1000 : 0;
+  }
+
+  exports.getCurrentMeasure = function () {
+    const songData = songs[getSelectedSong()];
+    return songStartTime > 0 ? songData.bpm * ((exports.getCurrentTime() - songData.delay) / 240) + 1 : 0;
   }
 
   exports.getTime = function getTime(unit) {
-    if (unit == "measures") {
-      // Subtract any delay before the first measure and start counting measures at 1
-      return song_meta.bpm * ((Dance.song.currentTime(0) - song_meta.delay) / 240) + 1;
+    let currentTime = this.getCurrentTime();
+    if (unit === "measures") {
+      return exports.getCurrentMeasure();
     } else {
-      return Dance.song.currentTime(0);
+      return currentTime;
     }
   }
 
@@ -563,7 +556,7 @@ export default function init(p5, Dance) {
 
   exports.startMapping = function startMapping(sprite, property, range) {
     var behavior = new Behavior(function (sprite) {
-      var energy = Dance.fft.getEnergy(range);
+      var energy = exports.getEnergy(range);
       if (property == "x") {
         energy = Math.round(p5.map(energy, 0, 255, 50, 350));
       } else if (property == "y") {
@@ -586,7 +579,7 @@ export default function init(p5, Dance) {
 
   exports.stopMapping = function stopMapping(sprite, property, range) {
     var behavior = new Behavior(function (sprite) {
-      var energy = Dance.fft.getEnergy(range);
+      var energy = exports.getEnergy(range);
       if (property == "x") {
         energy = Math.round(p5.map(energy, 0, 255, 50, 350));
       } else if (property == "y") {
@@ -634,17 +627,38 @@ export default function init(p5, Dance) {
     return p5.allSprites.indexOf(sprite) > -1;
   }
 
+  function loadSongMetadata(callback) {
+    let songDataPath = '/api/v1/sound-library/hoc_song_meta';
+    let ids = ['macklemore90', 'hammer', 'peas'];
+    $.when(
+      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[0]}.json`, (data) => {
+        METADATA[ids[0]] = data;
+      }),
+      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[1]}.json`, (data) => {
+        METADATA[ids[1]] = data;
+      }),
+      $.getJSON(`/api/v1/sound-library/hoc_song_meta/${ids[2]}.json`, (data) => {
+        METADATA[ids[2]] = data;
+      })
+    ).then( () => {
+      console.log("METADATA LOADED");
+      callback();
+    });
+  }
+
   const events = exports.currentFrameEvents = {
     'p5.keyWentDown': {},
     'Dance.fft.isPeak': {},
-    'cue': {},
+    'cue-seconds': {},
+    'cue-measures': {},
   };
 
   function updateEvents() {
     events.any = false;
     events['p5.keyWentDown'] = {};
     events['Dance.fft.isPeak'] = {};
-    events['cue'] = {};
+    events['cue-seconds'] = {};
+    events['cue-measures'] = {};
 
     for (let key of WATCHED_KEYS) {
       if (p5.keyWentDown(key)) {
@@ -653,24 +667,37 @@ export default function init(p5, Dance) {
       }
     }
 
-    for (let range of WATCHED_RANGES) {
-      if (Dance.fft.isPeak(range)) {
-        events.any = true;
-        events['Dance.fft.isPeak'][range] = true;
-      }
+    // TODO:
+    // for (let range of WATCHED_RANGES) {
+    //   if (isPeak(range)) {
+    //     events.any = true;
+    //     events['Dance.fft.isPeak'][range] = true;
+    //   }
+    // }
+
+    while (World.cues.seconds.length > 0 && World.cues.seconds[0] < exports.getCurrentTime()) {
+      events.any = true;
+      events['cue-seconds'][World.cues.seconds.splice(0, 1)] = true;
     }
 
-    for (let timestamp of World.cuesThisFrame) {
+    while (World.cues.measures.length > 0 && World.cues.measures[0] < exports.getCurrentMeasure()) {
       events.any = true;
-      events['cue'][timestamp] = true;
+      events['cue-measures'][World.cues.measures.splice(0, 1)] = true;
     }
   }
 
+  exports.registerValidation = function (callback) {
+    World.validationCallback = callback;
+  }
+
+  exports.init = function (callback) {
+    callback(World);
+  }
+
   exports.draw = function draw() {
-    Dance.fft.analyze();
     const context = {
-      isPeak: Dance.fft.isPeak(),
-      centroid: Dance.fft.getCentroid(),
+      isPeak: false, // TODO: isPeak(),
+      centroid: 0, // TODO: getCentroid(),
       backgroundColor: World.background_color,
     };
 
@@ -687,7 +714,6 @@ export default function init(p5, Dance) {
     }
 
     updateEvents();
-    World.cuesThisFrame.length = 0;
 
     p5.drawSprites();
 
@@ -702,8 +728,9 @@ export default function init(p5, Dance) {
     p5.textStyle(p5.BOLD);
     p5.textAlign(p5.TOP, p5.LEFT);
     p5.textSize(20);
-    p5.text("Measure: " +
-      (Math.floor(((Dance.song.currentTime() - song_meta.delay) * song_meta.bpm) / 240) + 1), 10, 20);
+
+    World.validationCallback(World, exports, sprites);
+    p5.text("Measure: " + (Math.floor(exports.getCurrentMeasure())), 10, 20);
   }
   return exports;
 }
