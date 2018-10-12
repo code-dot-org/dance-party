@@ -20,37 +20,6 @@ const ANIMATIONS = {};
 const FRAMES = 24;
 const METADATA = {};
 
-const songs = {
-  macklemore: {
-    url: 'https://curriculum.code.org/media/uploads/chu.mp3',
-    bpm: 146,
-    delay: 0.2, // Seconds to delay before calculating measures
-    verse: [26.5, 118.56], // Array of timestamps in seconds where verses occur
-    chorus: [92.25, 158] // Array of timestamps in seconds where choruses occur
-  },
-  macklemore90: {
-    url: 'https://curriculum.code.org/media/uploads/hold.mp3',
-    bpm: 146,
-    delay: 0.0, // Seconds to delay before calculating measures
-    verse: [0, 26.3], // Array of timestamps in seconds where verses occur
-    chorus: [65.75] // Array of timestamps in seconds where choruses occur
-  },
-  hammer: {
-    url: 'https://curriculum.code.org/media/uploads/touch.mp3',
-    bpm: 133,
-    delay: 2.32, // Seconds to delay before calculating measures
-    verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
-    chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
-  },
-  peas: {
-    url: 'https://curriculum.code.org/media/uploads/feeling.mp3',
-    bpm: 128,
-    delay: 0.0, // Seconds to delay before calculating measures
-    verse: [1.5, 15.2], // Array of timestamps in seconds where verses occur
-    chorus: [5.5, 22.1] // Array of timestamps in seconds where choruses occur
-  }
-};
-
 function randomInt(min, max) {
   return Math.random() * (max - min) + min;
 }
@@ -185,7 +154,7 @@ export default class DanceParty {
   }
 
   play() {
-    this.playSound_({url: songs[this.getSelectedSong_()].url, callback: () => {this.songStartTime_ = new Date()}});
+    this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
   }
 
   setBackground(color) {
@@ -248,7 +217,7 @@ export default class DanceParty {
     this.addBehavior_(sprite, () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
-      var msPerBeat = 60 * 1000 / (songs[this.getSelectedSong_()].bpm * (sprite.dance_speed / 2));
+      var msPerBeat = 60 * 1000 / (METADATA[this.getSelectedSong_()].bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
         sprite.sinceLastFrame -= msPerFrame;
@@ -516,7 +485,7 @@ export default class DanceParty {
   }
 
   getCurrentMeasure() {
-    const songData = songs[this.getSelectedSong_()];
+    const songData = METADATA[this.getSelectedSong_()];
     return this.songStartTime_ > 0 ? songData.bpm * ((this.getCurrentTime() - songData.delay) / 240) + 1 : 0;
   }
 
