@@ -387,7 +387,10 @@ export default class DanceParty {
     var count = group.length;
     var sprite, i, j;
     if (format === "circle") {
-      var radius = 50 + (count * 5);
+      // As we get more sprites to circle, make the radius
+      // larger to provide more space, but max out
+      // at 175 to keep everyone on screen
+      var radius = Math.min(175, 50 + (count * 5));
       var angle = -90 * (Math.PI / 180);
       var step = (2 * Math.PI) / count;
       group.forEach(function (sprite) {
