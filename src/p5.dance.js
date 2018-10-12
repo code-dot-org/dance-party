@@ -629,11 +629,10 @@ export default class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
-  loadSongMetadata_(id){
+  async loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
-    return new Promise((resolve) => fetch(`${songDataPath}/${id}.json`)
-      .then((response) => {return response.json()})
-      .then((data) => {METADATA[id] = data; resolve()}));
+    const response = await fetch(`${songDataPath}/${id}.json`);
+    METADATA[id] = await response.json();
   }
 
   loadDevelopmentSongs_(callback) {
