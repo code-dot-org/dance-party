@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi */
+/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
 
 import Effects from './Effects';
@@ -58,7 +58,7 @@ function randomInt(min, max) {
 export default class DanceParty {
   constructor(p5, getSelectedSong, playSound, onPuzzleComplete) {
     /**
-     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/this.p5_.play/pull/42).
+     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
      */
     window.p5.Renderer2D.prototype._getTintedImageCanvas = function (img) {
       this._tintCanvas = this._tintCanvas || document.createElement('canvas');
@@ -97,11 +97,8 @@ export default class DanceParty {
     this.playSound_ = playSound;
     this.onPuzzleComplete_ = onPuzzleComplete;
 
-    this.bgEffects_ = new Effects(p5, 1);
-    this.fgEffects_ = new Effects(p5, 0.8);
-
-    this.world.bg_effect = this.bgEffects_.none;
-    this.world.fg_effect = this.fgEffects_.none;
+    this.world.bg_effect = null;
+    this.world.fg_effect = null;
 
     this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
@@ -129,15 +126,15 @@ export default class DanceParty {
 
   pass() {
     this.onPuzzleComplete_(true);
-  };
+  }
 
   fail(message) {
     this.onPuzzleComplete_(false, message);
-  };
+  }
 
   addCues(timestamps) {
     this.world.cues = timestamps;
-  };
+  }
 
   reset() {
     this.songStartTime_ = 0;
@@ -146,13 +143,13 @@ export default class DanceParty {
     }
     this.currentFrameEvents.any = false;
 
-    this.world.fg_effect = this.fgEffects_.none;
-    this.world.bg_effect = this.bgEffects_.none;
-  };
+    this.world.fg_effect = null;
+    this.world.bg_effect = null;
+  }
 
   metadataLoaded() {
     return this.metadataLoaded_;
-  };
+  }
 
   preload() {
     // Retrieves JSON metadata for songs
@@ -175,6 +172,9 @@ export default class DanceParty {
   }
 
   setup() {
+    this.bgEffects_ = new Effects(this.p5_, 1);
+    this.fgEffects_ = new Effects(this.p5_, 0.8);
+
     // Create animations from spritesheets
     for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
       let this_sprite = this.world.SPRITE_NAMES[i];
@@ -299,6 +299,14 @@ export default class DanceParty {
     return sprite;
   }
 
+  makeNewDanceSpriteGroup(n, costume, layout) {
+    var tempGroup = this.p5_.createGroup();
+    for (var i=0; i<n; i++) {
+      tempGroup.add(this.makeNewDanceSprite(costume));
+    }
+    this.layoutSprites(tempGroup, layout);
+  }
+
 // Dance Moves
 
   changeMoveLR(sprite, move, dir) {
@@ -349,6 +357,9 @@ export default class DanceParty {
 // Group Blocks
 
   getGroupByName_(group) {
+    if (typeof(group) === "object") {
+      return group;
+    }
     if (group !== "all") {
       if (!this.sprites_by_type_.hasOwnProperty(group)) {
         console.log("There is no group of " + group);
@@ -375,7 +386,19 @@ export default class DanceParty {
     group = this.getGroupByName_(group);
     var count = group.length;
     var sprite, i, j;
-    if (format === "grid") {
+    if (format === "circle") {
+      // As we get more sprites to circle, make the radius
+      // larger to provide more space, but max out
+      // at 175 to keep everyone on screen
+      var radius = Math.min(175, 50 + (count * 5));
+      var angle = -90 * (Math.PI / 180);
+      var step = (2 * Math.PI) / count;
+      group.forEach(function (sprite) {
+        sprite.x = 200 + (radius * Math.cos(angle));
+        sprite.y = 200 + (radius * Math.sin(angle));
+        angle += step;
+      });
+    } else if (format === "grid") {
       var cols = Math.ceil(Math.sqrt(count));
       var rows = Math.ceil(count / cols);
       var current = 0;
@@ -403,12 +426,17 @@ export default class DanceParty {
         sprite.x = (i+1) * (400 / (count + 1));
         sprite.y = 200;
       }
-    } else {
+    } else if (format === "column") {
       for (i=0; i<count; i++) {
         sprite = group[i];
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
       }
+    } else if (format === "random") {
+      group.forEach(function (sprite) {
+        sprite.x = randomInt(25, 375);
+        sprite.y = randomInt(25, 375);
+      });
     }
   }
 
@@ -456,6 +484,13 @@ export default class DanceParty {
 
   changePropBy(sprite,  property, val) {
     this.setProp(sprite, property, this.getProp(sprite, property) + val);
+  }
+
+  setPropEach(group, property, val) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.setProp(sprite, property, val);
+    }, this);
   }
 
   jumpTo(sprite, location) {
@@ -710,7 +745,7 @@ export default class DanceParty {
 
     this.p5_.drawSprites();
 
-    if (this.world.fg_effect !== this.fgEffects_.none) {
+    if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
       this.p5_.push();
       this.p5_.blendMode(this.fgEffects_.blend);
       this.world.fg_effect.draw(context);
