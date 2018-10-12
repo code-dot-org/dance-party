@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+- 6
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm run lint
+
+notifications:
+  email: false
+
+before_deploy:
+  - npm run build
+
+deploy:
+  local_dir: /
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
