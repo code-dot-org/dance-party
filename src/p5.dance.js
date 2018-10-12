@@ -154,8 +154,7 @@ export default class DanceParty {
   }
 
   play() {
-    console.log("HERE: " + METADATA[this.getSelectedSong_()]);
-    this.playSound_({url: METADATA[this.getSelectedSong_()].url, callback: () => {this.songStartTime_ = new Date()}});
+    this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
   }
 
   setBackground(color) {
