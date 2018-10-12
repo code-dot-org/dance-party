@@ -8,16 +8,16 @@ cache:
     - node_modules
 
 script:
-  - npm lint
+  - npm run lint
 
 notifications:
   email: false
 
 before_deploy:
-  - npm run build && cp -r dist/* demo/
+  - npm run build
 
 deploy:
-  local_dir: demo
+  local_dir: /
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
