@@ -299,6 +299,14 @@ export default class DanceParty {
     return sprite;
   }
 
+  makeNewDanceSpriteGroup(n, costume, layout) {
+    var tempGroup = this.p5_.createGroup();
+    for (var i=0; i<n; i++) {
+      tempGroup.add(this.makeNewDanceSprite(costume));
+    }
+    this.layoutSprites(tempGroup, layout);
+  }
+
 // Dance Moves
 
   changeMoveLR(sprite, move, dir) {
@@ -349,6 +357,9 @@ export default class DanceParty {
 // Group Blocks
 
   getGroupByName_(group) {
+    if (typeof(group) === "object") {
+      return group;
+    }
     if (group !== "all") {
       if (!this.sprites_by_type_.hasOwnProperty(group)) {
         console.log("There is no group of " + group);
@@ -375,7 +386,19 @@ export default class DanceParty {
     group = this.getGroupByName_(group);
     var count = group.length;
     var sprite, i, j;
-    if (format === "grid") {
+    if (format === "circle") {
+      // As we get more sprites to circle, make the radius
+      // larger to provide more space, but max out
+      // at 175 to keep everyone on screen
+      var radius = Math.min(175, 50 + (count * 5));
+      var angle = -90 * (Math.PI / 180);
+      var step = (2 * Math.PI) / count;
+      group.forEach(function (sprite) {
+        sprite.x = 200 + (radius * Math.cos(angle));
+        sprite.y = 200 + (radius * Math.sin(angle));
+        angle += step;
+      });
+    } else if (format === "grid") {
       var cols = Math.ceil(Math.sqrt(count));
       var rows = Math.ceil(count / cols);
       var current = 0;
@@ -403,12 +426,17 @@ export default class DanceParty {
         sprite.x = (i+1) * (400 / (count + 1));
         sprite.y = 200;
       }
-    } else {
+    } else if (format === "column") {
       for (i=0; i<count; i++) {
         sprite = group[i];
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
       }
+    } else if (format === "random") {
+      group.forEach(function (sprite) {
+        sprite.x = randomInt(25, 375);
+        sprite.y = randomInt(25, 375);
+      });
     }
   }
 
@@ -456,6 +484,13 @@ export default class DanceParty {
 
   changePropBy(sprite,  property, val) {
     this.setProp(sprite, property, this.getProp(sprite, property) + val);
+  }
+
+  setPropEach(group, property, val) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.setProp(sprite, property, val);
+    }, this);
   }
 
   jumpTo(sprite, location) {
