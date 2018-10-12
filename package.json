@@ -15,8 +15,8 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@code-dot-org/p5.play": "1.3.2-cdo",
-    "p5": "0.7.1",
+    "@code-dot-org/p5.play": "1.3.3-cdo",
+    "p5": "0.5.4",
     "webpack": "4.19.1",
     "webpack-cli": "^2.1.5",
     "webpack-dev-server": "^3.1.4"

@@ -97,11 +97,8 @@ export default class DanceParty {
     this.playSound_ = playSound;
     this.onPuzzleComplete_ = onPuzzleComplete;
 
-    this.bgEffects_ = new Effects(p5, 1);
-    this.fgEffects_ = new Effects(p5, 0.8);
-
-    this.world.bg_effect = this.bgEffects_.none;
-    this.world.fg_effect = this.fgEffects_.none;
+    this.world.bg_effect = null;
+    this.world.fg_effect = null;
 
     this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
@@ -146,8 +143,8 @@ export default class DanceParty {
     }
     this.currentFrameEvents.any = false;
 
-    this.world.fg_effect = this.fgEffects_.none;
-    this.world.bg_effect = this.bgEffects_.none;
+    this.world.fg_effect = null;
+    this.world.bg_effect = null;
   };
 
   metadataLoaded() {
@@ -175,6 +172,9 @@ export default class DanceParty {
   }
 
   setup() {
+    this.bgEffects_ = new Effects(this.p5_, 1);
+    this.fgEffects_ = new Effects(this.p5_, 0.8);
+
     // Create animations from spritesheets
     for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
       let this_sprite = this.world.SPRITE_NAMES[i];
@@ -713,7 +713,7 @@ export default class DanceParty {
 
     this.p5_.drawSprites();
 
-    if (this.world.fg_effect !== this.fgEffects_.none) {
+    if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
       this.p5_.push();
       this.p5_.blendMode(this.fgEffects_.blend);
       this.world.fg_effect.draw(context);

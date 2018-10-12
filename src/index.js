@@ -2,16 +2,25 @@ import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 window.p5 = p5; // Needed for p5.play init.
 require('@code-dot-org/p5.play/lib/p5.play');
-import initDance from './p5.dance';
+import DanceParty from './p5.dance';
 
 console.log('hello dance');
 
-const p5Inst = new window.p5();
-window.nativeAPI = initDance(p5Inst, () => "hammer", ({callback}) => callback());
+new window.p5(p5Inst => {
+  function playSound({path, callback}) {
+    console.log('playSound called with ', path);
+    //callback();
+  }
+  window.nativeAPI = new DanceParty(p5Inst, () => "hammer", playSound);
+  nativeAPI.loadSongMetadata_ = () => {};
 
-p5Inst.preload = nativeAPI.preload;
-p5Inst.setup = nativeAPI.setup;
-p5Inst.draw = nativeAPI.draw;
+  p5Inst.preload = nativeAPI.preload.bind(nativeAPI);
+  p5Inst.setup = () => {
+    nativeAPI.setup();
 
-// Sample user code:
-nativeAPI.setBackgroundEffect('disco');
+    // Sample user code:
+    nativeAPI.setBackgroundEffect('disco');
+    nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  };
+  p5Inst.draw = nativeAPI.draw.bind(nativeAPI);
+});
