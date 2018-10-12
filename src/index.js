@@ -7,11 +7,7 @@ import DanceParty from './p5.dance';
 console.log('hello dance');
 
 new window.p5(p5Inst => {
-  function playSound({path, callback}) {
-    console.log('playSound called with ', path);
-    //callback();
-  }
-  window.nativeAPI = new DanceParty(p5Inst, () => "hammer", playSound);
+  const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, () => "hammer", () => {});
   nativeAPI.loadSongMetadata_ = () => {};
 
   p5Inst.preload = nativeAPI.preload.bind(nativeAPI);

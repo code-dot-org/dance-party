@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi */
+/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
 
 import Effects from './Effects';
@@ -58,7 +58,7 @@ function randomInt(min, max) {
 export default class DanceParty {
   constructor(p5, getSelectedSong, playSound, onPuzzleComplete) {
     /**
-     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/this.p5_.play/pull/42).
+     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
      */
     window.p5.Renderer2D.prototype._getTintedImageCanvas = function (img) {
       this._tintCanvas = this._tintCanvas || document.createElement('canvas');
@@ -126,15 +126,15 @@ export default class DanceParty {
 
   pass() {
     this.onPuzzleComplete_(true);
-  };
+  }
 
   fail(message) {
     this.onPuzzleComplete_(false, message);
-  };
+  }
 
   addCues(timestamps) {
     this.world.cues = timestamps;
-  };
+  }
 
   reset() {
     this.songStartTime_ = 0;
@@ -145,11 +145,11 @@ export default class DanceParty {
 
     this.world.fg_effect = null;
     this.world.bg_effect = null;
-  };
+  }
 
   metadataLoaded() {
     return this.metadataLoaded_;
-  };
+  }
 
   preload() {
     // Retrieves JSON metadata for songs
