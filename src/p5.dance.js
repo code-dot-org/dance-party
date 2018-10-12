@@ -631,7 +631,9 @@ export default class DanceParty {
 
   loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
-    return new Promise((resolve) => fetch(`${songDataPath}/${id}.json`).then((data) => {METADATA[id] = data; resolve()}));
+    return new Promise((resolve) => fetch(`${songDataPath}/${id}.json`)
+      .then((response) => {return response.json()})
+      .then((data) => {METADATA[id] = data; resolve()}));
   }
 
   loadDevelopmentSongs_(callback) {
