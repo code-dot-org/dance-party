@@ -14,7 +14,7 @@ notifications:
   email: false
 
 before_deploy:
-  - npm run build
+  - npm run build && cp -r dist/* .
 
 deploy:
   local_dir: /
