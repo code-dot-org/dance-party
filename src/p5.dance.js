@@ -390,7 +390,7 @@ export default class DanceParty {
       var radius = 50 + (count * 5);
       var angle = -90 * (Math.PI / 180);
       var step = (2 * Math.PI) / count;
-      group.forEach(function(sprite) {
+      group.forEach(function (sprite) {
         sprite.x = 200 + (radius * Math.cos(angle));
         sprite.y = 200 + (radius * Math.sin(angle));
         angle += step;
@@ -429,8 +429,8 @@ export default class DanceParty {
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
       }
-    } else if (format == "random") {
-      group.forEach(function(sprite) {
+    } else if (format === "random") {
+      group.forEach(function (sprite) {
         sprite.x = randomInt(25, 375);
         sprite.y = randomInt(25, 375);
       });
@@ -485,7 +485,7 @@ export default class DanceParty {
 
   setPropEach(group, property, val) {
     group = this.getGroupByName_(group);
-    group.forEach(function(sprite){
+    group.forEach(function (sprite){
       this.setProp(sprite, property, val);
     }, this);
   }
