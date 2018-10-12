@@ -126,7 +126,7 @@ export default class DanceParty {
   preload() {
     // Retrieves JSON metadata for songs
     // TODO: only load song data when necessary and don't hardcode the dev song
-    this.loadSongMetadata_(() => {this.metadataLoaded_ = true});
+    this.loadDevelopmentSongs_(() => {this.metadataLoaded_ = true});
 
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
@@ -599,20 +599,17 @@ export default class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
-  loadSongMetadata_(callback) {
+  async loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
+    const response = await fetch(`${songDataPath}/${id}.json`);
+    METADATA[id] = await response.json();
+  }
+
+  loadDevelopmentSongs_(callback) {
     let ids = ['macklemore90', 'hammer', 'peas'];
-    $.when(
-      $.getJSON(`${songDataPath}/${ids[0]}.json`, (data) => {
-        METADATA[ids[0]] = data;
-      }),
-      $.getJSON(`${songDataPath}/${ids[1]}.json`, (data) => {
-        METADATA[ids[1]] = data;
-      }),
-      $.getJSON(`${songDataPath}/${ids[2]}.json`, (data) => {
-        METADATA[ids[2]] = data;
-      })
-    ).then( () => {
+
+    Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
+    .then( () => {
       console.log("METADATA LOADED");
       callback();
     });
