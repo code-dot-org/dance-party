@@ -433,6 +433,22 @@ export default class DanceParty {
     }
   }
 
+  setPropRandom(sprite, property) {
+    if (!this.spriteExists_(sprite)) return;
+
+    if (property === "scale") {
+      sprite.scale = randomInt(0,100)/100;
+    } else if (property === "width" || property === "height") {
+      sprite[property] = SIZE * (randomInt(0,100)/100);
+    } else if (property === "y" || property === "x"){
+      sprite[property] = randomInt(50, 350);
+    } else if (property === "rotation"){
+      sprite[property] = randomInt(0, 359);
+    } else if (property === "tint") {
+      sprite.tint = "hsb(" + (randomInt(0, 359)) + ", 100%, 100%)";
+    }
+  }
+
   getProp(sprite, property) {
     if (!this.spriteExists_(sprite)) return;
 
