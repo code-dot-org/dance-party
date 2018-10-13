@@ -110,6 +110,9 @@ export default class DanceParty {
 
   addCues(timestamps) {
     this.world.cues = timestamps;
+    if (this.metadataLoaded()) {
+      this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
+    }
   }
 
   reset() {
@@ -657,7 +660,6 @@ export default class DanceParty {
 
     Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
     .then( () => {
-      this.peaksData = METADATA[this.getSelectedSong_()].analysis;
       callback();
     });
   }
@@ -678,7 +680,7 @@ export default class DanceParty {
       }
     }
 
-    if (this.metadataLoaded()) {
+    if (this.peaksData) {
       while (this.peaksData.length > 0 && this.peaksData[0].time < this.getCurrentTime()) {
         this.centroid_ = this.peaksData[0].centroid;
         this.energy_ = this.peaksData[0].energy;
