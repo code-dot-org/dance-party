@@ -72,6 +72,9 @@ export default class DanceParty {
 
     //TODO - need to reset on run or load new song
     this.peaksData = null;
+    this.peakThisFrame_ = false;
+    this.energy_ = 0;
+    this.centroid_ = 0;
 
     this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
@@ -480,8 +483,14 @@ export default class DanceParty {
 // Music Helpers
 
   getEnergy(range) {
-    // TODO:
-    return 100;
+    switch (range) {
+      case 'bass':
+        return this.energy_[0];
+      case 'mid':
+        return this.energy_[1];
+      case 'treble':
+        return this.energy_[2];
+    }
   }
 
   getCurrentTime() {
@@ -660,6 +669,7 @@ export default class DanceParty {
     events['Dance.fft.isPeak'] = {};
     events['cue-seconds'] = {};
     events['cue-measures'] = {};
+    this.peakThisFrame_ = false;
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
@@ -668,15 +678,18 @@ export default class DanceParty {
       }
     }
 
-    if(this.metadataLoaded() && this.world.cues.peaks.length > 0){
-      while (this.peaksData[0].time < this.getCurrentTime()) {
+    if (this.metadataLoaded()) {
+      while (this.peaksData.length > 0 && this.peaksData[0].time < this.getCurrentTime()) {
+        this.centroid_ = this.peaksData[0].centroid;
+        this.energy_ = this.peaksData[0].energy;
         for (let range of WATCHED_RANGES) {
           if (this.peaksData[0].beats[range]) {
             events.any = true;
             events['Dance.fft.isPeak'][range] = true;
+            this.peakThisFrame_ = true;
           }
         }
-        this.peaksData.splice(0,1);
+        this.peaksData.splice(0, 1);
       }
     }
 
@@ -700,9 +713,11 @@ export default class DanceParty {
   }
 
   draw() {
+    this.updateEvents_();
+
     const context = {
-      isPeak: false,
-      centroid: 0, // TODO: getCentroid(),
+      isPeak: this.peakThisFrame_,
+      centroid: this.centroid_,
       backgroundColor: this.world.background_color,
     };
 
@@ -717,8 +732,6 @@ export default class DanceParty {
         });
       });
     }
-
-    this.updateEvents_();
 
     this.p5_.drawSprites();
 
