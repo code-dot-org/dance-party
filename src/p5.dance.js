@@ -12,7 +12,7 @@ function Behavior(func, extraArgs) {
 }
 
 const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
-// TODO: const WATCHED_RANGES = [0, 1, 2];
+const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
 const SIZE = 300;
@@ -57,6 +57,7 @@ export default class DanceParty {
       cues: {
         seconds: [],
         measures: [],
+        peaks: []
       },
       validationCallback: () => {},
     };
@@ -68,6 +69,12 @@ export default class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
+
+    //TODO - need to reset on run or load new song
+    this.peaksData = null;
+    this.peakThisFrame_ = false;
+    this.energy_ = 0;
+    this.centroid_ = 0;
 
     this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
@@ -103,6 +110,9 @@ export default class DanceParty {
 
   addCues(timestamps) {
     this.world.cues = timestamps;
+    if (this.metadataLoaded()) {
+      this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
+    }
   }
 
   reset() {
@@ -492,8 +502,14 @@ export default class DanceParty {
 // Music Helpers
 
   getEnergy(range) {
-    // TODO:
-    return 100;
+    switch (range) {
+      case 'bass':
+        return this.energy_[0];
+      case 'mid':
+        return this.energy_[1];
+      case 'treble':
+        return this.energy_[2];
+    }
   }
 
   getCurrentTime() {
@@ -660,7 +676,6 @@ export default class DanceParty {
 
     Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
     .then( () => {
-      console.log("METADATA LOADED");
       callback();
     });
   }
@@ -672,6 +687,7 @@ export default class DanceParty {
     events['Dance.fft.isPeak'] = {};
     events['cue-seconds'] = {};
     events['cue-measures'] = {};
+    this.peakThisFrame_ = false;
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
@@ -680,13 +696,20 @@ export default class DanceParty {
       }
     }
 
-    // TODO:
-    // for (let range of WATCHED_RANGES) {
-    //   if (isPeak(range)) {
-    //     events.any = true;
-    //     events['Dance.fft.isPeak'][range] = true;
-    //   }
-    // }
+    if (this.peaksData) {
+      while (this.peaksData.length > 0 && this.peaksData[0].time < this.getCurrentTime()) {
+        this.centroid_ = this.peaksData[0].centroid;
+        this.energy_ = this.peaksData[0].energy;
+        for (let range of WATCHED_RANGES) {
+          if (this.peaksData[0].beats[range]) {
+            events.any = true;
+            events['Dance.fft.isPeak'][range] = true;
+            this.peakThisFrame_ = true;
+          }
+        }
+        this.peaksData.splice(0, 1);
+      }
+    }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
       events.any = true;
@@ -708,9 +731,11 @@ export default class DanceParty {
   }
 
   draw() {
+    this.updateEvents_();
+
     const context = {
-      isPeak: false, // TODO: isPeak(),
-      centroid: 0, // TODO: getCentroid(),
+      isPeak: this.peakThisFrame_,
+      centroid: this.centroid_,
       backgroundColor: this.world.background_color,
     };
 
@@ -725,8 +750,6 @@ export default class DanceParty {
         });
       });
     }
-
-    this.updateEvents_();
 
     this.p5_.drawSprites();
 
