@@ -12,7 +12,7 @@ function Behavior(func, extraArgs) {
 }
 
 const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
-// TODO: const WATCHED_RANGES = [0, 1, 2];
+const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
 const SIZE = 300;
@@ -57,6 +57,7 @@ export default class DanceParty {
       cues: {
         seconds: [],
         measures: [],
+        peaks: []
       },
       validationCallback: () => {},
     };
@@ -68,6 +69,9 @@ export default class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
+
+    //TODO - need to reset on run or load new song
+    this.peaksData = null;
 
     this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
@@ -644,7 +648,7 @@ export default class DanceParty {
 
     Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
     .then( () => {
-      console.log("METADATA LOADED");
+      this.peaksData = METADATA[this.getSelectedSong_()].analysis;
       callback();
     });
   }
@@ -664,13 +668,17 @@ export default class DanceParty {
       }
     }
 
-    // TODO:
-    // for (let range of WATCHED_RANGES) {
-    //   if (isPeak(range)) {
-    //     events.any = true;
-    //     events['Dance.fft.isPeak'][range] = true;
-    //   }
-    // }
+    if(this.metadataLoaded() && this.world.cues.peaks.length > 0){
+      while (this.peaksData[0].time < this.getCurrentTime()) {
+        for (let range of WATCHED_RANGES) {
+          if (this.peaksData[0].beats[range]) {
+            events.any = true;
+            events['Dance.fft.isPeak'][range] = true;
+          }
+        }
+        this.peaksData.splice(0,1);
+      }
+    }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
       events.any = true;
@@ -693,7 +701,7 @@ export default class DanceParty {
 
   draw() {
     const context = {
-      isPeak: false, // TODO: isPeak(),
+      isPeak: false,
       centroid: 0, // TODO: getCentroid(),
       backgroundColor: this.world.background_color,
     };
