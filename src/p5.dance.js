@@ -493,7 +493,7 @@ export default class DanceParty {
     if (unit === "measures") {
       return this.getCurrentMeasure();
     } else {
-      return this.getCurrentTime;
+      return this.getCurrentTime();
     }
   }
 
