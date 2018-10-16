@@ -179,4 +179,4 @@ module.exports = class Effects {
       }
     };
   }
-}
+};

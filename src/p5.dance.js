@@ -768,4 +768,4 @@ module.exports = class DanceParty {
     this.world.validationCallback(this.world, this, this.sprites_);
     this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
   }
-}
+};
