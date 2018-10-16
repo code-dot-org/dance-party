@@ -26,7 +26,12 @@ function randomInt(min, max) {
 }
 
 export default class DanceParty {
-  constructor(p5, getSelectedSong, playSound, onPuzzleComplete, recordReplayLog) {
+  constructor(p5, {
+    getSelectedSong,
+    onPuzzleComplete,
+    playSound,
+    recordReplayLog
+  }) {
     /**
      * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
      */
@@ -65,8 +70,8 @@ export default class DanceParty {
 
     this.p5_ = p5;
     this.getSelectedSong_ = getSelectedSong;
-    this.playSound_ = playSound;
     this.onPuzzleComplete_ = onPuzzleComplete;
+    this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
 
     this.world.bg_effect = null;
@@ -758,7 +763,7 @@ export default class DanceParty {
 
     this.p5_.drawSprites();
     if (this.recordReplayLog_) {
-      replayLog.logFrame(this.p5_);
+      replayLog.logSprites(this.p5_);
     }
 
     if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
