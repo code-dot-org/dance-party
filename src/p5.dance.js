@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
 
-import Effects from './Effects';
-import replayLog from './replay';
+const Effects = require('./Effects');
+const replayLog = require ('./replay');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -25,7 +25,7 @@ function randomInt(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-export default class DanceParty {
+module.exports = class DanceParty {
   constructor(p5, {
     getSelectedSong,
     onPuzzleComplete,
@@ -781,4 +781,4 @@ export default class DanceParty {
     this.world.validationCallback(this.world, this, this.sprites_);
     this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
   }
-}
+};
