@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 const FRAME_LIMIT = 30 * 10; // 10 seconds @ 30 fps
 const SPRITE_LIMIT = 25;
 
@@ -7,7 +7,7 @@ if (DEBUG) {
   window.log = log;
 }
 
-export default {
+module.exports = {
   logSprites: (p5) => {
     if (log.length > FRAME_LIMIT) {
       return;
