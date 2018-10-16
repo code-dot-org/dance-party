@@ -668,7 +668,7 @@ export default class DanceParty {
   async loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
     const response = await fetch(`${songDataPath}/${id}.json`);
-    METADATA[id] = await response.json();
+    this.setMetadata_(id, await response.json());
   }
 
   loadDevelopmentSongs_(callback) {
@@ -678,6 +678,10 @@ export default class DanceParty {
     .then( () => {
       callback();
     });
+  }
+
+  setMetadata_(id, data){
+    METADATA[id] = data;
   }
 
   updateEvents_() {

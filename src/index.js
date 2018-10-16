@@ -12,6 +12,7 @@ new window.p5(p5Inst => {
 
   p5Inst.preload = nativeAPI.preload.bind(nativeAPI);
   p5Inst.setup = () => {
+    nativeAPI.setMetadata_('hammer', {'bpm': '133', 'delay': '2.32'});
     nativeAPI.setup();
 
     // Sample user code:
