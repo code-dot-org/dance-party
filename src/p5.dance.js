@@ -680,6 +680,10 @@ export default class DanceParty {
     });
   }
 
+  setMetadata_(id, data){
+    METADATA[id] = data;
+  }
+
   updateEvents_() {
     const events = this.currentFrameEvents;
     events.any = false;
