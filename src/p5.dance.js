@@ -141,8 +141,12 @@ export default class DanceParty {
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
         const baseUrl = `${img_base}${this_sprite}_${name}`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
+          // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
+          // it to load the image as a Image (instead of a p5.Image), which avoids
+          // a canvas creation. This makes it possible to run on mobile Safari in
+          // iOS 12 with canvas memory limits.
           ANIMATIONS[this_sprite][moveIndex] = {
-            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames),
+            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true),
             mirror,
           };
         });
