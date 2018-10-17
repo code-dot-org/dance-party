@@ -28,7 +28,11 @@ module.exports = {
     })));
   },
 
+  getLog: () => {
+    return log;
+  },
+
   reset: () => {
     log.length = 0;
-  }
+  },
 };
