@@ -2,6 +2,7 @@
 /* global p5, Dance, validationProps */
 
 const Effects = require('./Effects');
+const replayLog = require('./replay');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -25,7 +26,12 @@ function randomInt(min, max) {
 }
 
 module.exports = class DanceParty {
-  constructor(p5, getSelectedSong, playSound, onPuzzleComplete) {
+  constructor(p5, {
+    getSelectedSong,
+    onPuzzleComplete,
+    playSound,
+    recordReplayLog
+  }) {
     /**
      * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
      */
@@ -64,8 +70,9 @@ module.exports = class DanceParty {
 
     this.p5_ = p5;
     this.getSelectedSong_ = getSelectedSong;
-    this.playSound_ = playSound;
     this.onPuzzleComplete_ = onPuzzleComplete;
+    this.playSound_ = playSound;
+    this.recordReplayLog_ = recordReplayLog;
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
@@ -168,6 +175,9 @@ module.exports = class DanceParty {
   }
 
   play() {
+    if (this.recordReplayLog_) {
+      replayLog.reset();
+    }
     this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
   }
 
@@ -760,6 +770,9 @@ module.exports = class DanceParty {
     }
 
     this.p5_.drawSprites();
+    if (this.recordReplayLog_) {
+      replayLog.logSprites(this.p5_);
+    }
 
     if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
       this.p5_.push();
