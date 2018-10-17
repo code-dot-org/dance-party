@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
 
-import Effects from './Effects';
+const Effects = require('./Effects');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -24,7 +24,7 @@ function randomInt(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-export default class DanceParty {
+module.exports = class DanceParty {
   constructor(p5, getSelectedSong, playSound, onPuzzleComplete) {
     /**
      * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
@@ -776,4 +776,4 @@ export default class DanceParty {
     this.world.validationCallback(this.world, this, this.sprites_);
     this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
   }
-}
+};

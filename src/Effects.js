@@ -1,4 +1,4 @@
-export default class Effects {
+module.exports = class Effects {
   constructor(p5, alpha, blend) {
     this.blend = blend || p5.BLEND;
 
@@ -179,4 +179,4 @@ export default class Effects {
       }
     };
   }
-}
+};
