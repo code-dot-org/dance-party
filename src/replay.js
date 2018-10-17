@@ -22,7 +22,7 @@ module.exports = {
       rotation: sprite.rotation,
       scale: sprite.scale,
       style: sprite.style,
-      tint: sprite.tint === undefined ? undefined : p5.color(sprite.tint || 0)._getHue(),
+      tint: sprite.tint === undefined ? undefined : p5.hue(p5.color(sprite.tint || 0)),
       x: sprite.x,
       y: sprite.y,
     })));
