@@ -1,13 +1,14 @@
 import p5 from 'p5';
-import 'p5/lib/addons/p5.sound';
 window.p5 = p5; // Needed for p5.play init.
 require('@code-dot-org/p5.play/lib/p5.play');
 import DanceParty from './p5.dance';
 
-console.log('hello dance');
-
 new window.p5(p5Inst => {
-  const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, () => "hammer", () => {});
+  const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
+    getSelectedSong: () => "hammer",
+    onPuzzleComplete: () => {},
+    playSound: () => {},
+  });
   nativeAPI.loadSongMetadata_ = () => {};
 
   p5Inst.preload = nativeAPI.preload.bind(nativeAPI);
