@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
 
-import Effects from './Effects';
-import replayLog from './replay';
+const Effects = require('./Effects');
+const replayLog = require('./replay');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -25,7 +25,7 @@ function randomInt(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-export default class DanceParty {
+module.exports = class DanceParty {
   constructor(p5, {
     getSelectedSong,
     onPuzzleComplete,
@@ -148,8 +148,12 @@ export default class DanceParty {
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
         const baseUrl = `${img_base}${this_sprite}_${name}`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
+          // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
+          // it to load the image as a Image (instead of a p5.Image), which avoids
+          // a canvas creation. This makes it possible to run on mobile Safari in
+          // iOS 12 with canvas memory limits.
           ANIMATIONS[this_sprite][moveIndex] = {
-            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames),
+            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true),
             mirror,
           };
         });
@@ -678,7 +682,7 @@ export default class DanceParty {
   async loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
     const response = await fetch(`${songDataPath}/${id}.json`);
-    METADATA[id] = await response.json();
+    this.setMetadata_(id, await response.json());
   }
 
   loadDevelopmentSongs_(callback) {
@@ -688,6 +692,10 @@ export default class DanceParty {
     .then( () => {
       callback();
     });
+  }
+
+  setMetadata_(id, data){
+    METADATA[id] = data;
   }
 
   updateEvents_() {
@@ -781,4 +789,4 @@ export default class DanceParty {
     this.world.validationCallback(this.world, this, this.sprites_);
     this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
   }
-}
+};
