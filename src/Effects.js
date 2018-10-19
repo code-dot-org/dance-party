@@ -95,14 +95,13 @@ module.exports = class Effects {
           this.update();
         }
         if (this.flashing) {
-          bgcolor = p5.rgb(255, 255, 255);
           this.waitTime--;
+        } else {
+          p5.background(bgcolor);
         }
         if (this.waitTime <= 0) {
-          bgcolor = p5.rgb(1, 1, 1);
           this.flashing = false;
         }
-        p5.background(bgcolor);
       }
     };
 
