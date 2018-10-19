@@ -31,30 +31,37 @@ module.exports = class Effects {
 
     this.disco = {
       bg: undefined,
+      colors: [],
+      squaresPerSide: 2,
+      averageUpdatesToSeeNewColor: 4,
       init: function () {
-        this.bg = p5.createGraphics(p5.width, p5.height);
-        this.bg.noStroke();
-        for (let i = 0; i < 16; i++) {
-          this.bg.fill(
-            p5.color("hsla(" + randomNumber(0, 359) + ", 100%, 80%, " + alpha + ")"));
-          this.bg.rect((i % 4) * 100, Math.floor(i / 4) * 100, 100, 100);
+        // Alpha is ignored for this effect to avoid memory leaks with too many
+        // layers of alpha blending.
+        this.totalSquares = this.squaresPerSide * this.squaresPerSide;
+        for (let i = 0; i < this.totalSquares; i++) {
+          this.colors[i] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       update: function () {
-        for (let i = randomNumber(5, 10); i > 0; i--) {
-          let loc = randomNumber(0, 15);
-          this.bg.fill(p5.color("hsla(" + randomNumber(0, 359) + ", 100%, 80%, " + alpha + ")"));
-          this.bg.rect((loc % 4) * 100, Math.floor(loc / 4) * 100, 100, 100);
+        const loc = randomNumber(0, this.totalSquares * this.averageUpdatesToSeeNewColor);
+        if (loc < this.totalSquares) {
+          this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       draw: function ({isPeak}) {
-        if (!this.bg) {
+        if (!this.totalSquares) {
           this.init();
         }
         if (isPeak) {
           this.update();
         }
-        p5.image(this.bg, 0, 0);
+        p5.push();
+        p5.noStroke();
+        for (let i = 0; i < this.totalSquares; i++) {
+          p5.fill(this.colors[i]);
+          p5.rect((i % 2) * p5.width / 2, Math.floor(i / 2) * p5.height / 2, p5.width / 2, p5.height / 2);
+        }
+        p5.pop();
       }
     };
 
