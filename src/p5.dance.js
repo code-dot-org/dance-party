@@ -30,7 +30,8 @@ module.exports = class DanceParty {
     getSelectedSong,
     onPuzzleComplete,
     playSound,
-    recordReplayLog
+    recordReplayLog,
+    toggleRunButton
   }) {
     /**
      * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
@@ -73,6 +74,7 @@ module.exports = class DanceParty {
     this.onPuzzleComplete_ = onPuzzleComplete;
     this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
+    this.toggleRunButton_ = toggleRunButton;
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
@@ -178,7 +180,11 @@ module.exports = class DanceParty {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
+    this.playSound_({
+      url: METADATA[this.getSelectedSong_()].file,
+      callback: () => {this.songStartTime_ = new Date()},
+      onEnded: () => {this.reset(); this.toggleRunButton_();}
+    });
   }
 
   setBackground(color) {
