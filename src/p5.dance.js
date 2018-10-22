@@ -197,7 +197,7 @@ module.exports = class DanceParty {
 // Block Functions
 //
 
-  makeNewDanceSprite(costume, name, location) {
+  makeNewDanceSprite(costume, _, location) {
 
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
