@@ -139,8 +139,8 @@ module.exports = class DanceParty {
 
   preload() {
     // Retrieves JSON metadata for songs
-    // TODO: only load song data when necessary and don't hardcode the dev song
-    this.loadDevelopmentSongs_(() => {this.metadataLoaded_ = true});
+    // Second param indicates test environment
+    this.loadSongs_(() => {this.metadataLoaded_ = true}, false);
 
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
@@ -685,13 +685,19 @@ module.exports = class DanceParty {
     this.setMetadata_(id, await response.json());
   }
 
-  loadDevelopmentSongs_(callback) {
-    let ids = ['macklemore90', 'hammer', 'peas'];
+  loadSongs_(callback, test) {
+    const manifest = test ? "testManifest.json" : "songManifest.json"
+    fetch(`/api/v1/sound-library/hoc_song_meta/` + manifest)
+      .then(response => response.json())
+      .then(data => this.parseSongOptions(data, callback));
+  }
 
-    Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
-    .then( () => {
-      callback();
-    });
+  parseSongOptions(data, callback) {
+    let promiseList = [];
+    if (data) {
+      promiseList = data.songs.map((song) => this.loadSongMetadata_(song.id));
+    }
+    Promise.all(promiseList).then(callback);
   }
 
   setMetadata_(id, data){
