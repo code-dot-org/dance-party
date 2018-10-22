@@ -31,30 +31,44 @@ module.exports = class Effects {
 
     this.disco = {
       bg: undefined,
+      colors: [],
+      squaresPerSide: 4,
+      minColorChangesPerUpdate: 5,
+      maxColorChangesPerUpdate: 9,
       init: function () {
-        this.bg = p5.createGraphics(p5.width, p5.height);
-        this.bg.noStroke();
-        for (let i = 0; i < 16; i++) {
-          this.bg.fill(
-            p5.color("hsla(" + randomNumber(0, 359) + ", 100%, 80%, " + alpha + ")"));
-          this.bg.rect((i % 4) * 100, Math.floor(i / 4) * 100, 100, 100);
+        // Alpha is ignored for this effect to avoid memory leaks with too many
+        // layers of alpha blending.
+        this.colors.length = this.squaresPerSide * this.squaresPerSide;
+        for (let i = 0; i < this.colors.length; i++) {
+          this.colors[i] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       update: function () {
-        for (let i = randomNumber(5, 10); i > 0; i--) {
-          let loc = randomNumber(0, 15);
-          this.bg.fill(p5.color("hsla(" + randomNumber(0, 359) + ", 100%, 80%, " + alpha + ")"));
-          this.bg.rect((loc % 4) * 100, Math.floor(loc / 4) * 100, 100, 100);
+        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate + 1);
+        for (let i = 0; i < numChanges; i++) {
+          const loc = randomNumber(0, this.colors.length + 1);
+          this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       draw: function ({isPeak}) {
-        if (!this.bg) {
+        if (this.colors.length === 0) {
           this.init();
         }
         if (isPeak) {
           this.update();
         }
-        p5.image(this.bg, 0, 0);
+        p5.push();
+        p5.noStroke();
+        const squareWidth = p5.width / this.squaresPerSide;
+        const squareHeight = p5.height / this.squaresPerSide;
+        for (let i = 0; i < this.colors.length; i++) {
+          p5.fill(this.colors[i]);
+          p5.rect((i % this.squaresPerSide) * squareWidth,
+              Math.floor(i / this.squaresPerSide) * squareHeight,
+              squareWidth,
+              squareHeight);
+        }
+        p5.pop();
       }
     };
 
