@@ -32,24 +32,26 @@ module.exports = class Effects {
     this.disco = {
       bg: undefined,
       colors: [],
-      squaresPerSide: 2,
-      averageUpdatesToSeeNewColor: 4,
+      squaresPerSide: 4,
+      minColorChangesPerUpdate: 5,
+      maxColorChangesPerUpdate: 9,
       init: function () {
         // Alpha is ignored for this effect to avoid memory leaks with too many
         // layers of alpha blending.
-        this.totalSquares = this.squaresPerSide * this.squaresPerSide;
-        for (let i = 0; i < this.totalSquares; i++) {
+        this.colors.length = this.squaresPerSide * this.squaresPerSide;
+        for (let i = 0; i < this.colors.length; i++) {
           this.colors[i] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       update: function () {
-        const loc = randomNumber(0, this.totalSquares * this.averageUpdatesToSeeNewColor);
-        if (loc < this.totalSquares) {
+        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate + 1);
+        for (let i = 0; i < numChanges; i++) {
+          const loc = randomNumber(0, this.colors.length + 1);
           this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
       draw: function ({isPeak}) {
-        if (!this.totalSquares) {
+        if (this.colors.length === 0) {
           this.init();
         }
         if (isPeak) {
@@ -57,9 +59,14 @@ module.exports = class Effects {
         }
         p5.push();
         p5.noStroke();
-        for (let i = 0; i < this.totalSquares; i++) {
+        const squareWidth = p5.width / this.squaresPerSide;
+        const squareHeight = p5.height / this.squaresPerSide;
+        for (let i = 0; i < this.colors.length; i++) {
           p5.fill(this.colors[i]);
-          p5.rect((i % 2) * p5.width / 2, Math.floor(i / 2) * p5.height / 2, p5.width / 2, p5.height / 2);
+          p5.rect((i % this.squaresPerSide) * squareWidth,
+              Math.floor(i / this.squaresPerSide) * squareHeight,
+              squareWidth,
+              squareHeight);
         }
         p5.pop();
       }

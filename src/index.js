@@ -10,7 +10,7 @@ new window.p5(p5Inst => {
   const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
     getSelectedSong: () => "hammer",
     onPuzzleComplete: () => {},
-    playSound: () => {},
+    playSound: ({callback}) => setTimeout(() => {callback && callback()}, 0),
   });
   nativeAPI.loadSongMetadata_ = () => {};
 
@@ -30,8 +30,7 @@ new window.p5(p5Inst => {
     nativeAPI.setBackgroundEffect('disco');
     nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-    // Simulate song start so we can see song effects based on peaks:
-    nativeAPI.songStartTime_ = new Date();
+    nativeAPI.songStartTime_ = nativeAPI.play();
   };
   p5Inst.draw = nativeAPI.draw.bind(nativeAPI);
 });
