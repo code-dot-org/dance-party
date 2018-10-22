@@ -10,7 +10,7 @@ new window.p5(p5Inst => {
   const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
     getSelectedSong: () => "hammer",
     onPuzzleComplete: () => {},
-    playSound: ({callback}) => setTimeout(() => {callback && callback()}, 0),
+    playSound: ({callback}) => setTimeout(() => {callback && callback();}, 0),
   });
   nativeAPI.loadSongMetadata_ = () => {};
 
