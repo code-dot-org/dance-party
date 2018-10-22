@@ -30,6 +30,7 @@ new window.p5(p5Inst => {
     nativeAPI.setBackgroundEffect('disco');
     nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
+    // Simulate song start so we can see song effects based on peaks:
     nativeAPI.songStartTime_ = new Date();
   };
   p5Inst.draw = nativeAPI.draw.bind(nativeAPI);
