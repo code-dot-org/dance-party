@@ -20,7 +20,7 @@ if (typeof global !== undefined) {
 
 const P5 = require('p5');
 
-context.define = function (_, _, callback) {
+context.define = function (name, dependencies, callback) {
   callback(P5);
 };
 context.define.amd = true;
