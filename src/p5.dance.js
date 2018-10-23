@@ -315,11 +315,11 @@ module.exports = class DanceParty {
   changeMoveLR(sprite, move, dir) {
     if (!this.spriteExists_(sprite)) return;
     if (move === "next") {
-      move = 1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
+      move = 1 + (sprite.current_move % (ANIMATIONS[sprite.style].length - 1));
     } else if (move === "prev") {
       //Javascript doesn't handle negative modulos as expected, so manually resetting the loop
       move = sprite.current_move - 1;
-      if (move < 0) {
+      if (move <= 0) {
         move = ANIMATIONS[sprite.style].length - 1;
       }
     } else if (move === "rand") {
