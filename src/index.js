@@ -1,10 +1,8 @@
-import p5 from 'p5';
-window.p5 = p5; // Needed for p5.play init.
-require('@code-dot-org/p5.play/lib/p5.play');
+import loadP5 from './loadP5';
 import DanceParty from './p5.dance';
 import jazzy_beats from "../metadata/jazzy_beats";
 
-new window.p5(p5Inst => {
+loadP5().then(p5Inst => {
   const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
     songMetadata: jazzy_beats,
     onSongPlay: () => {console.log("Start Play")},
