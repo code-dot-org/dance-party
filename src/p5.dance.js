@@ -111,6 +111,10 @@ module.exports = class DanceParty {
     this.songMetadata_ = data;
   }
 
+  metadataLoaded(id){
+   return this.songMetadata_ !== {} && this.songMetadata_.file.includes(id);
+  }
+
   pass() {
     this.onPuzzleComplete_(true);
   }
