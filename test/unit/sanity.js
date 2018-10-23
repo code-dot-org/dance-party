@@ -16,7 +16,7 @@ window.p5 = p5;
 p5.prototype.createGroup = () => {};
 
 test('sanity', t => {
-  const nativeAPI = new DanceParty(new p5(), () => {});
+  const nativeAPI = new DanceParty(new p5(), {});
 
   t.notOk(nativeAPI.metadataLoaded());
   t.end();
