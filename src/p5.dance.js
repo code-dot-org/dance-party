@@ -26,10 +26,10 @@ function randomInt(min, max) {
 }
 
 module.exports = class DanceParty {
-  constructor(p5, {
-    getSelectedSong,
+  constructor(p5, {songMetadata,
+    onSongPlay,
+    onSongComplete,
     onPuzzleComplete,
-    playSound,
     recordReplayLog
   }) {
     /**
@@ -69,10 +69,10 @@ module.exports = class DanceParty {
     };
 
     this.p5_ = p5;
-    this.getSelectedSong_ = getSelectedSong;
     this.onPuzzleComplete_ = onPuzzleComplete;
-    this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
+    this.songMetadata_ = songMetadata;
+    this.onSongPlay_ = onSongPlay;
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
@@ -118,7 +118,7 @@ module.exports = class DanceParty {
   addCues(timestamps) {
     this.world.cues = timestamps;
     if (this.metadataLoaded()) {
-      this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
+      this.peaksData = this.songMetadata_.analysis.slice();
     }
   }
 
@@ -186,7 +186,8 @@ module.exports = class DanceParty {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
+
+    this.onSongPlay_(() => {this.songStartTime_ = new Date()});
   }
 
   setBackground(color) {
@@ -249,7 +250,7 @@ module.exports = class DanceParty {
     this.addBehavior_(sprite, () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
-      var msPerBeat = 60 * 1000 / (METADATA[this.getSelectedSong_()].bpm * (sprite.dance_speed / 2));
+      var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
         sprite.sinceLastFrame -= msPerFrame;
@@ -543,7 +544,7 @@ module.exports = class DanceParty {
   }
 
   getCurrentMeasure() {
-    const songData = METADATA[this.getSelectedSong_()];
+    const songData = this.songMetadata_;
     return this.songStartTime_ > 0 ? songData.bpm * ((this.getCurrentTime() - songData.delay) / 240) + 1 : 0;
   }
 
