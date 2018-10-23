@@ -32,24 +32,26 @@ module.exports = class DanceParty {
     playSound,
     recordReplayLog
   }) {
-    /**
-     * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
-     */
-    Object.getPrototypeOf(p5).constructor.Renderer2D.prototype._getTintedImageCanvas = function (img) {
-      this._tintCanvas = this._tintCanvas || document.createElement('canvas');
-      this._tintCanvas.width = img.canvas.width;
-      this._tintCanvas.height = img.canvas.height;
-      const tmpCtx = this._tintCanvas.getContext('2d');
-      tmpCtx.fillStyle = 'hsl(' + this._pInst.hue(this._tint) + ', 100%, 50%)';
-      tmpCtx.fillRect(0, 0, this._tintCanvas.width, this._tintCanvas.height);
-      tmpCtx.globalCompositeOperation = 'destination-atop';
-      tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-      tmpCtx.globalCompositeOperation = 'multiply';
-      tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-      return this._tintCanvas;
-    };
-
-    Object.getPrototypeOf(p5).constructor.disableFriendlyErrors = true;
+    const P5 = Object.getPrototypeOf(p5).constructor;
+    if (P5.Renderer2D) {
+      /**
+       * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
+       */
+      Object.getPrototypeOf(p5).constructor.Renderer2D.prototype._getTintedImageCanvas = function (img) {
+        this._tintCanvas = this._tintCanvas || document.createElement('canvas');
+        this._tintCanvas.width = img.canvas.width;
+        this._tintCanvas.height = img.canvas.height;
+        const tmpCtx = this._tintCanvas.getContext('2d');
+        tmpCtx.fillStyle = 'hsl(' + this._pInst.hue(this._tint) + ', 100%, 50%)';
+        tmpCtx.fillRect(0, 0, this._tintCanvas.width, this._tintCanvas.height);
+        tmpCtx.globalCompositeOperation = 'destination-atop';
+        tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
+        tmpCtx.globalCompositeOperation = 'multiply';
+        tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
+        return this._tintCanvas;
+      };
+    }
+    P5.disableFriendlyErrors = true;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
