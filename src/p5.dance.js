@@ -181,7 +181,7 @@ module.exports = class DanceParty {
       replayLog.reset();
     }
 
-    this.onSongPlay_(() => {this.songStartTime_ = new Date()});
+    this.onSongPlay_(this.songMetadata_.file, () => {this.songStartTime_ = new Date()});
   }
 
   setBackground(color) {
