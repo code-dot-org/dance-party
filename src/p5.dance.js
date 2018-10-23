@@ -152,13 +152,21 @@ module.exports = class DanceParty {
           // it to load the image as a Image (instead of a p5.Image), which avoids
           // a canvas creation. This makes it possible to run on mobile Safari in
           // iOS 12 with canvas memory limits.
-          ANIMATIONS[this_sprite][moveIndex] = {
-            spritesheet: this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true),
-            mirror,
-          };
+          this.setAnimationSpriteSheet(this_sprite, moveIndex,
+            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
         });
       });
     });
+  }
+
+  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror){
+    if (!ANIMATIONS[sprite]) {
+      ANIMATIONS[sprite] = [];
+    }
+    ANIMATIONS[sprite][moveIndex] = {
+      spritesheet: spritesheet,
+      mirror,
+    };
   }
 
   setup() {
@@ -307,7 +315,11 @@ module.exports = class DanceParty {
     if (move === "next") {
       move = 1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
     } else if (move === "prev") {
-      move = 1 + ((sprite.current_move - 1) % (ANIMATIONS[sprite.style].length - 1));
+      //Javascript doesn't handle negative modulos as expected, so manually resetting the loop
+      move = sprite.current_move - 1;
+      if (move < 0) {
+        move = ANIMATIONS[sprite.style].length - 1;
+      }
     } else if (move === "rand") {
       // Make sure random switches to a new move
       move = sprite.current_move;
