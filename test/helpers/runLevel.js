@@ -1,32 +1,24 @@
 const DanceParty = require('../../src/p5.dance');
 const Levels = require('../../levels/hourOfCode');
-
-global.window = {
-  addEventListener: () => {},
-};
-global.document = {
-  hasFocus: () => true,
-  getElementsByTagName: () => ({}),
-};
-global.screen = {};
-const P5 = require('p5');
-global.define = function (_, _, callback) {
-  callback(P5);
-};
-global.define.amd = true;
-
-require('@code-dot-org/p5.play/lib/p5.play');
+const loadP5 = require('../../src/loadP5');
 
 const levels = Object.assign({}, Levels);
 
 module.exports = (levelName, onPuzzleComplete) => {
-  const p5Inst = new P5();
-  const nativeAPI = new DanceParty(p5Inst, {
-    getSelectedSong: () => 'hammer',
-    playSound: callback => callback(),
-    onPuzzleComplete,
+  return loadP5().then(p5Inst => {
+    const nativeAPI = new DanceParty(p5Inst, {
+      getSelectedSong: () => 'hammer',
+      playSound: callback => callback(),
+      onPuzzleComplete,
+    });
+    nativeAPI.reset();
+    nativeAPI.play();
+    console.log(levels[levelName].solution);
+    console.log(p5Inst.frameCount);
+    setTimeout(() => {
+      console.log(p5Inst.frameCount);
+      onPuzzleComplete();
+    }, 5000);
+    console.log(p5Inst.frameCount);
   });
-  nativeAPI.reset();
-  console.log(levels[levelName].solution);
-  onPuzzleComplete();
 };
