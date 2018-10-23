@@ -107,6 +107,10 @@ module.exports = class DanceParty {
     this.songStartTime_ = 0;
   }
 
+  updateSongMetadata(data) {
+    this.songMetadata_ = data;
+  }
+
   pass() {
     this.onPuzzleComplete_(true);
   }
