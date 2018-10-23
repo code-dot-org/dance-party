@@ -5,10 +5,11 @@ import DanceParty from './p5.dance';
 import macklemore90 from '../metadata/macklemore90.json';
 import hammer from '../metadata/hammer.json';
 import peas from '../metadata/peas.json';
+import jazzy_beats from '../metadata/jazzy_beats.json';
 
 new window.p5(p5Inst => {
   const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
-    getSelectedSong: () => "hammer",
+    getSelectedSong: () => "jazzy_beats",
     onPuzzleComplete: () => {},
     playSound: ({callback}) => setTimeout(() => {callback && callback();}, 0),
   });
@@ -16,6 +17,7 @@ new window.p5(p5Inst => {
 
   p5Inst.preload = nativeAPI.preload.bind(nativeAPI);
   p5Inst.setup = () => {
+    nativeAPI.setMetadata_('jazzy_beats', jazzy_beats);
     nativeAPI.setMetadata_('macklemore90', macklemore90);
     nativeAPI.setMetadata_('hammer', hammer);
     nativeAPI.setMetadata_('peas', peas);
