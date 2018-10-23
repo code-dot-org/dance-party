@@ -35,7 +35,7 @@ module.exports = class DanceParty {
     /**
      * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
      */
-    window.p5.Renderer2D.prototype._getTintedImageCanvas = function (img) {
+    Object.getPrototypeOf(p5).constructor.Renderer2D.prototype._getTintedImageCanvas = function (img) {
       this._tintCanvas = this._tintCanvas || document.createElement('canvas');
       this._tintCanvas.width = img.canvas.width;
       this._tintCanvas.height = img.canvas.height;
@@ -49,7 +49,7 @@ module.exports = class DanceParty {
       return this._tintCanvas;
     };
 
-    window.p5.disableFriendlyErrors = true;
+    Object.getPrototypeOf(p5).constructor.disableFriendlyErrors = true;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
