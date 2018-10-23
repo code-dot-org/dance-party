@@ -5,8 +5,8 @@ import jazzy_beats from "../metadata/jazzy_beats";
 loadP5().then(p5Inst => {
   const nativeAPI = window.nativeAPI = new DanceParty(p5Inst, {
     songMetadata: jazzy_beats,
-    onSongPlay: () => {console.log("Start Play")},
-    onSongComplete: () => {console.log("Stop Requested")},
+    onSongPlay: () => console.log("Start Play"),
+    onSongComplete: () => console.log("Stop Requested"),
     onPuzzleComplete: () => {}});
 
   p5Inst.preload = nativeAPI.preload.bind(nativeAPI);
