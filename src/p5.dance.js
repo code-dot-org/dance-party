@@ -19,7 +19,6 @@ const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
 const SIZE = 300;
 const ANIMATIONS = {};
 const FRAMES = 24;
-const METADATA = {};
 
 function randomInt(min, max) {
   return Math.random() * (max - min) + min;
@@ -104,7 +103,6 @@ module.exports = class DanceParty {
     ];
 
     this.songStartTime_ = 0;
-    this.metadataLoaded_ = false;
   }
 
   pass() {
@@ -117,9 +115,7 @@ module.exports = class DanceParty {
 
   addCues(timestamps) {
     this.world.cues = timestamps;
-    if (this.metadataLoaded()) {
-      this.peaksData = this.songMetadata_.analysis.slice();
-    }
+    this.peaksData = this.songMetadata_.analysis.slice();
   }
 
   reset() {
@@ -133,15 +129,7 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
   }
 
-  metadataLoaded() {
-    return this.metadataLoaded_;
-  }
-
   preload() {
-    // Retrieves JSON metadata for songs
-    // TODO: only load song data when necessary and don't hardcode the dev song
-    this.loadDevelopmentSongs_(() => {this.metadataLoaded_ = true});
-
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -690,25 +678,6 @@ module.exports = class DanceParty {
 
   spriteExists_(sprite) {
     return this.p5_.allSprites.indexOf(sprite) > -1;
-  }
-
-  async loadSongMetadata_(id){
-    let songDataPath = '/api/v1/sound-library/hoc_song_meta';
-    const response = await fetch(`${songDataPath}/${id}.json`);
-    this.setMetadata_(id, await response.json());
-  }
-
-  loadDevelopmentSongs_(callback) {
-    let ids = ['macklemore90', 'hammer', 'peas'];
-
-    Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
-    .then( () => {
-      callback();
-    });
-  }
-
-  setMetadata_(id, data){
-    METADATA[id] = data;
   }
 
   updateEvents_() {
