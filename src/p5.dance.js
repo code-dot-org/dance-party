@@ -160,7 +160,7 @@ module.exports = class DanceParty {
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror){
-    if(!ANIMATIONS[sprite]){
+    if (!ANIMATIONS[sprite]) {
       ANIMATIONS[sprite] = [];
     }
     ANIMATIONS[sprite][moveIndex] = {
