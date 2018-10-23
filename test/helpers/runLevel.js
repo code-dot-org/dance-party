@@ -9,18 +9,18 @@ global.document = {
   getElementsByTagName: () => ({}),
 };
 global.screen = {};
+const P5 = require('p5');
 global.define = function (_, _, callback) {
-  callback(window.p5);
+  callback(P5);
 };
 global.define.amd = true;
 
-window.p5 = require('p5'); // Needed for p5.play init.
 require('@code-dot-org/p5.play/lib/p5.play');
 
 const levels = Object.assign({}, Levels);
 
 module.exports = (levelName, onPuzzleComplete) => {
-  const p5Inst = new window.p5();
+  const p5Inst = new P5();
   const nativeAPI = new DanceParty(p5Inst, {
     getSelectedSong: () => 'hammer',
     playSound: callback => callback(),
