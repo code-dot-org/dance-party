@@ -106,7 +106,6 @@ module.exports = class DanceParty {
     ];
 
     this.songStartTime_ = 0;
-    this.metadataLoaded_ = false;
   }
 
   pass() {
@@ -119,9 +118,7 @@ module.exports = class DanceParty {
 
   addCues(timestamps) {
     this.world.cues = timestamps;
-    if (this.metadataLoaded()) {
-      this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
-    }
+    this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
   }
 
   reset() {
@@ -135,14 +132,10 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
   }
 
-  metadataLoaded() {
-    return this.metadataLoaded_;
-  }
-
   preload() {
     // Retrieves JSON metadata for songs
     // TODO: only load song data when necessary and don't hardcode the dev song
-    this.loadDevelopmentSongs_(() => {this.metadataLoaded_ = true});
+    this.loadDevelopmentSongs_();
 
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
@@ -693,19 +686,15 @@ module.exports = class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
-  async loadSongMetadata_(id){
+  loadSongMetadata_(id){
     let songDataPath = '/api/v1/sound-library/hoc_song_meta';
-    const response = await fetch(`${songDataPath}/${id}.json`);
-    this.setMetadata_(id, await response.json());
+    this.p5_.loadJSON(`${songDataPath}/${id}.json`, metadata => {
+      this.setMetadata_(id, metadata);
+    });
   }
 
   loadDevelopmentSongs_(callback) {
-    let ids = ['macklemore90', 'hammer', 'peas'];
-
-    Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
-    .then( () => {
-      callback();
-    });
+    ['macklemore90', 'hammer', 'peas'].forEach(id => this.loadSongMetadata_(id));
   }
 
   setMetadata_(id, data){

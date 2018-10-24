@@ -6,7 +6,6 @@ test('sanity', t => {
   loadP5().then(p5Inst => {
     const nativeAPI = new DanceParty(p5Inst, {});
 
-    t.notOk(nativeAPI.metadataLoaded());
     t.end();
   });
 });
