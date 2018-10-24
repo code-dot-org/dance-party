@@ -112,7 +112,20 @@ module.exports = class DanceParty {
   }
 
   metadataLoaded(id){
-   return this.songMetadata_ !== {} && this.songMetadata_.file.includes(id);
+    if(this.songMetadata_ === {}){
+      return
+    }
+    //Hard codes the three dev songs to make backward compatible with manifest
+    switch(id) {
+      case 'hammer':
+        return this.songMetadata_.file.includes('touch');
+      case 'peas':
+        return this.songMetadata_.file.includes('feeling');
+      case 'macklemore90':
+        return this.songMetadata_.file.includes('hold');
+      default:
+        this.songMetadata_.file.includes(id);
+    }
   }
 
   pass() {
