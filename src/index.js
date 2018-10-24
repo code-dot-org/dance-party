@@ -16,8 +16,7 @@ loadP5().then(p5Inst => {
     nativeAPI.setBackgroundEffect('disco');
     nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-    nativeAPI.setSongMetadata(jazzy_beats);
-    nativeAPI.play();
+    nativeAPI.play(jazzy_beats);
   };
   p5Inst.draw = nativeAPI.draw.bind(nativeAPI);
 });
