@@ -112,11 +112,11 @@ module.exports = class DanceParty {
   }
 
   metadataLoaded(id){
-    if(this.songMetadata_ === {}){
+    if (this.songMetadata_ === {}) {
       return
     }
     //Hard codes the three dev songs to make backward compatible with manifest
-    switch(id) {
+    switch (id) {
       case 'hammer':
         return this.songMetadata_.file.includes('touch');
       case 'peas':
