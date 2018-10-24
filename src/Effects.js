@@ -130,9 +130,9 @@ module.exports = class Effects {
           });
         }
       },
-      color: p5.rgb(127, 127, 255, 0.5),
+      color: p5.rgb(92, 101, 180, 0.5),
       update: function () {
-        this.color = p5.rgb(127, 127, randomNumber(127, 255), 0.5);
+        this.color = p5.rgb(92, 101, randomNumber(140, 220), 0.5);
       },
       draw: function () {
         if (this.drops.length < 1) {
@@ -188,6 +188,43 @@ module.exports = class Effects {
             taco.y = -50;
           }
           p5.pop();
+        }
+      }
+    };
+    this.splatter = {
+      splats:[],
+      numSplats:100,
+      randomSplat: function () {
+        let r = randomNumber(30,60);
+        return {x: randomNumber(0,400),
+            y: randomNumber(0,400),
+            color: p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)"),
+            width: r,
+            height: r,
+        };
+      },
+      init: function () {
+        for (var i=0;i<this.numSplats;i++) {
+          this.splats.push(this.randomSplat());
+        }
+        p5.strokeWeight(0);
+      },
+      update: function () {
+        //TODO: add some music-driven change? Right now it just grows continuously.
+      },
+      draw: function () {
+        if (this.splats.length<1) {
+          this.init();
+        }
+        p5.strokeWeight(0);
+        for (var i=0;i<this.splats.length;i++) {
+          if (randomNumber(0,50) === 0) {
+            this.splats[i]=this.randomSplat();
+          }
+          p5.fill(this.splats[i].color);
+          this.splats[i].width+=randomNumber(0,4);
+          this.splats[i].height+=randomNumber(0,4);
+          p5.ellipse(this.splats[i].x,this.splats[i].y,this.splats[i].width,this.splats[i].height);
         }
       }
     };
