@@ -15,7 +15,9 @@ class mockP5 {
       current_move: 0,
       mirrorX: () => {},
       changeAnimation: () => {},
-      animation: {looping: false}
+      animation: {looping: false},
+      scale: 1,
+      y: 100
     });
   };
 
@@ -67,5 +69,62 @@ test('Sprite dance increments and loops for next dance', t => {
 
   //Loops without rest move
   t.equal(p5Inst.allSprites[0].current_move, 1);
+  t.end();
+});
+
+test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', t => {
+  let p5Inst = new mockP5();
+  p5Inst.createSprite();
+  let nativeAPI = new DanceParty(p5Inst, () => {});
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+
+  //Initial value
+  t.equal(nativeAPI.getCurrentDance(p5Inst.allSprites[0]), p5Inst.allSprites[0].current_move);
+
+  let uninitializedSprite = {
+    style: "DOG",
+    current_move: 0,
+    mirrorX: () => {},
+    changeAnimation: () => {},
+    animation: {looping: false}
+  };
+
+  t.equal(nativeAPI.getCurrentDance(uninitializedSprite), undefined);
+  t.end();
+});
+
+
+test('setProp and getProp changes and retrieves sprite scale properties based on given values', t => {
+  let p5Inst = new mockP5();
+  p5Inst.createSprite();
+  let nativeAPI = new DanceParty(p5Inst, () => {});
+  let uninitializedSprite = {
+    style: "DOG",
+    current_move: 0,
+    mirrorX: () => {},
+    changeAnimation: () => {},
+    animation: {looping: false}
+  };
+
+  t.equal(nativeAPI.setProp(uninitializedSprite, 'scale', 10), undefined);
+  t.equal(nativeAPI.setProp(p5Inst.allSprites[0], 'scale', undefined), undefined);
+
+  nativeAPI.setProp(p5Inst.allSprites[0], 'scale', 50);
+  t.equal(p5Inst.allSprites[0].scale, 0.5);
+  t.equal(nativeAPI.getProp(p5Inst.allSprites[0], 'scale'), 50);
+
+  t.end();
+});
+
+
+test('setPropRandom set sprite y properties between 50 and 350', t => {
+  let p5Inst = new mockP5();
+  p5Inst.createSprite();
+  let nativeAPI = new DanceParty(p5Inst, () => {});
+
+  t.equal(p5Inst.allSprites[0].y, 100);
+  nativeAPI.setPropRandom(p5Inst.allSprites[0], 'y');
+  t.ok(p5Inst.allSprites[0].y > 50 && p5Inst.allSprites[0].y < 350);
+
   t.end();
 });
