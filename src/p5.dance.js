@@ -30,7 +30,7 @@ module.exports = class DanceParty {
     onPuzzleComplete,
     playSound,
     recordReplayLog
-  }) {
+  } = {}) {
     this.onInit = onInit;
 
     this.currentFrameEvents = {
@@ -82,8 +82,14 @@ module.exports = class DanceParty {
     ];
 
     this.songStartTime_ = 0;
+  }
 
-    loadP5().then(p5Inst => {
+  init(callback) {
+    if (callback) {
+      callback(this.world);
+    }
+
+    return loadP5().then(p5Inst => {
       this.p5_ = p5Inst;
       this.sprites_ = this.p5_.createGroup();
       this.p5_.preload = () => this.preload();
@@ -717,10 +723,6 @@ module.exports = class DanceParty {
 
   registerValidation(callback) {
     this.world.validationCallback = callback;
-  }
-
-  init(callback) {
-    callback(this.world);
   }
 
   draw() {
