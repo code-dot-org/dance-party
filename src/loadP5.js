@@ -3,17 +3,11 @@ let context;
 if (typeof global !== undefined) {
   context = global;
 
-  global.window = {
-    addEventListener: () => {
-    },
-  };
-
-  global.document = {
-    hasFocus: () => true,
-    getElementsByTagName: () => ({}),
-  };
-
-  global.screen = {};
+  const {JSDOM} = require('jsdom');
+  global.window = new JSDOM().window;
+  global.document = window.document;
+  global.screen = window.screen;
+  global.Image = window.Image;
 } else {
   context = window;
 }
@@ -49,8 +43,4 @@ context.define.amd = true;
 
 require('@code-dot-org/p5.play/lib/p5.play');
 
-module.exports = function () {
-  return new Promise(resolve => {
-    new P5(p5Inst => resolve(p5Inst));
-  });
-};
+module.exports = P5;

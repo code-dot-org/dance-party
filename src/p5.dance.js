@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
-const loadP5 = require('./loadP5');
+const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
 
@@ -29,6 +29,7 @@ module.exports = class DanceParty {
     onInit,
     onPuzzleComplete,
     playSound,
+    moveNames,
     recordReplayLog
   }) {
     this.onInit = onInit;
@@ -66,7 +67,7 @@ module.exports = class DanceParty {
 
     this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
 
-    this.world.MOVE_NAMES = [
+    this.world.MOVE_NAMES = moveNames || [
       {name: "Rest", mirror: true},
       {name: "ClapHigh", mirror: true},
       {name: "Clown", mirror: false},
@@ -83,12 +84,12 @@ module.exports = class DanceParty {
 
     this.songStartTime_ = 0;
 
-    loadP5().then(p5Inst => {
+    new P5(p5Inst => {
       this.p5_ = p5Inst;
-      this.sprites_ = this.p5_.createGroup();
-      this.p5_.preload = () => this.preload();
-      this.p5_.setup = () => this.setup();
-      this.p5_.draw = () => this.draw();
+      this.sprites_ = p5Inst.createGroup();
+      p5Inst.preload = () => this.preload();
+      p5Inst.setup = () => this.setup();
+      p5Inst.draw = () => this.draw();
     });
   }
 
@@ -157,7 +158,7 @@ module.exports = class DanceParty {
       }
     }
 
-    this.onInit && this.onInit();
+    this.onInit && this.onInit(this);
   }
 
   play(songData) {
@@ -733,7 +734,9 @@ module.exports = class DanceParty {
     };
 
     this.p5_.background("white");
-    (this.world.bg_effect || this.bgEffects_.none).draw(context);
+    if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
+      this.world.bg_effect.draw(context);
+    }
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
