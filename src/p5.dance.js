@@ -104,6 +104,14 @@ module.exports = class DanceParty {
     this.songStartTime_ = 0;
   }
 
+  getReplayLog() {
+    if (this.recordReplayLog_) {
+      return replayLog.getLog();
+    } else {
+      return [];
+    }
+  }
+
   pass() {
     this.onPuzzleComplete_(true);
   }
