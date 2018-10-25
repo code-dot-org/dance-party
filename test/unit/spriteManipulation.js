@@ -5,6 +5,7 @@ const createDanceAPI = () => {
   return new Promise(resolve => {
     new DanceParty({
       moveNames: [],
+      playSound: ({callback}) => callback(),
       onInit: nativeAPI => resolve(nativeAPI),
     });
   });
@@ -12,13 +13,15 @@ const createDanceAPI = () => {
 
 test.only('Sprite dance decrements and loops for prev dance', async t => {
   const nativeAPI = await createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
 
   //Mock 4 cat animation poses
   for(let i = 0; i < 4; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
   }
 
-  debugger;
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
   //Initial value
@@ -29,6 +32,7 @@ test.only('Sprite dance decrements and loops for prev dance', async t => {
   nativeAPI.changeMoveLR(sprite, 'prev', 1);
   //Decremented value
   t.equal(sprite.current_move, 2);
+  t.end();
 });
 
 // test('Sprite dance increments by two and loops for next dance', async t => {

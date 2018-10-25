@@ -143,6 +143,7 @@ module.exports = class DanceParty {
     ANIMATIONS[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
+      animation: 'missing',
     };
   }
 
