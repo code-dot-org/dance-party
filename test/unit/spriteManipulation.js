@@ -27,7 +27,7 @@ test('Sprite dance decrements and loops for prev dance', t => {
   p5Inst.createSprite();
   let nativeAPI = new DanceParty(p5Inst, () => {});
   //Mock 4 cat animation poses
-  for(let i = 0; i < 4; i++) {
+  for(let i = 0; i < 3; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
   }
 
@@ -35,19 +35,22 @@ test('Sprite dance decrements and loops for prev dance', t => {
   t.equal(p5Inst.allSprites[0].current_move, 0);
   nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'prev', 1);
   //Looped value
-  t.equal(p5Inst.allSprites[0].current_move, 3);
+  t.equal(p5Inst.allSprites[0].current_move, 2);
   nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'prev', 1);
   //Decremented value
+  t.equal(p5Inst.allSprites[0].current_move, 1);
+  nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'prev', 1);
+  //Loops without rest move
   t.equal(p5Inst.allSprites[0].current_move, 2);
   t.end();
 });
 
-test('Sprite dance increments by two and loops for next dance', t => {
+test('Sprite dance increments and loops for next dance', t => {
   let p5Inst = new mockP5();
   p5Inst.createSprite();
   let nativeAPI = new DanceParty(p5Inst, () => {});
   //Mock 4 cat animation poses
-  for(let i = 0; i < 4; i++) {
+  for(let i = 0; i < 3; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
   }
 
@@ -55,9 +58,14 @@ test('Sprite dance increments by two and loops for next dance', t => {
   t.equal(p5Inst.allSprites[0].current_move, 0);
   nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'next', 1);
   //Incremented value
+  t.equal(p5Inst.allSprites[0].current_move, 1);
+  nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'next', 1);
+
+  //Incremented value
   t.equal(p5Inst.allSprites[0].current_move, 2);
   nativeAPI.changeMoveLR(p5Inst.allSprites[0], 'next', 1);
-  //Looped value
+
+  //Loops without rest move
   t.equal(p5Inst.allSprites[0].current_move, 1);
   t.end();
 });

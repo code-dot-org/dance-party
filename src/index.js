@@ -10,5 +10,5 @@ const nativeAPI = window.nativeAPI = new DanceParty({
     nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     nativeAPI.play(jazzy_beats);
-  }
+  },
 });
