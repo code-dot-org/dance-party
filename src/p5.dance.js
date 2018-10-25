@@ -755,6 +755,7 @@ module.exports = class DanceParty {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
+      bpm: METADATA[this.getSelectedSong_()].bpm
     };
 
     this.p5_.background("white");
