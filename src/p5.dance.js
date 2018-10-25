@@ -76,7 +76,6 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.fg_effect = null;
 
-    //TODO - need to reset on run or load new song
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
