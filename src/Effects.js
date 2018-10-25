@@ -216,6 +216,7 @@ module.exports = class Effects {
         if (this.splats.length<1) {
           this.init();
         }
+        p5.svg();
         p5.strokeWeight(0);
         for (var i=0;i<this.splats.length;i++) {
           if (randomNumber(0,50) === 0) {
@@ -226,6 +227,35 @@ module.exports = class Effects {
           this.splats[i].height+=randomNumber(0,4);
           p5.ellipse(this.splats[i].x,this.splats[i].y,this.splats[i].width,this.splats[i].height);
         }
+      }
+    };
+    this.spiral = {
+      swirl: null,
+      angle: 0,
+      color: null,
+      init: function () {
+        //I should do this somewhere else, right?
+        this.swirl = p5.loadImage("https://curriculum.code.org/images/spiral.svg");
+        this.color=randomNumber(0,359);
+      },
+      update: function () {
+        this.color=(this.color+randomNumber(0,20)) % 359;
+      },
+      draw: function ({isPeak}) {
+        if (this.swirl === null) {
+          this.init();
+        }
+        if (isPeak) {
+          this.update();
+        }
+        p5.push();
+        p5.imageMode("center");
+        p5.translate(200,200);
+        this.angle+=20;
+        p5.rotate(Math.PI / 180 * this.angle);
+        p5.tint(p5.color("hsl(" + this.color + ", 100%, 80%)"));
+        p5.image(this.swirl,0,0,400,400);
+        p5.pop();
       }
     };
   }
