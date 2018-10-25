@@ -33,6 +33,8 @@ test.only('Sprite dance decrements and loops for prev dance', async t => {
   //Decremented value
   t.equal(sprite.current_move, 2);
   t.end();
+
+  nativeAPI.reset();
 });
 
 // test('Sprite dance increments by two and loops for next dance', async t => {
