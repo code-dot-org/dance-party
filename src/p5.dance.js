@@ -90,6 +90,7 @@ module.exports = class DanceParty {
     }
 
     return loadP5().then(p5Inst => {
+      debugger;
       this.p5_ = p5Inst;
       this.sprites_ = this.p5_.createGroup();
       this.p5_.preload = () => this.preload();
@@ -124,6 +125,7 @@ module.exports = class DanceParty {
   }
 
   preload() {
+    debugger;
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];

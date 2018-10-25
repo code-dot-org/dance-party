@@ -3,17 +3,11 @@ let context;
 if (typeof global !== undefined) {
   context = global;
 
-  global.window = {
-    addEventListener: () => {
-    },
-  };
-
-  global.document = {
-    hasFocus: () => true,
-    getElementsByTagName: () => ({}),
-  };
-
-  global.screen = {};
+  const {JSDOM} = require('jsdom');
+  global.window = new JSDOM().window;
+  global.document = window.document;
+  global.screen = window.screen;
+  global.Canvas = require('canvas');
 } else {
   context = window;
 }
