@@ -3,7 +3,7 @@ let context;
 if (typeof global !== undefined) {
   context = global;
 
-  const {JSDOM} = require('jsdom');
+  const {JSDOM} = eval("require('jsdom')"); // eslint-disable-line no-eval
   global.window = new JSDOM().window;
   global.document = window.document;
   global.screen = window.screen;
