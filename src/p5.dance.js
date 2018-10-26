@@ -30,7 +30,8 @@ module.exports = class DanceParty {
     onPuzzleComplete,
     playSound,
     moveNames,
-    recordReplayLog
+    recordReplayLog,
+    container,
   }) {
     this.onInit = onInit;
 
@@ -90,7 +91,7 @@ module.exports = class DanceParty {
       p5Inst.preload = () => this.preload();
       p5Inst.setup = () => this.setup();
       p5Inst.draw = () => this.draw();
-    });
+    }, container);
   }
 
   getReplayLog() {
