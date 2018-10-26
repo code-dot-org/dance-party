@@ -313,9 +313,8 @@ module.exports = class Effects {
         this.dy = 6*Math.sin(angleOfMovement);
       },
       draw: function ({isPeak}) {
-        if ((isPeak) || 
-          (Math.abs(this.targetX - this.x)<4 && Math.abs(this.targetY - this.y)<4))
-        {
+        if ((isPeak) ||
+          (Math.abs(this.targetX - this.x)<4 && Math.abs(this.targetY - this.y)<4)) {
           this.update();
         }
         if (this.targetX === 0) {
