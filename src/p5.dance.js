@@ -26,14 +26,18 @@ function randomInt(min, max) {
 
 module.exports = class DanceParty {
   constructor({
+    onHandleEvents,
     onInit,
     onPuzzleComplete,
     playSound,
     moveNames,
     recordReplayLog,
+    showMeasureLabel = true,
     container,
   }) {
+    this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
+    this.showMeasureLabel = showMeasureLabel;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -92,6 +96,14 @@ module.exports = class DanceParty {
       p5Inst.setup = () => this.setup();
       p5Inst.draw = () => this.draw();
     }, container);
+  }
+
+  onKeyDown(keyCode) {
+    this.p5_._onkeydown({ which: keyCode });
+  }
+
+  onKeyUp(keyCode) {
+    this.p5_._onkeyup({ which: keyCode });
   }
 
   getReplayLog() {
@@ -775,6 +787,12 @@ module.exports = class DanceParty {
     this.p5_.textSize(20);
 
     this.world.validationCallback(this.world, this, this.sprites_);
-    this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+    if (this.showMeasureLabel) {
+      this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+    }
+
+    if (this.currentFrameEvents.any && this.onHandleEvents) {
+      this.onHandleEvents(this.currentFrameEvents);
+    }
   }
 };
