@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js src",
     "test": "npm run lint && nyc tape ./test/unit/*.js",
     "test:unit": "tape ./test/unit/*.js",
+    "test:integration": "tape ./test/integration/*.js",
     "preversion": "npm run test",
     "version": "",
     "postversion": "git push && git push --tags && npm publish"
