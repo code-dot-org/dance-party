@@ -237,7 +237,7 @@ module.exports = class Effects {
         this.color=randomNumber(0,359);
       },
       update: function () {
-        this.color=(this.color+randomNumber(0,20)) % 359;
+        this.color=randomNumber(0,359);
       },
       draw: function ({isPeak,bpm}) {
         if (this.swirl === null) {
@@ -249,7 +249,7 @@ module.exports = class Effects {
         p5.push();
         p5.imageMode("center");
         p5.translate(200,200);
-        let rotation=(bpm/90)*80;
+        let rotation=(bpm/90)*50;
         this.angle-=rotation;
         p5.rotate(Math.PI / 180 * this.angle);
         p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
@@ -292,43 +292,41 @@ module.exports = class Effects {
     this.spotlight = {
       x: 200,
       y: 200,
+      targetX: null,
+      targetY: null,
       dx: 0,
       dy: 0,
       diameter: 0,
       swirl: null,
       init: function () {
-
+        this.targetX=200;
+        this.targetY=200;
+        this.update();
       },
       update: function () {
-        if (this.y<=0) {
-          this.dy=10;
+        while (Math.sqrt((this.targetY - this.y)**2 + (this.targetX - this.x)**2) < 40) {
+          this.targetX = randomNumber(50,350);
+          this.targetY = randomNumber(50,350);
         }
-        else if (this.y>=380) {
-          this.dy=-10;
-        }
-        else {
-          this.dy=randomNumber(5,10)*(randomNumber(0,1)==1 ? 1 : -1);
-        }
-        if (this.x<=0) {
-          this.dx=10;
-        }
-        else if (this.y>=380) {
-          this.dx=-10;
-        }
-        else {
-          this.dx=randomNumber(5,10)*(randomNumber(0,1)==1 ? 1 : -1);
-        }
-
+        let angleOfMovement=Math.atan2(this.targetY - this.y, this.targetX - this.x);
+        this.dx = 6*Math.cos(angleOfMovement);
+        this.dy = 6*Math.sin(angleOfMovement);
       },
       draw: function ({isPeak}) {
-        if ((isPeak) || (this.x<=-10) || (this.y<=-10) || (this.x>=400) || (this.y>=400)) {
+        if ((isPeak) || 
+          (Math.abs(this.targetX - this.x)<4 && Math.abs(this.targetY - this.y)<4))
+        {
           this.update();
         }
+        if (this.targetX === 0) {
+          this.init();
+        }
+
         p5.push();
         p5.noFill();
         p5.strokeWeight(600);
-        this.x+=this.dx;
-        this.y+=this.dy;
+        this.x+=this.dx+randomNumber(-1,1);
+        this.y+=this.dy+randomNumber(-1,1);
         p5.ellipse(this.x,this.y,800,800);
         p5.pop();
       }
