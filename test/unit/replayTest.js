@@ -14,7 +14,7 @@ class mockP5 {
   };
 }
 
-test('sanity', t => {
+test('replay', t => {
   const p5Inst = new mockP5();
 
   replayLog.logSprites(p5Inst);

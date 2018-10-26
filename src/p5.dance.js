@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
 /* global p5, Dance, validationProps */
-
+const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
 
@@ -19,39 +19,25 @@ const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
 const SIZE = 300;
 const ANIMATIONS = {};
 const FRAMES = 24;
-const METADATA = {};
 
 function randomInt(min, max) {
-  return Math.random() * (max - min) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 module.exports = class DanceParty {
-  constructor(p5, {
-    getSelectedSong,
+  constructor({
+    onHandleEvents,
+    onInit,
     onPuzzleComplete,
     playSound,
-    recordReplayLog
+    moveNames,
+    recordReplayLog,
+    showMeasureLabel = true,
+    container,
   }) {
-    const P5 = Object.getPrototypeOf(p5).constructor;
-    if (P5.Renderer2D) {
-      /**
-       * Patch p5 tint to use fast compositing (see https://github.com/code-dot-org/p5_play/pull/42).
-       */
-      Object.getPrototypeOf(p5).constructor.Renderer2D.prototype._getTintedImageCanvas = function (img) {
-        this._tintCanvas = this._tintCanvas || document.createElement('canvas');
-        this._tintCanvas.width = img.canvas.width;
-        this._tintCanvas.height = img.canvas.height;
-        const tmpCtx = this._tintCanvas.getContext('2d');
-        tmpCtx.fillStyle = 'hsl(' + this._pInst.hue(this._tint) + ', 100%, 50%)';
-        tmpCtx.fillRect(0, 0, this._tintCanvas.width, this._tintCanvas.height);
-        tmpCtx.globalCompositeOperation = 'destination-atop';
-        tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-        tmpCtx.globalCompositeOperation = 'multiply';
-        tmpCtx.drawImage(img.canvas, 0, 0, this._tintCanvas.width, this._tintCanvas.height);
-        return this._tintCanvas;
-      };
-    }
-    P5.disableFriendlyErrors = true;
+    this.onHandleEvents = onHandleEvents;
+    this.onInit = onInit;
+    this.showMeasureLabel = showMeasureLabel;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -70,8 +56,6 @@ module.exports = class DanceParty {
       validationCallback: () => {},
     };
 
-    this.p5_ = p5;
-    this.getSelectedSong_ = getSelectedSong;
     this.onPuzzleComplete_ = onPuzzleComplete;
     this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
@@ -80,17 +64,15 @@ module.exports = class DanceParty {
     this.world.fg_effect = null;
 
     //TODO - need to reset on run or load new song
-    this.peaksData = null;
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
 
-    this.sprites_ = this.p5_.createGroup();
     this.sprites_by_type_ = {};
 
     this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
 
-    this.world.MOVE_NAMES = [
+    this.world.MOVE_NAMES = moveNames || [
       {name: "Rest", mirror: true},
       {name: "ClapHigh", mirror: true},
       {name: "Clown", mirror: false},
@@ -106,7 +88,30 @@ module.exports = class DanceParty {
     ];
 
     this.songStartTime_ = 0;
-    this.metadataLoaded_ = false;
+
+    new P5(p5Inst => {
+      this.p5_ = p5Inst;
+      this.sprites_ = p5Inst.createGroup();
+      p5Inst.preload = () => this.preload();
+      p5Inst.setup = () => this.setup();
+      p5Inst.draw = () => this.draw();
+    }, container);
+  }
+
+  onKeyDown(keyCode) {
+    this.p5_._onkeydown({ which: keyCode });
+  }
+
+  onKeyUp(keyCode) {
+    this.p5_._onkeyup({ which: keyCode });
+  }
+
+  getReplayLog() {
+    if (this.recordReplayLog_) {
+      return replayLog.getLog();
+    } else {
+      return [];
+    }
   }
 
   pass() {
@@ -119,31 +124,22 @@ module.exports = class DanceParty {
 
   addCues(timestamps) {
     this.world.cues = timestamps;
-    if (this.metadataLoaded()) {
-      this.peaksData = METADATA[this.getSelectedSong_()].analysis.slice();
-    }
   }
 
   reset() {
     this.songStartTime_ = 0;
+    this.analysisPosition_ = 0;
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
+    this.p5_.noLoop();
     this.currentFrameEvents.any = false;
 
     this.world.fg_effect = null;
     this.world.bg_effect = null;
   }
 
-  metadataLoaded() {
-    return this.metadataLoaded_;
-  }
-
   preload() {
-    // Retrieves JSON metadata for songs
-    // TODO: only load song data when necessary and don't hardcode the dev song
-    this.loadDevelopmentSongs_(() => {this.metadataLoaded_ = true});
-
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -168,6 +164,7 @@ module.exports = class DanceParty {
     ANIMATIONS[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
+      animation: 'missing',
     };
   }
 
@@ -182,13 +179,18 @@ module.exports = class DanceParty {
         ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
       }
     }
+
+    this.onInit && this.onInit(this);
   }
 
-  play() {
+  play(songData) {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.playSound_({url: METADATA[this.getSelectedSong_()].file, callback: () => {this.songStartTime_ = new Date()}});
+    this.songMetadata_ = songData;
+    this.analysisPosition_ = 0;
+    this.playSound_({url: this.songMetadata_.file, callback: () => {this.songStartTime_ = new Date()}});
+    this.p5_.loop();
   }
 
   setBackground(color) {
@@ -251,7 +253,7 @@ module.exports = class DanceParty {
     this.addBehavior_(sprite, () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
-      var msPerBeat = 60 * 1000 / (METADATA[this.getSelectedSong_()].bpm * (sprite.dance_speed / 2));
+      var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
         sprite.sinceLastFrame -= msPerFrame;
@@ -315,11 +317,11 @@ module.exports = class DanceParty {
   changeMoveLR(sprite, move, dir) {
     if (!this.spriteExists_(sprite)) return;
     if (move === "next") {
-      move = 1 + ((sprite.current_move + 1) % (ANIMATIONS[sprite.style].length - 1));
+      move = 1 + (sprite.current_move % (ANIMATIONS[sprite.style].length - 1));
     } else if (move === "prev") {
       //Javascript doesn't handle negative modulos as expected, so manually resetting the loop
       move = sprite.current_move - 1;
-      if (move < 0) {
+      if (move <= 0) {
         move = ANIMATIONS[sprite.style].length - 1;
       }
     } else if (move === "rand") {
@@ -545,8 +547,8 @@ module.exports = class DanceParty {
   }
 
   getCurrentMeasure() {
-    const songData = METADATA[this.getSelectedSong_()];
-    return this.songStartTime_ > 0 ? songData.bpm * ((this.getCurrentTime() - songData.delay) / 240) + 1 : 0;
+    return this.songStartTime_ > 0 ?
+        this.songMetadata_.bpm * ((this.getCurrentTime() - this.songMetadata_.delay) / 240) + 1 : 0;
   }
 
   getTime(unit) {
@@ -693,27 +695,9 @@ module.exports = class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
-  async loadSongMetadata_(id){
-    let songDataPath = '/api/v1/sound-library/hoc_song_meta';
-    const response = await fetch(`${songDataPath}/${id}.json`);
-    this.setMetadata_(id, await response.json());
-  }
-
-  loadDevelopmentSongs_(callback) {
-    let ids = ['macklemore90', 'hammer', 'peas'];
-
-    Promise.all([this.loadSongMetadata_(ids[0]), this.loadSongMetadata_(ids[1]), this.loadSongMetadata_(ids[2])])
-    .then( () => {
-      callback();
-    });
-  }
-
-  setMetadata_(id, data){
-    METADATA[id] = data;
-  }
-
   updateEvents_() {
     const events = this.currentFrameEvents;
+    const { analysis } = this.songMetadata_ || {};
     events.any = false;
     events['this.p5_.keyWentDown'] = {};
     events['Dance.fft.isPeak'] = {};
@@ -728,19 +712,19 @@ module.exports = class DanceParty {
       }
     }
 
-    if (this.peaksData) {
-      while (this.peaksData.length > 0 && this.peaksData[0].time < this.getCurrentTime()) {
-        this.centroid_ = this.peaksData[0].centroid;
-        this.energy_ = this.peaksData[0].energy;
-        for (let range of WATCHED_RANGES) {
-          if (this.peaksData[0].beats[range]) {
-            events.any = true;
-            events['Dance.fft.isPeak'][range] = true;
-            this.peakThisFrame_ = true;
-          }
+    const { length } = analysis || [];
+    while (this.analysisPosition_ < length && analysis[this.analysisPosition_].time < this.getCurrentTime()) {
+      const { centroid, energy, beats } = analysis[this.analysisPosition_];
+      this.centroid_ = centroid;
+      this.energy_ = energy;
+      for (let range of WATCHED_RANGES) {
+        if (beats[range]) {
+          events.any = true;
+          events['Dance.fft.isPeak'][range] = true;
+          this.peakThisFrame_ = true;
         }
-        this.peaksData.splice(0, 1);
       }
+      this.analysisPosition_++;
     }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
@@ -772,7 +756,9 @@ module.exports = class DanceParty {
     };
 
     this.p5_.background("white");
-    (this.world.bg_effect || this.bgEffects_.none).draw(context);
+    if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
+      this.world.bg_effect.draw(context);
+    }
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
@@ -801,6 +787,12 @@ module.exports = class DanceParty {
     this.p5_.textSize(20);
 
     this.world.validationCallback(this.world, this, this.sprites_);
-    this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+    if (this.showMeasureLabel) {
+      this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+    }
+
+    if (this.currentFrameEvents.any && this.onHandleEvents) {
+      this.onHandleEvents(this.currentFrameEvents);
+    }
   }
 };
