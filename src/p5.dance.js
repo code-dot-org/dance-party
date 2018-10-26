@@ -63,7 +63,6 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.fg_effect = null;
 
-    //TODO - need to reset on run or load new song
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
@@ -123,7 +122,11 @@ module.exports = class DanceParty {
   }
 
   addCues(timestamps) {
-    this.world.cues = timestamps;
+    // Sort cues
+    const numSort = (a,b) => a - b;
+
+    this.world.cues.measures = timestamps.measures.sort(numSort);
+    this.world.cues.seconds = timestamps.seconds.sort(numSort);
   }
 
   reset() {
