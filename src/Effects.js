@@ -228,6 +228,36 @@ module.exports = class Effects {
         }
       }
     };
+    this.swirl = {
+      swirl: null,
+      angle: 0,
+      color: null,
+      init: function () {
+        this.swirl = p5.loadImage('data: image/svg+xml,'+encodeURIComponent(`<svg width="855" height="834" viewBox="0 0 855 834" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M277.353 2.93555C179.837 73.7852 158.22 210.271 229.067 307.787C275.989 372.367 351.696 403.66 425.806 396.854C328.591 464.24 194.86 441.895 124.981 345.713C54.1299 248.197 75.7471 111.709 173.263 40.8594C206.2 16.9316 243.579 3.55078 281.376 0.078125L279.462 1.41992C278.755 1.91992 278.052 2.42578 277.353 2.93555ZM450.388 178.842C521.235 81.3262 657.724 59.709 755.239 130.559L756.817 131.717L757.821 132.461L759.2 133.506C744.22 98.6309 719.942 67.2129 687.005 43.2832C589.489 -27.5664 453.005 -5.94922 382.153 91.5664C312.274 187.748 332.349 321.84 426.474 393.473C397.099 325.092 403.466 243.422 450.388 178.842ZM781.825 625.113C819.075 510.477 756.337 387.35 641.7 350.104C565.782 325.436 486.142 344.619 430.185 393.686C469.224 282.029 590.552 221.502 703.618 258.24C818.255 295.486 880.993 418.613 843.743 533.25C831.165 571.969 808.786 604.768 780.247 629.793L780.915 627.857L781.47 626.189L781.825 625.113ZM319.759 802.969C440.294 802.969 538.009 705.254 538.009 584.719C538.009 504.895 495.153 435.078 431.196 397.023C549.454 399.648 644.509 496.332 644.509 615.219C644.509 735.754 546.794 833.469 426.259 833.469C385.548 833.469 347.438 822.322 314.821 802.914C316.462 802.951 318.11 802.969 319.759 802.969ZM282.548 558.994C167.911 596.242 44.7861 533.506 7.53612 418.869C7.02831 417.299 6.53612 415.729 6.06346 414.156C-2.31544 451.176 -1.13966 490.863 11.4385 529.582C48.6885 644.219 171.813 706.955 286.45 669.707C399.517 632.971 462.095 512.689 428.048 399.41C411.622 471.996 358.466 534.328 282.548 558.994Z" fill="#4D575F"/></svg>`));
+        this.color=randomNumber(0,359);
+      },
+      update: function () {
+        this.color=(this.color+randomNumber(0,20)) % 359;
+      },
+      draw: function ({isPeak,bpm}) {
+        if (this.swirl === null) {
+          this.init();
+        }
+        if (isPeak) {
+          this.update();
+        }
+        p5.push();
+        p5.imageMode("center");
+        p5.translate(200,200);
+        let rotation=(bpm/90)*80;
+        this.angle-=rotation;
+        p5.rotate(Math.PI / 180 * this.angle);
+        p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
+        p5.image(this.swirl,0,0,600,600);
+        p5.pop();
+
+      }
+    };
     this.spiral = {
       swirl: null,
       angle: 0,
@@ -257,6 +287,50 @@ module.exports = class Effects {
         p5.image(this.swirl,0,0,600,600);
         p5.pop();
 
+      }
+    };
+    this.spotlight = {
+      x: 200,
+      y: 200,
+      dx: 0,
+      dy: 0,
+      diameter: 0,
+      swirl: null,
+      init: function () {
+
+      },
+      update: function () {
+        if (this.y<=0) {
+          this.dy=10;
+        }
+        else if (this.y>=380) {
+          this.dy=-10;
+        }
+        else {
+          this.dy=randomNumber(5,10)*(randomNumber(0,1)==1 ? 1 : -1);
+        }
+        if (this.x<=0) {
+          this.dx=10;
+        }
+        else if (this.y>=380) {
+          this.dx=-10;
+        }
+        else {
+          this.dx=randomNumber(5,10)*(randomNumber(0,1)==1 ? 1 : -1);
+        }
+
+      },
+      draw: function ({isPeak}) {
+        if ((isPeak) || (this.x<=-10) || (this.y<=-10) || (this.x>=400) || (this.y>=400)) {
+          this.update();
+        }
+        p5.push();
+        p5.noFill();
+        p5.strokeWeight(600);
+        this.x+=this.dx;
+        this.y+=this.dy;
+        p5.ellipse(this.x,this.y,800,800);
+        p5.pop();
       }
     };
   }
