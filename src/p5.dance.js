@@ -112,11 +112,9 @@ module.exports = class DanceParty {
   addCues(timestamps) {
     // Sort and de-duplicate
     const numSort = (a,b) => a - b;
-    let measures = timestamps.measures.sort(numSort);
-    let seconds = timestamps.seconds.sort(numSort);
 
-    this.world.cues.measures = measures.filter((measure, index) => measure != measures[index - 1]);
-    this.world.cues.seconds = seconds.filter((time, index) => time != seconds[index - 1]);
+    this.world.cues.measures = timestamps.measures.sort(numSort);
+    this.world.cues.seconds = timestamps.seconds.sort(numSort);
   }
 
   reset() {
