@@ -1,6 +1,6 @@
 let context;
 
-if (typeof global !== undefined) {
+if ((typeof process !== 'undefined') && (process.release) && (process.release.name === 'node')) {
   context = global;
 
   const {JSDOM} = eval("require('jsdom')"); // eslint-disable-line no-eval
