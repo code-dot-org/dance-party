@@ -110,7 +110,7 @@ module.exports = class DanceParty {
   }
 
   addCues(timestamps) {
-    // Sort and de-duplicate
+    // Sort cues
     const numSort = (a,b) => a - b;
 
     this.world.cues.measures = timestamps.measures.sort(numSort);
