@@ -119,4 +119,41 @@ module.exports = {
       }
     `,
   },
+  hoc09: {
+    solution: `
+      var left_shark;
+      var right_pineapple;
+
+      whenSetup(function () {
+        setBackgroundEffect("rainbow");
+        left_shark = makeNewDanceSprite("MOOSE", left_shark, {x: 100, y: 200});
+        right_pineapple = makeNewDanceSprite("ROBOT", right_pineapple, {x: 300, y: 200});
+        startMapping(left_shark, "height", "bass");
+        startMapping(right_pineapple, "scale", "bass");
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(left_shark, "next", -1);
+        changeMoveLR(right_pineapple, "next", 1);
+      });
+    `,
+    validationCode: `
+      if (World.following_count == undefined) {
+        World.following_count = 0;
+      }
+
+      if (nativeAPI.getTime("measures") > 8) {
+        sprites.forEach(function(sprite) {
+          // If a sprite has more than one behavior, assume it's following music
+          if (sprite.behaviors.length > 1) World.following_count++;
+        });
+        // We start with one sprite following by default, make sure the student has added another
+        if (World.following_count > 1) {
+          nativeAPI.pass();
+        } else {
+          nativeAPI.fail('Try adding the \`right_pineapple begins size following bass\` block to your program.');
+        }
+      }
+    `,
+  },
 };

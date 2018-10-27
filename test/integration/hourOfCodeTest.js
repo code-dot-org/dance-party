@@ -83,3 +83,20 @@ test('Dance 7: Fail the level', t => {
     t.end();
   });
 });
+
+test('Dance 9: Pass the level', t => {
+  const level = levels.hoc09;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 9: Fail the level', t => {
+  const level = levels.hoc09;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Try adding the `right_pineapple begins size following bass` block to your program.');
+    t.end();
+  });
+});
