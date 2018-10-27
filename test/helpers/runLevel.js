@@ -8,14 +8,20 @@ const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.
 const levels = Object.assign({}, Levels);
 
 module.exports = (levelName, onPuzzleComplete) => {
-  new DanceParty({
+  const nativeAPI = new DanceParty({
     moveNames: [],
     playSound: ({callback}) => callback(),
-    onPuzzleComplete,
+    onPuzzleComplete: () => {
+      onPuzzleComplete();
+      nativeAPI.reset();
+    },
     onInit: api => {
       const epilogue = `return {runUserSetup, runUserEvents, getCueList};`;
       const globals = new DanceAPI(api);
       const code = interpreted + levels[levelName].solution + epilogue;
+
+      const validationCallback = new Function('World', 'nativeAPI', 'sprites', levels[levelName].validationCode);
+      api.registerValidation(validationCallback);
 
       const params = [];
       const args = [];
@@ -36,12 +42,7 @@ module.exports = (levelName, onPuzzleComplete) => {
       }
 
       runUserSetup();
-      api.play({bpm: 120});
-
-      setTimeout(() => {
-        onPuzzleComplete();
-        api.reset();
-      }, 2000);
+      api.play({bpm: 12000, delay: 0});
     },
   });
 };
