@@ -66,3 +66,20 @@ test('Dance 4: Fail the level', t => {
     t.end();
   });
 });
+
+test('Dance 7: Pass the level', t => {
+  const level = levels.hoc07;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 7: Fail the level', t => {
+  const level = levels.hoc07;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Use the `set backup_dancer2 size` block to make that dancer smaller.');
+    t.end();
+  });
+});

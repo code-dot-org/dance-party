@@ -75,6 +75,48 @@ module.exports = {
       if (nativeAPI.getTime("measures") > 10) {
         nativeAPI.pass();
       }
-    `
-  }
+    `,
+  },
+  hoc07: {
+    solution: `
+      var backup_dancer1;
+      var backup_dancer2;
+      var lead_dancer;
+
+      whenSetup(function () {
+        setBackgroundEffect("diamonds");
+        backup_dancer1 = makeNewDanceSprite("CAT", backup_dancer1, {x: 300, y: 200});
+        setProp(backup_dancer1, "scale", 50);
+        backup_dancer2 = makeNewDanceSprite("ROBOT", backup_dancer2, {x: 100, y: 200});
+        setProp(backup_dancer2, "scale", 50);
+        lead_dancer = makeNewDanceSprite("MOOSE", lead_dancer, {x: 200, y: 200});
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(lead_dancer, "next", -1);
+      });
+
+      atTimestamp(4, "measures", function () {
+        changeMoveLR(backup_dancer1, MOVES.Fresh, -1);
+        changeMoveLR(backup_dancer2, MOVES.Fresh, 1);
+      });
+    `,
+    validationCode: `
+      if (World.changedCount == undefined) {
+        World.changedCount = 0;
+      }
+      if (nativeAPI.getTime("measures") > 6) {
+        sprites.forEach(function(sprite) {
+          if (sprite.scale != 1) {
+            World.changedCount++;
+          }
+        });
+        if (World.changedCount > 1) {
+          nativeAPI.pass();
+        } else {
+          nativeAPI.fail("Use the \`set backup_dancer2 size\` block to make that dancer smaller.");
+        }
+      }
+    `,
+  },
 };
