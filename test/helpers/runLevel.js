@@ -1,26 +1,24 @@
 const DanceParty = require('../../src/p5.dance');
 const DanceAPI = require('../../src/api');
-const Levels = require('../../levels/hourOfCode');
+
 const fs = require('fs');
 const path = require('path');
 const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
 
-const levels = Object.assign({}, Levels);
-
-module.exports = (levelName, onPuzzleComplete) => {
+module.exports = (userCode, validationCode, onPuzzleComplete) => {
   const nativeAPI = new DanceParty({
     moveNames: [],
     playSound: ({callback}) => callback(),
-    onPuzzleComplete: () => {
-      onPuzzleComplete();
+    onPuzzleComplete: (result, message) => {
+      onPuzzleComplete(result, message);
       nativeAPI.reset();
     },
     onInit: api => {
       const epilogue = `return {runUserSetup, runUserEvents, getCueList};`;
       const globals = new DanceAPI(api);
-      const code = interpreted + levels[levelName].solution + epilogue;
+      const code = interpreted + userCode + epilogue;
 
-      const validationCallback = new Function('World', 'nativeAPI', 'sprites', levels[levelName].validationCode);
+      const validationCallback = new Function('World', 'nativeAPI', 'sprites', validationCode);
       api.registerValidation(validationCallback);
 
       const params = [];
