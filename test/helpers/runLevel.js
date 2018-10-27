@@ -37,13 +37,16 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
       ctor.prototype = Function.prototype;
       const {runUserSetup, runUserEvents, getCueList} = new ctor().apply(null, args);
 
-      // Mock 4 cat animation poses.
-      for(let i = 0; i < 4; i++) {
+      // Mock 4 cat and moose animation poses.
+      for(let i = 0; i < 10; i++) {
         api.setAnimationSpriteSheet("CAT", i, {}, () => {});
+        api.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
       }
 
+      api.addCues(getCueList());
+      api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
       runUserSetup();
-      api.play({bpm: 12000, delay: 0});
+      api.play({bpm: 1200, delay: 0});
     },
   });
 };
