@@ -1,6 +1,8 @@
 const DanceParty = require('../../src/p5.dance');
 const Levels = require('../../levels/hourOfCode');
-const loadP5 = require('../../src/loadP5');
+const fs = require('fs');
+const path = require('path');
+const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
 
 const levels = Object.assign({}, Levels);
 
@@ -11,7 +13,8 @@ module.exports = (levelName, onPuzzleComplete) => {
     onPuzzleComplete,
     onInit: api => {
       debugger;
-      console.log(levels[levelName].solution);
+      eval(interpreted + levels[levelName].solution);
+      console.log(runUserSetup());
 
       api.play({bpm: 120});
 
