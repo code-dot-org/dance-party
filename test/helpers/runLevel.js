@@ -6,7 +6,8 @@ const path = require('path');
 const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
 
 module.exports = (userCode, validationCode, onPuzzleComplete) => {
-  const nativeAPI = new DanceParty({
+  let nativeAPI;
+  new DanceParty({
     moveNames: [],
     playSound: ({callback}) => callback(),
     onPuzzleComplete: (result, message) => {
@@ -14,6 +15,8 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
       nativeAPI.reset();
     },
     onInit: api => {
+      nativeAPI = api;
+
       const epilogue = `return {runUserSetup, runUserEvents, getCueList};`;
       const globals = new DanceAPI(api);
       const code = interpreted + userCode + epilogue;
