@@ -49,3 +49,20 @@ test('Dance 2: Fail the level by not changing the move', t => {
     t.end();
   });
 });
+
+test('Dance 4: Pass the level', t => {
+  const level = levels.hoc04;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 4: Fail the level', t => {
+  const level = levels.hoc04;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'You need to add a background effect.');
+    t.end();
+  });
+});

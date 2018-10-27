@@ -53,4 +53,28 @@ module.exports = {
       }
     `,
   },
+  hoc04: {
+    solution: `
+      var fancy_dancer;
+
+      whenSetup(function () {
+        fancy_dancer = makeNewDanceSprite("ROBOT", fancy_dancer, {x: 200, y: 200});
+        setBackgroundEffect("disco");
+      });
+
+      atTimestamp(4, "measures", function () {
+        changeMoveLR(fancy_dancer, MOVES.Dab, -1);
+      });
+    `,
+    validationCode: `
+      if (nativeAPI.getTime("measures") > 7) {
+        if (World.bg_effect == null) {
+          nativeAPI.fail("You need to add a background effect.");
+        }
+      }
+      if (nativeAPI.getTime("measures") > 10) {
+        nativeAPI.pass();
+      }
+    `
+  }
 };
