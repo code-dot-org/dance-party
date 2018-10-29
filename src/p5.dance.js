@@ -47,6 +47,8 @@ module.exports = class DanceParty {
       'cue-measures': {},
     };
 
+    this.dancer = new Dancer();
+
     this.world = {
       height: 400,
       cues: {
@@ -775,7 +777,7 @@ module.exports = class DanceParty {
 
     //this.p5_.drawSprites();
     this.sprites_.forEach(sprite => {
-      new Dancer().drawPose(this.p5_._renderer.drawingContext, sprite.position.x, sprite.position.y);
+      this.dancer.drawPose(this.p5_._renderer.drawingContext, sprite.animation.getFrame(), sprite.position.x, sprite.position.y);
     });
 
     if (this.recordReplayLog_) {
