@@ -22,3 +22,14 @@ test('getCues sorts measures and seconds cues', async t => {
   nativeAPI.reset();
 });
 
+test('getTime returns 0 for measures and seconds before song starts', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  //Initial Values
+  t.equal(nativeAPI.getTime('measures'), 0);
+  t.equal(nativeAPI.getTime('seconds'), 0);
+
+  t.end();
+  nativeAPI.reset();
+});
+
