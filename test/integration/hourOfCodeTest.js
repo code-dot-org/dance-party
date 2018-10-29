@@ -49,3 +49,54 @@ test('Dance 2: Fail the level by not changing the move', t => {
     t.end();
   });
 });
+
+test('Dance 4: Pass the level', t => {
+  const level = levels.hoc04;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 4: Fail the level', t => {
+  const level = levels.hoc04;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'You need to add a background effect.');
+    t.end();
+  });
+});
+
+test('Dance 7: Pass the level', t => {
+  const level = levels.hoc07;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 7: Fail the level', t => {
+  const level = levels.hoc07;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Use the `set backup_dancer2 size` block to make that dancer smaller.');
+    t.end();
+  });
+});
+
+test('Dance 9: Pass the level', t => {
+  const level = levels.hoc09;
+  attempt(level.solution, level.validationCode, (result, message) => {
+    t.true(result);
+    t.end();
+  });
+});
+
+test('Dance 9: Fail the level', t => {
+  const level = levels.hoc09;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Try adding the `right_pineapple begins size following bass` block to your program.');
+    t.end();
+  });
+});

@@ -21,7 +21,6 @@ before_deploy:
   - npm run build && cp -r dist/* .
 
 deploy:
-  local_dir: /
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
