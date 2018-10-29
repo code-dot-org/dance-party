@@ -53,4 +53,107 @@ module.exports = {
       }
     `,
   },
+  hoc04: {
+    solution: `
+      var fancy_dancer;
+
+      whenSetup(function () {
+        fancy_dancer = makeNewDanceSprite("ROBOT", fancy_dancer, {x: 200, y: 200});
+        setBackgroundEffect("disco");
+      });
+
+      atTimestamp(4, "measures", function () {
+        changeMoveLR(fancy_dancer, MOVES.Dab, -1);
+      });
+    `,
+    validationCode: `
+      if (nativeAPI.getTime("measures") > 7) {
+        if (World.bg_effect == null) {
+          nativeAPI.fail("You need to add a background effect.");
+        }
+      }
+      if (nativeAPI.getTime("measures") > 10) {
+        nativeAPI.pass();
+      }
+    `,
+  },
+  hoc07: {
+    solution: `
+      var backup_dancer1;
+      var backup_dancer2;
+      var lead_dancer;
+
+      whenSetup(function () {
+        setBackgroundEffect("diamonds");
+        backup_dancer1 = makeNewDanceSprite("CAT", backup_dancer1, {x: 300, y: 200});
+        setProp(backup_dancer1, "scale", 50);
+        backup_dancer2 = makeNewDanceSprite("ROBOT", backup_dancer2, {x: 100, y: 200});
+        setProp(backup_dancer2, "scale", 50);
+        lead_dancer = makeNewDanceSprite("MOOSE", lead_dancer, {x: 200, y: 200});
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(lead_dancer, "next", -1);
+      });
+
+      atTimestamp(4, "measures", function () {
+        changeMoveLR(backup_dancer1, MOVES.Fresh, -1);
+        changeMoveLR(backup_dancer2, MOVES.Fresh, 1);
+      });
+    `,
+    validationCode: `
+      if (World.changedCount == undefined) {
+        World.changedCount = 0;
+      }
+      if (nativeAPI.getTime("measures") > 6) {
+        sprites.forEach(function(sprite) {
+          if (sprite.scale != 1) {
+            World.changedCount++;
+          }
+        });
+        if (World.changedCount > 1) {
+          nativeAPI.pass();
+        } else {
+          nativeAPI.fail("Use the \`set backup_dancer2 size\` block to make that dancer smaller.");
+        }
+      }
+    `,
+  },
+  hoc09: {
+    solution: `
+      var left_shark;
+      var right_pineapple;
+
+      whenSetup(function () {
+        setBackgroundEffect("rainbow");
+        left_shark = makeNewDanceSprite("MOOSE", left_shark, {x: 100, y: 200});
+        right_pineapple = makeNewDanceSprite("ROBOT", right_pineapple, {x: 300, y: 200});
+        startMapping(left_shark, "height", "bass");
+        startMapping(right_pineapple, "scale", "bass");
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(left_shark, "next", -1);
+        changeMoveLR(right_pineapple, "next", 1);
+      });
+    `,
+    validationCode: `
+      if (World.following_count == undefined) {
+        World.following_count = 0;
+      }
+
+      if (nativeAPI.getTime("measures") > 8) {
+        sprites.forEach(function(sprite) {
+          // If a sprite has more than one behavior, assume it's following music
+          if (sprite.behaviors.length > 1) World.following_count++;
+        });
+        // We start with one sprite following by default, make sure the student has added another
+        if (World.following_count > 1) {
+          nativeAPI.pass();
+        } else {
+          nativeAPI.fail('Try adding the \`right_pineapple begins size following bass\` block to your program.');
+        }
+      }
+    `,
+  },
 };
