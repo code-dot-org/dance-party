@@ -1,23 +1,13 @@
 const test = require('tape');
-const DanceParty = require('../../src/p5.dance');
-
-const createDanceAPI = () => {
-  return new Promise(resolve => {
-    new DanceParty({
-      moveNames: [],
-      playSound: ({callback}) => callback(),
-      onInit: nativeAPI => resolve(nativeAPI),
-    });
-  });
-};
+const helpers = require ('./testHelpers');
 
 test('getCues sorts measures and seconds cues', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
 
-  //Initial Value
+  //Initial Values
   t.deepEqual(nativeAPI.world.cues.measures, []);
   t.deepEqual(nativeAPI.world.cues.seconds, []);
 

@@ -1,18 +1,8 @@
 const test = require('tape');
-const DanceParty = require('../../src/p5.dance');
-
-const createDanceAPI = () => {
-  return new Promise(resolve => {
-    new DanceParty({
-      moveNames: [],
-      playSound: ({callback}) => callback(),
-      onInit: nativeAPI => resolve(nativeAPI),
-    });
-  });
-};
+const helpers = require ('./testHelpers');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
@@ -38,7 +28,7 @@ test('Sprite dance decrements and loops for prev dance', async t => {
 });
 
 test('Sprite dance increments by one and loops for next dance', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
@@ -69,7 +59,7 @@ test('Sprite dance increments by one and loops for next dance', async t => {
 });
 
 test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
@@ -96,7 +86,7 @@ test('getCurrentDance returns current move value for initialized sprite and unde
 
 
 test('setProp and getProp changes and retrieves sprite scale properties based on given values', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
@@ -125,7 +115,7 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
 
 
 test('setPropRandom set sprite y properties between 50 and 350', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
