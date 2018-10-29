@@ -3,6 +3,7 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
+const Dancer = require('./dancer');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -772,7 +773,11 @@ module.exports = class DanceParty {
       });
     }
 
-    this.p5_.drawSprites();
+    //this.p5_.drawSprites();
+    this.sprites_.forEach(sprite => {
+      new Dancer().drawPose(this.p5_._renderer.drawingContext, sprite.position.x, sprite.position.y);
+    });
+
     if (this.recordReplayLog_) {
       replayLog.logSprites(this.p5_);
     }
