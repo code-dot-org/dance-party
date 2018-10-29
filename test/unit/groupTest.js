@@ -1,4 +1,4 @@
-const helpers = require ('./testHelpers');
+const helpers = require ('../helpers/createDanceAPI');
 const test = require('tape');
 
 test('changing dance moves for all updates all dancers', async t => {

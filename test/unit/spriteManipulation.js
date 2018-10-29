@@ -1,5 +1,5 @@
 const test = require('tape');
-const helpers = require ('./testHelpers');
+const helpers = require ('../helpers/createDanceAPI');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
   const nativeAPI = await helpers.createDanceAPI();
