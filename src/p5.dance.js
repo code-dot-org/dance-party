@@ -34,6 +34,7 @@ module.exports = class DanceParty {
     recordReplayLog,
     showMeasureLabel = true,
     container,
+    spriteConfig,
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -85,6 +86,10 @@ module.exports = class DanceParty {
       {name: "ThisOrThat", mirror: false},
       {name: "Thriller", mirror: true},
     ];
+
+    if (spriteConfig) {
+      spriteConfig(this.world);
+    }
 
     this.songStartTime_ = 0;
 
@@ -743,10 +748,6 @@ module.exports = class DanceParty {
 
   registerValidation(callback) {
     this.world.validationCallback = callback;
-  }
-
-  init(callback) {
-    callback(this.world);
   }
 
   draw() {
