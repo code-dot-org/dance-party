@@ -41,6 +41,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
       for(let i = 0; i < 10; i++) {
         api.setAnimationSpriteSheet("CAT", i, {}, () => {});
         api.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
+        api.setAnimationSpriteSheet("ROBOT", i, {}, () => {});
       }
 
       api.addCues(getCueList());
