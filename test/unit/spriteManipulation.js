@@ -58,6 +58,29 @@ test('Sprite dance increments by one and loops for next dance', async t => {
   nativeAPI.reset();
 });
 
+test('Sprite dance changes to a new dance for random', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  //Mock 3 cat animation poses
+  for(let i = 0; i < 3; i++) {
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+  }
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  //Initial value
+  t.equal(sprite.current_move, 0);
+  nativeAPI.changeMoveLR(sprite, 'rand', 1);
+  //Different value
+  t.notEqual(sprite.current_move, 0);
+  t.end();
+
+  nativeAPI.reset();
+});
+
 test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
