@@ -12,7 +12,11 @@ function Behavior(func, extraArgs) {
   this.extraArgs = extraArgs;
 }
 
-const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
+const WATCHED_KEYS = [
+  'up', 'left', 'down', 'right', 'space', 'enter',
+  ...'abcdefghijklmnopqrstuvwxyz'.split(''),
+  ...'0123456789'.split('')
+];
 const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
