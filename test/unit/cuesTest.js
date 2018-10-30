@@ -1,5 +1,5 @@
 const test = require('tape');
-const helpers = require ('../helpers/createDanceAPI');
+const helpers = require('../helpers/createDanceAPI');
 
 test('getCues sorts measures and seconds cues', async t => {
   const nativeAPI = await helpers.createDanceAPI();
@@ -7,7 +7,7 @@ test('getCues sorts measures and seconds cues', async t => {
     bpm: 120,
   });
 
-  //Initial Values
+  // Initial Values
   t.deepEqual(nativeAPI.world.cues.measures, []);
   t.deepEqual(nativeAPI.world.cues.seconds, []);
 
@@ -25,7 +25,7 @@ test('getCues sorts measures and seconds cues', async t => {
 test('getTime returns 0 for measures and seconds before song starts', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
-  //Initial Values
+  // Initial Values
   t.equal(nativeAPI.getTime('measures'), 0);
   t.equal(nativeAPI.getTime('seconds'), 0);
 

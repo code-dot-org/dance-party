@@ -1,5 +1,5 @@
 const test = require('tape');
-const helpers = require ('../helpers/createDanceAPI');
+const helpers = require('../helpers/createDanceAPI');
 
 test('sanity', async t => {
   const nativeAPI = await helpers.createDanceAPI();

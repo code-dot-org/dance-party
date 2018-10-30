@@ -1,5 +1,5 @@
 const test = require('tape');
-const helpers = require ('../helpers/createDanceAPI');
+const helpers = require('../helpers/createDanceAPI');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
   const nativeAPI = await helpers.createDanceAPI();
@@ -7,20 +7,20 @@ test('Sprite dance decrements and loops for prev dance', async t => {
     bpm: 120,
   });
 
-  //Mock 4 cat animation poses
+  // Mock 4 cat animation poses
   for(let i = 0; i < 4; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
   }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(sprite.current_move, 0);
   nativeAPI.changeMoveLR(sprite, 'prev', 1);
-  //Looped value
+  // Looped value
   t.equal(sprite.current_move, 3);
   nativeAPI.changeMoveLR(sprite, 'prev', 1);
-  //Decremented value
+  // Decremented value
   t.equal(sprite.current_move, 2);
   t.end();
 
@@ -33,25 +33,25 @@ test('Sprite dance increments by one and loops for next dance', async t => {
     bpm: 120,
   });
 
-  //Mock 3 cat animation poses
+  // Mock 3 cat animation poses
   for(let i = 0; i < 3; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
   }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(sprite.current_move, 0);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
-  //Incremented value
+  // Incremented value
   t.equal(sprite.current_move, 1);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
 
-  //Incremented value
+  // Incremented value
   t.equal(sprite.current_move, 2);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
 
-  //Loops without rest move
+  // Loops without rest move
   t.equal(sprite.current_move, 1);
   t.end();
 
@@ -64,17 +64,17 @@ test('Sprite dance changes to a new dance for random', async t => {
     bpm: 120,
   });
 
-  //Mock 3 cat animation poses
+  // Mock 3 cat animation poses
   for(let i = 0; i < 3; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
   }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(sprite.current_move, 0);
   nativeAPI.changeMoveLR(sprite, 'rand', 1);
-  //Different value
+  // Different value
   t.notEqual(sprite.current_move, 0);
   t.end();
 
@@ -86,11 +86,11 @@ test('getCurrentDance returns current move value for initialized sprite and unde
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(nativeAPI.getCurrentDance(sprite), sprite.current_move);
 
   let uninitializedSprite = {
@@ -113,7 +113,7 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
 
   let uninitializedSprite = {
     style: "DOG",
@@ -142,7 +142,7 @@ test('setPropRandom set sprite y properties between 50 and 350', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 

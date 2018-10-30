@@ -1,4 +1,4 @@
-const helpers = require ('../helpers/createDanceAPI');
+const helpers = require('../helpers/createDanceAPI');
 const test = require('tape');
 
 test('changing dance moves for all updates all dancers', async t => {
@@ -6,14 +6,13 @@ test('changing dance moves for all updates all dancers', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, () => {});
 
   const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
-
 
   t.equal(catSprite.current_move, 0);
   t.equal(bearSprite.current_move, 0);
@@ -27,21 +26,19 @@ test('changing dance moves for all updates all dancers', async t => {
   nativeAPI.reset();
 });
 
-
 test('changing dance moves for all cats updates only all cat dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, () => {});
 
   const catSpriteAlpha = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const catSpriteBeta = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
-
 
   t.equal(catSpriteAlpha.current_move, 0);
   t.equal(catSpriteBeta.current_move, 0);
@@ -62,9 +59,9 @@ test('GetGroupByName returns the expected number of sprites ', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, ()=> {} );
-  nativeAPI.setAnimationSpriteSheet("ALIEN", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("ALIEN", 0, {}, () => {});
 
   const catSpriteAlpha = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const catSpriteBeta = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
@@ -86,7 +83,7 @@ test('MakeNewDanceSpriteGroup returns the expected number of the given costumed 
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
   nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'circle');
 
   t.equal(nativeAPI.getGroupByName_('CAT').length, 4);
@@ -101,7 +98,7 @@ test('LayoutSprites sets the x position of sprites in the expected orientation',
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
   nativeAPI.makeNewDanceSpriteGroup(3, 'CAT', 'circle');
   nativeAPI.layoutSprites('CAT', 'column');
 

@@ -1,7 +1,7 @@
 const DanceParty = require('../../src/p5.dance');
 
 module.exports = {
-  createDanceAPI : () => {
+  createDanceAPI: () => {
     return new Promise(resolve => {
       new DanceParty({
         moveNames: [],
