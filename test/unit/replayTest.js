@@ -1,5 +1,5 @@
 const test = require('tape');
-const replayLog = require ('../../src/replay');
+const replayLog = require('../../src/replay');
 
 class mockP5 {
   constructor() {

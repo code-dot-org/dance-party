@@ -1,36 +1,26 @@
 const test = require('tape');
-const DanceParty = require('../../src/p5.dance');
-
-const createDanceAPI = () => {
-  return new Promise(resolve => {
-    new DanceParty({
-      moveNames: [],
-      playSound: ({callback}) => callback(),
-      onInit: nativeAPI => resolve(nativeAPI),
-    });
-  });
-};
+const helpers = require('../helpers/createDanceAPI');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
 
-  //Mock 4 cat animation poses
+  // Mock 4 cat animation poses
   for(let i = 0; i < 4; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
   }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(sprite.current_move, 0);
   nativeAPI.changeMoveLR(sprite, 'prev', 1);
-  //Looped value
+  // Looped value
   t.equal(sprite.current_move, 3);
   nativeAPI.changeMoveLR(sprite, 'prev', 1);
-  //Decremented value
+  // Decremented value
   t.equal(sprite.current_move, 2);
   t.end();
 
@@ -38,46 +28,69 @@ test('Sprite dance decrements and loops for prev dance', async t => {
 });
 
 test('Sprite dance increments by one and loops for next dance', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
 
-  //Mock 3 cat animation poses
+  // Mock 3 cat animation poses
   for(let i = 0; i < 3; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, ()=> {} );
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
   }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
   t.equal(sprite.current_move, 0);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
-  //Incremented value
+  // Incremented value
   t.equal(sprite.current_move, 1);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
 
-  //Incremented value
+  // Incremented value
   t.equal(sprite.current_move, 2);
   nativeAPI.changeMoveLR(sprite, 'next', 1);
 
-  //Loops without rest move
+  // Loops without rest move
   t.equal(sprite.current_move, 1);
   t.end();
 
   nativeAPI.reset();
 });
 
-test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
-  const nativeAPI = await createDanceAPI();
+test('Sprite dance changes to a new dance for random', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+
+  // Mock 3 cat animation poses
+  for(let i = 0; i < 3; i++) {
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+  }
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-  //Initial value
+  // Initial value
+  t.equal(sprite.current_move, 0);
+  nativeAPI.changeMoveLR(sprite, 'rand', 1);
+  // Different value
+  t.notEqual(sprite.current_move, 0);
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // Initial value
   t.equal(nativeAPI.getCurrentDance(sprite), sprite.current_move);
 
   let uninitializedSprite = {
@@ -96,11 +109,11 @@ test('getCurrentDance returns current move value for initialized sprite and unde
 
 
 test('setProp and getProp changes and retrieves sprite scale properties based on given values', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
 
   let uninitializedSprite = {
     style: "DOG",
@@ -125,11 +138,11 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
 
 
 test('setPropRandom set sprite y properties between 50 and 350', async t => {
-  const nativeAPI = await createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, ()=> {} );
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
