@@ -205,9 +205,6 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.playSound_({url: this.songMetadata_.file, callback: () => {this.songStartTime_ = new Date()}});
     this.p5_.loop();
-
-    /** Expose for testing **/
-    window.__mostRecentDancePartySongUrl = this.songMetadata_.file;
   }
 
   setBackground(color) {
@@ -807,8 +804,5 @@ module.exports = class DanceParty {
     if (this.currentFrameEvents.any && this.onHandleEvents) {
       this.onHandleEvents(this.currentFrameEvents);
     }
-
-    /** Expose for testing **/
-    window.__mostRecentDancePartySpriteCount = this.p5_.allSprites.length;
   }
 };
