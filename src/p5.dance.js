@@ -85,12 +85,12 @@ module.exports = class DanceParty {
       {name: "Roll", mirror: true},
       {name: "ThisOrThat", mirror: false},
       {name: "Thriller", mirror: true},
-      {name: "XArmsSide", mirror: true},
-      {name: "XArmsUp", mirror: true},
-      {name: "XJump", mirror: true},
-      {name: "XClapSide", mirror: true},
-      {name: "XHeadHips", mirror: true},
-      {name: "XHighKick", mirror: true},
+      {name: "XArmsSide", mirror: false},
+      {name: "XArmsUp", mirror: false},
+      {name: "XJump", mirror: false},
+      {name: "XClapSide", mirror: false},
+      {name: "XHeadHips", mirror: false},
+      {name: "XHighKick", mirror: false},
     ];
 
     if (spriteConfig) {
