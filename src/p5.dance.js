@@ -124,6 +124,14 @@ module.exports = class DanceParty {
     }
   }
 
+  getTestInterface() {
+    return {
+      getSprites: () => this.p5_ && this.p5_.allSprites,
+      getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
+      getSongStartedTime: () => this.songStartTime_,
+    };
+  }
+
   pass() {
     this.onPuzzleComplete_(true);
   }
