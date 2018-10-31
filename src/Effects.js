@@ -3,7 +3,7 @@ module.exports = class Effects {
     this.blend = blend || p5.BLEND;
 
     function randomNumber(min, max) {
-      return Math.floor(p5.random(min, max));
+      return Math.round(p5.random(min, max));
     }
 
     function colorFromHue(hue) {
@@ -52,9 +52,9 @@ module.exports = class Effects {
         }
       },
       update: function () {
-        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate + 1);
+        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
-          const loc = randomNumber(0, this.colors.length + 1);
+          const loc = randomNumber(0, this.colors.length);
           this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
         }
       },
