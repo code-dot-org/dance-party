@@ -481,6 +481,10 @@ module.exports = class DanceParty {
     this.setProp(sprite, "tint", val);
   }
 
+  setVisible(sprite, val) {
+    this.setProp(sprite, "visible", val);
+  }
+
   setProp(sprite, property, val) {
     if (!this.spriteExists_(sprite) || val === undefined) return;
 
@@ -535,6 +539,14 @@ module.exports = class DanceParty {
 
   changePropBy(sprite,  property, val) {
     this.setProp(sprite, property, this.getProp(sprite, property) + val);
+  }
+
+  setTintEach(group, val) {
+    this.setPropEach(group, "tint", val);
+  }
+
+  setVisibleEach(group, val) {
+    this.setPropEach(group, "visible", val);
   }
 
   setPropEach(group, property, val) {
