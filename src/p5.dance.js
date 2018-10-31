@@ -787,12 +787,9 @@ module.exports = class DanceParty {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
-<<<<<<< HEAD
+      bpm: this.songMetadata_ && this.songMetadata_.bpm,
       artist: this.songMetadata_.artist,
       title: this.songMetadata_.title,
-=======
-      bpm: this.songMetadata_ && this.songMetadata_.bpm,
->>>>>>> 5fb6a9c475f28549d17bc05f11087613f10078a0
     };
 
     this.p5_.background("white");
