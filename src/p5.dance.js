@@ -462,6 +462,16 @@ module.exports = class DanceParty {
         sprite.x = this.p5_.lerp(minX, maxX, col / (numCols - 1));
         sprite.y = this.p5_.lerp(minY, maxY, row / (numRows - 1));
       });
+    } else if (format === "inner") {
+      const pct = this.p5_.constrain(count / 10, 0, 1);
+      const radius = this.p5_.lerp(0, 100, pct);
+      const size = Math.ceil(Math.sqrt(count));
+      group.forEach((sprite, i) => {
+        const row = Math.floor(i / size);
+        const col = i % size;
+        sprite.x = this.p5_.lerp(200 - radius, 200 + radius, col / (size - 1));
+        sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
+      });
     } else if (format === "row") {
       for (i=0; i<count; i++) {
         sprite = group[i];

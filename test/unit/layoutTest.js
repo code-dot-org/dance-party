@@ -145,7 +145,7 @@ test('sprites that are lower are in front of those that are higher', async t => 
   });
 });
 
-test('grid layout with square rootable count', async t => {
+test('grid layout with perfect square count', async t => {
   await runLayoutTest(t, nativeAPI => {
     nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'grid');
 
@@ -166,7 +166,7 @@ test('grid layout with square rootable count', async t => {
   });
 });
 
-test('grid layout with non-square rootable count', async t => {
+test('grid layout without perfect square count', async t => {
   await runLayoutTest(t, nativeAPI => {
     nativeAPI.makeNewDanceSpriteGroup(5, 'CAT', 'grid');
 
@@ -189,5 +189,62 @@ test('grid layout with non-square rootable count', async t => {
 
     t.equal(cats[4].x, (minX + maxX) / 2);
     t.equal(cats[4].y, maxY);
+  });
+});
+
+test('inner layout with perfect square count', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'inner');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 4);
+
+    t.equal(cats[0].y, cats[1].y);
+    t.equal(cats[2].y, cats[3].y);
+    t.equal(cats[0].x, cats[2].x);
+    t.equal(cats[1].x, cats[3].x);
+
+    t.ok(cats[0].x < cats[1].x);
+    t.ok(cats[0].y < cats[2].y);
+  });
+});
+
+test('inner layout without perfect square count', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    // this should result in a 3x3 square
+    nativeAPI.makeNewDanceSpriteGroup(8, 'CAT', 'inner');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 8);
+
+    // width is equal to height
+    const width = cats[2].x - cats[0].x;
+    const height = cats[6].y - cats[0].y;
+    t.equal(width, height);
+
+    // last row is still left aligned
+    t.equal(cats[6].x, cats[0].x);
+  });
+});
+
+test('inner square gets bigger with count, but not after 10', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'inner');
+
+    // ends up on a 4x4 grid
+    nativeAPI.makeNewDanceSpriteGroup(10, 'ALIEN', 'inner');
+
+    // ends up on a 6x6 grid
+    nativeAPI.makeNewDanceSpriteGroup(30, 'DUCK', 'inner');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    const aliens = nativeAPI.getGroupByName_('ALIEN');
+    const ducks = nativeAPI.getGroupByName_('DUCK');
+
+    // cats smaller than aliens
+    t.ok((cats[1].x - cats[0].x) < (aliens[3].x - aliens[0].x));
+
+    // aliens same size as ducks
+    t.equal(aliens[3].x - aliens[0].x, ducks[5].x - ducks[0].x);
   });
 });
