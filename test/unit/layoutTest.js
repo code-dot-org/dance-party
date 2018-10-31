@@ -130,3 +130,17 @@ test('border works with > 10 sprites', async t => {
     [3, 0, 10].forEach(i => t.equal(cats[i].x, minX));
   });
 });
+
+test('sprites that are lower are in front of those that are higher', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(36, 'CAT', 'circle');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+
+    t.equal(cats.length, 36);
+
+    for (let i = 1; i < cats.length; i++) {
+      t.equal(cats[i].y > cats[i-1].y, cats[i].depth > cats[i-1].depth);
+    }
+  });
+});

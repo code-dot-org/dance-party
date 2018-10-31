@@ -576,7 +576,9 @@ module.exports = class DanceParty {
       throw new Error('Unexpected format: ' + foramt);
     }
 
-    // TODO: arrange z-index by y
+    // we want sprites that are lower in the canvas to show up on top of those
+    // that are higher
+    group.forEach(sprite => sprite.depth = sprite.y);
   }
 
 // Properties
