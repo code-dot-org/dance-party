@@ -12,7 +12,11 @@ function Behavior(func, extraArgs) {
   this.extraArgs = extraArgs;
 }
 
-const WATCHED_KEYS = ['w', 'a', 's', 'd', 'up', 'left', 'down', 'right', 'space'];
+const WATCHED_KEYS = [
+  'up', 'left', 'down', 'right', 'space', 'enter',
+  ...'abcdefghijklmnopqrstuvwxyz'.split(''),
+  ...'0123456789'.split('')
+];
 const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
@@ -477,6 +481,10 @@ module.exports = class DanceParty {
     this.setProp(sprite, "tint", val);
   }
 
+  setVisible(sprite, val) {
+    this.setProp(sprite, "visible", val);
+  }
+
   setProp(sprite, property, val) {
     if (!this.spriteExists_(sprite) || val === undefined) return;
 
@@ -531,6 +539,14 @@ module.exports = class DanceParty {
 
   changePropBy(sprite,  property, val) {
     this.setProp(sprite, property, this.getProp(sprite, property) + val);
+  }
+
+  setTintEach(group, val) {
+    this.setPropEach(group, "tint", val);
+  }
+
+  setVisibleEach(group, val) {
+    this.setPropEach(group, "visible", val);
   }
 
   setPropEach(group, property, val) {
@@ -771,8 +787,12 @@ module.exports = class DanceParty {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
+<<<<<<< HEAD
       artist: this.songMetadata_.artist,
       title: this.songMetadata_.title,
+=======
+      bpm: this.songMetadata_ && this.songMetadata_.bpm,
+>>>>>>> 5fb6a9c475f28549d17bc05f11087613f10078a0
     };
 
     this.p5_.background("white");
