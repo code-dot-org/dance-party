@@ -209,13 +209,16 @@ module.exports = class DanceParty {
     this.onInit && this.onInit(this);
   }
 
-  play(songData) {
+  play(songData, callback) {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
     this.songMetadata_ = songData;
     this.analysisPosition_ = 0;
-    this.playSound_({url: this.songMetadata_.file, callback: () => {this.songStartTime_ = new Date()}});
+    this.playSound_({url: this.songMetadata_.file, callback: () => {
+      this.songStartTime_ = new Date();
+      callback && callback();
+    }});
     this.p5_.loop();
   }
 
