@@ -414,7 +414,7 @@ module.exports = class DanceParty {
   }
 
   /**
-   * Given a group with an abritrary number of sprites, arrange them in a particular
+   * Given a group with an abitrary number of sprites, arrange them in a particular
    * layout. This is likely to change some or all of position/rotation/scale for
    * the sprites in the group
    */
