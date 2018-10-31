@@ -425,6 +425,11 @@ module.exports = class DanceParty {
     group.forEach(sprite => this.setProp(sprite, 'scale', 30));
 
     const count = group.length;
+    const minX = 20;
+    const maxX = 400 - minX;
+    const minY = 35;
+    const maxY = 400 - 40;
+
     var sprite, i, j;
     if (format === "circle") {
       // adjust radius of circle and size of the sprite according to number of
@@ -445,27 +450,18 @@ module.exports = class DanceParty {
         sprite.scale = scale;
       });
     } else if (format === "grid") {
-      var cols = Math.ceil(Math.sqrt(count));
-      var rows = Math.ceil(count / cols);
-      var current = 0;
-      for (i=0; i<rows; i++) {
-        if (count - current >= cols) {
-          for (j=0; j<cols; j++) {
-            sprite = group[current];
-            sprite.x = (j+1) * (400 / (cols + 1));
-            sprite.y = (i+1) * (400 / (rows + 1));
-            current++;
-          }
-        } else {
-          var remainder = count - current;
-          for (j=0; j<remainder; j++) {
-            sprite = group[current];
-            sprite.x = (j+1) * (400 / (remainder + 1));
-            sprite.y = (i+1) * (400 / (rows + 1));
-            current++;
-          }
-        }
-      }
+      // Create a grid where the width is the  square root of the count, rounded up
+      // and the height is the number of rows needed to fill in count cells
+      // For our last row, we might have empty cells in our grid (but the row
+      // structure will be the same)
+      const numCols = Math.ceil(Math.sqrt(count));
+      const numRows = Math.ceil(count / numCols);
+      group.forEach((sprite, i) => {
+        const row = Math.floor(i / numCols);
+        const col = i % numCols;
+        sprite.x = this.p5_.lerp(minX, maxX, col / (numCols - 1));
+        sprite.y = this.p5_.lerp(minY, maxY, row / (numRows - 1));
+      });
     } else if (format === "row") {
       for (i=0; i<count; i++) {
         sprite = group[i];
@@ -479,11 +475,6 @@ module.exports = class DanceParty {
         sprite.y = (i+1) * (400 / (count + 1));
       }
     } else if (format === "border") {
-      const minX = 20;
-      const maxX = 400 - minX;
-      const minY = 35;
-      const maxY = 400 - 40;
-
       // first fill the four corners
       // then split remainder into 4 groups. distribute group one along the top,
       // group 2 along the right, etc.
@@ -535,45 +526,13 @@ module.exports = class DanceParty {
           sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (leftCount + 1));
         }
       }
-    } else if (format === "square") {
-      group.forEach((sprite, i) => {
-        const locationByIndex = [
-          [25, 25],
-          [375, 375],
-          [375, 25],
-          [25, 375],
-          [200, 25],
-          [200, 375],
-          [25, 200],
-          [375, 200],
-        ];
-
-        if (locationByIndex[i]) {
-          sprite.x = locationByIndex[i][0];
-          sprite.y = locationByIndex[i][1];
-        } else if (i === 8) {
-          // move top middle over and then adjust this one
-          const topMiddle = group[4];
-          topMiddle.x = 200 - 60;
-          sprite.x = 200 + 60;
-          sprite.y = topMiddle.y;
-        } else if (i === 9) {
-          const bottomMiddle = group[5];
-          bottomMiddle.x = 200 - 60;
-          sprite.x = 200 + 60;
-          sprite.y = bottomMiddle.y;
-        } else {
-          sprite.x = 200;
-          sprite.y = 200;
-        }
-      });
     } else if (format === "random") {
       group.forEach(function (sprite) {
-        sprite.x = randomInt(25, 375);
-        sprite.y = randomInt(25, 375);
+        sprite.x = randomInt(minX, maxX);
+        sprite.y = randomInt(minY, maxY);
       });
     } else {
-      throw new Error('Unexpected format: ' + foramt);
+      throw new Error('Unexpected format: ' + format);
     }
 
     // we want sprites that are lower in the canvas to show up on top of those

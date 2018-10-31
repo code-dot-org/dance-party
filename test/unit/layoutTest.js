@@ -1,6 +1,11 @@
 const helpers = require('../helpers/createDanceAPI');
 const test = require('tape');
 
+const minX = 20;
+const maxX = 400 - minX;
+const minY = 35;
+const maxY = 400 - 40;
+
 async function runLayoutTest(t, fn) {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
@@ -110,11 +115,6 @@ test('border works with > 10 sprites', async t => {
 
     const cats = nativeAPI.getGroupByName_('CAT');
 
-    const minX = 20;
-    const maxX = 400 - minX;
-    const minY = 35;
-    const maxY = 400 - 40;
-
     t.equal(cats.length, 11);
 
     // top row should contain first, second, and then 2 more
@@ -142,5 +142,52 @@ test('sprites that are lower are in front of those that are higher', async t => 
     for (let i = 1; i < cats.length; i++) {
       t.equal(cats[i].y > cats[i-1].y, cats[i].depth > cats[i-1].depth);
     }
+  });
+});
+
+test('grid layout with square rootable count', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'grid');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 4);
+
+    t.equal(cats[0].x, minX);
+    t.equal(cats[0].y, minY);
+
+    t.equal(cats[1].x, maxX);
+    t.equal(cats[1].y, minY);
+
+    t.equal(cats[2].x, minX);
+    t.equal(cats[2].y, maxY);
+
+    t.equal(cats[3].x, maxX);
+    t.equal(cats[3].y, maxY);
+  });
+});
+
+test('grid layout with non-square rootable count', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(5, 'CAT', 'grid');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 5);
+
+    // size 5 means we're filling up a 3x3 grid, except that we don't end up
+    // needing the 3rd row, and so we instead fill a 3x2 grid
+    t.equal(cats[0].x, minX);
+    t.equal(cats[0].y, minY);
+
+    t.equal(cats[1].x, (minX + maxX) / 2);
+    t.equal(cats[1].y, minY);
+
+    t.equal(cats[2].x, maxX);
+    t.equal(cats[2].y, minY);
+
+    t.equal(cats[3].x, minX);
+    t.equal(cats[3].y, maxY);
+
+    t.equal(cats[4].x, (minX + maxX) / 2);
+    t.equal(cats[4].y, maxY);
   });
 });
