@@ -6,6 +6,14 @@ module.exports = class Effects {
       return Math.floor(p5.random(min, max));
     }
 
+    function colorFromHue(hue) {
+      return p5.color("hsl(" + Math.floor(hue % 360) + ", 100%, 80%)");
+    }
+
+    function randomColor() {
+      return colorFromHue(randomNumber(0, 359))
+    }
+
     this.none = {
       draw: function ({backgroundColor}) {
         p5.background(backgroundColor || "white");
