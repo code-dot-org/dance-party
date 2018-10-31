@@ -585,7 +585,6 @@ module.exports = class DanceParty {
     // that are higher
     // we also add a fractional component based on x to avoid z-fighting (except
     // in cases where we have identical x and y)
-    // TODO: add test for x portion
     group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
   }
 

@@ -145,6 +145,19 @@ test('sprites that are lower are in front of those that are higher', async t => 
   });
 });
 
+test('sprites that are further right have a higher depth', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(2, 'CAT', 'row');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+
+    t.equal(cats.length, 2);
+
+    t.equal(cats[0].y, cats[1].y);
+    t.ok(cats[0].depth < cats[1].depth);
+  });
+});
+
 test('grid layout with perfect square count', async t => {
   await runLayoutTest(t, nativeAPI => {
     nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'grid');
