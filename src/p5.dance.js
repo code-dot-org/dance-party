@@ -220,6 +220,8 @@ module.exports = class DanceParty {
   }
 
   setBackground(color) {
+    // Clear background effect so it doesn't cover up background color.
+    this.world.bg_effect = this.bgEffects_.none;
     this.world.background_color = color;
   }
 
