@@ -6,13 +6,13 @@ test('make sure we are checking all relevant keys', async t => {
   const p5 = nativeAPI.p5_;
 
   // simulate key presses
-  p5._onkeydown({which: p5.KEY.LEFT_ARROW});
-  p5._onkeydown({which: p5.KEY.SPACE});
-  p5._onkeydown({which: p5.KEY.ENTER});
-  p5._onkeydown({which: p5.KEY.A});
-  p5._onkeydown({which: p5.KEY.Z});
-  p5._onkeydown({which: p5.KEY['0']});
-  p5._onkeydown({which: p5.KEY['9']});
+  nativeAPI.onKeyDown(p5.KEY.LEFT_ARROW);
+  nativeAPI.onKeyDown(p5.KEY.SPACE);
+  nativeAPI.onKeyDown(p5.KEY.ENTER);
+  nativeAPI.onKeyDown(p5.KEY.A);
+  nativeAPI.onKeyDown(p5.KEY.Z);
+  nativeAPI.onKeyDown(p5.KEY['0']);
+  nativeAPI.onKeyDown(p5.KEY['9']);
   p5.readPresses();
 
   nativeAPI.updateEvents_();
