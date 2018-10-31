@@ -429,25 +429,60 @@ module.exports = class DanceParty {
     const maxX = 400 - minX;
     const minY = 35;
     const maxY = 400 - 40;
+    const radiansToDegrees = 180 / Math.PI;
+    const maxCircleRadius = 165;
 
-    var sprite, i, j;
     if (format === "circle") {
       // adjust radius of circle and size of the sprite according to number of
       // sprites in our group
       const pct = this.p5_.constrain(count / 10, 0, 1);
-      const radius = this.p5_.lerp(50, 175, pct);
+      const radius = this.p5_.lerp(50, maxCircleRadius, pct);
       const scale = this.p5_.lerp(0.8, 0.3, pct * pct);
       const startAngle = -Math.PI / 2;
       const deltaAngle = 2 * Math.PI / count;
 
-      const radiansToDegrees = 180 / Math.PI;
-
       group.forEach((sprite, i) => {
         const angle = deltaAngle * i + startAngle;
-        sprite.x = 200 + (radius * Math.cos(angle));
-        sprite.y = 200 + (radius * Math.sin(angle));
+        sprite.x = 200 + radius * Math.cos(angle);
+        sprite.y = 200 + radius * Math.sin(angle);
         sprite.rotation = (angle - startAngle) * radiansToDegrees;
         sprite.scale = scale;
+      });
+    } else if (format === 'plus') {
+      const pct = this.p5_.constrain(count / 10, 0, 1);
+      const maxRadius = this.p5_.lerp(50, maxCircleRadius, pct);
+      const numRings = Math.ceil(count / 4);
+      group.forEach((sprite, i) => {
+        const ring = Math.floor(i / 4) + 1;
+        const angle = [
+          -Math.PI / 2, // above
+          Math.PI / 2, // below
+          -Math.PI, // left
+          0 // right
+        ][i % 4];
+        const ringRadius = this.p5_.lerp(0, maxRadius, ring / numRings);
+
+        sprite.x = 200 + ringRadius * Math.cos(angle);
+        sprite.y = 200 + ringRadius * Math.sin(angle);
+      });
+    } else if (format === 'x') {
+      const pct = this.p5_.constrain(count / 10, 0, 1);
+      // we can have a bigger radius here since we're going to the corners
+      const maxRadius = this.p5_.lerp(0, Math.sqrt(2 * maxCircleRadius * maxCircleRadius), pct);
+      const numRings = Math.ceil(count / 4);
+      group.forEach((sprite, i) => {
+        const ring = Math.floor(i / 4) + 1;
+        const angle = [
+          -Math.PI / 4 + -Math.PI / 2,
+          -Math.PI / 4 + Math.PI / 2,
+          -Math.PI / 4 + 0,
+          -Math.PI / 4 + -Math.PI,
+        ][i % 4];
+        const ringRadius = this.p5_.lerp(0, maxRadius, ring / numRings);
+
+        sprite.x = 200 + ringRadius * Math.cos(angle);
+        sprite.y = 200 + ringRadius * Math.sin(angle);
+        sprite.rotation = (angle + Math.PI / 2) * radiansToDegrees;
       });
     } else if (format === "grid") {
       // Create a grid where the width is the  square root of the count, rounded up
@@ -473,14 +508,14 @@ module.exports = class DanceParty {
         sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
       });
     } else if (format === "row") {
-      for (i=0; i<count; i++) {
-        sprite = group[i];
+      for (let i=0; i<count; i++) {
+        const sprite = group[i];
         sprite.x = (i+1) * (400 / (count + 1));
         sprite.y = 200;
       }
     } else if (format === "column") {
-      for (i=0; i<count; i++) {
-        sprite = group[i];
+      for (let i=0; i<count; i++) {
+        const sprite = group[i];
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
       }
@@ -547,7 +582,10 @@ module.exports = class DanceParty {
 
     // we want sprites that are lower in the canvas to show up on top of those
     // that are higher
-    group.forEach(sprite => sprite.depth = sprite.y);
+    // we also add a fractional component based on x to avoid z-fighting (except
+    // in cases where we have identical x and y)
+    // TODO: add test for x portion
+    group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
   }
 
 // Properties

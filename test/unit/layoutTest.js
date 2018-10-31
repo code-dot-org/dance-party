@@ -192,6 +192,8 @@ test('grid layout without perfect square count', async t => {
   });
 });
 
+// TODO: test grid with size 2 as i have a bug atm
+
 test('inner layout with perfect square count', async t => {
   await runLayoutTest(t, nativeAPI => {
     nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'inner');
@@ -246,5 +248,108 @@ test('inner square gets bigger with count, but not after 10', async t => {
 
     // aliens same size as ducks
     t.equal(aliens[3].x - aliens[0].x, ducks[5].x - ducks[0].x);
+  });
+});
+
+test('plus layout with count of 4', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'plus');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 4);;
+
+    // first and second cats are aligned along x
+    t.equal(cats[0].x, cats[1].x);
+    t.ok(cats[0].y < cats[1].y);
+
+    // third and fourth are aligned along y
+    t.equal(cats[2].y, cats[3].y);
+    t.ok(cats[2].x < cats[3].x);
+
+    const width = cats[3].x - cats[2].x;
+    const height = cats[1].y - cats[0].y;
+    t.equal(width, height);
+  });
+});
+
+test('plus layout with count not divisible by 4', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(6, 'CAT', 'plus');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 6);;
+
+    // first, second, fifth and sixth  are aligned along x
+    t.equal(cats[0].x, cats[1].x);
+    t.equal(cats[0].x, cats[4].x);
+    t.equal(cats[0].x, cats[5].x);
+    t.ok(cats[4].y < cats[0].y);
+    t.ok(cats[0].y < cats[1].y);
+    t.ok(cats[1].y < cats[5].y);
+
+    // third and fourth are aligned along y
+    t.equal(cats[2].y, cats[3].y);
+    t.ok(cats[2].x < cats[3].x);
+
+  });
+});
+
+test('x layout with count of 4', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'x');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 4);
+
+    // JS math tries hard, and at least gets close
+    const essentiallyEqual = (a, b) => t.ok(Math.abs(a - b) < 0.0001);
+
+    // first and second reflect along a line with slope 1 going through (200, 200)
+    t.equal(200 - cats[0].x, cats[1].x - 200);
+    t.equal(200 - cats[0].y, cats[1].y - 200);
+
+    // same is true of third and fourth
+    essentiallyEqual(200 - cats[2].x, cats[3].x - 200);
+    essentiallyEqual(200 - cats[2].y, cats[3].y - 200);
+
+    // first and third have same y
+    t.equal(cats[0].y, cats[2].y);
+  });
+});
+
+
+test('x layout with count not divisible by 4', async t => {
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(7, 'CAT', 'x');
+
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 7);
+
+    // JS math tries hard, and at least gets close
+    const essentiallyEqual = (a, b) => t.ok(Math.abs(a - b) < 0.0001);
+
+    // first and second reflect along a line with slope 1 going through (200, 200)
+    t.equal(200 - cats[0].x, cats[1].x - 200);
+    t.equal(200 - cats[0].y, cats[1].y - 200);
+
+    // same is true of third and fourth
+    essentiallyEqual(200 - cats[2].x, cats[3].x - 200);
+    essentiallyEqual(200 - cats[2].y, cats[3].y - 200);
+
+    // and fifth and six
+    essentiallyEqual(200 - cats[4].x, cats[5].x - 200);
+    essentiallyEqual(200 - cats[4].y, cats[5].y - 200);
+
+    // fifth is to the left and above the first
+    t.ok(cats[4].x < cats[0].x);
+    t.ok(cats[4].y < cats[0].y);
+
+    // sixth is to the right and below the second
+    t.ok(cats[5].x > cats[1].x);
+    t.ok(cats[5].y > cats[1].y);
+
+    // seventh is to the right and above third
+    t.ok(cats[6].x > cats[2].x);
+    t.ok(cats[6].y < cats[2].y);
   });
 });
