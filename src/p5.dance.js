@@ -494,8 +494,9 @@ module.exports = class DanceParty {
       group.forEach((sprite, i) => {
         const row = Math.floor(i / numCols);
         const col = i % numCols;
-        sprite.x = this.p5_.lerp(minX, maxX, col / (numCols - 1));
-        sprite.y = this.p5_.lerp(minY, maxY, row / (numRows - 1));
+        // || 0 so that we recover from div 0
+        sprite.x = this.p5_.lerp(minX, maxX, col / (numCols - 1) || 0);
+        sprite.y = this.p5_.lerp(minY, maxY, row / (numRows - 1) || 0);
       });
     } else if (format === "inner") {
       const pct = this.p5_.constrain(count / 10, 0, 1);

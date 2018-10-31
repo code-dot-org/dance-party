@@ -192,7 +192,20 @@ test('grid layout without perfect square count', async t => {
   });
 });
 
-// TODO: test grid with size 2 as i have a bug atm
+test('grid layout of size 2', async t => {
+   await runLayoutTest(t, nativeAPI => {
+     nativeAPI.makeNewDanceSpriteGroup(2, 'CAT', 'grid');
+
+     const cats = nativeAPI.getGroupByName_('CAT');
+     t.equal(cats.length, 2);
+
+     t.equal(cats[0].x, minX);
+     t.equal(cats[0].y, minY);
+
+     t.equal(cats[1].x, maxX);
+     t.equal(cats[1].y, minY);
+   });
+});
 
 test('inner layout with perfect square count', async t => {
   await runLayoutTest(t, nativeAPI => {
