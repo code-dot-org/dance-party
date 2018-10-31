@@ -11,7 +11,7 @@ module.exports = class Effects {
     }
 
     function randomColor() {
-      return colorFromHue(randomNumber(0, 359))
+      return colorFromHue(randomNumber(0, 359));
     }
 
     this.none = {
