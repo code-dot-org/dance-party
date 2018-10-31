@@ -103,7 +103,7 @@ test('LayoutSprites sets the x position of sprites in the expected orientation',
   nativeAPI.layoutSprites('CAT', 'column');
 
   let cats = nativeAPI.getGroupByName_('CAT');
-  for(let i = 0; i < cats; i++){
+  for(let i = 0; i < cats.length; i++){
     t.equal(cats[i].x, 200);
   }
 
