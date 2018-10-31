@@ -7,7 +7,7 @@ module.exports = class Effects {
     }
 
     function colorFromHue(hue) {
-      return p5.color("hsl(" + Math.floor(hue % 360) + ", 100%, 80%)");
+      return p5.color("hsla(" + Math.floor(hue % 360) + ", 100%, 80%," + alpha + ")");
     }
 
     function randomColor() {
@@ -21,13 +21,9 @@ module.exports = class Effects {
     };
 
     this.rainbow = {
-      color: p5.color('hsla(0, 100%, 80%, ' + alpha + ')'),
+      color: colorFromHue(0),
       update: function () {
-        p5.push();
-        p5.colorMode(p5.HSL);
-        this.color =
-          p5.color(this.color._getHue() + 10, 100, 80, alpha);
-        p5.pop();
+        this.color = colorFromHue(this.color._getHue() + 10);
       },
       draw: function ({isPeak}) {
         if (isPeak) {
@@ -48,14 +44,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
+          this.colors[i] = randomColor();
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
+          this.colors[loc] = randomColor();
         }
       },
       draw: function ({isPeak}) {
@@ -90,14 +86,13 @@ module.exports = class Effects {
           this.update();
         }
         p5.push();
-        p5.colorMode(p5.HSB);
         p5.rectMode(p5.CENTER);
         p5.translate(200, 200);
         p5.rotate(45);
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke((this.hue + i * 10) % 360, 100, 75, alpha);
+          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
