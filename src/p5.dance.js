@@ -478,6 +478,63 @@ module.exports = class DanceParty {
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
       }
+    } else if (format === "border") {
+      const minX = 20;
+      const maxX = 400 - minX;
+      const minY = 35;
+      const maxY = 400 - 40;
+
+      // first fill the four corners
+      // then split remainder into 4 groups. distribute group one along the top,
+      // group 2 along the right, etc.
+      if (count > 0) {
+        group[0].x = minX;
+        group[0].y = minY;
+      }
+      if (count > 1) {
+        group[1].x = maxX;
+        group[1].y = minY;
+      }
+      if (count > 2) {
+        group[2].x = maxX;
+        group[2].y = maxY;
+      }
+      if (count > 3) {
+        group[3].x = minX;
+        group[3].y = maxY;
+      }
+      if (count > 4) {
+        const topCount = Math.ceil((count - 4 - 0) / 4);
+        const rightCount = Math.ceil((count - 4 - 1) / 4);
+        const bottomCount = Math.ceil((count - 4 - 2) / 4);
+        const leftCount = Math.ceil((count - 4 - 3) / 4);
+
+        for (let i = 0; i < topCount; i++) {
+          const sprite = group[4 + i];
+          // we want to include the corners in our total count so that the first
+          // inner sprite is > 0 and the last inner sprite is < 1 when we lerp
+          sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (topCount + 1));
+          sprite.y = minY
+        }
+
+        for (let i = 0; i < rightCount; i++) {
+          const sprite = group[4 + topCount + i];
+          sprite.x = maxX;
+          sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (rightCount + 1));
+        }
+
+        for (let i = 0; i < bottomCount; i++) {
+          const sprite = group[4 + topCount + rightCount + i];
+          sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (bottomCount + 1));
+          sprite.y = maxY;
+        }
+
+        for (let i = 0; i < leftCount; i++) {
+          const sprite = group[4 + topCount + rightCount + bottomCount + i];
+          sprite.x = minX;
+          sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (leftCount + 1));
+        }
+      }
     } else if (format === "square") {
       group.forEach((sprite, i) => {
         const locationByIndex = [
