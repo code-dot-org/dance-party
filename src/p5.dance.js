@@ -792,7 +792,7 @@ module.exports = class DanceParty {
       bpm: this.songMetadata_ && this.songMetadata_.bpm,
     };
 
-    this.p5_.background("white");
+    this.p5_.background(this.world.background_color || "white");
     if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
       this.world.bg_effect.draw(context);
     }
