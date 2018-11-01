@@ -376,7 +376,7 @@ module.exports = class Effects {
           x: x,
           arc: arc,
           offset: offset,
-          shift: randomNumber(0, 100),
+          shift: randomNumber(0, 359),
           color: randomColor(100, 50, 0.25),
         };
       },
