@@ -6,12 +6,12 @@ module.exports = class Effects {
       return Math.round(p5.random(min, max));
     }
 
-    function colorFromHue(hue) {
-      return p5.color("hsla(" + Math.floor(hue % 360) + ", 100%, 80%," + alpha + ")");
+    function colorFromHue(h, s=100, l=80, a=alpha) {
+      return p5.color("hsla(" + Math.floor(h % 360) + ", " + s + "%, " + l + "%," + a + ")");
     }
 
-    function randomColor() {
-      return colorFromHue(randomNumber(0, 359));
+    function randomColor(s=100, l=80, a=alpha) {
+      return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 
     this.none = {
@@ -237,7 +237,7 @@ module.exports = class Effects {
         let r = randomNumber(30,60);
         return {x: randomNumber(0,400),
             y: randomNumber(0,400),
-            color: p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)"),
+            color: randomColor(),
             width: r,
             height: r,
         };
@@ -291,7 +291,7 @@ module.exports = class Effects {
         let rotation=(bpm/90)*50;
         this.angle-=rotation;
         p5.rotate(Math.PI / 180 * this.angle);
-        p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
+        p5.tint(colorFromHue(this.color, 100, 60));
         p5.image(this.swirl,0,0,600,600);
         p5.pop();
 
@@ -315,14 +315,14 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
-        p5.background(p5.color("hsl(" + this.color + ", 100%, 10%)"));
+        p5.background(colorFromHue(this.color, 100, 10));
         p5.push();
         p5.imageMode("center");
         p5.translate(200,200);
         let rotation=(bpm/90)*200;
         this.angle-=rotation;
         p5.rotate(Math.PI / 180 * this.angle);
-        p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
+        p5.tint(colorFromHue(this.color, 100, 60));
         p5.image(this.swirl,0,0,600,600);
         p5.pop();
 
