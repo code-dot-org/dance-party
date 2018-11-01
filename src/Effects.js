@@ -406,7 +406,7 @@ module.exports = class Effects {
           p5.rotate((Math.sin((p5.frameCount / 100) + light.shift + centroid / 2000) * light.arc) + light.offset);
           p5.triangle(0, 0, -75, 600, 75, 600);
           p5.pop();
-        })
+        });
       }
     };
   }
