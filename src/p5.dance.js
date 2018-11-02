@@ -150,7 +150,7 @@ module.exports = class DanceParty {
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        const baseUrl = `${img_base}CAT_ClapHigh`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
           // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
           // it to load the image as a Image (instead of a p5.Image), which avoids
