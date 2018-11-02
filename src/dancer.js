@@ -17,9 +17,6 @@ class Rasterizer {
     this.queue = [/*
       frameKey: `character_move_framenum`
     */];
-
-    this.defaultWidth = 300;
-    this.defaultHeight = 300;
   }
 
   startQueue() {
@@ -87,8 +84,15 @@ const rasterizer = new Rasterizer();
 
 class Move {
   constructor(character, move) {
+    this.defaultWidth = 300;
+    this.defaultHeight = 300;
     this.character = character;
     this.move = move;
+    if (!Move.blitCanvas) {
+      Move.blitCanvas = document.createElement('canvas');
+      Move.blitCanvas.width = Move.blitCanvas.height = 300;
+      Move.blitCtx = Move.blitCanvas.getContext('2d');
+    }
   }
 
   drawPose(ctx, n, centerX, centerY, scaleX = 1, scaleY = 1, tint = null) {
@@ -98,8 +102,9 @@ class Move {
       return;
     }
 
-    ctx.putImageData(
-      frame,
+    Move.blitCtx.putImageData(frame, 0, 0);
+    ctx.drawImage(
+      Move.blitCanvas,
       centerX - this.defaultWidth / 2,
       centerY - this.defaultHeight / 2
     );
