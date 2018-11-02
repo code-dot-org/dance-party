@@ -8,9 +8,15 @@ test('Sprite dance decrements and loops for prev dance', async t => {
   });
 
   // Mock 4 cat animation poses
-  for(let i = 0; i < 4; i++) {
+  const moveCount = 4;
+  for(let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.world.MOVE_NAMES.push({
+      name: `move${i}`
+    })
   }
+  nativeAPI.world.fullLengthMoveCount = moveCount;
+  nativeAPI.world.restMoveCount = 1;
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
@@ -34,9 +40,15 @@ test('Sprite dance increments by one and loops for next dance', async t => {
   });
 
   // Mock 3 cat animation poses
-  for(let i = 0; i < 3; i++) {
+  const moveCount = 3;
+  for(let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.world.MOVE_NAMES.push({
+      name: `move${i}`
+    })
   }
+  nativeAPI.world.fullLengthMoveCount = moveCount;
+  nativeAPI.world.restMoveCount = 1;
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
@@ -65,9 +77,15 @@ test('Sprite dance changes to a new dance for random', async t => {
   });
 
   // Mock 3 cat animation poses
-  for(let i = 0; i < 3; i++) {
+  const moveCount = 3;
+  for(let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.world.MOVE_NAMES.push({
+      name: `move${i}`
+    })
   }
+  nativeAPI.world.fullLengthMoveCount = moveCount;
+  nativeAPI.world.restMoveCount = 1;
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 

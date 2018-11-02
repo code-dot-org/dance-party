@@ -10,6 +10,12 @@ test('changing dance moves for all updates all dancers', async t => {
   nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, () => {});
   nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
   nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, () => {});
+  nativeAPI.world.MOVE_NAMES = [
+    { name: `move1` },
+    { name: `move2` },
+  ];
+  nativeAPI.world.fullLengthMoveCount = nativeAPI.world.MOVE_NAMES.length;
+  nativeAPI.world.restMoveCount = 1;
 
   const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
@@ -62,6 +68,12 @@ test('changing dance moves for all cats updates only all cat dancers', async t =
   nativeAPI.setAnimationSpriteSheet("CAT", 1, {}, () => {});
   nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
   nativeAPI.setAnimationSpriteSheet("BEAR", 1, {}, () => {});
+  nativeAPI.world.MOVE_NAMES = [
+    { name: `move1` },
+    { name: `move2` },
+  ];
+  nativeAPI.world.fullLengthMoveCount = nativeAPI.world.MOVE_NAMES.length;
+  nativeAPI.world.restMoveCount = 1;
 
   const catSpriteAlpha = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   const catSpriteBeta = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
