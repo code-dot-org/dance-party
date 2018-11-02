@@ -685,8 +685,11 @@ module.exports = class DanceParty {
   }
 
   setDanceSpeed(sprite, speed) {
-    if (!this.spriteExists_(sprite)) return;
-    sprite.dance_speed = speed;
+    this.setProp(sprite, "dance_speed", speed);
+  }
+
+  setDanceSpeedEach(group, speed) {
+    this.setPropEach(group, "dance_speed", speed);
   }
 
 // Music Helpers
