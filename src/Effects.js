@@ -21,6 +21,36 @@ module.exports = class Effects {
     };
 
     this.rainbow = {
+      lengths: [0, 0, 0, 0, 0, 0, 0],
+      current: 0,
+      update: function () {
+        this.lengths[this.lengths.length - (1 + this.current)] = 1;
+        this.current = (this.current + 1) % this.lengths.length;
+      },
+      draw: function ({isPeak, bpm}) {
+        if (isPeak) {
+          this.update();
+        }
+        p5.push();
+        p5.background(colorFromHue(180, 50, 90));
+        p5.noFill();
+        p5.strokeWeight(50);
+        let d, i;
+        for (i = 0; i < 7; i++) {
+          p5.stroke(colorFromHue(i * 51.5, 100, 95));
+          d = 150 + i * 100;
+          p5.arc(0, 400, d, d, -90, 0);
+          if (this.lengths[i] > 0) {
+            p5.stroke(colorFromHue(i * 60, 100, 80, 1 - this.lengths[i] / 90));
+            p5.arc(0, 400, d, d, -90, -90 + this.lengths[i]);
+            this.lengths[i] = (this.lengths[i] + bpm / 50) % 90;
+          }
+        }
+        p5.pop();
+      }
+    };
+
+    this.color_cycle = {
       color: colorFromHue(0),
       update: function () {
         this.color = colorFromHue(this.color._getHue() + 10);
