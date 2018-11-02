@@ -1,14 +1,3 @@
-
-module.exports = class Dancer {
-  constructor(type = 'cat') {
-    this.clapHigh = new Move(type, 0);
-  }
-
-  drawPose(...args) {
-    this.clapHigh.drawPose(...args);
-  }
-};
-
 class Rasterizer {
   constructor() {
     this.cache = {/*
@@ -59,7 +48,7 @@ class Rasterizer {
       }
       callback();
     };
-    this.img.src = 'cat.min.svg'; //`assets/${character}.svg`;
+    this.img.src = `assets/${character}.svg`;
   }
 
   frameKey(character, move, frame) {
@@ -83,11 +72,9 @@ class Rasterizer {
 const rasterizer = new Rasterizer();
 
 class Move {
-  constructor(character, move) {
+  constructor() {
     this.defaultWidth = 300;
     this.defaultHeight = 300;
-    this.character = character;
-    this.move = move;
     if (!Move.blitCanvas) {
       Move.blitCanvas = document.createElement('canvas');
       Move.blitCanvas.width = Move.blitCanvas.height = 300;
@@ -95,8 +82,8 @@ class Move {
     }
   }
 
-  drawPose(ctx, n, centerX, centerY, scaleX = 1, scaleY = 1, tint = null) {
-    const frame = rasterizer.getFrame(this.character, this.move, n);
+  drawPose(ctx, character, move, n, centerX, centerY, scaleX = 1, scaleY = 1, tint = null) {
+    const frame = rasterizer.getFrame(character, move, n);
 
     if (!frame) {
       return;
@@ -110,3 +97,6 @@ class Move {
     );
   }
 }
+
+const move = new Move();
+module.exports = move.drawPose.bind(move);

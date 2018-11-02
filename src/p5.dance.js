@@ -3,7 +3,7 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
-const Dancer = require('./dancer');
+const drawPose = require('./dancer');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -46,8 +46,6 @@ module.exports = class DanceParty {
       'cue-seconds': {},
       'cue-measures': {},
     };
-
-    this.dancer = new Dancer();
 
     this.world = {
       height: 400,
@@ -777,7 +775,10 @@ module.exports = class DanceParty {
 
     //this.p5_.drawSprites();
     this.sprites_.forEach(sprite => {
-      this.dancer.drawPose(this.p5_._renderer.drawingContext, sprite.animation.getFrame(), sprite.position.x, sprite.position.y);
+      const costume = sprite.style.toLowerCase();
+      const move = sprite.current_move;
+      const frame = sprite.animation.getFrame();
+      drawPose(this.p5_._renderer.drawingContext, costume, move, frame, sprite.position.x, sprite.position.y);
     });
 
     if (this.recordReplayLog_) {
