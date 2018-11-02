@@ -33,13 +33,13 @@ module.exports = class Dancer {
     this.frames = [];
     //this.frames = data.map((dataUrl, n) => {
       let img = new Image();
-      const reference = document.createElement('canvas');
-      const referenceCtx = reference.getContext('2d');
+      let reference = document.createElement('canvas');
+      let referenceCtx = reference.getContext('2d');
     img.onload = () => {
       reference.width = reference.height = 7200;
       referenceCtx.drawImage(img, 0, 0, 480, 480, 0, 0, 7200, 7200);
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
         for (let i = 0; i < 12; i++) {
           for (let j = 0; j < 24; j++) {
             canvas.width = canvas.height = 300;
@@ -53,6 +53,10 @@ module.exports = class Dancer {
           }
         }
       img = null;
+      referenceCtx = null;
+      reference = null;
+      ctx = null;
+      canvas = null;
       };
     img.src = 'cat.min.svg'; //dataUrl; //`cat.min.svg#svgView(viewBox(${n * 800},0,400,400))`;
       //return i;
