@@ -20,5 +20,5 @@ This will set up a symlink in apps/node_modules to point at your local changes. 
 
 To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
-Open `chrome://inspect` in Chrome browser (requires Chrome 55+)
+Open [chrome://inspect](chrome://inspect) in Chrome browser (requires Chrome 55+)
 Tap on `inspect` link under "Remote Target"
