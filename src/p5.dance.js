@@ -910,6 +910,8 @@ module.exports = class DanceParty {
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
       bpm: this.songMetadata_ && this.songMetadata_.bpm,
+      artist: this.songMetadata_.artist,
+      title: this.songMetadata_.title,
     };
 
     this.p5_.background(this.world.background_color || "white");
