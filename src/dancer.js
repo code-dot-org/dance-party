@@ -30,11 +30,29 @@ module.exports = class Dancer {
     this.defaultWidth = 300;
     this.defaultHeight = 300;
 
-    this.frames = data.map(dataUrl => {
-      const i = new Image();
-      i.src = dataUrl;
-      return i;
-    });
+    this.frames = [];
+    //this.frames = data.map((dataUrl, n) => {
+      let img = new Image();
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        for (let i = 0; i < 12; i++) {
+          for (let j = 0; j < 24; j++) {
+            canvas.width = canvas.height = 300;
+            ctx.drawImage(img, j * 20, i * 20, 20, 20, 0, 0, 300, 300);
+            // canvas.toBlob(blob => {
+            //   console.log("converted " + j);
+            //   this.frames[j] = blob;
+            // });
+            //this.frames[j] = canvas.createImageBitmap();
+            createImageBitmap(canvas).then(bm => this.frames[j] = bm);
+          }
+        }
+      img = null;
+      };
+    img.src = 'cat.min.svg'; //dataUrl; //`cat.min.svg#svgView(viewBox(${n * 800},0,400,400))`;
+      //return i;
+    //});
   }
 
   drawPose(ctx, n, centerX, centerY, scaleX = 1, scaleY = 1, tint = null) {
