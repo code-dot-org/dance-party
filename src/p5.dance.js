@@ -148,7 +148,7 @@ module.exports = class DanceParty {
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}CAT_ClapHigh`;
+        const baseUrl = `${img_base}${this_sprite}_${name}`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
           // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
           // it to load the image as a Image (instead of a p5.Image), which avoids
@@ -306,12 +306,14 @@ module.exports = class DanceParty {
       sprite.scale = scale;
     };
 
-    sprite.draw = () => {
-      const costume = sprite.style.toLowerCase();
-      const move = sprite.current_move;
-      const frame = sprite.animation.getFrame();
-      drawPose(this.p5_._renderer.drawingContext, costume, move, frame, 0 ,0);
-    };
+    if (window.location.search.startsWith('?vector=')) {
+      sprite.draw = () => {
+        const costume = sprite.style.toLowerCase();
+        const move = sprite.current_move;
+        const frame = sprite.animation.getFrame();
+        drawPose(this.p5_._renderer.drawingContext, costume, move, frame, 0, 0);
+      };
+    }
 
     return sprite;
   }
