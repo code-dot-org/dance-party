@@ -22,4 +22,4 @@ module.exports = {
     {name: "XHeadHips", mirror: false},
     {name: "XHighKick", mirror: false},
   ],
-}
+};
