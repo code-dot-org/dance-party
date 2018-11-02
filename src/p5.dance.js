@@ -305,6 +305,14 @@ module.exports = class DanceParty {
     sprite.setScale = function (scale) {
       sprite.scale = scale;
     };
+
+    sprite.draw = () => {
+      const costume = sprite.style.toLowerCase();
+      const move = sprite.current_move;
+      const frame = sprite.animation.getFrame();
+      drawPose(this.p5_._renderer.drawingContext, costume, move, frame, 0 ,0);
+    };
+
     return sprite;
   }
 
@@ -773,13 +781,7 @@ module.exports = class DanceParty {
       });
     }
 
-    //this.p5_.drawSprites();
-    this.sprites_.forEach(sprite => {
-      const costume = sprite.style.toLowerCase();
-      const move = sprite.current_move;
-      const frame = sprite.animation.getFrame();
-      drawPose(this.p5_._renderer.drawingContext, costume, move, frame, sprite.position.x, sprite.position.y);
-    });
+    this.p5_.drawSprites();
 
     if (this.recordReplayLog_) {
       replayLog.logSprites(this.p5_);

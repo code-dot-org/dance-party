@@ -82,7 +82,7 @@ class Move {
     }
   }
 
-  drawPose(ctx, character, move, n, centerX, centerY, scaleX = 1, scaleY = 1, tint = null) {
+  drawPose(ctx, character, move, n, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1, tint = null) {
     const frame = rasterizer.getFrame(character, move, n);
 
     if (!frame) {
@@ -93,7 +93,9 @@ class Move {
     ctx.drawImage(
       Move.blitCanvas,
       centerX - this.defaultWidth / 2,
-      centerY - this.defaultHeight / 2
+      centerY - this.defaultHeight / 2,
+      this.defaultWidth * scaleX,
+      this.defaultHeight * scaleY,
     );
   }
 }
