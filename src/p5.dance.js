@@ -365,11 +365,11 @@ module.exports = class DanceParty {
     const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
     if (typeof move === 'number') {
       if (move < 0 || move >= fullLengthMoveCount) {
-        throw("Not moving to a valid full length move index!");
+        throw "Not moving to a valid full length move index!";
       }
     } else {
       if (nonRestingFullLengthMoveCount <= 1) {
-        throw("next/prev/rand requires that we have 2 or more non-resting full length moves");
+        throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
       }
       if (move === "next") {
         move = sprite.current_move + 1;
@@ -388,7 +388,7 @@ module.exports = class DanceParty {
           move = randomInt(firstNonRestingMoveIndex, fullLengthMoveCount - 1);
         }
       } else {
-        throw(`Unexpected move value: ${move}`);
+        throw `Unexpected move value: ${move}`;
       }
     }
     sprite.mirroring = dir;
@@ -416,7 +416,7 @@ module.exports = class DanceParty {
       }
     }
     if (move < 0 || move >= this.world.MOVE_NAMES.length) {
-      throw(`Invalid move index: ${move}`);
+      throw `Invalid move index: ${move}`;
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
