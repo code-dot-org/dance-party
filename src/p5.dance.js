@@ -925,7 +925,12 @@ module.exports = class DanceParty {
 
     this.p5_.drawSprites();
     if (this.recordReplayLog_) {
-      replayLog.logSprites(this.p5_);
+      replayLog.logFrame({
+        bg: this.world.bg_effect,
+        context,
+        fg: this.world.fg_effect,
+        p5: this.p5_,
+      });
     }
 
     if (this.world.fg_effect && this.world.fg_effect !== 'none') {
