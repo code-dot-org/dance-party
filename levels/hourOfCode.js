@@ -68,7 +68,7 @@ module.exports = {
     `,
     validationCode: `
       if (nativeAPI.getTime("measures") > 7) {
-        if (World.bg_effect == 'none') {
+        if (World.bg_effect == null) {
           nativeAPI.fail("You need to add a background effect.");
         }
       }

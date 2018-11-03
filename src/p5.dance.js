@@ -65,8 +65,8 @@ module.exports = class DanceParty {
     this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
 
-    this.world.bg_effect = 'none';
-    this.world.fg_effect = 'none';
+    this.world.bg_effect = null;
+    this.world.fg_effect = null;
 
     this.peakThisFrame_ = false;
     this.energy_ = 0;
@@ -161,8 +161,8 @@ module.exports = class DanceParty {
     this.p5_.noLoop();
     this.currentFrameEvents.any = false;
 
-    this.world.fg_effect = 'none';
-    this.world.bg_effect = 'none';
+    this.world.fg_effect = null;
+    this.world.bg_effect = null;
   }
 
   preload() {
@@ -224,7 +224,7 @@ module.exports = class DanceParty {
 
   setBackground(color) {
     // Clear background effect so it doesn't cover up background color.
-    this.world.bg_effect = 'none';
+    this.world.bg_effect = null;
     this.world.background_color = color;
   }
 
@@ -912,7 +912,7 @@ module.exports = class DanceParty {
       bpm: this.songMetadata_ && this.songMetadata_.bpm,
     };
 
-    this.bgEffects_[this.world.bg_effect].draw(context);
+    this.bgEffects_[this.world.bg_effect || 'none'].draw(context);
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
@@ -933,7 +933,7 @@ module.exports = class DanceParty {
       });
     }
 
-    if (this.world.fg_effect && this.world.fg_effect !== 'none') {
+    if (this.world.fg_effect && this.world.fg_effect !== null) {
       this.p5_.push();
       this.p5_.blendMode(this.fgEffects_.blend);
       this.fgEffects_[this.world.fg_effect].draw(context);
