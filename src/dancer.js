@@ -1,9 +1,11 @@
+const SOURCE_SIZE = 20;
+const CACHED_SIZE = 300;
 class Rasterizer {
   constructor() {
     this.cache = {/*
       dancerName_frameNum: ImageData
     */};
-    this.queue = [/*
+    this.moveQueue = [/*
       frameKey: `character_move_framenum`
     */];
   }
@@ -19,7 +21,7 @@ class Rasterizer {
   }
 
   processQueue() {
-    if (this.queue.length <= 0) {
+    if (this.moveQueue.length <= 0) {
       // Cleanup memory
       this.img = null;
       this.referenceCtx = null;
@@ -29,8 +31,8 @@ class Rasterizer {
       return;
     }
 
-    this.rasterizeItem(this.queue[0], () => {
-      this.queue.shift();
+    this.rasterizeItem(this.moveQueue[0], () => {
+      this.moveQueue.shift();
       this.processQueue();
     });
   }
@@ -38,13 +40,13 @@ class Rasterizer {
   rasterizeItem(frameKey, callback) {
     const [character, move] = frameKey.split('_');
     this.img.onload = () => {
-      this.reference.width = 7200;
-      this.reference.height = 300;
-      this.referenceCtx.drawImage(this.img, 0, move * 20, 480, 20, 0, 0, 7200, 300);
+      this.reference.width = 24 * CACHED_SIZE;
+      this.reference.height = CACHED_SIZE;
+      this.referenceCtx.drawImage(this.img, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
       for (let j = 0; j < 24; j++) {
-        this.canvas.width = this.canvas.height = 300;
-        this.ctx.drawImage(this.reference, j * 300, 0, 300, 300, 0, 0, 300, 300);
-        this.cache[this.frameKey(character, move, j)] = this.ctx.getImageData(0, 0, 300, 300);
+        this.canvas.width = this.canvas.height = CACHED_SIZE;
+        this.ctx.drawImage(this.reference, j * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
+        this.cache[this.frameKey(character, move, j)] = this.ctx.getImageData(0, 0, CACHED_SIZE, CACHED_SIZE);
       }
       callback();
     };
@@ -61,8 +63,8 @@ class Rasterizer {
       return this.cache[frameKey];
     }
 
-    if (!this.queue.some(key => key.startsWith(`${character}_${move}_`))) {
-      this.queue.push(frameKey);
+    if (!this.moveQueue.some(key => key.startsWith(`${character}_${move}_`))) {
+      this.moveQueue.push(frameKey);
       this.startQueue();
     }
     return null;
@@ -77,7 +79,7 @@ class Move {
     this.defaultHeight = 300;
     if (!Move.blitCanvas) {
       Move.blitCanvas = document.createElement('canvas');
-      Move.blitCanvas.width = Move.blitCanvas.height = 300;
+      Move.blitCanvas.width = Move.blitCanvas.height = CACHED_SIZE;
       Move.blitCtx = Move.blitCanvas.getContext('2d');
     }
   }
