@@ -65,8 +65,8 @@ module.exports = class DanceParty {
     this.playSound_ = playSound;
     this.recordReplayLog_ = recordReplayLog;
 
-    this.world.bg_effect = null;
-    this.world.fg_effect = null;
+    this.world.bg_effect = 'none';
+    this.world.fg_effect = 'none';
 
     this.peakThisFrame_ = false;
     this.energy_ = 0;
@@ -161,8 +161,8 @@ module.exports = class DanceParty {
     this.p5_.noLoop();
     this.currentFrameEvents.any = false;
 
-    this.world.fg_effect = null;
-    this.world.bg_effect = null;
+    this.world.fg_effect = 'none';
+    this.world.bg_effect = 'none';
   }
 
   preload() {
@@ -224,21 +224,21 @@ module.exports = class DanceParty {
 
   setBackground(color) {
     // Clear background effect so it doesn't cover up background color.
-    this.world.bg_effect = this.bgEffects_.none;
+    this.world.bg_effect = 'none';
     this.world.background_color = color;
   }
 
   setBackgroundEffect(effect) {
-    this.world.bg_effect = this.bgEffects_[effect];
+    this.world.bg_effect = effect;
   }
 
   setForegroundEffect(effect) {
-    this.world.fg_effect = this.fgEffects_[effect];
+    this.world.fg_effect = effect;
   }
 
-//
-// Block Functions
-//
+  //
+  // Block Functions
+  //
 
   makeNewDanceSprite(costume, _, location) {
 
@@ -343,7 +343,7 @@ module.exports = class DanceParty {
     this.layoutSprites(tempGroup, layout);
   }
 
-// Dance Moves
+  // Dance Moves
 
   changeMoveLR(sprite, move, dir) {
     if (!this.spriteExists_(sprite)) return;
@@ -394,7 +394,7 @@ module.exports = class DanceParty {
     }
   }
 
-// Group Blocks
+  // Group Blocks
 
   getGroupByName_(group) {
     if (typeof(group) === "object") {
@@ -597,7 +597,7 @@ module.exports = class DanceParty {
     group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
   }
 
-// Properties
+  // Properties
 
   setTint(sprite, val) {
     this.setProp(sprite, "tint", val);
@@ -689,7 +689,7 @@ module.exports = class DanceParty {
     sprite.dance_speed = speed;
   }
 
-// Music Helpers
+  // Music Helpers
 
   getEnergy(range) {
     switch (range) {
@@ -708,7 +708,7 @@ module.exports = class DanceParty {
 
   getCurrentMeasure() {
     return this.songStartTime_ > 0 ?
-        this.songMetadata_.bpm * ((this.getCurrentTime() - this.songMetadata_.delay) / 240) + 1 : 0;
+      this.songMetadata_.bpm * ((this.getCurrentTime() - this.songMetadata_.delay) / 240) + 1 : 0;
   }
 
   getTime(unit) {
@@ -719,7 +719,7 @@ module.exports = class DanceParty {
     }
   }
 
-// Behaviors
+  // Behaviors
 
   addBehavior_(sprite, behavior) {
     if (!this.spriteExists_(sprite) || behavior === undefined) return;
@@ -912,10 +912,7 @@ module.exports = class DanceParty {
       bpm: this.songMetadata_ && this.songMetadata_.bpm,
     };
 
-    this.p5_.background(this.world.background_color || "white");
-    if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
-      this.world.bg_effect.draw(context);
-    }
+    this.bgEffects_[this.world.bg_effect].draw(context);
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
@@ -931,10 +928,10 @@ module.exports = class DanceParty {
       replayLog.logSprites(this.p5_);
     }
 
-    if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
+    if (this.world.fg_effect && this.world.fg_effect !== 'none') {
       this.p5_.push();
       this.p5_.blendMode(this.fgEffects_.blend);
-      this.world.fg_effect.draw(context);
+      this.fgEffects_[this.world.fg_effect].draw(context);
       this.p5_.pop();
     }
 
@@ -952,4 +949,4 @@ module.exports = class DanceParty {
       this.onHandleEvents(this.currentFrameEvents);
     }
   }
-};
+}
