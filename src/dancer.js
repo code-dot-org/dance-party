@@ -98,7 +98,7 @@ class Move {
     }
   }
 
-  drawPose(ctx, character, move, n, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1, tint = null) {
+  drawPose(ctx, character, move, n, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1 /* TODO: , tint = null */) {
     const frame = rasterizer.getFrame(character, move, n);
 
     if (!frame) {
