@@ -39,6 +39,7 @@ module.exports = class DanceParty {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
+    this.useVector = window.location.search.startsWith('?vector=');
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -144,6 +145,10 @@ module.exports = class DanceParty {
   }
 
   preload() {
+    if (this.useVector) {
+      return;
+    }
+
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -176,11 +181,13 @@ module.exports = class DanceParty {
     this.bgEffects_ = new Effects(this.p5_, 1);
     this.fgEffects_ = new Effects(this.p5_, 0.8);
 
-    // Create animations from spritesheets
-    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-      let this_sprite = this.world.SPRITE_NAMES[i];
-      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+    if (!this.useVector) {
+      // Create animations from spritesheets
+      for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
+        let this_sprite = this.world.SPRITE_NAMES[i];
+        for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
+          ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+        }
       }
     }
 
@@ -306,11 +313,11 @@ module.exports = class DanceParty {
       sprite.scale = scale;
     };
 
-    if (window.location.search.startsWith('?vector=')) {
+    if (this.useVector) {
       sprite.draw = () => {
         const costume = sprite.style.toLowerCase();
         const move = sprite.current_move;
-        const frame = sprite.animation.getFrame();
+        const frame = sprite.frame;
         drawPose(this.p5_._renderer.drawingContext, costume, move, frame, 0, 0);
       };
     }
