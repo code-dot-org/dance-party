@@ -1,5 +1,7 @@
 const SOURCE_SIZE = 20;
 const CACHED_SIZE = 300;
+const LONG_MOVES = 12;
+const MAX_FRAMES_PER_MOVE = 24;
 
 class Rasterizer {
   constructor() {
@@ -7,7 +9,7 @@ class Rasterizer {
       character: Image
     */};
     this.cache = {/*
-      dancerName_frameNum: ImageData
+      moveKey: ImageData
     */};
     this.moveQueue = [/*
       frameKey: `character_move_framenum`
@@ -20,10 +22,10 @@ class Rasterizer {
   startQueue() {
     // Setup memory
     this.reference = document.createElement('canvas');
+    this.reference.width = MAX_FRAMES_PER_MOVE * CACHED_SIZE;
+    this.reference.height = CACHED_SIZE;
     this.referenceCtx = this.reference.getContext('2d');
-    this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d');
-    setTimeout(this.processQueue.bind(this), 0);
+    this.processQueue();
   }
 
   processQueue() {
@@ -31,8 +33,6 @@ class Rasterizer {
       // Cleanup memory
       this.referenceCtx = null;
       this.reference = null;
-      this.ctx = null;
-      this.canvas = null;
       return;
     }
 
@@ -47,34 +47,17 @@ class Rasterizer {
   }
 
   rasterizeMove(moveKey, callback) {
-    const [character, move] = moveKey.split('_');
+    let [character, move] = moveKey.split('_');
+    move = parseInt(move, 10);
+    const moveFrames = move < LONG_MOVES ? 24 : 12;
     const svgImg = this.getSvgImg(character);
 
     const rasterize = () => {
-      if (this.frameQueue.length === 0) {
-        for (let i = 0; i < 24; i++) {
-          this.frameQueue.push(this.frameKey(character, move, i));
-        }
-
-        // Clear reference canvas and draw the relevant part of the SVG onto it
-        this.reference.width = 24 * CACHED_SIZE;
-        this.reference.height = CACHED_SIZE;
-        this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
-      }
-
-      // Pull from the frame queue and render the next frame.
-      const nextFrameKey = this.frameQueue.shift();
-      const frame = nextFrameKey.split('_')[2];
-      // clear canvas
-      this.canvas.width = this.canvas.height = CACHED_SIZE;
-      this.ctx.drawImage(this.reference, frame * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
-      this.cache[nextFrameKey] = this.ctx.getImageData(0, 0, CACHED_SIZE, CACHED_SIZE);
-
-      if (this.frameQueue.length > 0) {
-        setTimeout(rasterize, 0);
-      } else {
-        callback();
-      }
+      // Clear reference canvas and draw the relevant part of the SVG onto it
+      this.referenceCtx.clearRect(0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
+      this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, moveFrames * SOURCE_SIZE, SOURCE_SIZE, 0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
+      this.cache[moveKey] = this.referenceCtx.getImageData(0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
+      callback();
     };
 
     if (imgLoaded(svgImg)) {
@@ -85,17 +68,12 @@ class Rasterizer {
     }
   }
 
-  frameKey(character, move, frame) {
-    return `${character}_${move}_${frame}`;
-  }
-
-  getFrame(character, move, frame) {
-    const frameKey = this.frameKey(character, move, frame);
-    if (this.cache[frameKey]) {
-      return this.cache[frameKey];
+  getMove(character, move) {
+    const moveKey = `${character}_${move}`;
+    if (this.cache[moveKey]) {
+      return this.cache[moveKey];
     }
 
-    const moveKey = `${character}_${move}`;
     if (!this.moveQueue.includes(moveKey)) {
       this.moveQueue.push(moveKey);
       this.startQueue();
@@ -117,14 +95,14 @@ class Move {
     }
   }
 
-  drawPose(ctx, character, move, n, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1, tint = null) {
-    const frame = rasterizer.getFrame(character, move, n);
+  drawPose(ctx, character, move, frame, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1 /* TODO: , tint = null */) {
+    const animation = rasterizer.getMove(character, move);
 
-    if (!frame) {
+    if (!animation) {
       return;
     }
 
-    Move.blitCtx.putImageData(frame, 0, 0);
+    Move.blitCtx.putImageData(animation, -CACHED_SIZE * frame, 0, CACHED_SIZE * frame, 0, CACHED_SIZE, CACHED_SIZE);
     ctx.drawImage(
       Move.blitCanvas,
       centerX - this.defaultWidth / 2,
