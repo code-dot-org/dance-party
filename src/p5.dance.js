@@ -264,15 +264,19 @@ module.exports = class DanceParty {
     this.sprites_by_type_[costume].add(sprite);
 
     sprite.mirroring = 1;
+    sprite.isLooping = true;
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
     sprite.previous_move = 0;
 
-    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
+    for (let i = 0; ANIMATIONS[costume] && i < ANIMATIONS[costume].length; i++) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
     }
-    sprite.animation.stop();
+    if (sprite.animation) {
+      sprite.animation.stop();
+    }
+    sprite.frame = 0;
     this.sprites_.add(sprite);
     sprite.speed = 10;
     sprite.sinceLastFrame = 0;
@@ -287,29 +291,37 @@ module.exports = class DanceParty {
       var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
+        const totalFrames = sprite.current_move > 12 ? 12 : 24;
+        const currentFrame = sprite.frame;
         sprite.sinceLastFrame -= msPerFrame;
         sprite.looping_frame++;
-        if (sprite.animation.looping) {
-          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+        if (sprite.isLooping) {
+          sprite.frame = sprite.looping_frame % totalFrames;
         } else {
-          sprite.animation.nextFrame();
+          sprite.frame = (sprite.frame + 1) % totalFrames;
         }
 
         if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) sprite.mirroring *= -1;
-          if (sprite.animation.looping) {
+          if (ANIMATIONS[sprite.style] && ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+            sprite.mirroring *= -1;
+          }
+          if (sprite.isLooping) {
             sprite.mirrorX(sprite.mirroring);
           }
         }
 
-        var currentFrame = sprite.animation.getFrame();
-        if (currentFrame === sprite.animation.getLastFrame() && !sprite.animation.looping) {
-          //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
-          sprite.changeAnimation("anim" + sprite.current_move);
-          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+        if (currentFrame === totalFrames && !sprite.isLooping) {
+          if (sprite.animation) {
+            sprite.changeAnimation("anim" + sprite.current_move);
+          }
+          sprite.frame = sprite.looping_frame % totalFrames;
           sprite.mirrorX(sprite.mirroring);
-          sprite.animation.looping = true;
+          sprite.isLooping = true;
         }
+      }
+      if (sprite.animation) {
+        sprite.animation.loopin = sprite.isLooping;
+        sprite.animation.changeFrame(sprite.frame);
       }
     });
 
@@ -365,8 +377,8 @@ module.exports = class DanceParty {
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
-    if (sprite.animation.looping) sprite.looping_frame = 0;
-    sprite.animation.looping = true;
+    if (sprite.isLooping) sprite.looping_frame = 0;
+    sprite.isLooping = true;
     sprite.current_move = move;
   }
 
@@ -384,7 +396,7 @@ module.exports = class DanceParty {
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
-    sprite.animation.looping = false;
+    sprite.isLooping = false;
     sprite.animation.changeFrame(FRAMES / 2);
   }
 
