@@ -47,13 +47,13 @@ class Rasterizer {
   }
 
   rasterizeMove(moveKey, callback) {
-    const [character, move] = frameKey.split('_');
+    const [character, move] = moveKey.split('_');
     const svgImg = this.getSvgImg(character);
 
     const rasterize = () => {
       if (this.frameQueue.length === 0) {
-        for (let i = 0; j < 24; j++) {
-          this.frameKey.push(this.frameKey(character, move, i));
+        for (let i = 0; i < 24; i++) {
+          this.frameQueue.push(this.frameKey(character, move, i));
         }
 
         // Clear reference canvas and draw the relevant part of the SVG onto it
@@ -64,7 +64,7 @@ class Rasterizer {
 
       // Pull from the frame queue and render the next frame.
       const nextFrameKey = this.frameQueue.shift();
-      const [_c, _m, frame] = nextFrameKey.split('_')[2];
+      const frame = nextFrameKey.split('_')[2];
       // clear canvas
       this.canvas.width = this.canvas.height = CACHED_SIZE;
       this.ctx.drawImage(this.reference, frame * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
