@@ -12,6 +12,9 @@ class Rasterizer {
     this.moveQueue = [/*
       frameKey: `character_move_framenum`
     */];
+    this.frameQueue = [/*
+      frameKey: `character_move_framenum`
+    */];
   }
 
   startQueue() {
@@ -33,7 +36,7 @@ class Rasterizer {
       return;
     }
 
-    this.rasterizeItem(this.moveQueue[0], () => {
+    this.rasterizeMove(this.moveQueue[0], () => {
       this.moveQueue.shift();
       this.processQueue();
     });
@@ -43,20 +46,35 @@ class Rasterizer {
     return this.svgImgCache[character] = this.svgImgCache[character] || new Image();
   }
 
-  rasterizeItem(frameKey, callback) {
+  rasterizeMove(moveKey, callback) {
     const [character, move] = frameKey.split('_');
     const svgImg = this.getSvgImg(character);
 
     const rasterize = () => {
-      this.reference.width = 24 * CACHED_SIZE;
-      this.reference.height = CACHED_SIZE;
-      this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
-      for (let j = 0; j < 24; j++) {
-        this.canvas.width = this.canvas.height = CACHED_SIZE;
-        this.ctx.drawImage(this.reference, j * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
-        this.cache[this.frameKey(character, move, j)] = this.ctx.getImageData(0, 0, CACHED_SIZE, CACHED_SIZE);
+      if (this.frameQueue.length === 0) {
+        for (let i = 0; j < 24; j++) {
+          this.frameKey.push(this.frameKey(character, move, i));
+        }
+
+        // Clear reference canvas and draw the relevant part of the SVG onto it
+        this.reference.width = 24 * CACHED_SIZE;
+        this.reference.height = CACHED_SIZE;
+        this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
       }
-      callback();
+
+      // Pull from the frame queue and render the next frame.
+      const nextFrameKey = this.frameQueue.shift();
+      const [_c, _m, frame] = nextFrameKey.split('_')[2];
+      // clear canvas
+      this.canvas.width = this.canvas.height = CACHED_SIZE;
+      this.ctx.drawImage(this.reference, frame * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
+      this.cache[nextFrameKey] = this.ctx.getImageData(0, 0, CACHED_SIZE, CACHED_SIZE);
+
+      if (this.frameQueue.length > 0) {
+        setTimeout(rasterize, 0);
+      } else {
+        callback();
+      }
     };
 
     if (imgLoaded(svgImg)) {
@@ -77,8 +95,9 @@ class Rasterizer {
       return this.cache[frameKey];
     }
 
-    if (!this.moveQueue.some(key => key.startsWith(`${character}_${move}_`))) {
-      this.moveQueue.push(frameKey);
+    const moveKey = `${character}_${move}`;
+    if (!this.moveQueue.includes(moveKey)) {
+      this.moveQueue.push(moveKey);
       this.startQueue();
     }
     return null;
