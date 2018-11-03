@@ -1,7 +1,11 @@
 const SOURCE_SIZE = 20;
 const CACHED_SIZE = 300;
+
 class Rasterizer {
   constructor() {
+    this.svgImgCache = {/*
+      character: Image
+    */};
     this.cache = {/*
       dancerName_frameNum: ImageData
     */};
@@ -12,7 +16,6 @@ class Rasterizer {
 
   startQueue() {
     // Setup memory
-    this.img = new Image();
     this.reference = document.createElement('canvas');
     this.referenceCtx = this.reference.getContext('2d');
     this.canvas = document.createElement('canvas');
@@ -23,7 +26,6 @@ class Rasterizer {
   processQueue() {
     if (this.moveQueue.length <= 0) {
       // Cleanup memory
-      this.img = null;
       this.referenceCtx = null;
       this.reference = null;
       this.ctx = null;
@@ -37,12 +39,18 @@ class Rasterizer {
     });
   }
 
+  getSvgImg(character) {
+    return this.svgImgCache[character] = this.svgImgCache[character] || new Image();
+  }
+
   rasterizeItem(frameKey, callback) {
     const [character, move] = frameKey.split('_');
-    this.img.onload = () => {
+    const svgImg = this.getSvgImg(character);
+
+    const rasterize = () => {
       this.reference.width = 24 * CACHED_SIZE;
       this.reference.height = CACHED_SIZE;
-      this.referenceCtx.drawImage(this.img, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
+      this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, 24 * SOURCE_SIZE, SOURCE_SIZE, 0, 0, 24 * CACHED_SIZE, CACHED_SIZE);
       for (let j = 0; j < 24; j++) {
         this.canvas.width = this.canvas.height = CACHED_SIZE;
         this.ctx.drawImage(this.reference, j * CACHED_SIZE, 0, CACHED_SIZE, CACHED_SIZE, 0, 0, CACHED_SIZE, CACHED_SIZE);
@@ -50,7 +58,13 @@ class Rasterizer {
       }
       callback();
     };
-    this.img.src = `assets/${character}.svg`;
+
+    if (imgLoaded(svgImg)) {
+      rasterize();
+    } else {
+      svgImg.onload = rasterize;
+      svgImg.src = `assets/${character}.svg`;
+    }
   }
 
   frameKey(character, move, frame) {
@@ -100,6 +114,10 @@ class Move {
       this.defaultHeight * scaleY,
     );
   }
+}
+
+function imgLoaded(imgElement) {
+  return imgElement.complete && imgElement.naturalHeight !== 0;
 }
 
 const move = new Move();
