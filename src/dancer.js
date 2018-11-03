@@ -1,44 +1,29 @@
 const SOURCE_SIZE = 20;
 const CACHED_SIZE = 300;
 const LONG_MOVES = 12;
-const MAX_FRAMES_PER_MOVE = 24;
 
 class Rasterizer {
   constructor() {
     this.svgImgCache = {/*
-      character: Image
+      character: Image (svg)
     */};
     this.cache = {/*
-      moveKey: ImageData
+      moveKey: CanvasElement (rasterized)
     */};
     this.moveQueue = [/*
       frameKey: `character_move_framenum`
     */];
-    this.frameQueue = [/*
-      frameKey: `character_move_framenum`
-    */];
-  }
-
-  startQueue() {
-    // Setup memory
-    this.reference = document.createElement('canvas');
-    this.reference.width = MAX_FRAMES_PER_MOVE * CACHED_SIZE;
-    this.reference.height = CACHED_SIZE;
-    this.referenceCtx = this.reference.getContext('2d');
-    this.processQueue();
   }
 
   processQueue() {
     if (this.moveQueue.length <= 0) {
-      // Cleanup memory
-      this.referenceCtx = null;
-      this.reference = null;
       return;
     }
 
+    console.log('Queue depth: ' + this.moveQueue.length);
     this.rasterizeMove(this.moveQueue[0], () => {
       this.moveQueue.shift();
-      this.processQueue();
+      setTimeout(() => this.processQueue(), 66);
     });
   }
 
@@ -51,12 +36,14 @@ class Rasterizer {
     move = parseInt(move, 10);
     const moveFrames = move < LONG_MOVES ? 24 : 12;
     const svgImg = this.getSvgImg(character);
+    const canvas = document.createElement('canvas');
+    canvas.width = moveFrames * CACHED_SIZE;
+    canvas.height = CACHED_SIZE;
 
     const rasterize = () => {
-      // Clear reference canvas and draw the relevant part of the SVG onto it
-      this.referenceCtx.clearRect(0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
-      this.referenceCtx.drawImage(svgImg, 0, move * SOURCE_SIZE, moveFrames * SOURCE_SIZE, SOURCE_SIZE, 0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
-      this.cache[moveKey] = this.referenceCtx.getImageData(0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
+      console.timeStamp('Rasterizing ' + moveKey);
+      canvas.getContext('2d').drawImage(svgImg, 0, move * SOURCE_SIZE, moveFrames * SOURCE_SIZE, SOURCE_SIZE, 0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
+      this.cache[moveKey] = canvas;
       callback();
     };
 
@@ -76,7 +63,7 @@ class Rasterizer {
 
     if (!this.moveQueue.includes(moveKey)) {
       this.moveQueue.push(moveKey);
-      this.startQueue();
+      this.processQueue();
     }
     return null;
   }
@@ -88,11 +75,6 @@ class Move {
   constructor() {
     this.defaultWidth = 300;
     this.defaultHeight = 300;
-    if (!Move.blitCanvas) {
-      Move.blitCanvas = document.createElement('canvas');
-      Move.blitCanvas.width = Move.blitCanvas.height = CACHED_SIZE;
-      Move.blitCtx = Move.blitCanvas.getContext('2d');
-    }
   }
 
   drawPose(ctx, character, move, frame, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1 /* TODO: , tint = null */) {
@@ -102,9 +84,12 @@ class Move {
       return;
     }
 
-    Move.blitCtx.putImageData(animation, -CACHED_SIZE * frame, 0, CACHED_SIZE * frame, 0, CACHED_SIZE, CACHED_SIZE);
     ctx.drawImage(
-      Move.blitCanvas,
+      animation,
+      CACHED_SIZE * frame,
+      0,
+      CACHED_SIZE,
+      CACHED_SIZE,
       centerX - this.defaultWidth / 2,
       centerY - this.defaultHeight / 2,
       this.defaultWidth * scaleX,
