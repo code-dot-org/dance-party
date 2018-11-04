@@ -215,10 +215,12 @@ module.exports = class DanceParty {
     }
     this.songMetadata_ = songData;
     this.analysisPosition_ = 0;
-    this.playSound_({url: this.songMetadata_.file, callback: () => {
+    this.playSound_(this.songMetadata_.file, () => {
       this.songStartTime_ = new Date();
       callback && callback();
-    }});
+    }, () => {
+      this.reset();
+    });
     this.p5_.loop();
   }
 
