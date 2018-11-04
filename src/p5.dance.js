@@ -3,7 +3,9 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
-const drawPose = require('./dancer');
+const Rasterizer = require('./dancer');
+
+const VECTOR_MODE = window.location.search.startsWith('?vector=');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -145,18 +147,34 @@ module.exports = class DanceParty {
 
   preload() {
     // Load spritesheet JSON files
+
+    // For rastering
+    if (VECTOR_MODE) {
+      this.rasterizer = new Rasterizer(() => {
+        this.p5_._decrementPreload();
+      });
+      this.p5_._incrementPreload();
+    }
+
+
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}${this_sprite}_${name}`;
-        this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
-          // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
-          // it to load the image as a Image (instead of a p5.Image), which avoids
-          // a canvas creation. This makes it possible to run on mobile Safari in
-          // iOS 12 with canvas memory limits.
-          this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
-        });
+        if (VECTOR_MODE) {
+          const spriteImage = this.rasterizer.getMove(this_sprite, moveIndex);
+          const spritesheet = new this.p5_.SpriteSheet(spriteImage, 300, 300, 24);
+          this.setAnimationSpriteSheet(this_sprite, moveIndex, spritesheet, mirror);
+        } else {
+          const baseUrl = `${img_base}${this_sprite}_${name}`;
+          this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
+            // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
+            // it to load the image as a Image (instead of a p5.Image), which avoids
+            // a canvas creation. This makes it possible to run on mobile Safari in
+            // iOS 12 with canvas memory limits.
+            this.setAnimationSpriteSheet(this_sprite, moveIndex,
+              this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
+          });
+        }
       });
     });
   }
@@ -177,14 +195,27 @@ module.exports = class DanceParty {
     this.fgEffects_ = new Effects(this.p5_, 0.8);
 
     // Create animations from spritesheets
-    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-      let this_sprite = this.world.SPRITE_NAMES[i];
-      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+    // if (!VECTOR_MODE) {
+      for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
+        let this_sprite = this.world.SPRITE_NAMES[i];
+        for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
+          ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
+        }
       }
-    }
+    // }
 
     this.onInit && this.onInit(this);
+  }
+
+  getAnimation(character, moveIndex) {
+    if (!(ANIMATIONS[character] && ANIMATIONS[character][moveIndex])) {
+      const spriteImage = {canvas: getMoveCanvas(character, moveIndex), width: 24 * 300, height: 300};
+      const spritesheet = new this.p5_.SpriteSheet(spriteImage, 300, 300, 24);
+      const { mirror } = this.world.MOVE_NAMES[moveIndex];
+      this.setAnimationSpriteSheet(character, moveIndex, spritesheet, mirror);
+      ANIMATIONS[character][moveIndex].animation = this.p5_.loadAnimation(ANIMATIONS[character][moveIndex].spritesheet);
+    }
+    return ANIMATIONS[character][moveIndex].animation;
   }
 
   play(songData) {
@@ -242,9 +273,16 @@ module.exports = class DanceParty {
     sprite.current_move = 0;
     sprite.previous_move = 0;
 
-    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
-      sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
+    // Preload animations into each sprite in spritesheet mode
+    if (VECTOR_MODE) {
+      sprite.addAnimation('anim0', this.getAnimation(sprite.style, 0));
+      sprite.changeAnimation('anim0');
+    } else {
+      for (var i = 0; i < ANIMATIONS[costume].length; i++) {
+        sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
+      }
     }
+
     sprite.animation.stop();
     this.sprites_.add(sprite);
     sprite.speed = 10;
@@ -278,7 +316,7 @@ module.exports = class DanceParty {
         var currentFrame = sprite.animation.getFrame();
         if (currentFrame === sprite.animation.getLastFrame() && !sprite.animation.looping) {
           //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
-          sprite.changeAnimation("anim" + sprite.current_move);
+          sprite.changeDance(sprite.current_move);
           sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
           sprite.mirrorX(sprite.mirroring);
           sprite.animation.looping = true;
@@ -306,14 +344,15 @@ module.exports = class DanceParty {
       sprite.scale = scale;
     };
 
-    if (window.location.search.startsWith('?vector=')) {
-      sprite.draw = () => {
-        const costume = sprite.style.toLowerCase();
-        const move = sprite.current_move;
-        const frame = sprite.animation.getFrame();
-        drawPose(this.p5_._renderer.drawingContext, costume, move, frame, 0, 0);
-      };
-    }
+    sprite.changeDance = function (move) {
+      const animKey = "anim" + move;
+      if (VECTOR_MODE) {
+        if (!sprite.hasAnimation(animKey)) {
+          sprite.addAnimation(animKey, window.nativeAPI.getAnimation(sprite.style, move));
+        }
+      }
+      sprite.changeAnimation(animKey);
+    };
 
     return sprite;
   }
@@ -347,7 +386,7 @@ module.exports = class DanceParty {
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
-    sprite.changeAnimation("anim" + move);
+    sprite.changeDance(move);
     if (sprite.animation.looping) sprite.looping_frame = 0;
     sprite.animation.looping = true;
     sprite.current_move = move;
@@ -366,7 +405,7 @@ module.exports = class DanceParty {
       }
     }
     sprite.mirrorX(dir);
-    sprite.changeAnimation("anim" + move);
+    sprite.changeDance(move);
     sprite.animation.looping = false;
     sprite.animation.changeFrame(FRAMES / 2);
   }

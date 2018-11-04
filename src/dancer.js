@@ -1,106 +1,104 @@
+const FRAMES_PER_ROW = 6;
 const SOURCE_SIZE = 20;
+const SOURCE_ROW_SIZE = FRAMES_PER_ROW * SOURCE_SIZE;
 const CACHED_SIZE = 300;
+const CACHED_ROW_SIZE = FRAMES_PER_ROW * CACHED_SIZE;
 const LONG_MOVES = 12;
+const EMPTY_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
 class Rasterizer {
-  constructor() {
-    this.svgImgCache = {/*
-      character: Image (svg)
-    */};
+  constructor(onStop) {
+    this.onStop = onStop;
+    this.cachedSvgImg = null;
     this.cache = {/*
       moveKey: CanvasElement (rasterized)
     */};
     this.moveQueue = [/*
       frameKey: `character_move_framenum`
     */];
-  }
-
-  processQueue() {
-    if (this.moveQueue.length <= 0) {
-      return;
-    }
-
-    console.log('Queue depth: ' + this.moveQueue.length);
-    this.rasterizeMove(this.moveQueue[0], () => {
-      this.moveQueue.shift();
-      setTimeout(() => this.processQueue(), 66);
-    });
-  }
-
-  getSvgImg(character) {
-    return this.svgImgCache[character] = this.svgImgCache[character] || new Image();
-  }
-
-  rasterizeMove(moveKey, callback) {
-    let [character, move] = moveKey.split('_');
-    move = parseInt(move, 10);
-    const moveFrames = move < LONG_MOVES ? 24 : 12;
-    const svgImg = this.getSvgImg(character);
-    const canvas = document.createElement('canvas');
-    canvas.width = moveFrames * CACHED_SIZE;
-    canvas.height = CACHED_SIZE;
-
-    const rasterize = () => {
-      console.timeStamp('Rasterizing ' + moveKey);
-      canvas.getContext('2d').drawImage(svgImg, 0, move * SOURCE_SIZE, moveFrames * SOURCE_SIZE, SOURCE_SIZE, 0, 0, moveFrames * CACHED_SIZE, CACHED_SIZE);
-      this.cache[moveKey] = canvas;
-      callback();
-    };
-
-    if (imgLoaded(svgImg)) {
-      rasterize();
-    } else {
-      svgImg.onload = rasterize;
-      svgImg.src = `assets/${character}.svg`;
-    }
+    this.processQueue = this.processQueue.bind(this);
   }
 
   getMove(character, move) {
     const moveKey = `${character}_${move}`;
-    if (this.cache[moveKey]) {
-      return this.cache[moveKey];
+    if (!this.cache[moveKey]) {
+      this.generateMove(character, move, moveKey);
     }
-
-    if (!this.moveQueue.includes(moveKey)) {
-      this.moveQueue.push(moveKey);
-      this.processQueue();
-    }
-    return null;
-  }
-}
-
-const rasterizer = new Rasterizer();
-
-class Move {
-  constructor() {
-    this.defaultWidth = 300;
-    this.defaultHeight = 300;
+    return this.cache[moveKey];
   }
 
-  drawPose(ctx, character, move, frame, centerX = 0, centerY = 0, scaleX = 1, scaleY = 1 /* TODO: , tint = null */) {
-    const animation = rasterizer.getMove(character, move);
+  generateMove(character, move, moveKey) {
+    console.count('generateMove');
+    // Synchronously generate an empty canvas for p5.play to use
+    // Kick off asynchronous rasterize step
+    const moveFrames = move < LONG_MOVES ? 24 : 12;
+    // base64-encoded PNG transparent pixel
+    this.cache[moveKey] = new Image();
+    this.cache[moveKey].width = 6 * CACHED_SIZE;
+    this.cache[moveKey].height = Math.ceil(moveFrames / 6) * CACHED_SIZE;
+    this.cache[moveKey].src = EMPTY_PNG;
 
-    if (!animation) {
+    this.moveQueue.push([moveKey, character, move, moveFrames]);
+    if (this.moveQueue.length === 1) {
+      this.cachedSvgImg = new Image();
+      this.canvas = document.createElement('canvas');
+      this.canvas.width = CACHED_SIZE * 6;
+      this.canvas.height = CACHED_SIZE * 4;
+      this.context = this.canvas.getContext('2d');
+      setTimeout(this.processQueue, 0);
+    }
+  }
+
+  processQueue() {
+    if (this.moveQueue.length <= 0) {
+      console.log('done');
+      delete this.context;
+      delete this.canvas;
+      delete this.cachedSvgImg;
+      if (typeof this.onStop === 'function') {
+        this.onStop();
+      }
       return;
     }
 
-    ctx.drawImage(
-      animation,
-      CACHED_SIZE * frame,
-      0,
-      CACHED_SIZE,
-      CACHED_SIZE,
-      centerX - this.defaultWidth / 2,
-      centerY - this.defaultHeight / 2,
-      this.defaultWidth * scaleX,
-      this.defaultHeight * scaleY,
-    );
+    this.rasterizeMove(this.moveQueue[0], () => {
+      this.moveQueue.shift();
+      setTimeout(this.processQueue, 0);
+    });
+  }
+
+  rasterizeMove(moveData, callback) {
+    const [moveKey, character, move, moveFrames] = moveData;
+    // const moveName = window.nativeAPI.world.MOVE_NAMES[move].name;
+    // const svgUrl = `assets/${character.toLowerCase()}.svg#${moveName}`;
+    const svgUrl = `assets/${character.toLowerCase()}.svg`;
+
+    const rasterize = () => {
+      console.count('rasterize');
+      this.context.clearRect(0, 0, CACHED_SIZE * 6, CACHED_SIZE * 4);
+      this.context.drawImage(this.cachedSvgImg, 0, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 0, CACHED_ROW_SIZE, CACHED_SIZE);
+      this.context.drawImage(this.cachedSvgImg, SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
+      if (moveFrames > 12) {
+        this.context.drawImage(this.cachedSvgImg, 2 * SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 2 * CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
+        this.context.drawImage(this.cachedSvgImg, 3 * SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 3 * CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
+      }
+      this.cache[moveKey].src = this.canvas.toDataURL();
+      callback();
+    };
+
+    const skip = () => {
+      console.log(`Couldn't load '${svgUrl}'. Skipping...`);
+      callback();
+    };
+
+    if (this.cachedSvgImg.src !== svgUrl) {
+      this.cachedSvgImg.onload = rasterize;
+      this.cachedSvgImg.onerror = skip;
+      this.cachedSvgImg.src = svgUrl;
+    } else {
+      rasterize();
+    }
   }
 }
 
-function imgLoaded(imgElement) {
-  return imgElement.complete && imgElement.naturalHeight !== 0;
-}
-
-const move = new Move();
-module.exports = move.drawPose.bind(move);
+module.exports = Rasterizer;
