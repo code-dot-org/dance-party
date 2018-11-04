@@ -3,7 +3,7 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
-const Rasterizer = require('./dancer');
+const SpritesheetBuilder = require('./SpritesheetBuilder');
 
 const VECTOR_MODE = window.location.search.startsWith('?vector=');
 
@@ -148,21 +148,16 @@ module.exports = class DanceParty {
   preload() {
     // Load spritesheet JSON files
 
-    // For rastering
+    // For loading SVGs as spritesheets
     if (VECTOR_MODE) {
-      this.rasterizer = new Rasterizer(() => {
-        this.p5_._decrementPreload();
-      });
-      this.p5_._incrementPreload();
+      this.spritesheetBuilder = new SpritesheetBuilder(this.p5_);
     }
-
 
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
         if (VECTOR_MODE) {
-          const spriteImage = this.rasterizer.getMove(this_sprite, moveIndex);
-          const spritesheet = new this.p5_.SpriteSheet(spriteImage, 300, 300, 24);
+          const spritesheet = this.spritesheetBuilder.getSpriteSheet(this_sprite, moveIndex);
           this.setAnimationSpriteSheet(this_sprite, moveIndex, spritesheet, mirror);
         } else {
           const baseUrl = `${img_base}${this_sprite}_${name}`;
