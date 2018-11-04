@@ -195,14 +195,12 @@ module.exports = class DanceParty {
     this.fgEffects_ = new Effects(this.p5_, 0.8);
 
     // Create animations from spritesheets
-    // if (!VECTOR_MODE) {
-      for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-        let this_sprite = this.world.SPRITE_NAMES[i];
-        for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-          ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
-        }
+    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
+      let this_sprite = this.world.SPRITE_NAMES[i];
+      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
+        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
       }
-    // }
+    }
 
     this.onInit && this.onInit(this);
   }
@@ -273,11 +271,9 @@ module.exports = class DanceParty {
     sprite.current_move = 0;
     sprite.previous_move = 0;
 
-    // Preload animations into each sprite in spritesheet mode
     for (var i = 0; i < ANIMATIONS[costume].length; i++) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
     }
-
     sprite.animation.stop();
     this.sprites_.add(sprite);
     sprite.speed = 10;
@@ -340,6 +336,7 @@ module.exports = class DanceParty {
     };
 
     sprite.changeDance = function (move) {
+      // TODO (Brad): This is a hook for lazy-unpacking SVG animations
       const animKey = "anim" + move;
       sprite.changeAnimation(animKey);
     };
