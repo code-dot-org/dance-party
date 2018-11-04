@@ -205,17 +205,6 @@ module.exports = class DanceParty {
     this.onInit && this.onInit(this);
   }
 
-  getAnimation(character, moveIndex) {
-    if (!(ANIMATIONS[character] && ANIMATIONS[character][moveIndex])) {
-      const spriteImage = {canvas: getMoveCanvas(character, moveIndex), width: 24 * 300, height: 300};
-      const spritesheet = new this.p5_.SpriteSheet(spriteImage, 300, 300, 24);
-      const { mirror } = this.world.MOVE_NAMES[moveIndex];
-      this.setAnimationSpriteSheet(character, moveIndex, spritesheet, mirror);
-      ANIMATIONS[character][moveIndex].animation = this.p5_.loadAnimation(ANIMATIONS[character][moveIndex].spritesheet);
-    }
-    return ANIMATIONS[character][moveIndex].animation;
-  }
-
   play(songData) {
     if (this.recordReplayLog_) {
       replayLog.reset();
