@@ -274,13 +274,8 @@ module.exports = class DanceParty {
     sprite.previous_move = 0;
 
     // Preload animations into each sprite in spritesheet mode
-    if (VECTOR_MODE) {
-      sprite.addAnimation('anim0', this.getAnimation(sprite.style, 0));
-      sprite.changeAnimation('anim0');
-    } else {
-      for (var i = 0; i < ANIMATIONS[costume].length; i++) {
-        sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
-      }
+    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
+      sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
     }
 
     sprite.animation.stop();
@@ -346,11 +341,6 @@ module.exports = class DanceParty {
 
     sprite.changeDance = function (move) {
       const animKey = "anim" + move;
-      if (VECTOR_MODE) {
-        if (!sprite.hasAnimation(animKey)) {
-          sprite.addAnimation(animKey, window.nativeAPI.getAnimation(sprite.style, move));
-        }
-      }
       sprite.changeAnimation(animKey);
     };
 
