@@ -4,12 +4,36 @@ const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
 
-function Behavior(func, extraArgs) {
-  if (!extraArgs) {
-    extraArgs = [];
+class Behavior {
+  constructor(func, extraArgs=[]) {
+    this.func = func;
+    this.extraArgs = extraArgs;
   }
-  this.func = func;
-  this.extraArgs = extraArgs;
+
+  execute(sprite) {
+    this.func.apply(null, [sprite].concat(this.extraArgs));
+  }
+
+  equals(other) {
+    if (this.func.name && other.func.name) {
+      // These are legacy behaviors, check for equality based only on the name.
+      return this.func.name === other.func.name;
+    }
+    if (this.func !== other.func) {
+      return false;
+    }
+    if (other.extraArgs.length !== this.extraArgs.length) {
+      return false;
+    }
+    let extraArgsEqual = true;
+    for (let j = 0; j < this.extraArgs.length; j++) {
+      if (other.extraArgs[j] !== this.extraArgs[j]) {
+        extraArgsEqual = false;
+        break;
+      }
+    }
+    return extraArgsEqual;
+  }
 }
 
 const WATCHED_KEYS = [
@@ -794,37 +818,16 @@ module.exports = class DanceParty {
   findBehavior_(sprite, behavior) {
     for (let i = 0; i < sprite.behaviors.length; i++) {
       const myBehavior = sprite.behaviors[i];
-      if (this.behaviorsEqual_(behavior, myBehavior)) {
+      if (behavior.equals(myBehavior)) {
         return i;
       }
     }
     return -1;
   }
 
-  behaviorsEqual_(behavior1, behavior2) {
-    if (behavior1.func.name && behavior2.func.name) {
-      // These are legacy behaviors, check for equality based only on the name.
-      return behavior1.func.name === behavior2.func.name;
-    }
-    if (behavior1.func !== behavior2.func) {
-      return false;
-    }
-    if (behavior2.extraArgs.length !== behavior1.extraArgs.length) {
-      return false;
-    }
-    let extraArgsEqual = true;
-    for (let j = 0; j < behavior1.extraArgs.length; j++) {
-      if (behavior2.extraArgs[j] !== behavior1.extraArgs[j]) {
-        extraArgsEqual = false;
-        break;
-      }
-    }
-    return extraArgsEqual;
-  }
-
   startMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
+    const behavior = new Behavior(sprite => {
+      let energy = this.getEnergy(range);
       if (property === "x") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
       } else if (property === "y") {
@@ -962,9 +965,7 @@ module.exports = class DanceParty {
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
       this.sprites_.forEach(function (sprite) {
-        sprite.behaviors.forEach(function (behavior) {
-          behavior.func.apply(null, [sprite].concat(behavior.extraArgs));
-        });
+        sprite.behaviors.forEach(behavior => behavior.execute(sprite))
       });
     }
 
