@@ -297,21 +297,23 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
   await subTest({ testCode: ({ nativeAPI, sprite }) => {
     // Full length move:
     nativeAPI.changeMoveLR(sprite, 1, 1);
+    t.equal(sprite.getAnimationLabel(), 'anim1');
     t.equal(sprite.current_move, 1);
 
     // Rest move:
     nativeAPI.changeMoveLR(sprite, 0, 1);
+    t.equal(sprite.getAnimationLabel(), 'anim0');
     t.equal(sprite.current_move, 0);
 
     // Short burst move:
     let error = null;
     try {
-      // Passing 3 should fail (index is too large)
       nativeAPI.changeMoveLR(sprite, 2, 1);
     } catch (e) {
       error = e;
     }
     t.notEqual(error, null, "short burst move should fail with changeMoveLR");
+    t.equal(sprite.getAnimationLabel(), 'anim0');
     t.equal(sprite.current_move, 0);
   }});
 
