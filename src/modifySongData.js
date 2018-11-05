@@ -32,6 +32,13 @@ function getFrequencyEnergy(energy, numDeviations=1.5, smoothFactor=0.7) {
     calculateMean(nonZero.map(x => Math.pow(mean - x, 2)))
   );
 
+  if (stdDev === 0) {
+    // Don't expect this to ever happen, but if it does lets just return our
+    // initial energy rather than divide by zero later
+    console.error('getFrequencyEnergy has standard deviation of zero');
+    return energy;
+  }
+
   const min = mean - stdDev * numDeviations;
   const max = mean + stdDev * numDeviations;
 
@@ -42,6 +49,8 @@ function getFrequencyEnergy(energy, numDeviations=1.5, smoothFactor=0.7) {
 /**
  * Smooths out an array frame by frame. Each new frame consists of smoothFactor
  * percent of the previous frame and (1-smoothFactor) percent of the current frame
+ * This is done so that sprites updates end up being more gradual instead of jerking
+ * around
  * This method mutates the input rg
  * @param {number[]} rg
  * @param {number} smoothFactor
@@ -74,7 +83,7 @@ function modifySongData(songData, numDeviations=1.5, smoothFactor=0.7) {
   const treble = getFrequencyEnergy(analysis.map(x => x.energy[2]), numDeviations, smoothFactor);
 
   // Create a new analysis that duplicates each frame, but replaces energy values
-  // with out new ones
+  // with our new ones
   const newAnalysis = analysis.map((currentFrame, i) => Object.assign({},
     currentFrame, { energy: [bass[i], mid[i], treble[i]] }));
 
