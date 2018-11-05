@@ -251,6 +251,73 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
   t.end();
 });
 
+test('Sprite dance changes will allow short burst moves for doMoveLR but not changeMoveLR', async t => {
+
+  const subTest = async ({ moveCount = 3, shortMoveCount = 1, testCode }) => {
+    const nativeAPI = await helpers.createDanceAPI();
+    nativeAPI.play({
+      bpm: 120,
+    });
+  
+    // Mock cat animation poses
+    for(let i = 0; i < moveCount; i++) {
+      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.world.MOVE_NAMES.push({
+        name: `move${i}`,
+        rest: i == 0,
+        shortBurst: i >= (moveCount - shortMoveCount),
+      })
+    }
+    nativeAPI.world.fullLengthMoveCount = moveCount - shortMoveCount;
+    nativeAPI.world.restMoveCount = 1;
+  
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    testCode({ nativeAPI, sprite });
+
+    nativeAPI.reset();
+  }
+
+  // Verify we can call doMoveLR() with a rest, full length, and short burst move:
+  await subTest({ testCode: ({ nativeAPI, sprite }) => {
+    // Full length move:
+    nativeAPI.doMoveLR(sprite, 1, 1);
+    t.equal(sprite.getAnimationLabel(), 'anim1');
+
+    // Rest move:
+    nativeAPI.doMoveLR(sprite, 0, 1);
+    t.equal(sprite.getAnimationLabel(), 'anim0');
+
+    // Short burst move:
+    nativeAPI.doMoveLR(sprite, 2, 1);
+    t.equal(sprite.getAnimationLabel(), 'anim2');
+  }});
+
+  // Verify we can call changeMoveLR() with a rest or a full length, but not a short burst move:
+  await subTest({ testCode: ({ nativeAPI, sprite }) => {
+    // Full length move:
+    nativeAPI.changeMoveLR(sprite, 1, 1);
+    t.equal(sprite.current_move, 1);
+
+    // Rest move:
+    nativeAPI.changeMoveLR(sprite, 0, 1);
+    t.equal(sprite.current_move, 0);
+
+    // Short burst move:
+    let error = null;
+    try {
+      // Passing 3 should fail (index is too large)
+      nativeAPI.changeMoveLR(sprite, 2, 1);
+    } catch (e) {
+      error = e;
+    }
+    t.notEqual(error, null, "short burst move should fail with changeMoveLR");
+    t.equal(sprite.current_move, 0);
+  }});
+
+  t.end();
+});
+
 test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
