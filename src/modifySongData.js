@@ -61,6 +61,9 @@ function smooth(rg, smoothFactor) {
  */
 function modifySongData(songData, numDeviations=1.5, smoothFactor=0.7) {
   const { analysis } = songData;
+  if (!analysis) {
+    return songData;
+  }
 
   // One thing to note with the approach we've chosen: each song/energy band is
   // independently normalized around energy 128. This means even if a song is
