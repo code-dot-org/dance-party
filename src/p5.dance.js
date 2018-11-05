@@ -39,10 +39,14 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    i18n = {
+      measure: () => "Measure:",
+    },
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
+    this.i18n = i18n;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -947,7 +951,7 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${(Math.floor(this.getCurrentMeasure()))}`, 10, 20);
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {
