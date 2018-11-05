@@ -121,6 +121,49 @@ module.exports = class DanceParty {
     }, container);
   }
 
+  ensureSpritesAreLoaded(sprite_names) {
+    sprite_names = sprite_names || this.world.SPRITE_NAMES;
+    const promises = [];
+
+    // Load spritesheet JSON files
+    sprite_names.forEach(this_sprite => {
+      if (ANIMATIONS[this_sprite].length === this.world.MOVE_NAMES.length) {
+        // Already loaded, nothing to do:
+        return;
+      }
+      this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
+        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        promises.push(new Promise(resolve => {
+          this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
+            // Passing a callback as the 3rd arg to loadSpriteSheet() indicates that
+            // we want it to load the image as a Image (instead of a p5.Image), which
+            // avoids a canvas creation. This makes it possible to run on mobile
+            // Safari in iOS 12 with canvas memory limits.
+            const spriteSheet = this.p5_.loadSpriteSheet(
+              `${baseUrl}.png`,
+              jsonData.frames,
+              () => {
+                const animation = this.p5_.loadAnimation(spriteSheet);
+                this.setAnimationSpriteSheet(
+                  this_sprite,
+                  moveIndex,
+                  spriteSheet,
+                  mirror,
+                  animation);
+                resolve();
+              });
+          });
+        }));  
+      });
+    });
+
+    const promise = Promise.all(promises);
+    promise.then(() => {
+      this.allSpritesLoaded = true;
+    });
+    return promise;
+  }
+
   onKeyDown(keyCode) {
     this.p5_._onkeydown({ which: keyCode });
   }
@@ -162,6 +205,7 @@ module.exports = class DanceParty {
   }
 
   reset() {
+    this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
     while (this.p5_.allSprites.length > 0) {
@@ -178,42 +222,23 @@ module.exports = class DanceParty {
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
-      this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}${this_sprite}_${name}`;
-        this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
-          // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
-          // it to load the image as a Image (instead of a p5.Image), which avoids
-          // a canvas creation. This makes it possible to run on mobile Safari in
-          // iOS 12 with canvas memory limits.
-          this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
-        });
-      });
     });
   }
 
-  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror){
+  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
     if (!ANIMATIONS[sprite]) {
       ANIMATIONS[sprite] = [];
     }
     ANIMATIONS[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
-      animation: 'missing',
+      animation: animation || 'missing',
     };
   }
 
   setup() {
     this.bgEffects_ = new Effects(this.p5_, 1);
     this.fgEffects_ = new Effects(this.p5_, 0.8);
-
-    // Create animations from spritesheets
-    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-      let this_sprite = this.world.SPRITE_NAMES[i];
-      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
-      }
-    }
 
     this.onInit && this.onInit(this);
   }
@@ -943,6 +968,10 @@ module.exports = class DanceParty {
   }
 
   draw() {
+    this.p5_.background(this.world.background_color || "white");
+    if (!this.allSpritesLoaded) {
+      return;
+    }
     this.updateEvents_();
 
     const context = {
@@ -954,7 +983,6 @@ module.exports = class DanceParty {
       title: this.songMetadata_.title,
     };
 
-    this.p5_.background(this.world.background_color || "white");
     if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
       this.world.bg_effect.draw(context);
     }
