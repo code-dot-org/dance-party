@@ -8,11 +8,11 @@ module.exports = {
         lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});
       });
       
-      everySeconds(1, "measures", function () {
+      everySeconds(2, "measures", function () {
         changeMoveLR(lead_dancer, 3, -1);
       });
       
-      everySeconds(2, "measures", function () {
+      everySeconds(4, "measures", function () {
         changeMoveLR(lead_dancer, 1, -1);
       });
     `,
@@ -23,17 +23,17 @@ module.exports = {
         lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});
       });
       
-      everySeconds(2, "measures", function () {
+      everySeconds(4, "measures", function () {
         changeMoveLR(lead_dancer, 1, -1);
       });
       
-      everySeconds(1, "measures", function () {
+      everySeconds(2, "measures", function () {
         changeMoveLR(lead_dancer, 3, -1);
       });
     `,
     ],
     validationCode: `
-      if (nativeAPI.getTime("measures") === 2) {
+      if (nativeAPI.getTime("measures") === 4) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 1){
@@ -41,16 +41,16 @@ module.exports = {
           }
         }
       }
-      if (nativeAPI.getTime("measures") === 3) {
+      if (nativeAPI.getTime("measures") > 7 && nativeAPI.getTime("measures") < 8) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 3){
-            nativeAPI.fail("Cat sprite not dancing 3."); 
+            nativeAPI.fail("Cat sprite not dancing 3.");
           }
         }
       }
       
-      if (nativeAPI.getTime("measures") > 7) {
+      if (nativeAPI.getTime("measures") > 8) {
         nativeAPI.pass();
       }
     `,
@@ -64,11 +64,11 @@ module.exports = {
         lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});
       });
       
-      everySeconds(2, "seconds", function () {
+      everySeconds(3, "seconds", function () {
         changeMoveLR(lead_dancer, 3, -1);
       });
       
-      everySeconds(5, "seconds", function () {
+      everySeconds(6, "seconds", function () {
         changeMoveLR(lead_dancer, 1, -1);
       });
     `,
@@ -79,17 +79,17 @@ module.exports = {
         lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});
       });
       
-      everySeconds(5, "seconds", function () {
+      everySeconds(6, "seconds", function () {
         changeMoveLR(lead_dancer, 1, -1);
       });
       
-      everySeconds(2, "seconds", function () {
+      everySeconds(3, "seconds", function () {
         changeMoveLR(lead_dancer, 3, -1);
       });
     `,
     ],
     validationCode: `
-      if (nativeAPI.getTime("seconds") === 5) {
+      if (nativeAPI.getTime("seconds") > 7 && nativeAPI.getTime("seconds") < 9) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 1){
@@ -97,7 +97,7 @@ module.exports = {
           }
         }
       }
-      if (nativeAPI.getTime("seconds") === 2) {
+      if (nativeAPI.getTime("seconds") > 4 && nativeAPI.getTime("seconds") < 6) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 3){
@@ -106,7 +106,7 @@ module.exports = {
         }
       }
       
-      if (nativeAPI.getTime("seconds") > 7) {
+      if (nativeAPI.getTime("seconds") > 9) {
         nativeAPI.pass();
       }
     `,
@@ -145,7 +145,7 @@ module.exports = {
     `,
     ],
     validationCode: `
-      if (nativeAPI.getTime("measures") === 2) {
+      if (nativeAPI.getTime("measures") >= 3 && nativeAPI.getTime("measures") < 4) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 1){
@@ -153,7 +153,7 @@ module.exports = {
           }
         }
       }
-      if (nativeAPI.getTime("measures") === 4) {
+      if (nativeAPI.getTime("measures") >= 5 && nativeAPI.getTime("measures") < 6) {
         let cats = nativeAPI.getGroupByName_('CAT');
         for(let i = 0; i < cats.length; i++){
           if(cats[i].current_move !== 3){
@@ -162,7 +162,7 @@ module.exports = {
         }
       }
       
-      if (nativeAPI.getTime("measures") > 5) {
+      if (nativeAPI.getTime("measures") > 6) {
         nativeAPI.pass();
       }
     `,

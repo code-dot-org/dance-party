@@ -25,6 +25,7 @@ const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
 
+// NOTE: min and max are inclusive
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -81,6 +82,14 @@ module.exports = class DanceParty {
     if (spriteConfig) {
       spriteConfig(this.world);
     }
+
+    // Sort after spriteConfig function has executed to ensure that
+    // rest moves are at the beginning and shortBurst moves are all at the end
+    this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
+      move1.rest * -2 * move2.rest * 2 + move2.shortBurst * -1 + move1.shortBurst * 1
+    ));
+    this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
+    this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
 
     this.songStartTime_ = 0;
 
@@ -277,7 +286,9 @@ module.exports = class DanceParty {
         }
 
         if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) sprite.mirroring *= -1;
+          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+            sprite.mirroring *= -1;
+          }
           if (sprite.animation.looping) {
             sprite.mirrorX(sprite.mirroring);
           }
@@ -327,32 +338,56 @@ module.exports = class DanceParty {
 // Dance Moves
 
   changeMoveLR(sprite, move, dir) {
-    if (!this.spriteExists_(sprite)) return;
-    if (move === "next") {
-      move = 1 + (sprite.current_move % (ANIMATIONS[sprite.style].length - 1));
-    } else if (move === "prev") {
-      //Javascript doesn't handle negative modulos as expected, so manually resetting the loop
-      move = sprite.current_move - 1;
-      if (move <= 0) {
-        move = ANIMATIONS[sprite.style].length - 1;
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
+    // Number of valid full length moves
+    const { fullLengthMoveCount, restMoveCount } = this.world;
+    const firstNonRestingMoveIndex = restMoveCount;
+    // The "rest" moves are assumed to always be at the beginning
+    const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
+    if (typeof move === 'number') {
+      if (move < 0 || move >= fullLengthMoveCount) {
+        throw "Not moving to a valid full length move index!";
       }
-    } else if (move === "rand") {
-      // Make sure random switches to a new move
-      move = sprite.current_move;
-      while (move === sprite.current_move) {
-        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
+    } else {
+      if (nonRestingFullLengthMoveCount <= 1) {
+        throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
+      }
+      if (move === "next") {
+        move = sprite.current_move + 1;
+        if (move >= fullLengthMoveCount) {
+          move = firstNonRestingMoveIndex;
+        }
+      } else if (move === "prev") {
+        move = sprite.current_move - 1;
+        if (move < firstNonRestingMoveIndex) {
+          move = fullLengthMoveCount - 1;
+        }
+      } else if (move === "rand") {
+        // Make sure random switches to a new move
+        move = sprite.current_move;
+        while (move === sprite.current_move) {
+          move = randomInt(firstNonRestingMoveIndex, fullLengthMoveCount - 1);
+        }
+      } else {
+        throw `Unexpected move value: ${move}`;
       }
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
-    if (sprite.animation.looping) sprite.looping_frame = 0;
+    if (sprite.animation.looping) {
+      sprite.looping_frame = 0;
+    }
     sprite.animation.looping = true;
     sprite.current_move = move;
   }
 
   doMoveLR(sprite, move, dir) {
-    if (!this.spriteExists_(sprite)) return;
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
     if (move === "next") {
       move = (sprite.current_move + 1) % ANIMATIONS[sprite.style].length;
     } else if (move === "prev") {
@@ -363,10 +398,15 @@ module.exports = class DanceParty {
         move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
       }
     }
+    if (move < 0 || move >= this.world.MOVE_NAMES.length) {
+      throw `Invalid move index: ${move}`;
+    }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
     sprite.animation.looping = false;
-    sprite.animation.changeFrame(FRAMES / 2);
+    // For non-shortBurst, we jump to the middle of the animation
+    const frameNum = this.world.MOVE_NAMES[move].shortBurst ? 0 : (FRAMES / 2);
+    sprite.animation.changeFrame(frameNum);
   }
 
   getCurrentDance(sprite) {
@@ -891,6 +931,8 @@ module.exports = class DanceParty {
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
       bpm: this.songMetadata_ && this.songMetadata_.bpm,
+      artist: this.songMetadata_.artist,
+      title: this.songMetadata_.title,
     };
 
     this.p5_.background(this.world.background_color || "white");
