@@ -3,6 +3,8 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
+const constants = require('./constants');
+const modifySongData = require('./modifySongData');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -20,10 +22,11 @@ const WATCHED_KEYS = [
 const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
-const SIZE = 300;
+const SIZE = constants.SIZE;
+const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
-const FRAMES = 24;
 
+// NOTE: min and max are inclusive
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -39,10 +42,14 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    i18n = {
+      measure: () => "Measure:",
+    },
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
+    this.i18n = i18n;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -74,32 +81,20 @@ module.exports = class DanceParty {
 
     this.sprites_by_type_ = {};
 
-    this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
-
-    this.world.MOVE_NAMES = moveNames || [
-      {name: "Rest", mirror: true},
-      {name: "ClapHigh", mirror: true},
-      {name: "Clown", mirror: false},
-      {name: "Dab", mirror: true},
-      {name: "DoubleJam", mirror: false},
-      {name: "Drop", mirror: true},
-      {name: "Floss", mirror: true},
-      {name: "Fresh", mirror: true},
-      {name: "Kick", mirror: true},
-      {name: "Roll", mirror: true},
-      {name: "ThisOrThat", mirror: false},
-      {name: "Thriller", mirror: true},
-      {name: "XArmsSide", mirror: false},
-      {name: "XArmsUp", mirror: false},
-      {name: "XJump", mirror: false},
-      {name: "XClapSide", mirror: false},
-      {name: "XHeadHips", mirror: false},
-      {name: "XHighKick", mirror: false},
-    ];
+    this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
+    this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
 
     if (spriteConfig) {
       spriteConfig(this.world);
     }
+
+    // Sort after spriteConfig function has executed to ensure that
+    // rest moves are at the beginning and shortBurst moves are all at the end
+    this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
+      move1.rest * -2 * move2.rest * 2 + move2.shortBurst * -1 + move1.shortBurst * 1
+    ));
+    this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
+    this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
 
     this.songStartTime_ = 0;
 
@@ -166,6 +161,23 @@ module.exports = class DanceParty {
   }
 
   preload() {
+    // Load spritesheets compressed to various levels of quality with pngquant
+    // Pass queryparam ?quality=<quality> to try a particular quality level.
+    // Only those png assets will be downlaoded.
+    // Available quality levels:
+    // 50 - 40% smaller
+    // 25 - 46%
+    // 10 - 51%
+    //  5 - 55%
+    //  1 - 55%
+    //  0 - 63% smaller
+    let qualitySuffix = '-q50'; // Default to q50 for now.  Set to '' to go back to full-quality.
+    const qualitySetting = queryParam('quality');
+    if (qualitySetting) {
+      qualitySuffix = `-q${qualitySetting}`;
+      document.title = `q${qualitySetting} - ${document.title}`;
+    }
+
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -177,7 +189,7 @@ module.exports = class DanceParty {
           // a canvas creation. This makes it possible to run on mobile Safari in
           // iOS 12 with canvas memory limits.
           this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
+            this.p5_.loadSpriteSheet(`${baseUrl}${qualitySuffix}.png`, jsonData.frames, true), mirror)
         });
       });
     });
@@ -213,12 +225,14 @@ module.exports = class DanceParty {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.songMetadata_ = songData;
+    this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
-    this.playSound_({url: this.songMetadata_.file, callback: () => {
+    this.playSound_(this.songMetadata_.file, () => {
       this.songStartTime_ = new Date();
       callback && callback();
-    }});
+    }, () => {
+      this.reset();
+    });
     this.p5_.loop();
   }
 
@@ -296,7 +310,9 @@ module.exports = class DanceParty {
         }
 
         if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) sprite.mirroring *= -1;
+          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+            sprite.mirroring *= -1;
+          }
           if (sprite.animation.looping) {
             sprite.mirrorX(sprite.mirroring);
           }
@@ -346,32 +362,56 @@ module.exports = class DanceParty {
   // Dance Moves
 
   changeMoveLR(sprite, move, dir) {
-    if (!this.spriteExists_(sprite)) return;
-    if (move === "next") {
-      move = 1 + (sprite.current_move % (ANIMATIONS[sprite.style].length - 1));
-    } else if (move === "prev") {
-      //Javascript doesn't handle negative modulos as expected, so manually resetting the loop
-      move = sprite.current_move - 1;
-      if (move <= 0) {
-        move = ANIMATIONS[sprite.style].length - 1;
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
+    // Number of valid full length moves
+    const { fullLengthMoveCount, restMoveCount } = this.world;
+    const firstNonRestingMoveIndex = restMoveCount;
+    // The "rest" moves are assumed to always be at the beginning
+    const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
+    if (typeof move === 'number') {
+      if (move < 0 || move >= fullLengthMoveCount) {
+        throw "Not moving to a valid full length move index!";
       }
-    } else if (move === "rand") {
-      // Make sure random switches to a new move
-      move = sprite.current_move;
-      while (move === sprite.current_move) {
-        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
+    } else {
+      if (nonRestingFullLengthMoveCount <= 1) {
+        throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
+      }
+      if (move === "next") {
+        move = sprite.current_move + 1;
+        if (move >= fullLengthMoveCount) {
+          move = firstNonRestingMoveIndex;
+        }
+      } else if (move === "prev") {
+        move = sprite.current_move - 1;
+        if (move < firstNonRestingMoveIndex) {
+          move = fullLengthMoveCount - 1;
+        }
+      } else if (move === "rand") {
+        // Make sure random switches to a new move
+        move = sprite.current_move;
+        while (move === sprite.current_move) {
+          move = randomInt(firstNonRestingMoveIndex, fullLengthMoveCount - 1);
+        }
+      } else {
+        throw `Unexpected move value: ${move}`;
       }
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
-    if (sprite.animation.looping) sprite.looping_frame = 0;
+    if (sprite.animation.looping) {
+      sprite.looping_frame = 0;
+    }
     sprite.animation.looping = true;
     sprite.current_move = move;
   }
 
   doMoveLR(sprite, move, dir) {
-    if (!this.spriteExists_(sprite)) return;
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
     if (move === "next") {
       move = (sprite.current_move + 1) % ANIMATIONS[sprite.style].length;
     } else if (move === "prev") {
@@ -382,10 +422,15 @@ module.exports = class DanceParty {
         move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
       }
     }
+    if (move < 0 || move >= this.world.MOVE_NAMES.length) {
+      throw `Invalid move index: ${move}`;
+    }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
     sprite.animation.looping = false;
-    sprite.animation.changeFrame(FRAMES / 2);
+    // For non-shortBurst, we jump to the middle of the animation
+    const frameNum = this.world.MOVE_NAMES[move].shortBurst ? 0 : (FRAMES / 2);
+    sprite.animation.changeFrame(frameNum);
   }
 
   getCurrentDance(sprite) {
@@ -905,11 +950,15 @@ module.exports = class DanceParty {
   draw() {
     this.updateEvents_();
 
+    const { bpm, artist, title } = this.songMetadata_ || {};
+
     const context = {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
-      bpm: this.songMetadata_ && this.songMetadata_.bpm,
+      bpm,
+      artist,
+      title,
     };
 
     this.bgEffects_[this.world.bg_effect || 'none'].draw(context);
@@ -947,11 +996,23 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${(Math.floor(this.getCurrentMeasure()))}`, 10, 20);
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {
       this.onHandleEvents(this.currentFrameEvents);
     }
   }
+};
+
+function queryParam(key) {
+  const pair = window.location.search
+    .slice(1)
+    .split('&')
+    .map(pair => pair.split('='))
+    .find(pair => decodeURIComponent(pair[0]) === key);
+  if (pair) {
+    return decodeURIComponent(pair[1]);
+  }
+  return undefined;
 }

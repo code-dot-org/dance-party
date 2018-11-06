@@ -3,7 +3,15 @@ module.exports = class Effects {
     this.blend = blend || p5.BLEND;
 
     function randomNumber(min, max) {
-      return Math.floor(p5.random(min, max));
+      return Math.round(p5.random(min, max));
+    }
+
+    function colorFromHue(h, s=100, l=80, a=alpha) {
+      return p5.color("hsla(" + Math.floor(h % 360) + ", " + s + "%, " + l + "%," + a + ")");
+    }
+
+    function randomColor(s=100, l=80, a=alpha) {
+      return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 
     this.none = {
@@ -13,13 +21,39 @@ module.exports = class Effects {
     };
 
     this.rainbow = {
-      color: p5.color('hsla(0, 100%, 80%, ' + alpha + ')'),
+      lengths: [0, 0, 0, 0, 0, 0, 0],
+      current: 0,
       update: function () {
+        this.lengths[this.lengths.length - (1 + this.current)] = 1;
+        this.current = (this.current + 1) % this.lengths.length;
+      },
+      draw: function ({isPeak, bpm}) {
+        if (isPeak) {
+          this.update();
+        }
         p5.push();
-        p5.colorMode(p5.HSL);
-        this.color =
-          p5.color(this.color._getHue() + 10, 100, 80, alpha);
+        p5.background(colorFromHue(180, 50, 90));
+        p5.noFill();
+        p5.strokeWeight(50);
+        let d, i;
+        for (i = 0; i < 7; i++) {
+          p5.stroke(colorFromHue(i * 51.5, 100, 95));
+          d = 150 + i * 100;
+          p5.arc(0, 400, d, d, -90, 0);
+          if (this.lengths[i] > 0) {
+            p5.stroke(colorFromHue(i * 60, 100, 80, 1 - this.lengths[i] / 90));
+            p5.arc(0, 400, d, d, -90, -90 + this.lengths[i]);
+            this.lengths[i] = (this.lengths[i] + bpm / 50) % 90;
+          }
+        }
         p5.pop();
+      }
+    };
+
+    this.color_cycle = {
+      color: colorFromHue(0),
+      update: function () {
+        this.color = colorFromHue(this.color._getHue() + 10);
       },
       draw: function ({isPeak}) {
         if (isPeak) {
@@ -40,14 +74,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
+          this.colors[i] = randomColor();
         }
       },
       update: function () {
-        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate + 1);
+        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
-          const loc = randomNumber(0, this.colors.length + 1);
-          this.colors[loc] = p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)");
+          const loc = randomNumber(0, this.colors.length);
+          this.colors[loc] = randomColor();
         }
       },
       draw: function ({isPeak}) {
@@ -82,14 +116,13 @@ module.exports = class Effects {
           this.update();
         }
         p5.push();
-        p5.colorMode(p5.HSB);
         p5.rectMode(p5.CENTER);
         p5.translate(200, 200);
         p5.rotate(45);
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke((this.hue + i * 10) % 360, 100, 75, alpha);
+          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
@@ -153,6 +186,42 @@ module.exports = class Effects {
       }
     };
 
+    this.text = {
+      texts: [],
+      maxTexts: 100,
+      update: function (text, hue, size) {
+        this.texts.push({
+          x: randomNumber(25, 375),
+          y: randomNumber(25, 375),
+          text: text,
+          color: colorFromHue(hue),
+          size: size
+        });
+        if (this.texts.length > this.maxTexts) {
+          this.texts.shift();
+        }
+      },
+      draw: function ({isPeak, centroid, artist, title}) {
+        if (isPeak) {
+          let text;
+          if (randomNumber(0, 1) === 0) {
+            text = artist;
+          } else {
+            text = title;
+          }
+          this.update(text, centroid, randomNumber(14, 48));
+        }
+        p5.push();
+        p5.textAlign(p5.CENTER, p5.CENTER);
+        this.texts.forEach(function (t) {
+          p5.textSize(t.size);
+          p5.fill(t.color);
+          p5.text(t.text, t.x, t.y);
+        });
+        p5.pop();
+      }
+    };
+
     this.raining_tacos = {
       tacos: [],
       size: 50,
@@ -198,7 +267,7 @@ module.exports = class Effects {
         let r = randomNumber(30,60);
         return {x: randomNumber(0,400),
             y: randomNumber(0,400),
-            color: p5.color("hsl(" + randomNumber(0, 359) + ", 100%, 80%)"),
+            color: randomColor(),
             width: r,
             height: r,
         };
@@ -252,7 +321,7 @@ module.exports = class Effects {
         let rotation=(bpm/90)*50;
         this.angle-=rotation;
         p5.rotate(Math.PI / 180 * this.angle);
-        p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
+        p5.tint(colorFromHue(this.color, 100, 60));
         p5.image(this.swirl,0,0,600,600);
         p5.pop();
 
@@ -276,14 +345,14 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
-        p5.background(p5.color("hsl(" + this.color + ", 100%, 10%)"));
+        p5.background(colorFromHue(this.color, 100, 10));
         p5.push();
         p5.imageMode("center");
         p5.translate(200,200);
         let rotation=(bpm/90)*200;
         this.angle-=rotation;
         p5.rotate(Math.PI / 180 * this.angle);
-        p5.tint(p5.color("hsl(" + this.color + ", 100%, 60%)"));
+        p5.tint(colorFromHue(this.color, 100, 60));
         p5.image(this.swirl,0,0,600,600);
         p5.pop();
 
@@ -328,6 +397,46 @@ module.exports = class Effects {
         this.y+=this.dy+randomNumber(-1,1);
         p5.ellipse(this.x,this.y,800,800);
         p5.pop();
+      }
+    };
+    this.color_lights = {
+      lights: [],
+      newLight: function (x, arc, offset) {
+        return {
+          x: x,
+          arc: arc,
+          offset: offset,
+          shift: randomNumber(0, 359),
+          color: randomColor(100, 50, 0.25),
+        };
+      },
+      init: function () {
+        this.lights.push(this.newLight(75, 25, -10));
+        this.lights.push(this.newLight(100, 15, -15));
+        this.lights.push(this.newLight(300, 15, 15));
+        this.lights.push(this.newLight(325, 25, 10));
+      },
+      update: function () {
+        this.lights.forEach(function (light) {
+          light.color = randomColor(100, 50, 0.25);
+        });
+      },
+      draw: function ({isPeak, centroid}) {
+        if (this.lights.length<1) {
+          this.init();
+        }
+        if (isPeak) {
+          this.update();
+        }
+        p5.noStroke();
+        this.lights.forEach(function (light) {
+          p5.push();
+          p5.fill(light.color);
+          p5.translate(light.x, -50);
+          p5.rotate((Math.sin((p5.frameCount / 100) + light.shift + centroid / 2000) * light.arc) + light.offset);
+          p5.triangle(0, 0, -75, 600, 75, 600);
+          p5.pop();
+        });
       }
     };
   }

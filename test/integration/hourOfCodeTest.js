@@ -4,7 +4,7 @@ const levels = require('../../levels/hourOfCode');
 
 test('Dance 1: Pass the level', t => {
   const level = levels.hoc01;
-  attempt(level.solution, level.validationCode, (result, message) => {
+  attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
   });
@@ -21,7 +21,7 @@ test('Dance 1: Fail the level', t => {
 
 test('Dance 2: Pass the level', t => {
   const level = levels.hoc02;
-  attempt(level.solution, level.validationCode, (result, message) => {
+  attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
   });
@@ -52,7 +52,7 @@ test('Dance 2: Fail the level by not changing the move', t => {
 
 test('Dance 4: Pass the level', t => {
   const level = levels.hoc04;
-  attempt(level.solution, level.validationCode, (result, message) => {
+  attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
   });
@@ -69,7 +69,7 @@ test('Dance 4: Fail the level', t => {
 
 test('Dance 7: Pass the level', t => {
   const level = levels.hoc07;
-  attempt(level.solution, level.validationCode, (result, message) => {
+  attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
   });
@@ -86,7 +86,7 @@ test('Dance 7: Fail the level', t => {
 
 test('Dance 9: Pass the level', t => {
   const level = levels.hoc09;
-  attempt(level.solution, level.validationCode, (result, message) => {
+  attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
   });

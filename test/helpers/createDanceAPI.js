@@ -1,12 +1,13 @@
 const DanceParty = require('../../src/p5.dance');
 
 module.exports = {
-  createDanceAPI: () => {
+  createDanceAPI: (props) => {
     return new Promise(resolve => {
       new DanceParty({
         moveNames: [],
-        playSound: ({callback}) => callback(),
+        playSound: (url, callback) => callback(),
         onInit: nativeAPI => resolve(nativeAPI),
+        ...props
       });
     });
   }
