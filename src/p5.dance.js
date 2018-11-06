@@ -3,6 +3,8 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
+const constants = require('./constants');
+const modifySongData = require('./modifySongData');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -20,9 +22,9 @@ const WATCHED_KEYS = [
 const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
-const SIZE = 300;
+const SIZE = constants.SIZE;
+const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
-const FRAMES = 24;
 
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
@@ -40,10 +42,14 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    i18n = {
+      measure: () => "Measure:",
+    },
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
+    this.i18n = i18n;
 
     this.currentFrameEvents = {
       'this.p5_.keyWentDown': {},
@@ -75,28 +81,8 @@ module.exports = class DanceParty {
 
     this.sprites_by_type_ = {};
 
-    this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
-
-    this.world.MOVE_NAMES = moveNames || [
-      {name: "Rest", mirror: true, rest: true},
-      {name: "ClapHigh", mirror: true},
-      {name: "Clown", mirror: false},
-      {name: "Dab", mirror: true},
-      {name: "DoubleJam", mirror: false},
-      {name: "Drop", mirror: true},
-      {name: "Floss", mirror: true},
-      {name: "Fresh", mirror: true},
-      {name: "Kick", mirror: true},
-      {name: "Roll", mirror: true},
-      {name: "ThisOrThat", mirror: false},
-      {name: "Thriller", mirror: true},
-      {name: "XArmsSide", mirror: false, shortBurst: true},
-      {name: "XArmsUp", mirror: false, shortBurst: true},
-      {name: "XJump", mirror: false, shortBurst: true},
-      {name: "XClapSide", mirror: false, shortBurst: true},
-      {name: "XHeadHips", mirror: false, shortBurst: true},
-      {name: "XHighKick", mirror: false, shortBurst: true},
-    ];
+    this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
+    this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
 
     if (spriteConfig) {
       spriteConfig(this.world);
@@ -175,6 +161,23 @@ module.exports = class DanceParty {
   }
 
   preload() {
+    // Load spritesheets compressed to various levels of quality with pngquant
+    // Pass queryparam ?quality=<quality> to try a particular quality level.
+    // Only those png assets will be downlaoded.
+    // Available quality levels:
+    // 50 - 40% smaller
+    // 25 - 46%
+    // 10 - 51%
+    //  5 - 55%
+    //  1 - 55%
+    //  0 - 63% smaller
+    let qualitySuffix = '-q50'; // Default to q50 for now.  Set to '' to go back to full-quality.
+    const qualitySetting = queryParam('quality');
+    if (qualitySetting) {
+      qualitySuffix = `-q${qualitySetting}`;
+      document.title = `q${qualitySetting} - ${document.title}`;
+    }
+
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -186,7 +189,7 @@ module.exports = class DanceParty {
           // a canvas creation. This makes it possible to run on mobile Safari in
           // iOS 12 with canvas memory limits.
           this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
+            this.p5_.loadSpriteSheet(`${baseUrl}${qualitySuffix}.png`, jsonData.frames, true), mirror)
         });
       });
     });
@@ -222,12 +225,14 @@ module.exports = class DanceParty {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.songMetadata_ = songData;
+    this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
-    this.playSound_({url: this.songMetadata_.file, callback: () => {
+    this.playSound_(this.songMetadata_.file, () => {
       this.songStartTime_ = new Date();
       callback && callback();
-    }});
+    }, () => {
+      this.reset();
+    });
     this.p5_.loop();
   }
 
@@ -955,13 +960,15 @@ module.exports = class DanceParty {
   draw() {
     this.updateEvents_();
 
+    const { bpm, artist, title } = this.songMetadata_ || {};
+
     const context = {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
-      bpm: this.songMetadata_ && this.songMetadata_.bpm,
-      artist: this.songMetadata_.artist,
-      title: this.songMetadata_.title,
+      bpm,
+      artist,
+      title,
     };
 
     this.p5_.background(this.world.background_color || "white");
@@ -997,7 +1004,7 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text("Measure: " + (Math.floor(this.getCurrentMeasure())), 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${(Math.floor(this.getCurrentMeasure()))}`, 10, 20);
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {
@@ -1005,3 +1012,15 @@ module.exports = class DanceParty {
     }
   }
 };
+
+function queryParam(key) {
+  const pair = window.location.search
+    .slice(1)
+    .split('&')
+    .map(pair => pair.split('='))
+    .find(pair => decodeURIComponent(pair[0]) === key);
+  if (pair) {
+    return decodeURIComponent(pair[1]);
+  }
+  return undefined;
+}

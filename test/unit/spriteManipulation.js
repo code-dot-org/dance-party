@@ -9,11 +9,11 @@ test('Sprite dance decrements and loops for prev dance', async t => {
 
   // Mock 4 cat animation poses
   const moveCount = 4;
-  for(let i = 0; i < moveCount; i++) {
+  for (let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
       name: `move${i}`
-    })
+    });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
@@ -41,11 +41,11 @@ test('Sprite dance increments by one and loops for next dance', async t => {
 
   // Mock 3 cat animation poses
   const moveCount = 3;
-  for(let i = 0; i < moveCount; i++) {
+  for (let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
       name: `move${i}`
-    })
+    });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
@@ -78,11 +78,11 @@ test('Sprite dance changes to a new dance for random', async t => {
 
   // Mock 3 cat animation poses
   const moveCount = 3;
-  for(let i = 0; i < moveCount; i++) {
+  for (let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
       name: `move${i}`
-    })
+    });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
@@ -106,25 +106,25 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock 3 cat animation poses
     const moveCount = 3;
-    for(let i = 0; i < moveCount; i++) {
+    for (let i = 0; i < moveCount; i++) {
       nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
-        rest: i == 0,
-      })
+        rest: i === 0,
+      });
     }
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
     nativeAPI.reset();
-  }
+  };
 
   // Verify Next behavior:
   await subTest(({ nativeAPI, sprite }) => {
@@ -181,24 +181,24 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock cat animation poses
-    for(let i = 0; i < moveCount; i++) {
+    for (let i = 0; i < moveCount; i++) {
       nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
-        rest: i == 0,
-      })
+        rest: i === 0,
+      });
     }
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
     nativeAPI.reset();
-  }
+  };
 
   // Verify invalid string parameter behavior:
   await subTest({ testCode: ({ nativeAPI, sprite }) => {
@@ -258,25 +258,25 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock cat animation poses
-    for(let i = 0; i < moveCount; i++) {
+    for (let i = 0; i < moveCount; i++) {
       nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
-        rest: i == 0,
+        rest: i === 0,
         shortBurst: i >= (moveCount - shortMoveCount),
-      })
+      });
     }
     nativeAPI.world.fullLengthMoveCount = moveCount - shortMoveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
     nativeAPI.reset();
-  }
+  };
 
   // Verify we can call doMoveLR() with a rest, full length, and short burst move:
   await subTest({ testCode: ({ nativeAPI, sprite }) => {
@@ -353,14 +353,6 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
-
-  let uninitializedSprite = {
-    style: "DOG",
-    current_move: 0,
-    mirrorX: () => {},
-    changeAnimation: () => {},
-    animation: {looping: false}
-  };
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 

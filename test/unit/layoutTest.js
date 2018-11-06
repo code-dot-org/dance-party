@@ -206,18 +206,18 @@ test('grid layout without perfect square count', async t => {
 });
 
 test('grid layout of size 2', async t => {
-   await runLayoutTest(t, nativeAPI => {
-     nativeAPI.makeNewDanceSpriteGroup(2, 'CAT', 'grid');
+  await runLayoutTest(t, nativeAPI => {
+    nativeAPI.makeNewDanceSpriteGroup(2, 'CAT', 'grid');
 
-     const cats = nativeAPI.getGroupByName_('CAT');
-     t.equal(cats.length, 2);
+    const cats = nativeAPI.getGroupByName_('CAT');
+    t.equal(cats.length, 2);
 
-     t.equal(cats[0].x, minX);
-     t.equal(cats[0].y, minY);
+    t.equal(cats[0].x, minX);
+    t.equal(cats[0].y, minY);
 
-     t.equal(cats[1].x, maxX);
-     t.equal(cats[1].y, minY);
-   });
+    t.equal(cats[1].x, maxX);
+    t.equal(cats[1].y, minY);
+  });
 });
 
 test('inner layout with perfect square count', async t => {
@@ -282,7 +282,7 @@ test('plus layout with count of 4', async t => {
     nativeAPI.makeNewDanceSpriteGroup(4, 'CAT', 'plus');
 
     const cats = nativeAPI.getGroupByName_('CAT');
-    t.equal(cats.length, 4);;
+    t.equal(cats.length, 4);
 
     // first and second cats are aligned along x
     t.equal(cats[0].x, cats[1].x);
@@ -303,7 +303,7 @@ test('plus layout with count not divisible by 4', async t => {
     nativeAPI.makeNewDanceSpriteGroup(6, 'CAT', 'plus');
 
     const cats = nativeAPI.getGroupByName_('CAT');
-    t.equal(cats.length, 6);;
+    t.equal(cats.length, 6);
 
     // first, second, fifth and sixth  are aligned along x
     t.equal(cats[0].x, cats[1].x);
