@@ -15,7 +15,7 @@ test('testInterface getSprites', async t => {
 
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-  
+
   t.equal(testInterface.getSprites().length, 1);
   t.equal(testInterface.getSprites()[0], sprite);
 

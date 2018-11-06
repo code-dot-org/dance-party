@@ -39,7 +39,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
 
       // Mock 4 cat and moose animation poses.
       const moveCount = 10;
-      for(let i = 0; i < moveCount; i++) {
+      for (let i = 0; i < moveCount; i++) {
         api.setAnimationSpriteSheet("CAT", i, {}, () => {});
         api.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
         api.setAnimationSpriteSheet("ROBOT", i, {}, () => {});
