@@ -160,6 +160,23 @@ module.exports = class DanceParty {
   }
 
   preload() {
+    // Load spritesheets compressed to various levels of quality with pngquant
+    // Pass queryparam ?quality=<quality> to try a particular quality level.
+    // Only those png assets will be downlaoded.
+    // Available quality levels:
+    // 50 - 40% smaller
+    // 25 - 46%
+    // 10 - 51%
+    //  5 - 55%
+    //  1 - 55%
+    //  0 - 63% smaller
+    let qualitySuffix = '-q50'; // Default to q50 for now.  Set to '' to go back to full-quality.
+    const qualitySetting = queryParam('quality');
+    if (qualitySetting) {
+      qualitySuffix = `-q${qualitySetting}`;
+      document.title = `q${qualitySetting} - ${document.title}`;
+    }
+
     // Load spritesheet JSON files
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
@@ -171,7 +188,7 @@ module.exports = class DanceParty {
           // a canvas creation. This makes it possible to run on mobile Safari in
           // iOS 12 with canvas memory limits.
           this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}.png`, jsonData.frames, true), mirror)
+            this.p5_.loadSpriteSheet(`${baseUrl}${qualitySuffix}.png`, jsonData.frames, true), mirror)
         });
       });
     });
@@ -982,3 +999,15 @@ module.exports = class DanceParty {
     }
   }
 };
+
+function queryParam(key) {
+  const pair = window.location.search
+    .slice(1)
+    .split('&')
+    .map(pair => pair.split('='))
+    .find(pair => decodeURIComponent(pair[0]) === key);
+  if (pair) {
+    return decodeURIComponent(pair[1]);
+  }
+  return undefined;
+}
