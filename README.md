@@ -5,8 +5,8 @@ Steps to get up and running
 ```
 git clone git@github.com:code-dot-org/dance-party.git
 cd dance-party
-nvm install 6.9.0
-nvm use v6.9.0
+nvm install
+nvm use
 npm install
 npm run dev
 ```
@@ -17,6 +17,7 @@ If you want to make changes locally in dance-party and have them show up in your
 - In the dance-party directory `npm link`
 - In the apps directory `npm link @code-dot-org/dance-party`
 - confirm the output paths from the above two commands contain the same node version: `~/.nvm/versions/node/v6.9.0/lib/node_modules/@code-dot-org/dance-party`
+  - if they don't match, go back to dance party and try `nvm use v6.9.0; npm link; nvm use`
 
 This will set up a symlink in apps/node_modules to point at your local changes. Run `npm run build` in dance-party, and then the apps build should pick the changes up next time it builds.
 
