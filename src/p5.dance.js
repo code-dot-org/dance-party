@@ -994,7 +994,7 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text(`${this.i18n.measure()} ${(Math.floor(this.getCurrentMeasure()))}`, 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {
