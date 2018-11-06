@@ -26,6 +26,7 @@ test('i18n', async t => {
   nativeAPI.p5_.text = text => {
     t.equals(text, 'hello 0');
     t.end();
+    nativeAPI.p5_.text = () => {};
   };
 
   nativeAPI.reset();
