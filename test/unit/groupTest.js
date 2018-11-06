@@ -117,14 +117,13 @@ test('changing dance moves for all to rand sets same dance for all dancers', asy
     spriteGroup[i] = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   }
 
-  //Initial
-  t.equal(spriteGroup[0].current_move, 0);
-
+  let firstDanceMove = 2;
+  nativeAPI.changeMoveEachLR('all', firstDanceMove);
   nativeAPI.changeMoveEachLR('all', 'rand');
 
   const newMove = spriteGroup[0].current_move;
+  t.notEqual(newMove, firstDanceMove);
   for (let i = 0; i < groupCount; i++) {
-    t.notEqual(spriteGroup[i].current_move, 0);
     t.equal(spriteGroup[i].current_move, newMove);
   }
 
