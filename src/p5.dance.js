@@ -6,11 +6,12 @@ const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
 
-function Behavior(func, extraArgs) {
+function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
     extraArgs = [];
   }
   this.func = func;
+  this.id = id;
   this.extraArgs = extraArgs;
 }
 
@@ -295,7 +296,7 @@ module.exports = class DanceParty {
     sprite.behaviors = [];
 
     // Add behavior to control animation
-    this.addBehavior_(sprite, () => {
+    const updateSpriteFrame = () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
       var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
@@ -327,7 +328,9 @@ module.exports = class DanceParty {
           sprite.animation.looping = true;
         }
       }
-    });
+    };
+
+    this.addBehavior_(sprite, new Behavior(updateSpriteFrame, 'updateSpriteFrame'));
 
     sprite.setTint = function (color) {
       sprite.tint = color;
@@ -766,69 +769,44 @@ module.exports = class DanceParty {
 
 // Behaviors
 
+  /**
+   * @param {Sprite} sprite
+   * @param {Behavior} behavior
+   */
   addBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
+    if (!this.spriteExists_(sprite) || behavior === undefined) {
+      return;
+    }
 
-    behavior = this.normalizeBehavior_(behavior);
-
-    if (this.findBehavior_(sprite, behavior) !== -1) {
+    if (sprite.behaviors.find(b => b.id === behavior.id)) {
       return;
     }
     sprite.behaviors.push(behavior);
   }
 
-  removeBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
-
-    behavior = this.normalizeBehavior_(behavior);
-
-    var index = this.findBehavior_(sprite, behavior);
-    if (index === -1) {
+  /**
+   * @param {Sprite} sprite
+   * @param {string} behaviorId
+   */
+  removeBehavior_(sprite, behaviorId) {
+    if (!this.spriteExists_(sprite)) {
       return;
     }
+
+    const index = sprite.behaviors.findIndex(b => b.id === behaviorId);
     sprite.behaviors.splice(index, 1);
   }
 
-  normalizeBehavior_(behavior) {
-    if (typeof behavior === 'function') {
-      return new Behavior(behavior);
-    }
-    return behavior;
-  }
-
-  findBehavior_(sprite, behavior) {
-    for (let i = 0; i < sprite.behaviors.length; i++) {
-      const myBehavior = sprite.behaviors[i];
-      if (this.behaviorsEqual_(behavior, myBehavior)) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  behaviorsEqual_(behavior1, behavior2) {
-    if (behavior1.func.name && behavior2.func.name) {
-      // These are legacy behaviors, check for equality based only on the name.
-      return behavior1.func.name === behavior2.func.name;
-    }
-    if (behavior1.func !== behavior2.func) {
-      return false;
-    }
-    if (behavior2.extraArgs.length !== behavior1.extraArgs.length) {
-      return false;
-    }
-    let extraArgsEqual = true;
-    for (let j = 0; j < behavior1.extraArgs.length; j++) {
-      if (behavior2.extraArgs[j] !== behavior1.extraArgs[j]) {
-        extraArgsEqual = false;
-        break;
-      }
-    }
-    return extraArgsEqual;
-  }
-
+  /**
+   * @param {Sprite} sprite
+   * @param {string} property
+   * @param {string} range
+   */
   startMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
+    // id's should be the same as long as the property/range are the same. they
+    // need not be unique across sprites
+    const id = [property, range].join('-');
+    const behavior = new Behavior(sprite => {
       var energy = this.getEnergy(range);
       if (property === "x") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
@@ -845,32 +823,13 @@ module.exports = class DanceParty {
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
+    }, id, [property, range]);
     this.addBehavior_(sprite, behavior);
   }
 
   stopMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 159);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
-      } else if (property === "tint") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
-        energy = "hsb(" + energy + ",100%,100%)";
-      }
-      sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
-    this.removeBehavior_(sprite, behavior);
+    const id = [property, range].join('-');
+    this.removeBehavior_(sprite, id);
   }
 
   changeColorBy(input, method, amount) {

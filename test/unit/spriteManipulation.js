@@ -106,7 +106,7 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock 3 cat animation poses
     const moveCount = 3;
     for(let i = 0; i < moveCount; i++) {
@@ -118,8 +118,8 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
     }
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
@@ -181,7 +181,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock cat animation poses
     for(let i = 0; i < moveCount; i++) {
       nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
@@ -192,8 +192,8 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     }
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
@@ -258,7 +258,7 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
     nativeAPI.play({
       bpm: 120,
     });
-  
+
     // Mock cat animation poses
     for(let i = 0; i < moveCount; i++) {
       nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
@@ -270,8 +270,8 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
     }
     nativeAPI.world.fullLengthMoveCount = moveCount - shortMoveCount;
     nativeAPI.world.restMoveCount = 1;
-  
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});  
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
     testCode({ nativeAPI, sprite });
 
@@ -388,6 +388,46 @@ test('setPropRandom set sprite y properties between 50 and 350', async t => {
   t.equal(sprite.y, 200);
   nativeAPI.setPropRandom(sprite, 'y');
   t.ok(sprite.y > 50 && sprite.y < 350);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('startMapping/stopMapping adds and removes behaviors', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // This is 1 only because we have a behavior that we add to every sprite
+  // (which should arguably be a different concept)
+  t.equal(sprite.behaviors.length, 1);
+
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+
+  t.equal(sprite.behaviors.length, 2);
+
+  // adding the same mapping again gets ignored
+  // TODO: this fails
+  // nativeAPI.startMapping(sprite, 'x', 'bass');
+  // t.equal(sprite.behaviors.length, 2);
+
+  // changing the range gives a new behavior
+  nativeAPI.startMapping(sprite, 'x', 'treble');
+  t.equal(sprite.behaviors.length, 3);
+
+  // changing the property gives a new behavior
+  nativeAPI.startMapping(sprite, 'y', 'bass');
+  t.equal(sprite.behaviors.length, 4);
+
+  // stop mapping removes behavior
+  nativeAPI.stopMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 3);
+
 
   t.end();
 
