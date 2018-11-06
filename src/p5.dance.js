@@ -356,42 +356,53 @@ module.exports = class DanceParty {
 
 // Dance Moves
 
-  changeMoveLR(sprite, move, dir) {
-    if (!this.spriteExists_(sprite)) {
-      return;
-    }
+  checkDanceMoveCount() {
+
+  }
+
+  getNewChangeMove(requested_change, current_move) {
     // Number of valid full length moves
     const { fullLengthMoveCount, restMoveCount } = this.world;
     const firstNonRestingMoveIndex = restMoveCount;
     // The "rest" moves are assumed to always be at the beginning
     const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
+    if (nonRestingFullLengthMoveCount <= 1) {
+      throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
+    }
+    let move = current_move;
+    if (requested_change === "next") {
+      move = current_move + 1;
+      if (move >= fullLengthMoveCount) {
+        move = firstNonRestingMoveIndex;
+      }
+    } else if (requested_change === "prev") {
+      move = current_move - 1;
+      if (move < firstNonRestingMoveIndex) {
+        move = fullLengthMoveCount - 1;
+      }
+    } else if (requested_change === "rand") {
+      // Make sure random switches to a new move
+      while (move === current_move) {
+        move = randomInt(this.world.restMoveCount, this.world.fullLengthMoveCount - 1);
+      }
+    } else {
+      throw `Unexpected move value: ${move}`;
+    }
+    return move;
+  }
+
+  changeMoveLR(sprite, move, dir) {
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
+    // Number of valid full length moves
+    const { fullLengthMoveCount } = this.world;
     if (typeof move === 'number') {
       if (move < 0 || move >= fullLengthMoveCount) {
         throw "Not moving to a valid full length move index!";
       }
     } else {
-      if (nonRestingFullLengthMoveCount <= 1) {
-        throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
-      }
-      if (move === "next") {
-        move = sprite.current_move + 1;
-        if (move >= fullLengthMoveCount) {
-          move = firstNonRestingMoveIndex;
-        }
-      } else if (move === "prev") {
-        move = sprite.current_move - 1;
-        if (move < firstNonRestingMoveIndex) {
-          move = fullLengthMoveCount - 1;
-        }
-      } else if (move === "rand") {
-        // Make sure random switches to a new move
-        move = sprite.current_move;
-        while (move === sprite.current_move) {
-          move = randomInt(firstNonRestingMoveIndex, fullLengthMoveCount - 1);
-        }
-      } else {
-        throw `Unexpected move value: ${move}`;
-      }
+      move = this.getNewChangeMove(move, sprite.current_move);
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
@@ -452,6 +463,9 @@ module.exports = class DanceParty {
 
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
+    if (move === "rand") {
+      move = this.getNewChangeMove(move, group[0].current_move);
+    }
     group.forEach(sprite => {
       this.changeMoveLR(sprite, move, dir);
     });

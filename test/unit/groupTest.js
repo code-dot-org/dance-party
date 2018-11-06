@@ -93,6 +93,46 @@ test('changing dance moves for all cats updates only all cat dancers', async t =
   nativeAPI.reset();
 });
 
+test('changing dance moves for all to rand sets same dance for all dancers', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  // Mock 4 cat animation poses
+  const moveCount = 4;
+  for(let i = 0; i < moveCount; i++) {
+    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.world.MOVE_NAMES.push({
+      name: `move${i}`
+    })
+  }
+
+  nativeAPI.world.fullLengthMoveCount = moveCount;
+  nativeAPI.world.restMoveCount = 1;
+
+  let spriteGroup = [];
+  const groupCount = 5;
+  for(let i = 0; i < groupCount; i++){
+    spriteGroup[i] = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  }
+
+  //Initial
+  t.equal(spriteGroup[0].current_move, 0);
+
+  nativeAPI.changeMoveEachLR('all', 'rand');
+
+  const newMove = spriteGroup[0].current_move;
+  for(let i = 0; i < groupCount; i++){
+    t.notEqual(spriteGroup[i].current_move, 0);
+    t.equal(spriteGroup[i].current_move, newMove);
+  }
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
 test('GetGroupByName returns the expected number of sprites ', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
