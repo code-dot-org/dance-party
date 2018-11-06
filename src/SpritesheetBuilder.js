@@ -49,8 +49,6 @@ class SpritesheetBuilder {
     const moveFrames = move < LONG_MOVES ? 24 : 12;
     // base64-encoded PNG transparent pixel
     this.cache[moveKey] = new Image();
-    this.cache[moveKey].width = 6 * CACHED_SIZE / 2;
-    this.cache[moveKey].height = Math.ceil(moveFrames / 6) * CACHED_SIZE;
     this.cache[moveKey].src = EMPTY_PNG;
 
     this.moveQueue.push([moveKey, character, move, moveFrames]);
@@ -61,8 +59,6 @@ class SpritesheetBuilder {
 
   startQueue() {
     this.p5._incrementPreload();
-    this.onStop = () => this.p5._decrementPreload();
-
     this.cachedSvgImg = new Image();
     this.canvas = document.createElement('canvas');
     this.canvas.width = CACHED_SIZE * 6 / 2;
@@ -71,15 +67,17 @@ class SpritesheetBuilder {
     setTimeout(this.processQueue, 0);
   }
 
+  stopQueue() {
+    this.p5._decrementPreload();
+    delete this.context;
+    delete this.canvas;
+    delete this.cachedSvgImg;
+    console.log('done');
+  }
+
   processQueue() {
     if (this.moveQueue.length <= 0) {
-      console.log('done');
-      delete this.context;
-      delete this.canvas;
-      delete this.cachedSvgImg;
-      if (typeof this.onStop === 'function') {
-        this.onStop();
-      }
+      this.stopQueue();
       return;
     }
 
@@ -98,20 +96,15 @@ class SpritesheetBuilder {
     const rasterize = () => {
       console.count('rasterize');
       this.context.clearRect(0, 0, CACHED_SIZE * 6, CACHED_SIZE * 4);
+      // TODO: Non-hacky sprite packing and fewer drawImage calls
       for (let frame = 0; frame < moveFrames; frame++) {
-        let row = Math.floor(frame / 6);
-        let col = frame % 6;
+        const row = Math.floor(frame / 6);
+        const col = frame % 6;
         this.context.drawImage(this.cachedSvgImg,
           (frame + 0.25) * SOURCE_SIZE, move * SOURCE_SIZE, SOURCE_SIZE / 2, SOURCE_SIZE,
           col * CACHED_SIZE / 2, row * CACHED_SIZE, CACHED_SIZE / 2, CACHED_SIZE
         );
       }
-      // this.context.drawImage(this.cachedSvgImg, 0, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 0, CACHED_ROW_SIZE, CACHED_SIZE);
-      // this.context.drawImage(this.cachedSvgImg, SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
-      // if (moveFrames > 12) {
-      //   this.context.drawImage(this.cachedSvgImg, 2 * SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 2 * CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
-      //   this.context.drawImage(this.cachedSvgImg, 3 * SOURCE_ROW_SIZE, move * SOURCE_SIZE, SOURCE_ROW_SIZE, SOURCE_SIZE, 0, 3 * CACHED_SIZE, CACHED_ROW_SIZE, CACHED_SIZE);
-      // }
       this.cache[moveKey].src = this.canvas.toDataURL();
       callback();
     };
