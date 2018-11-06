@@ -4,35 +4,66 @@ const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
 
-class Behavior {
-  constructor(func, extraArgs=[]) {
-    this.func = func;
-    this.extraArgs = extraArgs;
+/**
+ * Previously we used behaviors in two different ways. One of those behaviors
+ * (updateSpriteFrame) we registered for every single sprite. The other behaviors
+ * get registered/unregistered based on user behavior.
+ * I've moved updateSpriteFrame to no longer be a Behavior and instead gets called
+ * directly. However, we have numerous levels that use count of behaviors in their
+ * validation. Rather than modify those levels, I'm going to just add a noop
+ * behavior
+ * After HOC we should remove this behavior and update those levels.
+ */
+class NoopBehavior {
+  applyToSprite() {
   }
 
-  execute(sprite) {
-    this.func.apply(null, [sprite].concat(this.extraArgs));
+  equals() {
+    return false;
+  }
+}
+
+class EnergyBehavior {
+  /**
+   * @param {string} property
+   * @param {string} range
+   */
+  constructor(property, range) {
+    this.property = property;
+    // which frequency bin
+    this.range = range;
+  }
+
+  /**
+   * Mutates a sprite's property according to the provided energy and the stored
+   * property/range we have for this behavior;
+   * @param {Sprite} sprite
+   * @param {number[3]} energy - Energy values for bass, mid, treble
+   */
+  applyToSprite(sprite, energy) {
+    const { property } = this;
+    const baseEnergy = energy[this.range];
+    let mappedEnergy;
+
+    if (property === "x") {
+      mappedEnergy = Math.round(this.p5_.map(baseEnergy, 0, 255, 50, 350));
+    } else if (property === "y") {
+      mappedEnergy = Math.round(this.p5_.map(baseEnergy, 0, 255, 350, 50));
+    } else if (property === "scale") {
+      mappedEnergy = this.p5_.map(baseEnergy, 0, 255, 0.5, 1.5);
+    } else if (property === "width" || property === "height") {
+      mappedEnergy = this.p5_.map(baseEnergy, 0, 255, 50, 150);
+    } else if (property === "rotation" || property === "direction") {
+      mappedEnergy = Math.round(this.p5_.map(baseEnergy, 0, 255, -180, 180));
+    } else if (property === "tint") {
+      mappedEnergy = Math.round(this.p5_.map(baseEnergy, 0, 255, 0, 360));
+      mappedEnergy = "hsb(" + baseEnergy + ",100%,100%)";
+    }
+    sprite[property] = mappedEnergy;
   }
 
   equals(other) {
-    if (this.func.name && other.func.name) {
-      // These are legacy behaviors, check for equality based only on the name.
-      return this.func.name === other.func.name;
-    }
-    if (this.func !== other.func) {
-      return false;
-    }
-    if (other.extraArgs.length !== this.extraArgs.length) {
-      return false;
-    }
-    let extraArgsEqual = true;
-    for (let j = 0; j < this.extraArgs.length; j++) {
-      if (other.extraArgs[j] !== this.extraArgs[j]) {
-        extraArgsEqual = false;
-        break;
-      }
-    }
-    return extraArgsEqual;
+    return this.property === other.property && this.range === other.range;
   }
 }
 
@@ -313,40 +344,10 @@ module.exports = class DanceParty {
     sprite.previous_speed = 1;
     sprite.behaviors = [];
 
-    // Add behavior to control animation
-    this.addBehavior_(sprite, () => {
-      var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
-      sprite.sinceLastFrame += delta;
-      var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
-      var msPerFrame = msPerBeat / FRAMES;
-      while (sprite.sinceLastFrame > msPerFrame) {
-        sprite.sinceLastFrame -= msPerFrame;
-        sprite.looping_frame++;
-        if (sprite.animation.looping) {
-          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
-        } else {
-          sprite.animation.nextFrame();
-        }
-
-        if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
-            sprite.mirroring *= -1;
-          }
-          if (sprite.animation.looping) {
-            sprite.mirrorX(sprite.mirroring);
-          }
-        }
-
-        var currentFrame = sprite.animation.getFrame();
-        if (currentFrame === sprite.animation.getLastFrame() && !sprite.animation.looping) {
-          //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
-          sprite.changeAnimation("anim" + sprite.current_move);
-          sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
-          sprite.mirrorX(sprite.mirroring);
-          sprite.animation.looping = true;
-        }
-      }
-    });
+    // Post-HOC we should remove this line, and update levels that depend on
+    // number of behaviors (ideally those tests would call something like
+    // nativeAPI.numberOfBehaviors() instead of accessing sprite properties directly)
+    this.addBehavior_(sprite, new NoopBehavior());
 
     sprite.setTint = function (color) {
       sprite.tint = color;
@@ -376,6 +377,40 @@ module.exports = class DanceParty {
       tempGroup.add(this.makeNewDanceSprite(costume));
     }
     this.layoutSprites(tempGroup, layout);
+  }
+
+  updateSpriteFrame(sprite) {
+    var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
+    sprite.sinceLastFrame += delta;
+    var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
+    var msPerFrame = msPerBeat / FRAMES;
+    while (sprite.sinceLastFrame > msPerFrame) {
+      sprite.sinceLastFrame -= msPerFrame;
+      sprite.looping_frame++;
+      if (sprite.animation.looping) {
+        sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+      } else {
+        sprite.animation.nextFrame();
+      }
+
+      if (sprite.looping_frame % FRAMES === 0) {
+        if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+          sprite.mirroring *= -1;
+        }
+        if (sprite.animation.looping) {
+          sprite.mirrorX(sprite.mirroring);
+        }
+      }
+
+      var currentFrame = sprite.animation.getFrame();
+      if (currentFrame === sprite.animation.getLastFrame() && !sprite.animation.looping) {
+        //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
+        sprite.changeAnimation("anim" + sprite.current_move);
+        sprite.animation.changeFrame(sprite.looping_frame % sprite.animation.images.length);
+        sprite.mirrorX(sprite.mirroring);
+        sprite.animation.looping = true;
+      }
+    }
   }
 
 // Dance Moves
@@ -755,17 +790,6 @@ module.exports = class DanceParty {
 
 // Music Helpers
 
-  getEnergy(range) {
-    switch (range) {
-      case 'bass':
-        return this.energy_[0];
-      case 'mid':
-        return this.energy_[1];
-      case 'treble':
-        return this.energy_[2];
-    }
-  }
-
   getCurrentTime() {
     return this.songStartTime_ > 0 ? (new Date() - this.songStartTime_) / 1000 : 0;
   }
@@ -786,9 +810,9 @@ module.exports = class DanceParty {
 // Behaviors
 
   addBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
-
-    behavior = this.normalizeBehavior_(behavior);
+    if (!this.spriteExists_(sprite) || behavior === undefined) {
+      return;
+    }
 
     if (this.findBehavior_(sprite, behavior) !== -1) {
       return;
@@ -797,22 +821,15 @@ module.exports = class DanceParty {
   }
 
   removeBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
+    if (!this.spriteExists_(sprite) || behavior === undefined) {
+      return;
+    }
 
-    behavior = this.normalizeBehavior_(behavior);
-
-    var index = this.findBehavior_(sprite, behavior);
+    const index = this.findBehavior_(sprite, behavior);
     if (index === -1) {
       return;
     }
     sprite.behaviors.splice(index, 1);
-  }
-
-  normalizeBehavior_(behavior) {
-    if (typeof behavior === 'function') {
-      return new Behavior(behavior);
-    }
-    return behavior;
   }
 
   findBehavior_(sprite, behavior) {
@@ -825,49 +842,23 @@ module.exports = class DanceParty {
     return -1;
   }
 
+  /**
+   * @param {Sprite} sprite
+   * @param {string} property
+   * @param {string} range
+   */
   startMapping(sprite, property, range) {
-    const behavior = new Behavior(sprite => {
-      let energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 150);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
-      } else if (property === "tint") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
-        energy = "hsb(" + energy + ",100%,100%)";
-      }
-      sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
+    const behavior = new EnergyBehavior(sprite, property, range);
     this.addBehavior_(sprite, behavior);
   }
 
+  /**
+   * @param {Sprite} sprite
+   * @param {string} property
+   * @param {string} range
+   */
   stopMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 159);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
-      } else if (property === "tint") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
-        energy = "hsb(" + energy + ",100%,100%)";
-      }
-      sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
+    const behavior = new EnergyBehavior(sprite, property, range);
     this.removeBehavior_(sprite, behavior);
   }
 
@@ -963,9 +954,13 @@ module.exports = class DanceParty {
     }
 
     if (this.p5_.frameCount > 2) {
+      const energy = this.energy_;
       // Perform sprite behaviors
-      this.sprites_.forEach(function (sprite) {
-        sprite.behaviors.forEach(behavior => behavior.execute(sprite))
+      this.sprites_.forEach(sprite => {
+        this.updateSpriteFrame(sprite);
+        sprite.behaviors.forEach(behavior => {
+          behavior.applyToSprite(sprite, energy)
+        })
       });
     }
 
