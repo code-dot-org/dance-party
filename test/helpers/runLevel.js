@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
 
-module.exports = (userCode, validationCode, onPuzzleComplete) => {
+module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
   let nativeAPI;
   new DanceParty({
     moveNames: [],
@@ -47,7 +47,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
       api.addCues(getCueList());
       api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
       runUserSetup();
-      api.play({bpm: 1200, delay: 0});
+      api.play({bpm: bpm, delay: 0});
     },
   });
 };
