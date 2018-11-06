@@ -26,6 +26,10 @@ function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function getCueList() {
   var timestamps = [];
   var measures = [];
@@ -106,10 +110,13 @@ function whenPeak(range, event) {
 }
 
 function atTimestamp(timestamp, unit, event) {
+  // Increment priority by 1 to account for 'atTimestamp' events having a higher priority
+  // than everySecond events when they have share a timestamp parameter
   inputEvents.push({
     type: 'cue-' + unit,
     event: event,
-    param: timestamp
+    param: timestamp,
+    priority: timestamp + 1
   });
 }
 
