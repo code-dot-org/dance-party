@@ -945,13 +945,15 @@ module.exports = class DanceParty {
   draw() {
     this.updateEvents_();
 
+    const { bpm, artist, title } = this.songMetadata_ || {};
+
     const context = {
       isPeak: this.peakThisFrame_,
       centroid: this.centroid_,
       backgroundColor: this.world.background_color,
-      bpm: this.songMetadata_ && this.songMetadata_.bpm,
-      artist: this.songMetadata_.artist,
-      title: this.songMetadata_.title,
+      bpm,
+      artist,
+      title,
     };
 
     this.p5_.background(this.world.background_color || "white");
