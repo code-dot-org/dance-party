@@ -31,3 +31,14 @@ test('i18n', async t => {
 
   nativeAPI.reset();
 });
+
+test('draw without songData', async t => {
+  // we have a valid scenario where draw is called without having set any song
+  // metadata. make sure that we dont hit any exceptions in that path
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.draw();
+
+  t.end();
+
+  nativeAPI.reset();
+});
