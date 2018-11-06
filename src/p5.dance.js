@@ -356,10 +356,6 @@ module.exports = class DanceParty {
 
 // Dance Moves
 
-  checkDanceMoveCount() {
-
-  }
-
   getNewChangeMove(requested_change, current_move) {
     // Number of valid full length moves
     const { fullLengthMoveCount, restMoveCount } = this.world;
