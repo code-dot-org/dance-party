@@ -11,7 +11,7 @@ class mockP5 {
       getAnimationLabel: () => {},
       mirrorX: () => {},
     });
-  };
+  }
 }
 
 test('replay', t => {

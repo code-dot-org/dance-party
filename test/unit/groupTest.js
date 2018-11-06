@@ -102,10 +102,10 @@ test('GetGroupByName returns the expected number of sprites ', async t => {
   nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
   nativeAPI.setAnimationSpriteSheet("ALIEN", 0, {}, () => {});
 
-  const catSpriteAlpha = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-  const catSpriteBeta = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-  const alienSprite = nativeAPI.makeNewDanceSprite("ALIEN", null, {x: 200, y: 200});
-  const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
+  nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  nativeAPI.makeNewDanceSprite("ALIEN", null, {x: 200, y: 200});
+  nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
 
   t.equal(nativeAPI.getGroupByName_('all').length, 4);
   t.equal(nativeAPI.getGroupByName_('CAT').length, 2);
@@ -142,7 +142,7 @@ test('LayoutSprites sets the x position of sprites in the expected orientation',
   nativeAPI.layoutSprites('CAT', 'column');
 
   let cats = nativeAPI.getGroupByName_('CAT');
-  for(let i = 0; i < cats.length; i++){
+  for (let i = 0; i < cats.length; i++) {
     t.equal(cats[i].x, 200);
   }
 
