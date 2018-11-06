@@ -3,6 +3,7 @@
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
+const constants = require('./constants');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -20,9 +21,9 @@ const WATCHED_KEYS = [
 const WATCHED_RANGES = [0, 1, 2];
 
 const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
-const SIZE = 300;
+const SIZE = constants.SIZE;
+const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
-const FRAMES = 24;
 
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
@@ -75,28 +76,8 @@ module.exports = class DanceParty {
 
     this.sprites_by_type_ = {};
 
-    this.world.SPRITE_NAMES = ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"];
-
-    this.world.MOVE_NAMES = moveNames || [
-      {name: "Rest", mirror: true, rest: true},
-      {name: "ClapHigh", mirror: true},
-      {name: "Clown", mirror: false},
-      {name: "Dab", mirror: true},
-      {name: "DoubleJam", mirror: false},
-      {name: "Drop", mirror: true},
-      {name: "Floss", mirror: true},
-      {name: "Fresh", mirror: true},
-      {name: "Kick", mirror: true},
-      {name: "Roll", mirror: true},
-      {name: "ThisOrThat", mirror: false},
-      {name: "Thriller", mirror: true},
-      {name: "XArmsSide", mirror: false, shortBurst: true},
-      {name: "XArmsUp", mirror: false, shortBurst: true},
-      {name: "XJump", mirror: false, shortBurst: true},
-      {name: "XClapSide", mirror: false, shortBurst: true},
-      {name: "XHeadHips", mirror: false, shortBurst: true},
-      {name: "XHighKick", mirror: false, shortBurst: true},
-    ];
+    this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
+    this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
 
     if (spriteConfig) {
       spriteConfig(this.world);
