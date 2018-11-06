@@ -9,7 +9,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete) => {
   let nativeAPI;
   new DanceParty({
     moveNames: [],
-    playSound: ({callback}) => callback(),
+    playSound: (url, callback) => callback(),
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();

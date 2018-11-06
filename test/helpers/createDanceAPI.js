@@ -5,7 +5,7 @@ module.exports = {
     return new Promise(resolve => {
       new DanceParty({
         moveNames: [],
-        playSound: ({callback}) => callback(),
+        playSound: (url, callback) => callback(),
         onInit: nativeAPI => resolve(nativeAPI),
         ...props
       });
