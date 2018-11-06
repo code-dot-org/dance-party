@@ -4,6 +4,7 @@ const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
 const constants = require('./constants');
+const modifySongData = require('./modifySongData');
 
 function Behavior(func, extraArgs) {
   if (!extraArgs) {
@@ -224,7 +225,7 @@ module.exports = class DanceParty {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
-    this.songMetadata_ = songData;
+    this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
     this.playSound_({url: this.songMetadata_.file, callback: () => {
       this.songStartTime_ = new Date();
