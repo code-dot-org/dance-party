@@ -832,7 +832,6 @@ module.exports = class DanceParty {
 
   stopMapping(sprite, property, range) {
     const id = [property, range].join('-');
-    console.log('id: ', id);
     this.removeBehavior_(sprite, id);
   }
 

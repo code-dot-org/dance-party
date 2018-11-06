@@ -412,9 +412,8 @@ test('startMapping/stopMapping adds and removes behaviors', async t => {
   t.equal(sprite.behaviors.length, 2);
 
   // adding the same mapping again gets ignored
-  // TODO: this fails
-  // nativeAPI.startMapping(sprite, 'x', 'bass');
-  // t.equal(sprite.behaviors.length, 2);
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 2);
 
   // changing the range gives a new behavior
   nativeAPI.startMapping(sprite, 'x', 'treble');
