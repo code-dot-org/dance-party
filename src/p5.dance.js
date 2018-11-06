@@ -794,6 +794,9 @@ module.exports = class DanceParty {
     }
 
     const index = sprite.behaviors.findIndex(b => b.id === behaviorId);
+    if (index === -1) {
+      return;
+    }
     sprite.behaviors.splice(index, 1);
   }
 
@@ -829,6 +832,7 @@ module.exports = class DanceParty {
 
   stopMapping(sprite, property, range) {
     const id = [property, range].join('-');
+    console.log('id: ', id);
     this.removeBehavior_(sprite, id);
   }
 

@@ -428,6 +428,9 @@ test('startMapping/stopMapping adds and removes behaviors', async t => {
   nativeAPI.stopMapping(sprite, 'x', 'bass');
   t.equal(sprite.behaviors.length, 3);
 
+  // removing a non-existent behavior is a noop
+  nativeAPI.stopMapping(sprite, 'rotation', 'bass');
+  t.equal(sprite.behaviors.length, 3);
 
   t.end();
 
