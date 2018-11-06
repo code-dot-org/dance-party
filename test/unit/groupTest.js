@@ -101,11 +101,11 @@ test('changing dance moves for all to rand sets same dance for all dancers', asy
 
   // Mock 4 cat animation poses
   const moveCount = 4;
-  for(let i = 0; i < moveCount; i++) {
+  for (let i = 0; i < moveCount; i++) {
     nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
       name: `move${i}`
-    })
+    });
   }
 
   nativeAPI.world.fullLengthMoveCount = moveCount;
@@ -113,7 +113,7 @@ test('changing dance moves for all to rand sets same dance for all dancers', asy
 
   let spriteGroup = [];
   const groupCount = 5;
-  for(let i = 0; i < groupCount; i++){
+  for (let i = 0; i < groupCount; i++) {
     spriteGroup[i] = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
   }
 
@@ -123,7 +123,7 @@ test('changing dance moves for all to rand sets same dance for all dancers', asy
   nativeAPI.changeMoveEachLR('all', 'rand');
 
   const newMove = spriteGroup[0].current_move;
-  for(let i = 0; i < groupCount; i++){
+  for (let i = 0; i < groupCount; i++) {
     t.notEqual(spriteGroup[i].current_move, 0);
     t.equal(spriteGroup[i].current_move, newMove);
   }
