@@ -283,10 +283,7 @@ module.exports = class DanceParty {
     var sprite = this.p5_.createSprite(location.x, location.y);
 
     sprite.style = costume;
-    if (!this.sprites_by_type_.hasOwnProperty(costume)) {
-      this.sprites_by_type_[costume] = this.p5_.createGroup();
-    }
-    this.sprites_by_type_[costume].add(sprite);
+    this.getGroupByName_(costume).add(sprite);
 
     sprite.mirroring = 1;
     sprite.looping_move = 0;
@@ -464,14 +461,14 @@ module.exports = class DanceParty {
     if (typeof(group) === "object") {
       return group;
     }
-    if (group !== "all") {
-      if (!this.sprites_by_type_.hasOwnProperty(group)) {
-        console.log("There is no group of " + group);
-        return;
-      }
-      return this.sprites_by_type_[group];
+    if (group === "all") {
+      return this.p5_.allSprites;
     }
-    return this.p5_.allSprites;
+
+    if (!this.sprites_by_type_.hasOwnProperty(group)) {
+      this.sprites_by_type_[group] = this.p5_.createGroup();
+    }
+    return this.sprites_by_type_[group];
   }
 
   changeMoveEachLR(group, move, dir) {
