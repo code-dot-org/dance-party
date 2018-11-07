@@ -104,6 +104,7 @@ module.exports = class DanceParty {
       p5Inst.preload = () => this.preload();
       p5Inst.setup = () => this.setup();
       p5Inst.draw = () => this.draw();
+      //Allows the sprite width and height to be set independently
       this.p5_._fixedSpriteAnimationFrameSizes = true;
     }, container);
   }
