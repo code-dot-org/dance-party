@@ -385,3 +385,12 @@ test('setPropRandom set sprite y properties between 50 and 350', async t => {
 
   nativeAPI.reset();
 });
+
+test('p5 fixedSpriteAnimationSizes is true', async t => {
+  //Turning this flag on allows us to scale a sprite horizontally and vertically
+  const nativeAPI = await helpers.createDanceAPI();
+  t.ok(nativeAPI.p5_._fixedSpriteAnimationFrameSizes);
+  t.end();
+
+  nativeAPI.reset();
+});
