@@ -437,18 +437,12 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
-    if (move === "next") {
-      move = (sprite.current_move + 1) % ANIMATIONS[sprite.style].length;
-    } else if (move === "prev") {
-      move = (sprite.current_move - 1) % ANIMATIONS[sprite.style].length;
-    } else if (move === "rand") {
-      move = sprite.current_move;
-      while (move === sprite.current_move) {
-        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
+    if (typeof move === 'number') {
+      if (move < 0 || move >= this.world.MOVE_NAMES.length) {
+        throw new Error(`Invalid move index: ${move}`);
       }
-    }
-    if (move < 0 || move >= this.world.MOVE_NAMES.length) {
-      throw new Error(`Invalid move index: ${move}`);
+    } else {
+      move = this.getNewChangedMove(move, sprite.current_move);
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
@@ -492,7 +486,12 @@ module.exports = class DanceParty {
 
   doMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    group.forEach(sprite => { this.doMoveLR(sprite, move, dir);});
+    if (move === "rand") {
+      move = this.getNewChangedMove(move, group[0].current_move);
+    }
+    group.forEach(sprite => {
+      this.doMoveLR(sprite, move, dir);
+    });
   }
 
   /**
