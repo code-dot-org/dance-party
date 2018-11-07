@@ -15,8 +15,8 @@ test('make sure we are checking all relevant keys', async t => {
   nativeAPI.onKeyDown(p5.KEY['9']);
   p5.readPresses();
 
-  nativeAPI.updateEvents_();
-  t.deepEqual(nativeAPI.currentFrameEvents['this.p5_.keyWentDown'], {
+  const events = nativeAPI.updateEvents_();
+  t.deepEqual(events['this.p5_.keyWentDown'], {
     left: true,
     space: true,
     enter: true,
