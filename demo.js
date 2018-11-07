@@ -4,6 +4,7 @@ import interpreted from 'raw-loader!./src/p5.dance.interpreted.js';
 import injectInterpreted from './test/helpers/injectInterpreted';
 
 const textareaCode = document.querySelector('#code');
+const buttonRun = document.querySelector('#run');
 
 const nativeAPI = window.nativeAPI = new DanceParty({
   onPuzzleComplete: () => {},
@@ -39,12 +40,12 @@ atTimestamp(2, "measures", function () {
 });
 `;
 
-document.querySelector('#run').addEventListener('click', event => {
-  if (event.target.innerText === "Reset") {
-    event.target.innerText = "Run!";
+document.querySelector('#run').addEventListener('click', () => {
+  if (buttonRun.innerText === "Reset") {
+    buttonRun.innerText = "Run!";
     nativeAPI.reset();
   } else {
-    event.target.innerText = "Reset";
+    buttonRun.innerText = "Reset";
     runCode();
   }
 });
