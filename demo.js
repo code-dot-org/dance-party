@@ -9,36 +9,16 @@ const nativeAPI = window.nativeAPI = new DanceParty({
     callback && callback();
   }, 0),
   onInit: () => {
-    const {
-      runUserSetup,
-      runUserEvents,
-      getCueList,
-      atTimestamp
-    } = injectInterpreted(nativeAPI, interpreted);
-
-    // Sample user code:
-    nativeAPI.setBackgroundEffect('disco');
-    nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-    atTimestamp(2, "measures", function () {
-      nativeAPI.setBackgroundEffect('diamonds');
-    });
-
-
-    // setup event tracking
-    // Worth noting that any calls that setup event tracking (such as atTimestamp)
-    // must happen before this point
-    nativeAPI.addCues(getCueList());
-    nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
-    runUserSetup();
-
-
-    nativeAPI.play(jazzy_beats);
+    document.querySelector('#run').style.display = 'inline';
   },
   container: 'dance',
 });
 
-document.querySelector('#code').innerText = `setBackgroundEffect('disco');
-nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+document.querySelector('#code').innerText = `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+atTimestamp(2, "measures", function () {
+  nativeAPI.setBackgroundEffect("disco");
+});
 `;
 
 document.querySelector('#run').addEventListener('click', event => {
@@ -47,6 +27,17 @@ document.querySelector('#run').addEventListener('click', event => {
     nativeAPI.reset();
   } else {
     event.target.innerText = "Reset";
+    const {
+      runUserSetup,
+      runUserEvents,
+      getCueList,
+    } = injectInterpreted(nativeAPI, interpreted, document.querySelector('#code').value);
+
+    // Setup event tracking.
+    nativeAPI.addCues(getCueList());
+    nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
+    runUserSetup();
+
     nativeAPI.play(jazzy_beats);
   }
 });
