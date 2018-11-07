@@ -121,19 +121,26 @@ function atTimestamp(timestamp, unit, event) {
 }
 
 function everySeconds(n, unit, event) {
-  // TODO: 90 seconds is the max for songs, but 90 measures is too long
-  everySecondsRange(n, unit, 0, 90, event);
+  // Measures start counting at 1, whereas seconds start counting at 0.
+  // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
+  // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
+  var start, stop;
+  if (unit === "measures") {
+    start = 1;
+    // TODO: 90 seconds is the max for songs, but 90 measures is too long
+    stop = 91;
+  } else {
+    start = 0;
+    stop = 90;
+  }
+  everySecondsRange(n, unit, start, stop, event);
 }
 
 function everySecondsRange(n, unit, start, stop, event) {
   if (n > 0) {
-    // There are two offsets involved in the initial timestamp.
     // Offset by n so that we don't generate an event at the beginning
     // of the first period.
-    // And, if "measures", offset by 1, since they start at 1.
-    // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
-    // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
-    var timestamp = start + n + (unit === "measures" ? 1 : 0);
+    var timestamp = start + n;
 
     while (timestamp < stop) {
       inputEvents.push({
