@@ -3,7 +3,9 @@ import jazzy_beats from './metadata/jazzy_beats';
 
 const nativeAPI = window.nativeAPI = new DanceParty({
   onPuzzleComplete: () => {},
-  playSound: ({callback}) => setTimeout(() => {callback && callback();}, 0),
+  playSound: (url, callback, onEnded) => setTimeout(() => {
+    callback && callback();
+  }, 0),
   onInit: () => {
     // Sample user code:
     nativeAPI.setBackgroundEffect('disco');
