@@ -55,6 +55,38 @@ module.exports = {
       }
     `,
   },
+  collisionEveryNMeasureDifferentDancers: {
+    solution: `
+      var dancer1, dancer2;
+
+      whenSetup(function () {
+        dancer1 = makeNewDanceSprite("CAT", null, {x: 100, y: 200});
+        dancer2 = makeNewDanceSprite("MOOSE", null, {x: 300, y: 200});
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(dancer1, 4, -1);
+      });
+
+      everySeconds(4, "measures", function () {
+        changeMoveLR(dancer2, 4, -1);
+      });
+    `,
+    validationCode: `
+      if (nativeAPI.getTime("measures") > 4) {
+        const all = nativeAPI.getGroupByName_('all');
+        for (let i = 0; i < all.length; i++){
+          if (all[i].current_move !== 4) {
+            nativeAPI.fail("Sprite not dancing move 4.");
+          }
+        }
+      }
+
+      if (nativeAPI.getTime("measures") > 5) {
+        nativeAPI.pass();
+      }
+    `,
+  },
   collisionEveryNSeconds: {
     solutions: [
       `
