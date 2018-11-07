@@ -109,11 +109,6 @@ function whenPeak(range, event) {
   });
 }
 
-/**
- * @param {number} timestamp
- * @param {string} unit
- * @param {function} event
- */
 function atTimestamp(timestamp, unit, event) {
   // Increment priority by 1 to account for 'atTimestamp' events having a higher priority
   // than everySecond events when they have share a timestamp parameter

@@ -32,6 +32,7 @@
     "eslint": "^2.8.0",
     "jsdom": "^12.2.0",
     "nyc": "^13.1.0",
+    "raw-loader": "^0.5.1",
     "sinon": "^7.1.1",
     "tape": "^4.9.1",
     "webpack": "4.19.1",
@@ -42,7 +43,5 @@
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
   "homepage": "https://github.com/code-dot-org/dance-party#readme",
-  "dependencies": {
-    "raw-loader": "^0.5.1"
-  }
+  "dependencies": {}
 }

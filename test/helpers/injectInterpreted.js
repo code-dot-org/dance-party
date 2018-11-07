@@ -1,7 +1,6 @@
 /**
  * This file is used by both our dev/demo process, and our tests (and thus must
  * run in both Node and Browser)
-
  */
 
 const DanceAPI = require('../../src/api');
