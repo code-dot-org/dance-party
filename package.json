@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
-  "homepage": "https://github.com/code-dot-org/dance-party#readme"
+  "homepage": "https://github.com/code-dot-org/dance-party#readme",
+  "dependencies": {
+    "raw-loader": "^0.5.1"
+  }
 }
