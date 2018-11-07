@@ -450,3 +450,45 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
 
   t.end();
 });
+
+test('startMapping/stopMapping adds and removes behaviors', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // This is 1 only because we have a behavior that we add to every sprite
+  // (which should arguably be a different concept)
+  t.equal(sprite.behaviors.length, 1);
+
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+
+  t.equal(sprite.behaviors.length, 2);
+
+  // adding the same mapping again gets ignored
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 2);
+
+  // changing the range gives a new behavior
+  nativeAPI.startMapping(sprite, 'x', 'treble');
+  t.equal(sprite.behaviors.length, 3);
+
+  // changing the property gives a new behavior
+  nativeAPI.startMapping(sprite, 'y', 'bass');
+  t.equal(sprite.behaviors.length, 4);
+
+  // stop mapping removes behavior
+  nativeAPI.stopMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 3);
+
+  // removing a non-existent behavior is a noop
+  nativeAPI.stopMapping(sprite, 'rotation', 'bass');
+  t.equal(sprite.behaviors.length, 3);
+
+  t.end();
+
+  nativeAPI.reset();
+});
