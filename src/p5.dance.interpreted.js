@@ -129,10 +129,11 @@ function everySecondsRange(n, unit, start, stop, event) {
   if (n > 0) {
     // There are two offsets involved in the initial timestamp.
     // Offset by n so that we don't generate an event at the beginning
-    // of the first duration.  And offset by 1, since we want to generate the
-    // event at the beginning of the next measure or second.
+    // of the first period.
+    // And, if "measures", offset by 1, since they start at 1.
     // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
-    var timestamp = start + n + 1;
+    // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
+    var timestamp = start + n + (unit === "measures" ? 1 : 0);
 
     while (timestamp < stop) {
       inputEvents.push({
