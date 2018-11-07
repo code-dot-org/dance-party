@@ -417,7 +417,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'rand' when only one dance should fail
-      nativeAPI.getNewChangeMove(sprite, 'rand', 1);
+      nativeAPI.getNewChangedMove(sprite, 'rand', 1);
     } catch (e) {
       error = e;
     }
@@ -429,7 +429,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'next' when only one dance should fail
-      nativeAPI.getNewChangeMove(sprite, 'next', 1);
+      nativeAPI.getNewChangedMove(sprite, 'next', 1);
     } catch (e) {
       error = e;
     }
@@ -441,7 +441,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'prev' when only one dance should fail
-      nativeAPI.getNewChangeMove(sprite, 'prev', 1);
+      nativeAPI.getNewChangedMove(sprite, 'prev', 1);
     } catch (e) {
       error = e;
     }
