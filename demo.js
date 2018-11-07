@@ -34,4 +34,19 @@ const nativeAPI = window.nativeAPI = new DanceParty({
 
     nativeAPI.play(jazzy_beats);
   },
+  container: 'dance',
+});
+
+document.querySelector('#code').innerText = `setBackgroundEffect('disco');
+nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+`;
+
+document.querySelector('#run').addEventListener('click', event => {
+  if (event.target.innerText === "Reset") {
+    event.target.innerText = "Run!";
+    nativeAPI.reset();
+  } else {
+    event.target.innerText = "Reset";
+    nativeAPI.play(jazzy_beats);
+  }
 });
