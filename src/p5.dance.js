@@ -227,9 +227,9 @@ module.exports = class DanceParty {
     }
     this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
-    this.playSound_(this.songMetadata_.file, () => {
+    this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
-      callback && callback();
+      callback && callback(playSuccess);
     }, () => {
       this.reset();
     });
