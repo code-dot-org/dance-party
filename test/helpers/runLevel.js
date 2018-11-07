@@ -1,4 +1,4 @@
-const DanceParty = require('../../src/p5.dance');
+const {createDanceAPI} = require('./createDanceAPI');
 
 const fs = require('fs');
 const path = require('path');
@@ -7,9 +7,7 @@ const injectInterpreted = require('./injectInterpreted');
 
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
   let nativeAPI;
-  new DanceParty({
-    moveNames: [],
-    playSound: (url, callback) => callback(),
+  createDanceAPI({
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
@@ -20,13 +18,11 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
       const validationCallback = new Function('World', 'nativeAPI', 'sprites', validationCode);
       api.registerValidation(validationCallback);
 
-
       const {
         runUserSetup,
         runUserEvents,
         getCueList
       } = injectInterpreted(nativeAPI, interpreted, userCode);
-
 
       // Mock 4 cat and moose animation poses.
       const moveCount = 10;
