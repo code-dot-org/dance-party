@@ -32,6 +32,24 @@ test('changing dance moves for all updates all dancers', async t => {
   nativeAPI.reset();
 });
 
+test('changing dance moves for empty group does nothing without error', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  t.equal(catSprite.current_move, 0);
+  nativeAPI.changeMoveEachLR('BEAR', 1);
+  t.equal(catSprite.current_move, 0);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
 test('changing visibility for all updates all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
@@ -149,7 +167,7 @@ test('GetGroupByName returns the expected number of sprites ', async t => {
   t.equal(nativeAPI.getGroupByName_('all').length, 4);
   t.equal(nativeAPI.getGroupByName_('CAT').length, 2);
   t.equal(nativeAPI.getGroupByName_('ALIEN').length, 1);
-  t.equal(nativeAPI.getGroupByName_('DOG'), undefined);
+  t.equal(nativeAPI.getGroupByName_('DOG').length, 0);
 
   t.end();
 
@@ -184,6 +202,22 @@ test('LayoutSprites sets the x position of sprites in the expected orientation',
   for (let i = 0; i < cats.length; i++) {
     t.equal(cats[i].x, 200);
   }
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('LayoutSprites is safe to call with any layout on an empty group', async t => {
+  // Checking for divide-by-zero errors
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  ['circle', 'plus', 'x', 'grid', 'inner', 'row', 'column', 'border', 'random'].forEach(layout => {
+    nativeAPI.layoutSprites('BEAR', layout);
+  });
 
   t.end();
 
