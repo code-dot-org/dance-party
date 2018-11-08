@@ -279,16 +279,16 @@ test('Sprite move sorting works reliably', async t => {
     setTimeout(() => {
       this._preloadCount--;
       this._runIfPreloadsAreDone();
-      callback('{"frames":{}}');  
+      callback('{"frames":{}}');
     }, 0);
-  }
-  P5.prototype.loadImageElement = function(_url, callback) {
+  };
+  P5.prototype.loadImageElement = function (_url, callback) {
     setTimeout(() => {
       this._preloadCount--;
       this._runIfPreloadsAreDone();
       callback(new Image());
     }, 0);
-  }
+  };
 
   const nativeAPI = await helpers.createDanceAPI({ moveNames, spriteConfig: world => { world.SPRITE_NAMES = ['foo']; } });
 
