@@ -497,12 +497,12 @@ module.exports = class DanceParty {
   /**
    * Given a group with an abitrary number of sprites, arrange them in a particular
    * layout. This is likely to change some or all of position/rotation/scale for
-   * the sprites in the group
+   * the sprites in the group.
    */
   layoutSprites(group, format) {
     group = this.getGroupByName_(group);
 
-    // begin by resizing the entire group
+    // Begin by resizing the entire group.
     group.forEach(sprite => this.setProp(sprite, 'scale', 30));
 
     const count = group.length;
@@ -514,8 +514,8 @@ module.exports = class DanceParty {
     const maxCircleRadius = 165;
 
     if (format === "circle") {
-      // adjust radius of circle and size of the sprite according to number of
-      // sprites in our group
+      // Adjust radius of circle and size of the sprite according to number of
+      // sprites in our group.
       const pct = this.p5_.constrain(count / 10, 0, 1);
       const radius = this.p5_.lerp(50, maxCircleRadius, pct);
       const scale = this.p5_.lerp(0.8, 0.3, pct * pct);
@@ -537,18 +537,19 @@ module.exports = class DanceParty {
         const ring = Math.floor(i / 4) + 1;
         const angle = [
           -Math.PI / 2, // above
-          Math.PI / 2, // below
-          -Math.PI, // left
-          0 // right
+          Math.PI / 2,  // below
+          -Math.PI,     // left
+          0             // right
         ][i % 4];
         const ringRadius = this.p5_.lerp(0, maxRadius, ring / numRings);
 
         sprite.x = 200 + ringRadius * Math.cos(angle);
         sprite.y = 200 + ringRadius * Math.sin(angle);
+        sprite.rotation = 0;
       });
     } else if (format === 'x') {
       const pct = this.p5_.constrain(count / 10, 0, 1);
-      // we can have a bigger radius here since we're going to the corners
+      // We can have a bigger radius here since we're going to the corners.
       const maxRadius = this.p5_.lerp(0, Math.sqrt(2 * maxCircleRadius * maxCircleRadius), pct);
       const numRings = Math.ceil(count / 4);
       group.forEach((sprite, i) => {
@@ -566,18 +567,19 @@ module.exports = class DanceParty {
         sprite.rotation = (angle + Math.PI / 2) * radiansToDegrees;
       });
     } else if (format === "grid") {
-      // Create a grid where the width is the  square root of the count, rounded up
-      // and the height is the number of rows needed to fill in count cells
+      // Create a grid where the width is the square root of the count, rounded up,
+      // and the height is the number of rows needed to fill in count cells.
       // For our last row, we might have empty cells in our grid (but the row
-      // structure will be the same)
+      // structure will be the same).
       const numCols = Math.ceil(Math.sqrt(count));
       const numRows = Math.ceil(count / numCols);
       group.forEach((sprite, i) => {
         const row = Math.floor(i / numCols);
         const col = i % numCols;
-        // || 0 so that we recover from div 0
+        // || 0 so that we recover from div 0.
         sprite.x = this.p5_.lerp(minX, maxX, col / (numCols - 1) || 0);
         sprite.y = this.p5_.lerp(minY, maxY, row / (numRows - 1) || 0);
+        sprite.rotation = 0;
       });
     } else if (format === "inner") {
       const pct = this.p5_.constrain(count / 10, 0, 1);
@@ -588,22 +590,25 @@ module.exports = class DanceParty {
         const col = i % size;
         sprite.x = this.p5_.lerp(200 - radius, 200 + radius, col / (size - 1));
         sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
+        sprite.rotation = 0;
       });
     } else if (format === "row") {
       for (let i=0; i<count; i++) {
         const sprite = group[i];
         sprite.x = (i+1) * (400 / (count + 1));
         sprite.y = 200;
+        sprite.rotation = 0;
       }
     } else if (format === "column") {
       for (let i=0; i<count; i++) {
         const sprite = group[i];
         sprite.x = 200;
         sprite.y = (i+1) * (400 / (count + 1));
+        sprite.rotation = 0;
       }
     } else if (format === "border") {
-      // first fill the four corners
-      // then split remainder into 4 groups. distribute group one along the top,
+      // First fill the four corners.
+      // Then split remainder into 4 groups. Distribute group one along the top,
       // group 2 along the right, etc.
       if (count > 0) {
         group[0].x = minX;
@@ -629,43 +634,48 @@ module.exports = class DanceParty {
 
         for (let i = 0; i < topCount; i++) {
           const sprite = group[4 + i];
-          // we want to include the corners in our total count so that the first
-          // inner sprite is > 0 and the last inner sprite is < 1 when we lerp
+          // We want to include the corners in our total count so that the first
+          // inner sprite is > 0 and the last inner sprite is < 1 when we lerp.
           sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (topCount + 1));
           sprite.y = minY
+          sprite.rotation = 0;
         }
 
         for (let i = 0; i < rightCount; i++) {
           const sprite = group[4 + topCount + i];
           sprite.x = maxX;
           sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (rightCount + 1));
+          sprite.rotation = 0;
         }
 
         for (let i = 0; i < bottomCount; i++) {
           const sprite = group[4 + topCount + rightCount + i];
           sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (bottomCount + 1));
           sprite.y = maxY;
+          sprite.rotation = 0;
         }
 
         for (let i = 0; i < leftCount; i++) {
           const sprite = group[4 + topCount + rightCount + bottomCount + i];
           sprite.x = minX;
           sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (leftCount + 1));
+          sprite.rotation = 0;
         }
       }
     } else if (format === "random") {
       group.forEach(function (sprite) {
         sprite.x = randomInt(minX, maxX);
         sprite.y = randomInt(minY, maxY);
+        sprite.rotation = 0;
       });
     } else {
       throw new Error('Unexpected format: ' + format);
     }
 
-    // we want sprites that are lower in the canvas to show up on top of those
-    // that are higher
-    // we also add a fractional component based on x to avoid z-fighting (except
-    // in cases where we have identical x and y)
+    // We want sprites that are lower in the canvas to show up on top of those
+    // that are higher.
+    // We also add a fractional component based on x to avoid z-fighting (except
+    // in cases where we have identical x and y).
     group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
   }
 
