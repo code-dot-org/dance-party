@@ -30,6 +30,9 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * @returns {Object} An object with two arrays, each of which is a list of numbers
+ */
 function getCueList() {
   var timestamps = [];
   var measures = [];
@@ -102,6 +105,10 @@ function ifDanceIs(sprite, dance, ifStatement, elseStatement) {
   }
 }
 
+/**
+ * @param {string} key - Many options, including up, down, left, right, a-z, 0-9
+ * @param {function} func - Code to run when event fires
+ */
 function whenKey(key, func) {
   inputEvents.push({
     type: 'this.p5_.keyWentDown',
@@ -110,6 +117,10 @@ function whenKey(key, func) {
   });
 }
 
+/**
+ * @param {string} range - Should be "bass", "mid", or "treble"
+ * @param {function} func - Code to run when event fires
+ */
 function whenPeak(range, func) {
   inputEvents.push({
     type: 'Dance.fft.isPeak',
@@ -118,6 +129,11 @@ function whenPeak(range, func) {
   });
 }
 
+/**
+ * @param {number} timestamp
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ */
 function atTimestamp(timestamp, unit, func) {
   if (unit === "measures") {
     timestamp += 1;
@@ -133,6 +149,11 @@ function atTimestamp(timestamp, unit, func) {
   });
 }
 
+/**
+ * @param {number} n
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ */
 function everySeconds(n, unit, func) {
   // Measures start counting at 1, whereas seconds start counting at 0.
   // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
@@ -149,24 +170,37 @@ function everySeconds(n, unit, func) {
   everySecondsRange(n, unit, start, stop, func);
 }
 
+/**
+ * @param {number} n
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {number} start
+ * @param {number} stop
+ * @param {function} func - Code to run when event fires
+ */
 function everySecondsRange(n, unit, start, stop, func) {
-  if (n > 0) {
-    // Offset by n so that we don't generate an event at the beginning
-    // of the first period.
-    var timestamp = start + n;
+  if (n <= 0) {
+    return;
+  }
 
-    while (timestamp < stop) {
-      inputEvents.push({
-        type: 'cue-' + unit,
-        func: func,
-        param: timestamp,
-        priority: n
-      });
-      timestamp += n;
-    }
+  // Offset by n so that we don't generate an event at the beginning
+  // of the first period.
+  var timestamp = start + n;
+
+  while (timestamp < stop) {
+    inputEvents.push({
+      type: 'cue-' + unit,
+      func: func,
+      param: timestamp,
+      priority: n
+    });
+    timestamp += n;
   }
 }
 
+/**
+ * @param {string} unit - Should be "verse" or "chorus"
+ * @param {function} func - Code to run when event fires
+ */
 function everyVerseChorus(unit, func) {
   inputEvents.push({
     type: 'verseChorus',
