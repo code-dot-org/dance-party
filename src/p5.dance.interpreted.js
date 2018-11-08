@@ -110,6 +110,10 @@ function whenPeak(range, event) {
 }
 
 function atTimestamp(timestamp, unit, event) {
+  if (unit === "measures") {
+    timestamp += 1;
+  }
+
   // Increment priority by 1 to account for 'atTimestamp' events having a higher priority
   // than everySecond events when they have share a timestamp parameter
   inputEvents.push({
@@ -121,13 +125,27 @@ function atTimestamp(timestamp, unit, event) {
 }
 
 function everySeconds(n, unit, event) {
-  // TODO: 90 seconds is the max for songs, but 90 measures is too long
-  everySecondsRange(n, unit, 0, 90, event);
+  // Measures start counting at 1, whereas seconds start counting at 0.
+  // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
+  // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
+  var start, stop;
+  if (unit === "measures") {
+    start = 1;
+    // TODO: 90 seconds is the max for songs, but 90 measures is too long
+    stop = 91;
+  } else {
+    start = 0;
+    stop = 90;
+  }
+  everySecondsRange(n, unit, start, stop, event);
 }
 
 function everySecondsRange(n, unit, start, stop, event) {
   if (n > 0) {
-    var timestamp = start;
+    // Offset by n so that we don't generate an event at the beginning
+    // of the first period.
+    var timestamp = start + n;
+
     while (timestamp < stop) {
       inputEvents.push({
         type: 'cue-' + unit,

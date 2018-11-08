@@ -1,15 +1,13 @@
-const DanceParty = require('../../src/p5.dance');
-const DanceAPI = require('../../src/api');
+const {createDanceAPI} = require('./createDanceAPI');
 
 const fs = require('fs');
 const path = require('path');
 const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
+const injectInterpreted = require('./injectInterpreted');
 
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
   let nativeAPI;
-  new DanceParty({
-    moveNames: [],
-    playSound: (url, callback) => callback(),
+  createDanceAPI({
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
@@ -17,25 +15,14 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
     onInit: api => {
       nativeAPI = api;
 
-      const epilogue = `return {runUserSetup, runUserEvents, getCueList};`;
-      const globals = new DanceAPI(api);
-      const code = interpreted + userCode + epilogue;
-
       const validationCallback = new Function('World', 'nativeAPI', 'sprites', validationCode);
       api.registerValidation(validationCallback);
 
-      const params = [];
-      const args = [];
-      for (let k of Object.keys(globals)) {
-        params.push(k);
-        args.push(globals[k]);
-      }
-      params.push(code);
-      const ctor = function () {
-        return Function.apply(this, params);
-      };
-      ctor.prototype = Function.prototype;
-      const {runUserSetup, runUserEvents, getCueList} = new ctor().apply(null, args);
+      const {
+        runUserSetup,
+        runUserEvents,
+        getCueList
+      } = injectInterpreted(nativeAPI, interpreted, userCode);
 
       // Mock 4 cat and moose animation poses.
       const moveCount = 10;
