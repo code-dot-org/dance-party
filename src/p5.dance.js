@@ -129,6 +129,7 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      frameRate: () => this.p5_.frameRate(),
     };
   }
 
