@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import DanceParty from './src/p5.dance';
 import jazzy_beats from './metadata/jazzy_beats';
 import interpreted from 'raw-loader!./src/p5.dance.interpreted.js';
