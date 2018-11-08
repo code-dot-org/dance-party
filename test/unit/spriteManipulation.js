@@ -386,6 +386,41 @@ test('setPropRandom set sprite y properties between 50 and 350', async t => {
   nativeAPI.reset();
 });
 
+test('p5 fixedSpriteAnimationSizes is true', async t => {
+  // Turning this flag on allows us to scale a sprite horizontally and vertically
+  const nativeAPI = await helpers.createDanceAPI();
+  t.ok(nativeAPI.p5_._fixedSpriteAnimationFrameSizes);
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('changing width and height accounted for during p5 draw', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // Initial value
+  t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleX(), 1);
+  t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleY(), 1);
+
+  nativeAPI.setProp(sprite, "width", 50);
+  nativeAPI.setProp(sprite, 'height', 75);
+
+  // setProp sets the value to SIZE (300) * (val / 100)
+  t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleX(), 150);
+  t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleY(), 225);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+
 test('prev, next, and rand dance move will throw when not enough dance moves', async t => {
 
   const subTest = async ({moveCount = 1, testCode}) => {
