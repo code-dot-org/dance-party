@@ -56,25 +56,34 @@ function runUserSetup() {
   });
 }
 
+/**
+ * @param {Object} events - An object where each key is an event type. Each value
+ *  is another object, where the keys represeent the param of the event to be run
+ */
 function runUserEvents(events) {
-  var currentEvents = {};
+  var functionsToRun = {};
+
+  // Iterate through all of the inputEvents we've cached in the interpreter, looking
+  // to see if they meet the criteria of the passed in events object. If they do,
+  // we add them to our functionsToRun object.
   for (var i = 0; i < inputEvents.length; i++) {
     var eventType = inputEvents[i].type;
-    var event = inputEvents[i].event;
+    var func = inputEvents[i].func;
     var param = inputEvents[i].param;
     var priority = inputEvents[i].priority;
     if (events[eventType] && events[eventType][param]) {
       //If there are multiple cues of the same type, only run the event with the highest priority
-      if (!currentEvents[eventType] || currentEvents[eventType].priority < priority) {
-        currentEvents[eventType] = {event: event, priority: priority};
+      if (!functionsToRun[eventType] || functionsToRun[eventType].priority < priority) {
+        functionsToRun[eventType] = {
+          func: func,
+          priority: priority
+        };
       }
     }
   }
-  for (var input in currentEvents){
-    if(currentEvents.hasOwnProperty(input)){
-      currentEvents[input].event();
-    }
-  }
+
+  // execute functions
+  Object.keys(functionsToRun).forEach(key => functionsToRun[key].func());
 }
 
 function whenSetup(event) {
@@ -93,23 +102,23 @@ function ifDanceIs(sprite, dance, ifStatement, elseStatement) {
   }
 }
 
-function whenKey(key, event) {
+function whenKey(key, func) {
   inputEvents.push({
     type: 'this.p5_.keyWentDown',
-    event: event,
+    func: func,
     param: key
   });
 }
 
-function whenPeak(range, event) {
+function whenPeak(range, func) {
   inputEvents.push({
     type: 'Dance.fft.isPeak',
-    event: event,
+    func: func,
     param: range
   });
 }
 
-function atTimestamp(timestamp, unit, event) {
+function atTimestamp(timestamp, unit, func) {
   if (unit === "measures") {
     timestamp += 1;
   }
@@ -118,13 +127,13 @@ function atTimestamp(timestamp, unit, event) {
   // than everySecond events when they have share a timestamp parameter
   inputEvents.push({
     type: 'cue-' + unit,
-    event: event,
+    func: func,
     param: timestamp,
     priority: timestamp + 1
   });
 }
 
-function everySeconds(n, unit, event) {
+function everySeconds(n, unit, func) {
   // Measures start counting at 1, whereas seconds start counting at 0.
   // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
   // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
@@ -137,10 +146,10 @@ function everySeconds(n, unit, event) {
     start = 0;
     stop = 90;
   }
-  everySecondsRange(n, unit, start, stop, event);
+  everySecondsRange(n, unit, start, stop, func);
 }
 
-function everySecondsRange(n, unit, start, stop, event) {
+function everySecondsRange(n, unit, start, stop, func) {
   if (n > 0) {
     // Offset by n so that we don't generate an event at the beginning
     // of the first period.
@@ -149,7 +158,7 @@ function everySecondsRange(n, unit, start, stop, event) {
     while (timestamp < stop) {
       inputEvents.push({
         type: 'cue-' + unit,
-        event: event,
+        func: func,
         param: timestamp,
         priority: n
       });
@@ -158,10 +167,10 @@ function everySecondsRange(n, unit, start, stop, event) {
   }
 }
 
-function everyVerseChorus(unit, event) {
+function everyVerseChorus(unit, func) {
   inputEvents.push({
     type: 'verseChorus',
-    event: event,
+    func: func,
     param: unit
   });
 }

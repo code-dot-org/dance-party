@@ -135,6 +135,11 @@ module.exports = class DanceParty {
     this.onPuzzleComplete_(false, message);
   }
 
+  /**
+   * @param {Object} timestamps
+   * @param {number[]} timestamps.measures
+   * @param {number[]} timestamps.seconds
+   */
   addCues(timestamps) {
     // Sort cues
     const numSort = (a,b) => a - b;
