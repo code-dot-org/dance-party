@@ -251,6 +251,55 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
   t.end();
 });
 
+test('Sprite move sorting works reliably', async t => {
+  const moveNames = [
+    {
+      name: 'rest',
+      rest: true,
+    },
+    {
+      name: 'fullLength1',
+    },
+    {
+      name: 'fullLength2',
+    },
+    {
+      name: 'shortBurst1',
+      shortBurst: true,
+    },
+    {
+      name: 'shortBurst2',
+      shortBurst: true,
+    },
+  ];
+
+  const P5 = require('../../src/loadP5');
+
+  P5.prototype.loadJSON = function (_url, callback) {
+    setTimeout(() => {
+      this._preloadCount--;
+      this._runIfPreloadsAreDone();
+      callback('{"frames":{}}');  
+    }, 0);
+  }
+  P5.prototype.loadImageElement = function(_url, callback) {
+    setTimeout(() => {
+      this._preloadCount--;
+      this._runIfPreloadsAreDone();
+      callback(new Image());
+    }, 0);
+  }
+
+  const nativeAPI = await helpers.createDanceAPI({ moveNames, spriteConfig: world => { world.SPRITE_NAMES = ['foo']; } });
+
+  nativeAPI.p5_.noLoop();
+
+  // The MOVE_NAMES as provided have not been changed.
+  t.deepEqual(nativeAPI.world.MOVE_NAMES, moveNames);
+
+  t.end();
+});
+
 test('Sprite dance changes will allow short burst moves for doMoveLR but not changeMoveLR', async t => {
 
   const subTest = async ({ moveCount = 3, shortMoveCount = 1, testCode }) => {
