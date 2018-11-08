@@ -25,7 +25,7 @@ module.exports = function (api, interpretedCode, userCode='') {
   ];
 
   const globals = new DanceAPI(api);
-  const code = interpretedCode + userCode + `return {${functionNames.join(',')}};`;
+  const code = interpretedCode + userCode + `return {${functionNames.map(s => `${s}:${s}`).join(',')}};`;
 
   const params = [];
   const args = [];
