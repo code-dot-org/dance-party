@@ -223,3 +223,23 @@ test('LayoutSprites is safe to call with any layout on an empty group', async t 
 
   nativeAPI.reset();
 });
+
+test('LayoutSprites resets rotation', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(3, 'CAT', 'circle');
+  nativeAPI.layoutSprites('CAT', 'circle');
+  nativeAPI.layoutSprites('CAT', 'grid');
+
+  let cats = nativeAPI.getGroupByName_('CAT');
+  for (let i = 0; i < cats.length; i++) {
+    t.equal(cats[i].rotation, 0);
+  }
+
+  t.end();
+
+  nativeAPI.reset();
+});
