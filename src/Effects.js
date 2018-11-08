@@ -514,7 +514,8 @@ function drawSwirl(ctx) {
 }
 
 function drawSpiral(ctx) {
-  ctx.translate(0,1200);
+  ctx.scale(0.5,0.5);
+  ctx.translate(620,1750);
   ctx.scale(0.1,-0.1);
   ctx.fillStyle = "#fff";
   ctx.beginPath();
