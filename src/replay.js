@@ -9,6 +9,7 @@ if (DEBUG) {
 
 module.exports = {
   logSprites: (p5) => {
+    // TODO elijah: remove this once we're fully on logFrame
     if (log.length > FRAME_LIMIT) {
       return;
     }
@@ -26,6 +27,31 @@ module.exports = {
       x: sprite.x,
       y: sprite.y,
     })));
+  },
+
+  // new logging function that supports all the stuff necessary for effects, at
+  // the cost of a lot more complexity. Should fully replace logSprites
+  logFrame: ({bg, context, fg, p5}) => {
+    if (log.length >= FRAME_LIMIT) {
+      return;
+    }
+
+    const frame = {bg, fg, context};
+
+    const spritesToLog = p5.allSprites.slice(0, SPRITE_LIMIT);
+    frame.sprites = spritesToLog.map((sprite) => ({
+      animationFrame: sprite.animation && sprite.animation.getFrame(),
+      animationLabel: sprite.getAnimationLabel(),
+      mirrorX: sprite.mirrorX(),
+      rotation: sprite.rotation,
+      scale: sprite.scale,
+      style: sprite.style,
+      tint: sprite.tint === undefined ? undefined : p5.hue(p5.color(sprite.tint || 0)),
+      x: sprite.x,
+      y: sprite.y,
+    }));
+
+    log.push(frame);
   },
 
   getLog: () => {

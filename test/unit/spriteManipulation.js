@@ -390,6 +390,110 @@ test('p5 fixedSpriteAnimationSizes is true', async t => {
   //Turning this flag on allows us to scale a sprite horizontally and vertically
   const nativeAPI = await helpers.createDanceAPI();
   t.ok(nativeAPI.p5_._fixedSpriteAnimationFrameSizes);
+});
+
+test('prev, next, and rand dance move will throw when not enough dance moves', async t => {
+
+  const subTest = async ({moveCount = 1, testCode}) => {
+    const nativeAPI = await helpers.createDanceAPI();
+    nativeAPI.play({
+      bpm: 120,
+    });
+
+    // Mock cat animation poses
+    for (let i = 0; i < moveCount; i++) {
+      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.world.MOVE_NAMES.push({
+        name: `move${i}`,
+        rest: i === 0,
+      });
+    }
+    nativeAPI.world.fullLengthMoveCount = moveCount;
+    nativeAPI.world.restMoveCount = 1;
+
+    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+    testCode({ nativeAPI, sprite });
+
+    nativeAPI.reset();
+  };
+
+  // Verify invalid number of tests:
+  await subTest({ testCode: ({nativeAPI, sprite}) => {
+    let error = null;
+    try {
+      // Requesting 'rand' when only one dance should fail
+      nativeAPI.getNewChangedMove(sprite, 'rand', 1);
+    } catch (e) {
+      error = e;
+    }
+    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+  }});
+
+  // Verify invalid move index behavior for changeMoveLR():
+  await subTest({ testCode: ({nativeAPI, sprite}) => {
+    let error = null;
+    try {
+      // Requesting 'next' when only one dance should fail
+      nativeAPI.getNewChangedMove(sprite, 'next', 1);
+    } catch (e) {
+      error = e;
+    }
+    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+  }});
+
+  // Verify invalid rand move because we don't have any different, non-resting moves:
+  await subTest({ moveCount: 2, testCode: ({nativeAPI, sprite}) => {
+    let error = null;
+    try {
+      // Requesting 'prev' when only one dance should fail
+      nativeAPI.getNewChangedMove(sprite, 'prev', 1);
+    } catch (e) {
+      error = e;
+    }
+    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+  }});
+
+  t.end();
+});
+
+test('startMapping/stopMapping adds and removes behaviors', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // This is 1 only because we have a behavior that we add to every sprite
+  // (which should arguably be a different concept)
+  t.equal(sprite.behaviors.length, 1);
+
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+
+  t.equal(sprite.behaviors.length, 2);
+
+  // adding the same mapping again gets ignored
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 2);
+
+  // changing the range gives a new behavior
+  nativeAPI.startMapping(sprite, 'x', 'treble');
+  t.equal(sprite.behaviors.length, 3);
+
+  // changing the property gives a new behavior
+  nativeAPI.startMapping(sprite, 'y', 'bass');
+  t.equal(sprite.behaviors.length, 4);
+
+  // stop mapping removes behavior
+  nativeAPI.stopMapping(sprite, 'x', 'bass');
+  t.equal(sprite.behaviors.length, 3);
+
+  // removing a non-existent behavior is a noop
+  nativeAPI.stopMapping(sprite, 'rotation', 'bass');
+  t.equal(sprite.behaviors.length, 3);
+
   t.end();
 
   nativeAPI.reset();

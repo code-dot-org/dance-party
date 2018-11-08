@@ -1,6 +1,6 @@
 {
   "name": "@code-dot-org/dance-party",
-  "version": "0.0.21",
+  "version": "0.0.23",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -32,6 +32,8 @@
     "eslint": "^2.8.0",
     "jsdom": "^12.2.0",
     "nyc": "^13.1.0",
+    "raw-loader": "^0.5.1",
+    "sinon": "^7.1.1",
     "tape": "^4.9.1",
     "webpack": "4.19.1",
     "webpack-cli": "^2.1.5",
@@ -40,5 +42,6 @@
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
-  "homepage": "https://github.com/code-dot-org/dance-party#readme"
+  "homepage": "https://github.com/code-dot-org/dance-party#readme",
+  "dependencies": {}
 }

@@ -41,7 +41,7 @@ module.exports = {
         }
       } else if (nativeAPI.getTime("measures") > 7) {
         nativeAPI.pass();
-      } else if (nativeAPI.getTime("measures") > 4.5) {
+      } else if (nativeAPI.getTime("measures") > 5.5) {
         if (sprites.length > 0) {
           if (sprites[0].current_move === World.startingMove) {
             nativeAPI.fail("Your dancer wasn't doing a new move after the fourth measure.");

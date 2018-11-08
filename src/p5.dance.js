@@ -6,11 +6,12 @@ const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
 
-function Behavior(func, extraArgs) {
+function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
     extraArgs = [];
   }
   this.func = func;
+  this.id = id;
   this.extraArgs = extraArgs;
 }
 
@@ -223,15 +224,25 @@ module.exports = class DanceParty {
     this.onInit && this.onInit(this);
   }
 
+  getBackgroundEffect() {
+    return this.bgEffects_[this.world.bg_effect || 'none'];
+  }
+
+  getForegroundEffect() {
+    if (this.world.fg_effect && this.world.fg_effect !== null) {
+      return this.fgEffects_[this.world.fg_effect];
+    }
+  }
+
   play(songData, callback) {
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
     this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
-    this.playSound_(this.songMetadata_.file, () => {
+    this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
-      callback && callback();
+      callback && callback(playSuccess);
     }, () => {
       this.reset();
     });
@@ -240,21 +251,21 @@ module.exports = class DanceParty {
 
   setBackground(color) {
     // Clear background effect so it doesn't cover up background color.
-    this.world.bg_effect = this.bgEffects_.none;
+    this.world.bg_effect = null;
     this.world.background_color = color;
   }
 
   setBackgroundEffect(effect) {
-    this.world.bg_effect = this.bgEffects_[effect];
+    this.world.bg_effect = effect;
   }
 
   setForegroundEffect(effect) {
-    this.world.fg_effect = this.fgEffects_[effect];
+    this.world.fg_effect = effect;
   }
 
-//
-// Block Functions
-//
+  //
+  // Block Functions
+  //
 
   makeNewDanceSprite(costume, _, location) {
 
@@ -274,10 +285,7 @@ module.exports = class DanceParty {
     var sprite = this.p5_.createSprite(location.x, location.y);
 
     sprite.style = costume;
-    if (!this.sprites_by_type_.hasOwnProperty(costume)) {
-      this.sprites_by_type_[costume] = this.p5_.createGroup();
-    }
-    this.sprites_by_type_[costume].add(sprite);
+    this.getGroupByName_(costume).add(sprite);
 
     sprite.mirroring = 1;
     sprite.looping_move = 0;
@@ -297,7 +305,7 @@ module.exports = class DanceParty {
     sprite.behaviors = [];
 
     // Add behavior to control animation
-    this.addBehavior_(sprite, () => {
+    const updateSpriteFrame = () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
       var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
@@ -329,7 +337,9 @@ module.exports = class DanceParty {
           sprite.animation.looping = true;
         }
       }
-    });
+    };
+
+    this.addBehavior_(sprite, new Behavior(updateSpriteFrame, 'updateSpriteFrame'));
 
     sprite.setTint = function (color) {
       sprite.tint = color;
@@ -361,44 +371,56 @@ module.exports = class DanceParty {
     this.layoutSprites(tempGroup, layout);
   }
 
-// Dance Moves
+  // Dance Moves
+
+  /**
+   * Returns a next/prev/rand move
+   * @param {string} requestedChange - 'prev'/'next'/'rand' move request
+   * @param {number} currentMove - value representing current move of sprite
+   */
+  getNewChangedMove(requestedChange, currentMove) {
+    // Number of valid full length moves
+    const { fullLengthMoveCount, restMoveCount } = this.world;
+    const firstNonRestingMoveIndex = restMoveCount;
+    // The "rest" moves are assumed to always be at the beginning
+    const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
+    if (nonRestingFullLengthMoveCount <= 1) {
+      throw new Error("next/prev/rand requires that we have 2 or more non-resting full length moves");
+    }
+    let move = currentMove;
+    if (requestedChange === "next") {
+      move = currentMove + 1;
+      if (move >= fullLengthMoveCount) {
+        move = firstNonRestingMoveIndex;
+      }
+    } else if (requestedChange === "prev") {
+      move = currentMove - 1;
+      if (move < firstNonRestingMoveIndex) {
+        move = fullLengthMoveCount - 1;
+      }
+    } else if (requestedChange === "rand") {
+      // Make sure random switches to a new move
+      while (move === currentMove) {
+        move = randomInt(this.world.restMoveCount, this.world.fullLengthMoveCount - 1);
+      }
+    } else {
+      throw new Error(`Unexpected move value: ${move}`);
+    }
+    return move;
+  }
 
   changeMoveLR(sprite, move, dir) {
     if (!this.spriteExists_(sprite)) {
       return;
     }
     // Number of valid full length moves
-    const { fullLengthMoveCount, restMoveCount } = this.world;
-    const firstNonRestingMoveIndex = restMoveCount;
-    // The "rest" moves are assumed to always be at the beginning
-    const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
+    const { fullLengthMoveCount } = this.world;
     if (typeof move === 'number') {
       if (move < 0 || move >= fullLengthMoveCount) {
-        throw "Not moving to a valid full length move index!";
+        throw new Error("Not moving to a valid full length move index!");
       }
     } else {
-      if (nonRestingFullLengthMoveCount <= 1) {
-        throw "next/prev/rand requires that we have 2 or more non-resting full length moves";
-      }
-      if (move === "next") {
-        move = sprite.current_move + 1;
-        if (move >= fullLengthMoveCount) {
-          move = firstNonRestingMoveIndex;
-        }
-      } else if (move === "prev") {
-        move = sprite.current_move - 1;
-        if (move < firstNonRestingMoveIndex) {
-          move = fullLengthMoveCount - 1;
-        }
-      } else if (move === "rand") {
-        // Make sure random switches to a new move
-        move = sprite.current_move;
-        while (move === sprite.current_move) {
-          move = randomInt(firstNonRestingMoveIndex, fullLengthMoveCount - 1);
-        }
-      } else {
-        throw `Unexpected move value: ${move}`;
-      }
+      move = this.getNewChangedMove(move, sprite.current_move);
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
@@ -414,18 +436,12 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
-    if (move === "next") {
-      move = (sprite.current_move + 1) % ANIMATIONS[sprite.style].length;
-    } else if (move === "prev") {
-      move = (sprite.current_move - 1) % ANIMATIONS[sprite.style].length;
-    } else if (move === "rand") {
-      move = sprite.current_move;
-      while (move === sprite.current_move) {
-        move = randomInt(0, ANIMATIONS[sprite.style].length - 1);
+    if (typeof move === 'number') {
+      if (move < 0 || move >= this.world.MOVE_NAMES.length) {
+        throw new Error(`Invalid move index: ${move}`);
       }
-    }
-    if (move < 0 || move >= this.world.MOVE_NAMES.length) {
-      throw `Invalid move index: ${move}`;
+    } else {
+      move = this.getNewChangedMove(move, sprite.current_move);
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
@@ -441,24 +457,27 @@ module.exports = class DanceParty {
     }
   }
 
-// Group Blocks
+  // Group Blocks
 
   getGroupByName_(group) {
     if (typeof(group) === "object") {
       return group;
     }
-    if (group !== "all") {
-      if (!this.sprites_by_type_.hasOwnProperty(group)) {
-        console.log("There is no group of " + group);
-        return;
-      }
-      return this.sprites_by_type_[group];
+    if (group === "all") {
+      return this.p5_.allSprites;
     }
-    return this.p5_.allSprites;
+
+    if (!this.sprites_by_type_.hasOwnProperty(group)) {
+      this.sprites_by_type_[group] = this.p5_.createGroup();
+    }
+    return this.sprites_by_type_[group];
   }
 
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
+    if (move === "rand") {
+      move = this.getNewChangedMove(move, group[0].current_move);
+    }
     group.forEach(sprite => {
       this.changeMoveLR(sprite, move, dir);
     });
@@ -466,7 +485,12 @@ module.exports = class DanceParty {
 
   doMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    group.forEach(sprite => { this.doMoveLR(sprite, move, dir);});
+    if (move === "rand") {
+      move = this.getNewChangedMove(move, group[0].current_move);
+    }
+    group.forEach(sprite => {
+      this.doMoveLR(sprite, move, dir);
+    });
   }
 
   /**
@@ -644,7 +668,7 @@ module.exports = class DanceParty {
     group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
   }
 
-// Properties
+  // Properties
 
   setTint(sprite, val) {
     this.setProp(sprite, "tint", val);
@@ -736,7 +760,7 @@ module.exports = class DanceParty {
     sprite.dance_speed = speed;
   }
 
-// Music Helpers
+  // Music Helpers
 
   getEnergy(range) {
     switch (range) {
@@ -755,7 +779,7 @@ module.exports = class DanceParty {
 
   getCurrentMeasure() {
     return this.songStartTime_ > 0 ?
-        this.songMetadata_.bpm * ((this.getCurrentTime() - this.songMetadata_.delay) / 240) + 1 : 0;
+      this.songMetadata_.bpm * ((this.getCurrentTime() - this.songMetadata_.delay) / 240) + 1 : 0;
   }
 
   getTime(unit) {
@@ -766,71 +790,49 @@ module.exports = class DanceParty {
     }
   }
 
-// Behaviors
+  // Behaviors
 
+  /**
+   * @param {Sprite} sprite
+   * @param {Behavior} behavior
+   */
   addBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
+    if (!this.spriteExists_(sprite) || behavior === undefined) {
+      return;
+    }
 
-    behavior = this.normalizeBehavior_(behavior);
-
-    if (this.findBehavior_(sprite, behavior) !== -1) {
+    if (sprite.behaviors.find(b => b.id === behavior.id)) {
       return;
     }
     sprite.behaviors.push(behavior);
   }
 
-  removeBehavior_(sprite, behavior) {
-    if (!this.spriteExists_(sprite) || behavior === undefined) return;
+  /**
+   * @param {Sprite} sprite
+   * @param {string} behaviorId
+   */
+  removeBehavior_(sprite, behaviorId) {
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
 
-    behavior = this.normalizeBehavior_(behavior);
-
-    var index = this.findBehavior_(sprite, behavior);
+    const index = sprite.behaviors.findIndex(b => b.id === behaviorId);
     if (index === -1) {
       return;
     }
     sprite.behaviors.splice(index, 1);
   }
 
-  normalizeBehavior_(behavior) {
-    if (typeof behavior === 'function') {
-      return new Behavior(behavior);
-    }
-    return behavior;
-  }
-
-  findBehavior_(sprite, behavior) {
-    for (let i = 0; i < sprite.behaviors.length; i++) {
-      const myBehavior = sprite.behaviors[i];
-      if (this.behaviorsEqual_(behavior, myBehavior)) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  behaviorsEqual_(behavior1, behavior2) {
-    if (behavior1.func.name && behavior2.func.name) {
-      // These are legacy behaviors, check for equality based only on the name.
-      return behavior1.func.name === behavior2.func.name;
-    }
-    if (behavior1.func !== behavior2.func) {
-      return false;
-    }
-    if (behavior2.extraArgs.length !== behavior1.extraArgs.length) {
-      return false;
-    }
-    let extraArgsEqual = true;
-    for (let j = 0; j < behavior1.extraArgs.length; j++) {
-      if (behavior2.extraArgs[j] !== behavior1.extraArgs[j]) {
-        extraArgsEqual = false;
-        break;
-      }
-    }
-    return extraArgsEqual;
-  }
-
+  /**
+   * @param {Sprite} sprite
+   * @param {string} property
+   * @param {string} range
+   */
   startMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
+    // id's should be the same as long as the property/range are the same. they
+    // need not be unique across sprites
+    const id = [property, range].join('-');
+    const behavior = new Behavior(sprite => {
       var energy = this.getEnergy(range);
       if (property === "x") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
@@ -847,32 +849,13 @@ module.exports = class DanceParty {
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
+    }, id, [property, range]);
     this.addBehavior_(sprite, behavior);
   }
 
   stopMapping(sprite, property, range) {
-    var behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 159);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
-      } else if (property === "tint") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
-        energy = "hsb(" + energy + ",100%,100%)";
-      }
-      sprite[property] = energy;
-    }, [property, range]);
-    //behavior.func.name = "mapping" + property + range;
-    this.removeBehavior_(sprite, behavior);
+    const id = [property, range].join('-');
+    this.removeBehavior_(sprite, id);
   }
 
   changeColorBy(input, method, amount) {
@@ -963,10 +946,7 @@ module.exports = class DanceParty {
       title,
     };
 
-    this.p5_.background(this.world.background_color || "white");
-    if (this.world.bg_effect && this.world.fg_effect !== this.fgEffects_.none) {
-      this.world.bg_effect.draw(context);
-    }
+    this.getBackgroundEffect().draw(context);
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
@@ -979,13 +959,18 @@ module.exports = class DanceParty {
 
     this.p5_.drawSprites();
     if (this.recordReplayLog_) {
-      replayLog.logSprites(this.p5_);
+      replayLog.logFrame({
+        bg: this.world.bg_effect,
+        context,
+        fg: this.world.fg_effect,
+        p5: this.p5_,
+      });
     }
 
-    if (this.world.fg_effect && this.world.fg_effect !== this.fgEffects_.none) {
+    if (this.getForegroundEffect()) {
       this.p5_.push();
       this.p5_.blendMode(this.fgEffects_.blend);
-      this.world.fg_effect.draw(context);
+      this.getForegroundEffect().draw(context);
       this.p5_.pop();
     }
 
@@ -996,7 +981,7 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text(`${this.i18n.measure()} ${(Math.floor(this.getCurrentMeasure()))}`, 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {

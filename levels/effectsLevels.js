@@ -7,29 +7,29 @@ module.exports = {
       whenSetup(function () {
         setBackgroundEffect("color_cycle");
       });
-      
+
       atTimestamp(4, "measures", function () {
         setBackgroundEffect("text");
       });
     `,
     validationCode: `
-    
+
       if (nativeAPI.getTime("measures") > 1 && nativeAPI.getTime("measures") < 3) {
         if (World.bg_effect == null) {
           nativeAPI.fail("You need to add a background effect.");
-        } else if (World.bg_effect.color == null) {
+        } else if (nativeAPI.getBackgroundEffect().color == null) {
           nativeAPI.fail("You need to set the background to color_cycle");
         }
       }
-      
-      if (nativeAPI.getTime("measures") > 5) {
+
+      if (nativeAPI.getTime("measures") > 6) {
         if (World.bg_effect == null) {
           nativeAPI.fail("You need to add a background effect.");
-        } else if (World.bg_effect.texts == null) {
+        } else if (nativeAPI.getBackgroundEffect().texts == null) {
           nativeAPI.fail("You need to set the background to text");
         }
       }
-      
+
       if (nativeAPI.getTime("measures") > 7) {
         nativeAPI.pass();
       }
