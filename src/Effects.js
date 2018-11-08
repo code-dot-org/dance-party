@@ -463,6 +463,7 @@ module.exports = class Effects {
 };
 
 function drawSwirl(ctx) {
+  ctx.save();
   ctx.fillStyle = "#333";
   ctx.beginPath();
   ctx.moveTo(277.353,2.93555);
@@ -511,9 +512,11 @@ function drawSwirl(ctx) {
   ctx.bezierCurveTo(411.622,471.996,358.466,534.328,282.548,558.994);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
 }
 
 function drawSpiral(ctx) {
+  ctx.save();
   ctx.scale(0.5,0.5);
   ctx.translate(620,1750);
   ctx.scale(0.1,-0.1);
@@ -595,4 +598,5 @@ function drawSpiral(ctx) {
   ctx.bezierCurveTo(7453,12798,7297,12802,7221,12785);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
 }
