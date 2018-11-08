@@ -252,7 +252,36 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
 });
 
 test('Sprite move sorting works reliably', async t => {
-  const moveNames = [
+
+  const P5 = require('../../src/loadP5');
+
+  P5.prototype.loadJSON = function (_url, callback) {
+    setTimeout(() => {
+      this._preloadCount--;
+      this._runIfPreloadsAreDone();
+      callback('{"frames":{}}');
+    }, 0);
+  };
+  P5.prototype.loadImageElement = function (_url, callback) {
+    setTimeout(() => {
+      this._preloadCount--;
+      this._runIfPreloadsAreDone();
+      callback(new Image());
+    }, 0);
+  };
+
+  const subTest = async ({ moveNames, testCode }) => {
+    const nativeAPI = await helpers.createDanceAPI({ moveNames, spriteConfig: world => { world.SPRITE_NAMES = ['foo']; } });
+
+    nativeAPI.p5_.noLoop();
+
+    testCode({ nativeAPI });
+
+    nativeAPI.reset();
+  };
+
+  // Verify we don't modify moveNames that are already sorted properly:
+  const moveNamesPreSorted = [
     {
       name: 'rest',
       rest: true,
@@ -273,29 +302,44 @@ test('Sprite move sorting works reliably', async t => {
     },
   ];
 
-  const P5 = require('../../src/loadP5');
+  await subTest({ moveNames: moveNamesPreSorted, testCode: ({ nativeAPI }) => {
+    // The MOVE_NAMES as provided have not been changed.
+    t.deepEqual(nativeAPI.world.MOVE_NAMES, moveNamesPreSorted);
 
-  P5.prototype.loadJSON = function (_url, callback) {
-    setTimeout(() => {
-      this._preloadCount--;
-      this._runIfPreloadsAreDone();
-      callback('{"frames":{}}');
-    }, 0);
-  };
-  P5.prototype.loadImageElement = function (_url, callback) {
-    setTimeout(() => {
-      this._preloadCount--;
-      this._runIfPreloadsAreDone();
-      callback(new Image());
-    }, 0);
-  };
+    // The restMoveCount and fullLengthMoveCount are correct:
+    t.equal(nativeAPI.world.restMoveCount, 1);
+    t.equal(nativeAPI.world.fullLengthMoveCount, 3);
+  }});
 
-  const nativeAPI = await helpers.createDanceAPI({ moveNames, spriteConfig: world => { world.SPRITE_NAMES = ['foo']; } });
+  // Verify we do properly sort rest and shortBurst moves:
+  const moveNamesUnSorted = [
+    {
+      name: 'fullLength',
+    },
+    {
+      name: 'shortBurst',
+      shortBurst: true,
+    },
+    {
+      name: 'rest',
+      rest: true,
+    },
+  ];
 
-  nativeAPI.p5_.noLoop();
+  await subTest({ moveNames: moveNamesUnSorted, testCode: ({ nativeAPI }) => {
+    // The MOVE_NAMES are now in the proper order:
+    t.equal(nativeAPI.world.MOVE_NAMES[0].name, 'rest');
+    t.ok(nativeAPI.world.MOVE_NAMES[0].rest);
 
-  // The MOVE_NAMES as provided have not been changed.
-  t.deepEqual(nativeAPI.world.MOVE_NAMES, moveNames);
+    t.equal(nativeAPI.world.MOVE_NAMES[1].name, 'fullLength');
+
+    t.equal(nativeAPI.world.MOVE_NAMES[2].name, 'shortBurst');
+    t.ok(nativeAPI.world.MOVE_NAMES[2].shortBurst);
+
+    // The restMoveCount and fullLengthMoveCount are correct:
+    t.equal(nativeAPI.world.restMoveCount, 1);
+    t.equal(nativeAPI.world.fullLengthMoveCount, 2);
+  }});
 
   t.end();
 });

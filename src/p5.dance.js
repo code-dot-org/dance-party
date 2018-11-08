@@ -92,7 +92,7 @@ module.exports = class DanceParty {
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
     this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
-      !!move1.rest * -2 * !!move2.rest * 2 + !!move2.shortBurst * -1 + !!move1.shortBurst * 1
+      !!move1.rest * -2 + !!move2.rest * 2 + !!move2.shortBurst * -1 + !!move1.shortBurst * 1
     ));
     this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
     this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
