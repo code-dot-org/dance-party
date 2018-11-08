@@ -18,6 +18,12 @@ var MOVES = {
   Thriller: 11
 };
 
+var QueueType = {
+  every: 'every',
+  after: 'after',
+  other: 'other'
+};
+
 // Event handlers, loops, and callbacks.
 var inputEvents = [];
 var setupCallbacks = [];
@@ -64,29 +70,52 @@ function runUserSetup() {
  *  is another object, where the keys represeent the param of the event to be run
  */
 function runUserEvents(events) {
-  var functionsToRun = {};
+  // We have three separate event queues.
+  // First we run every N seconds/measures events
+  // Then we run after N seconds/measures events
+  // Finally we run all other events
+
+  var queues = {};
+  Object.keys(QueueType).forEach(function(key) {
+    queues[key] = [];
+  });
 
   // Iterate through all of the inputEvents we've cached in the interpreter, looking
   // to see if they meet the criteria of the passed in events object. If they do,
-  // we add them to our functionsToRun object.
+  // we add them to the appropriate event queue
   for (var i = 0; i < inputEvents.length; i++) {
     var eventType = inputEvents[i].type;
-    var func = inputEvents[i].func;
     var param = inputEvents[i].param;
-    var priority = inputEvents[i].priority;
+    var queueType = inputEvents[i].queueType;
     if (events[eventType] && events[eventType][param]) {
-      //If there are multiple cues of the same type, only run the event with the highest priority
-      if (!functionsToRun[eventType] || functionsToRun[eventType].priority < priority) {
-        functionsToRun[eventType] = {
-          func: func,
-          priority: priority
-        };
+      if (!queues[queueType]) {
+        throw new Error('Unknown queueType: ', queueType);
       }
+      queues[queueType].push({
+        priority: inputEvents[i].priority,
+        func: inputEvents[i].func
+      });
     }
   }
 
-  // execute functions
-  Object.keys(functionsToRun).forEach(key => functionsToRun[key].func());
+  function prioritySort(a, b) {
+    // TODO: If compareFunction(a, b) returns 0, leave a and b unchanged with respect
+    // to each other, but sorted with respect to all different elements. Note: the
+    // ECMAscript standard does not guarantee this behaviour, and thus not all
+    // browsers (e.g. Mozilla versions dating back to at least 2003) respect this.
+    // ^ Matters to us, because we initially seed items according to block position
+    // and we want to maintain that ordering in our sort when priorities are equal
+    // There are ways we could ensure that
+    return a.priority - b.priority;
+  }
+
+  function executeFuncs(item) {
+    item.func();
+  }
+
+  queues[QueueType.every].sort(prioritySort).forEach(executeFuncs);
+  queues[QueueType.after].sort(prioritySort).forEach(executeFuncs);
+  queues[QueueType.other].forEach(executeFuncs);
 }
 
 function whenSetup(event) {
@@ -113,7 +142,8 @@ function whenKey(key, func) {
   inputEvents.push({
     type: 'this.p5_.keyWentDown',
     func: func,
-    param: key
+    param: key,
+    queueType: QueueType.other,
   });
 }
 
@@ -125,7 +155,8 @@ function whenPeak(range, func) {
   inputEvents.push({
     type: 'Dance.fft.isPeak',
     func: func,
-    param: range
+    param: range,
+    queueType: QueueType.other,
   });
 }
 
@@ -135,17 +166,19 @@ function whenPeak(range, func) {
  * @param {function} func - Code to run when event fires
  */
 function atTimestamp(timestamp, unit, func) {
+  // Despite the functions name, if we call atTimestamp(4, "measures", foo), we
+  // actually want to fire on the 5th measure (i.e after 4 measures have completed)
   if (unit === "measures") {
     timestamp += 1;
   }
 
-  // Increment priority by 1 to account for 'atTimestamp' events having a higher priority
-  // than everySecond events when they have share a timestamp parameter
   inputEvents.push({
     type: 'cue-' + unit,
     func: func,
     param: timestamp,
-    priority: timestamp + 1
+    queueType: QueueType.after,
+    // actual priority value is inconsequential here
+    priority: 0,
   });
 }
 
@@ -191,6 +224,7 @@ function everySecondsRange(n, unit, start, stop, func) {
       type: 'cue-' + unit,
       func: func,
       param: timestamp,
+      queueType: QueueType.every,
       priority: n
     });
     timestamp += n;
