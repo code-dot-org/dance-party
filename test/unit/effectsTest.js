@@ -71,3 +71,12 @@ test('color_lights foreground effect updates with specified effect', async t => 
   nativeAPI.reset();
 });
 
+test('setting fg effect to none clears the fg effect', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.setForegroundEffect('color_lights');
+  nativeAPI.setForegroundEffect('none');
+  t.equal(nativeAPI.getForegroundEffect(), undefined);
+
+  t.end();
+  nativeAPI.reset();
+});
