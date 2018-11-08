@@ -439,5 +439,36 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.snowflakes = {
+      flake: [],
+      draw: function () {
+        p5.background('lightblue');
+        let flake = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6,12),
+        };
+        this.flake.push(flake);
+        p5.noStroke();
+        p5.fill('white');
+        this.flake.forEach(function (flake){
+          p5.push();
+          p5.translate(flake.x, flake.y);
+          for (let i = 0; i < 5; i++) {
+            p5.rotate(360 / 5);
+            p5.ellipse(0, 0, 1, flake.size);
+          }
+          let fallSpeed = p5.map(flake.size, 6, 12, 2, 5);
+          flake.y += fallSpeed;
+          flake.x += flake.velocityX;
+          p5.pop();
+        });
+        this.flake = this.flake.filter(function (flake) {
+          return flake.y < 425;
+        });
+      }
+    };
   }
 };
