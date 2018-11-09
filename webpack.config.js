@@ -1,6 +1,5 @@
 module.exports = {
-  // Uncomment when debugging
-  // devtool: 'eval-cheap-module-source-map',
+  devtool: 'eval-cheap-module-source-map',
   entry: {
     main: './src/index.js',
     demo: './demo.js',
