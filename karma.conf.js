@@ -9,6 +9,7 @@ module.exports = config => {
       'test/integration/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
+      mode: 'development',
       node: {
         fs: 'empty',
       },
