@@ -238,7 +238,7 @@ module.exports = class DanceParty {
       }
     }
 
-    this.performanceData_.initTime = performance.now();
+    this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
   }
 
@@ -261,7 +261,7 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
-      this.performanceData_.lastPlayDelay = performance.now() - this.performanceData_.lastPlayCall;
+      this.performanceData_.lastPlayDelay = timeSinceLoad() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
     }, () => {
       this.reset();
@@ -959,7 +959,7 @@ module.exports = class DanceParty {
   }
 
   resetPerformanceDataForRun_() {
-    this.performanceData_.lastPlayCall = performance.now();
+    this.performanceData_.lastPlayCall = timeSinceLoad();
     this.performanceData_.lastPlayDelay = null;
     this.performanceData_.frameRateSamples = 0;
     this.performanceData_.frameRateMax = -Infinity;
@@ -1055,4 +1055,13 @@ function queryParam(key) {
     return decodeURIComponent(pair[1]);
   }
   return undefined;
+}
+
+function timeSinceLoad() {
+  if (typeof performance !== 'undefined') {
+    return performance.now()
+  } else if (typeof process !== 'undefined') {
+    return process.hrtime();
+  }
+  return Date.now();
 }
