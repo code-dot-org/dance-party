@@ -38,7 +38,6 @@ module.exports = class DanceParty {
     onInit,
     onPuzzleComplete,
     playSound,
-    moveNames,
     recordReplayLog,
     showMeasureLabel = true,
     container,
@@ -99,7 +98,7 @@ module.exports = class DanceParty {
     };
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
-    this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
+    this.world.MOVE_NAMES = constants.MOVE_NAMES;
 
     if (spriteConfig) {
       spriteConfig(this.world);
