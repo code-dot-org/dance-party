@@ -57,3 +57,40 @@ test('conflicting everySeconds and atTimestamp cues', async t => {
   t.end();
   nativeAPI.reset();
 });
+
+test('conflicting atTimestamp cues, last definition wins', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    atTimestamp(1, "seconds", () => setBackground("orange"));
+    atTimestamp(1, "seconds", () => setBackground("purple"));
+  `);
+
+  interpretedAPI.runUserEvents({
+    any: true,
+    'cue-seconds': {
+      1: true,
+    }
+  });
+  t.deepEqual(nativeAPI.world.background_color, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('non-conflicting atTimestamp cues, both take effect', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    atTimestamp(1, "seconds", () => setBackground("orange"));
+    atTimestamp(1, "seconds", () => setForegroundEffect("color_lights"));
+  `);
+
+  interpretedAPI.runUserEvents({
+    any: true,
+    'cue-seconds': {
+      1: true,
+    }
+  });
+  t.deepEqual(nativeAPI.world.background_color, 'orange');
+  t.deepEqual(nativeAPI.world.fg_effect, 'color_lights');
+
+  t.end();
+  nativeAPI.reset();
+});
