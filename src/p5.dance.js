@@ -110,7 +110,7 @@ module.exports = class DanceParty {
 
     // We can't use Array.sort() : see https://stackoverflow.com/q/3026281
     const restMoves = this.world.MOVE_NAMES.filter(move => move.rest);
-    const nonRestingFullLengthMoves = this.world.MOVE_NAMES.filter(move => !move.rest & !move.shortBurst);
+    const nonRestingFullLengthMoves = this.world.MOVE_NAMES.filter(move => !move.rest && !move.shortBurst);
     const shortBurstMoves = this.world.MOVE_NAMES.filter(move => move.shortBurst);
     this.world.MOVE_NAMES = [
       ...restMoves,
