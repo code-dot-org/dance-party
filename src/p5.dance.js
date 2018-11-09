@@ -81,6 +81,22 @@ module.exports = class DanceParty {
     this.centroid_ = 0;
 
     this.sprites_by_type_ = {};
+    this.performanceData_ = {
+      // Time from the start of document load to the init() callback
+      initTime: null,
+      // Time the run button was last clicked
+      lastPlayCall: null,
+      // Time between last run click and last time the song actually started playing
+      lastPlayDelay: null,
+      // Number of frame rate samples taken since last run
+      frameRateSamples: 0,
+      // Maximum frame rate recorded since last run
+      frameRateMax: -Infinity,
+      // Minimum frame rate recorded since last run
+      frameRateMin: Infinity,
+      // Average frame rate recorded since last run
+      frameRateMean: 0
+    };
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
@@ -131,6 +147,7 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      getPerformanceData: () => JSON.parse(JSON.stringify(this.performanceData_)),
     };
   }
 
@@ -221,6 +238,7 @@ module.exports = class DanceParty {
       }
     }
 
+    this.performanceData_.initTime = performance.now();
     this.onInit && this.onInit(this);
   }
 
@@ -235,6 +253,7 @@ module.exports = class DanceParty {
   }
 
   play(songData, callback) {
+    this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
@@ -242,6 +261,7 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
+      this.performanceData_.lastPlayDelay = performance.now() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
     }, () => {
       this.reset();
@@ -938,12 +958,37 @@ module.exports = class DanceParty {
     }
   }
 
+  resetPerformanceDataForRun_() {
+    this.performanceData_.lastPlayCall = performance.now();
+    this.performanceData_.lastPlayDelay = null;
+    this.performanceData_.frameRateSamples = 0;
+    this.performanceData_.frameRateMax = -Infinity;
+    this.performanceData_.frameRateMin = Infinity;
+    this.performanceData_.frameRateMean = 0;
+  }
+
+  sampleFrameRate_() {
+    // Sampling rate: Every 15 frames, roughly twice per second.
+    if (this.p5_.frameCount % 15 !== 0) {
+      return;
+    }
+
+    const frameRate = this.p5_.frameRate();
+    this.performanceData_.frameRateMax = Math.max(this.performanceData_.frameRateMax, frameRate);
+    this.performanceData_.frameRateMin = Math.min(this.performanceData_.frameRateMin, frameRate);
+    this.performanceData_.frameRateMean =
+      (frameRate + this.performanceData_.frameRateSamples * this.performanceData_.frameRateMean) /
+      (this.performanceData_.frameRateSamples + 1);
+    this.performanceData_.frameRateSamples++;
+  }
+
   registerValidation(callback) {
     this.world.validationCallback = callback;
   }
 
   draw() {
     this.updateEvents_();
+    this.sampleFrameRate_();
 
     const { bpm, artist, title } = this.songMetadata_ || {};
 
