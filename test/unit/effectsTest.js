@@ -34,6 +34,19 @@ test('text background effect updates with song text', async t => {
   nativeAPI.reset();
 });
 
+test('swirl and spiral background effects', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  nativeAPI.setBackgroundEffect('swirl');
+  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+
+  nativeAPI.setBackgroundEffect('spiral');
+  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+
+  t.end();
+  nativeAPI.reset();
+});
+
 test('rainbow foreground effect updates with specified effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
@@ -71,3 +84,12 @@ test('color_lights foreground effect updates with specified effect', async t => 
   nativeAPI.reset();
 });
 
+test('setting fg effect to none clears the fg effect', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.setForegroundEffect('color_lights');
+  nativeAPI.setForegroundEffect('none');
+  t.equal(nativeAPI.getForegroundEffect(), undefined);
+
+  t.end();
+  nativeAPI.reset();
+});

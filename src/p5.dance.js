@@ -226,7 +226,7 @@ module.exports = class DanceParty {
   }
 
   getForegroundEffect() {
-    if (this.world.fg_effect && this.world.fg_effect !== null) {
+    if (this.world.fg_effect && this.world.fg_effect !== null && this.world.fg_effect !== 'none') {
       return this.fgEffects_[this.world.fg_effect];
     }
   }
