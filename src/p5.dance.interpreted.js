@@ -18,6 +18,12 @@ var MOVES = {
   Thriller: 11
 };
 
+var QueueType = {
+  every: 'every',
+  after: 'after',
+  other: 'other'
+};
+
 // Event handlers, loops, and callbacks.
 var inputEvents = [];
 var setupCallbacks = [];
@@ -30,6 +36,9 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * @returns {Object} An object with two arrays, each of which is a list of numbers
+ */
 function getCueList() {
   var timestamps = [];
   var measures = [];
@@ -56,25 +65,57 @@ function runUserSetup() {
   });
 }
 
+/**
+ * @param {Object} events - An object where each key is an event type. Each value
+ *  is another object, where the keys represent the param of the event to be run
+ */
 function runUserEvents(events) {
-  var currentEvents = {};
+  // We have three separate event queues.
+  // First we run every N seconds/measures events
+  // Then we run after N seconds/measures events
+  // Finally we run all other events
+
+  var queues = {};
+  Object.keys(QueueType).forEach(function(key) {
+    queues[key] = [];
+  });
+
+  // Iterate through all of the inputEvents we've cached in the interpreter, looking
+  // to see if they meet the criteria of the passed in events object. If they do,
+  // we add them to the appropriate event queue
   for (var i = 0; i < inputEvents.length; i++) {
     var eventType = inputEvents[i].type;
-    var event = inputEvents[i].event;
     var param = inputEvents[i].param;
-    var priority = inputEvents[i].priority;
+    var queueType = inputEvents[i].queueType;
     if (events[eventType] && events[eventType][param]) {
-      //If there are multiple cues of the same type, only run the event with the highest priority
-      if (!currentEvents[eventType] || currentEvents[eventType].priority < priority) {
-        currentEvents[eventType] = {event: event, priority: priority};
+      if (!queues[queueType]) {
+        throw new Error('Unknown queueType: ', queueType);
       }
+      queues[queueType].push({
+        priority: inputEvents[i].priority,
+        func: inputEvents[i].func
+      });
     }
   }
-  for (var input in currentEvents){
-    if(currentEvents.hasOwnProperty(input)){
-      currentEvents[input].event();
-    }
+
+  function prioritySort(a, b) {
+    // TODO: If compareFunction(a, b) returns 0, leave a and b unchanged with respect
+    // to each other, but sorted with respect to all different elements. Note: the
+    // ECMAscript standard does not guarantee this behaviour, and thus not all
+    // browsers (e.g. Mozilla versions dating back to at least 2003) respect this.
+    // ^ Matters to us, because we initially seed items according to block position
+    // and we want to maintain that ordering in our sort when priorities are equal
+    // There are ways we could ensure that
+    return a.priority - b.priority;
   }
+
+  function executeFuncs(item) {
+    item.func();
+  }
+
+  queues[QueueType.every].sort(prioritySort).forEach(executeFuncs);
+  queues[QueueType.after].sort(prioritySort).forEach(executeFuncs);
+  queues[QueueType.other].forEach(executeFuncs);
 }
 
 function whenSetup(event) {
@@ -93,38 +134,60 @@ function ifDanceIs(sprite, dance, ifStatement, elseStatement) {
   }
 }
 
-function whenKey(key, event) {
+/**
+ * @param {string} key - Many options, including up, down, left, right, a-z, 0-9
+ * @param {function} func - Code to run when event fires
+ */
+function whenKey(key, func) {
   inputEvents.push({
     type: 'this.p5_.keyWentDown',
-    event: event,
-    param: key
+    func: func,
+    param: key,
+    queueType: QueueType.other,
   });
 }
 
-function whenPeak(range, event) {
+/**
+ * @param {string} range - Should be "bass", "mid", or "treble"
+ * @param {function} func - Code to run when event fires
+ */
+function whenPeak(range, func) {
   inputEvents.push({
     type: 'Dance.fft.isPeak',
-    event: event,
-    param: range
+    func: func,
+    param: range,
+    queueType: QueueType.other,
   });
 }
 
-function atTimestamp(timestamp, unit, event) {
+/**
+ * @param {number} timestamp
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ */
+function atTimestamp(timestamp, unit, func) {
+  // Despite the functions name, if we call atTimestamp(4, "measures", foo), we
+  // actually want to fire on the 5th measure (i.e after 4 measures have completed)
   if (unit === "measures") {
     timestamp += 1;
   }
 
-  // Increment priority by 1 to account for 'atTimestamp' events having a higher priority
-  // than everySecond events when they have share a timestamp parameter
   inputEvents.push({
     type: 'cue-' + unit,
-    event: event,
+    func: func,
     param: timestamp,
-    priority: timestamp + 1
+    queueType: QueueType.after,
+    // actual priority value is inconsequential here
+    priority: 0,
   });
 }
 
-function everySeconds(n, unit, event) {
+/**
+ * @param {number} n
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ */
+function everySeconds(n, unit, func) {
   // Measures start counting at 1, whereas seconds start counting at 0.
   // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
   // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
@@ -137,31 +200,45 @@ function everySeconds(n, unit, event) {
     start = 0;
     stop = 90;
   }
-  everySecondsRange(n, unit, start, stop, event);
+  everySecondsRange(n, unit, start, stop, func);
 }
 
-function everySecondsRange(n, unit, start, stop, event) {
-  if (n > 0) {
-    // Offset by n so that we don't generate an event at the beginning
-    // of the first period.
-    var timestamp = start + n;
+/**
+ * @param {number} n
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {number} start
+ * @param {number} stop
+ * @param {function} func - Code to run when event fires
+ */
+function everySecondsRange(n, unit, start, stop, func) {
+  if (n <= 0) {
+    return;
+  }
 
-    while (timestamp < stop) {
-      inputEvents.push({
-        type: 'cue-' + unit,
-        event: event,
-        param: timestamp,
-        priority: n
-      });
-      timestamp += n;
-    }
+  // Offset by n so that we don't generate an event at the beginning
+  // of the first period.
+  var timestamp = start + n;
+
+  while (timestamp < stop) {
+    inputEvents.push({
+      type: 'cue-' + unit,
+      func: func,
+      param: timestamp,
+      queueType: QueueType.every,
+      priority: n
+    });
+    timestamp += n;
   }
 }
 
-function everyVerseChorus(unit, event) {
+/**
+ * @param {string} unit - Should be "verse" or "chorus"
+ * @param {function} func - Code to run when event fires
+ */
+function everyVerseChorus(unit, func) {
   inputEvents.push({
     type: 'verseChorus',
-    event: event,
+    func: func,
     param: unit
   });
 }
