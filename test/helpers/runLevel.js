@@ -9,6 +9,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
+      nativeAPI.teardown();
     },
     onInit: api => {
       nativeAPI = api;

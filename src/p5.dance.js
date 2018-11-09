@@ -125,6 +125,10 @@ module.exports = class DanceParty {
     }, container);
   }
 
+  teardown() {
+    this.p5_.remove();
+  }
+
   onKeyDown(keyCode) {
     this.p5_._onkeydown({ which: keyCode });
   }
