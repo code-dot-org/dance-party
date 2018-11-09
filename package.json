@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --mode development",
     "codecov": "mkdir coverage && nyc report --reporter=text-lcov > ./coverage/unit.lcov && codecov",
     "lint": "eslint --ext .js src test",
-    "test": "npm run lint && nyc tape ./test/**/*.js",
+    "test": "npm run lint && nyc tape ./test/unit/*.js && karma start",
     "test:unit": "tape ./test/unit/*.js",
     "test:integration": "karma start",
     "preversion": "npm run test",

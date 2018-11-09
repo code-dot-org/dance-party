@@ -36,7 +36,7 @@ module.exports = config => {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
-    }
+    },
 
     // Run and exit unless WATCH=1.
     singleRun: !process.env['WATCH'],
