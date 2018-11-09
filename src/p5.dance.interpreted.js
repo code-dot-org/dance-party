@@ -67,7 +67,7 @@ function runUserSetup() {
 
 /**
  * @param {Object} events - An object where each key is an event type. Each value
- *  is another object, where the keys represeent the param of the event to be run
+ *  is another object, where the keys represent the param of the event to be run
  */
 function runUserEvents(events) {
   // We have three separate event queues.
