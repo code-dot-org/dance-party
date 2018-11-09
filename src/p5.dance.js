@@ -288,7 +288,7 @@ module.exports = class DanceParty {
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
-    sprite.previous_move = 0;
+    sprite.previous_move = 0; // I don't think this is used?
 
     for (var i = 0; i < ANIMATIONS[costume].length; i++) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);

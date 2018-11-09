@@ -27,8 +27,8 @@ test('atTimestamp adds a cue to the cue list', async t => {
 
 test('conflicting everySeconds and atTimestamp cues', async t => {
   const {nativeAPI, interpretedAPI} = await runUserCode(`
-    everySeconds(2, "seconds", () => setBackground("green"));
     everySeconds(4, "seconds", () => setBackground("blue"));
+    everySeconds(2, "seconds", () => setBackground("green"));
     atTimestamp(6, "seconds", () => setBackground("red"));
   `);
 
@@ -53,6 +53,54 @@ test('conflicting everySeconds and atTimestamp cues', async t => {
   goToSecondsAndVerify(9, 'blue');
   goToSecondsAndVerify(10, 'green');
   goToSecondsAndVerify(11, 'green');
+  goToSecondsAndVerify(12, 'blue');
+  goToSecondsAndVerify(13, 'blue');
+  goToSecondsAndVerify(14, 'green');
+  goToSecondsAndVerify(15, 'green');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('non-conflicting everySeconds cues', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  for (let i = 0; i < 4; i++) {
+    nativeAPI.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet("ROBOT", i, {}, () => {});
+    nativeAPI.world.MOVE_NAMES.push({
+      name: `move${i}`
+    });
+  }
+  nativeAPI.world.fullLengthMoveCount = 4;
+  nativeAPI.world.restMoveCount = 1;
+  const userCode = `
+    const moose = makeNewDanceSprite("MOOSE");
+    const robot = makeNewDanceSprite("ROBOT");
+
+    everySeconds(1, "seconds", () => changeMoveLR(moose, "next"));
+    everySeconds(2, "seconds", () => changeMoveLR(robot, "next"));
+  `;
+  const interpretedAPI = injectInterpreted(nativeAPI, interpreted, userCode);
+
+  function goToSecondsAndVerify(n, expectedMooseDance, expectedRobotDance) {
+    interpretedAPI.runUserEvents({
+      any: true,
+      'cue-seconds': {
+        [n]: true,
+      }
+    });
+    t.equal(nativeAPI.getGroupByName_('MOOSE')[0].current_move, expectedMooseDance);
+    t.equal(nativeAPI.getGroupByName_('ROBOT')[0].current_move, expectedRobotDance);
+  }
+
+  goToSecondsAndVerify(0, 0, 0);
+  goToSecondsAndVerify(1, 1, 0);
+  goToSecondsAndVerify(2, 2, 1);
+  goToSecondsAndVerify(3, 3, 1);
+  goToSecondsAndVerify(4, 1, 2);
+  goToSecondsAndVerify(5, 2, 2);
+  goToSecondsAndVerify(6, 3, 3);
+  goToSecondsAndVerify(7, 1, 3);
 
   t.end();
   nativeAPI.reset();
