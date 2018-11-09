@@ -52,13 +52,6 @@ module.exports = class DanceParty {
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
 
-    this.currentFrameEvents = {
-      'this.p5_.keyWentDown': {},
-      'Dance.fft.isPeak': {},
-      'cue-seconds': {},
-      'cue-measures': {},
-    };
-
     this.world = {
       height: 400,
       cues: {
@@ -107,11 +100,18 @@ module.exports = class DanceParty {
 
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
-    this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
-      !!move1.rest * -2 + !!move2.rest * 2 + !!move2.shortBurst * -1 + !!move1.shortBurst * 1
-    ));
-    this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
-    this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
+
+    // We can't use Array.sort() : see https://stackoverflow.com/q/3026281
+    const restMoves = this.world.MOVE_NAMES.filter(move => move.rest);
+    const nonRestingFullLengthMoves = this.world.MOVE_NAMES.filter(move => !move.rest && !move.shortBurst);
+    const shortBurstMoves = this.world.MOVE_NAMES.filter(move => move.shortBurst);
+    this.world.MOVE_NAMES = [
+      ...restMoves,
+      ...nonRestingFullLengthMoves,
+      ...shortBurstMoves,
+    ];
+    this.world.restMoveCount = restMoves.length;
+    this.world.fullLengthMoveCount = restMoves.length + nonRestingFullLengthMoves.length;
 
     this.songStartTime_ = 0;
 
@@ -159,6 +159,11 @@ module.exports = class DanceParty {
     this.onPuzzleComplete_(false, message);
   }
 
+  /**
+   * @param {Object} timestamps
+   * @param {number[]} timestamps.measures
+   * @param {number[]} timestamps.seconds
+   */
   addCues(timestamps) {
     // Sort cues
     const numSort = (a,b) => a - b;
@@ -174,7 +179,6 @@ module.exports = class DanceParty {
       this.p5_.allSprites[0].remove();
     }
     this.p5_.noLoop();
-    this.currentFrameEvents.any = false;
 
     this.world.fg_effect = null;
     this.world.bg_effect = null;
@@ -311,7 +315,7 @@ module.exports = class DanceParty {
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
-    sprite.previous_move = 0;
+    sprite.previous_move = 0; // I don't think this is used?
 
     for (var i = 0; i < ANIMATIONS[costume].length; i++) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
@@ -915,19 +919,23 @@ module.exports = class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
+  /**
+   * @return {Object} TODO: describe
+   */
   updateEvents_() {
-    const events = this.currentFrameEvents;
     const { analysis } = this.songMetadata_ || {};
-    events.any = false;
-    events['this.p5_.keyWentDown'] = {};
-    events['Dance.fft.isPeak'] = {};
-    events['cue-seconds'] = {};
-    events['cue-measures'] = {};
+
+    // Will potentially set the following:
+    // this.p5_.keyWentDown
+    // Dance.fft.isPeak
+    // cue-seconds
+    // cue-measures
+    const events = {};
     this.peakThisFrame_ = false;
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events.any = true;
+        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {}
         events['this.p5_.keyWentDown'][key] = true;
       }
     }
@@ -939,7 +947,7 @@ module.exports = class DanceParty {
       this.energy_ = energy;
       for (let range of WATCHED_RANGES) {
         if (beats[range]) {
-          events.any = true;
+          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {}
           events['Dance.fft.isPeak'][range] = true;
           this.peakThisFrame_ = true;
         }
@@ -948,14 +956,16 @@ module.exports = class DanceParty {
     }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
-      events.any = true;
+      events['cue-seconds'] = events['cue-seconds'] || {}
       events['cue-seconds'][this.world.cues.seconds.splice(0, 1)] = true;
     }
 
     while (this.world.cues.measures.length > 0 && this.world.cues.measures[0] < this.getCurrentMeasure()) {
-      events.any = true;
+      events['cue-measures'] = events['cue-measures'] || {};
       events['cue-measures'][this.world.cues.measures.splice(0, 1)] = true;
     }
+
+    return events;
   }
 
   resetPerformanceDataForRun_() {
@@ -987,7 +997,7 @@ module.exports = class DanceParty {
   }
 
   draw() {
-    this.updateEvents_();
+    const events = this.updateEvents_();
     this.sampleFrameRate_();
 
     const { bpm, artist, title } = this.songMetadata_ || {};
@@ -1039,8 +1049,8 @@ module.exports = class DanceParty {
       this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
     }
 
-    if (this.currentFrameEvents.any && this.onHandleEvents) {
-      this.onHandleEvents(this.currentFrameEvents);
+    if (Object.keys(events).length && this.onHandleEvents) {
+      this.onHandleEvents(events);
     }
   }
 };
