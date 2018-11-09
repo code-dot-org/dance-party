@@ -118,7 +118,7 @@ module.exports = class DanceParty {
       ...shortBurstMoves,
     ];
     this.world.restMoveCount = restMoves.length;
-    this.world.fullLengthMoveCount = restMoves.length + shortBurstMoves.length;
+    this.world.fullLengthMoveCount = restMoves.length + nonRestingFullLengthMoves.length;
 
     this.songStartTime_ = 0;
 
