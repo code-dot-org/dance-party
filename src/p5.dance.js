@@ -74,6 +74,22 @@ module.exports = class DanceParty {
     this.centroid_ = 0;
 
     this.sprites_by_type_ = {};
+    this.performanceData_ = {
+      // Time from the start of document load to the init() callback
+      initTime: null,
+      // Time play() was last called
+      lastPlayCall: null,
+      // Time between last play() call and last time the song actually started playing
+      lastPlayDelay: null,
+      // Number of frame rate samples taken since last run
+      frameRateSamples: 0,
+      // Maximum frame rate recorded since last run
+      frameRateMax: -Infinity,
+      // Minimum frame rate recorded since last run
+      frameRateMin: Infinity,
+      // Average frame rate recorded since last run
+      frameRateMean: 0
+    };
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
@@ -84,11 +100,18 @@ module.exports = class DanceParty {
 
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
-    this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
-      !!move1.rest * -2 + !!move2.rest * 2 + !!move2.shortBurst * -1 + !!move1.shortBurst * 1
-    ));
-    this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
-    this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
+
+    // We can't use Array.sort() : see https://stackoverflow.com/q/3026281
+    const restMoves = this.world.MOVE_NAMES.filter(move => move.rest);
+    const nonRestingFullLengthMoves = this.world.MOVE_NAMES.filter(move => !move.rest && !move.shortBurst);
+    const shortBurstMoves = this.world.MOVE_NAMES.filter(move => move.shortBurst);
+    this.world.MOVE_NAMES = [
+      ...restMoves,
+      ...nonRestingFullLengthMoves,
+      ...shortBurstMoves,
+    ];
+    this.world.restMoveCount = restMoves.length;
+    this.world.fullLengthMoveCount = restMoves.length + nonRestingFullLengthMoves.length;
 
     this.songStartTime_ = 0;
 
@@ -124,6 +147,7 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      getPerformanceData: () => Object.assign({}, this.performanceData_),
     };
   }
 
@@ -218,6 +242,7 @@ module.exports = class DanceParty {
       }
     }
 
+    this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
   }
 
@@ -232,6 +257,7 @@ module.exports = class DanceParty {
   }
 
   play(songData, callback) {
+    this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
@@ -239,6 +265,7 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
+      this.performanceData_.lastPlayDelay = timeSinceLoad() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
     }, () => {
       this.reset();
@@ -941,12 +968,37 @@ module.exports = class DanceParty {
     return events;
   }
 
+  resetPerformanceDataForRun_() {
+    this.performanceData_.lastPlayCall = timeSinceLoad();
+    this.performanceData_.lastPlayDelay = null;
+    this.performanceData_.frameRateSamples = 0;
+    this.performanceData_.frameRateMax = -Infinity;
+    this.performanceData_.frameRateMin = Infinity;
+    this.performanceData_.frameRateMean = 0;
+  }
+
+  sampleFrameRate_() {
+    // Sampling rate: Every 15 frames, roughly twice per second.
+    if (this.p5_.frameCount % 15 !== 0) {
+      return;
+    }
+
+    const frameRate = this.p5_.frameRate();
+    this.performanceData_.frameRateMax = Math.max(this.performanceData_.frameRateMax, frameRate);
+    this.performanceData_.frameRateMin = Math.min(this.performanceData_.frameRateMin, frameRate);
+    this.performanceData_.frameRateMean =
+      (frameRate + this.performanceData_.frameRateSamples * this.performanceData_.frameRateMean) /
+      (this.performanceData_.frameRateSamples + 1);
+    this.performanceData_.frameRateSamples++;
+  }
+
   registerValidation(callback) {
     this.world.validationCallback = callback;
   }
 
   draw() {
     const events = this.updateEvents_();
+    this.sampleFrameRate_();
 
     const { bpm, artist, title } = this.songMetadata_ || {};
 
@@ -1013,4 +1065,13 @@ function queryParam(key) {
     return decodeURIComponent(pair[1]);
   }
   return undefined;
+}
+
+function timeSinceLoad() {
+  if (typeof performance !== 'undefined') {
+    return performance.now()
+  } else if (typeof process !== 'undefined') {
+    return process.hrtime();
+  }
+  return 0;
 }
