@@ -6,9 +6,9 @@
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --mode development",
-    "codecov": "mkdir coverage && nyc report --reporter=text-lcov > ./coverage/unit.lcov && codecov",
+    "codecov": "mkdir -p coverage && nyc report --reporter=text-lcov > ./coverage/unit.lcov && codecov",
     "lint": "eslint --ext .js src test",
-    "test": "npm run lint && nyc tape ./test/unit/*.js && karma start",
+    "test": "npm run lint && nyc npm run test:unit && npm run test:integration",
     "test:unit": "tape ./test/unit/*.js",
     "test:integration": "karma start",
     "preversion": "npm run test",
