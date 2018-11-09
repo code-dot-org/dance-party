@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "DOG_DoubleJam_00.png",
+	"frame": {"x":638,"y":181,"w":98,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":65,"w":98,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_02.png",
+	"frame": {"x":738,"y":183,"w":118,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":63,"w":118,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_04.png",
+	"frame": {"x":1161,"y":193,"w":105,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":61,"w":105,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_06.png",
+	"frame": {"x":858,"y":183,"w":103,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":62,"w":103,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_08.png",
+	"frame": {"x":120,"y":176,"w":106,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":70,"w":106,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_10.png",
+	"frame": {"x":778,"y":1,"w":128,"h":180},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":89,"w":128,"h":180},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_12.png",
+	"frame": {"x":265,"y":1,"w":136,"h":174},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":98,"w":136,"h":174},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_14.png",
+	"frame": {"x":1,"y":1,"w":136,"h":173},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":100,"w":136,"h":173},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_16.png",
+	"frame": {"x":908,"y":1,"w":130,"h":180},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":92,"w":130,"h":180},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_18.png",
+	"frame": {"x":1163,"y":1,"w":104,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":80,"w":104,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_20.png",
+	"frame": {"x":228,"y":177,"w":97,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":70,"w":97,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_22.png",
+	"frame": {"x":963,"y":190,"w":93,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":63,"w":93,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_24.png",
+	"frame": {"x":1058,"y":190,"w":101,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":61,"w":101,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_26.png",
+	"frame": {"x":1268,"y":198,"w":100,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":61,"w":100,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_28.png",
+	"frame": {"x":435,"y":180,"w":102,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":66,"w":102,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_30.png",
+	"frame": {"x":1,"y":176,"w":117,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":79,"w":117,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_32.png",
+	"frame": {"x":527,"y":1,"w":124,"h":177},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":94,"w":124,"h":177},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_34.png",
+	"frame": {"x":403,"y":1,"w":122,"h":174},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":99,"w":122,"h":174},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_36.png",
+	"frame": {"x":139,"y":1,"w":124,"h":173},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":100,"w":124,"h":173},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_38.png",
+	"frame": {"x":653,"y":1,"w":123,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":95,"w":123,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_40.png",
+	"frame": {"x":1040,"y":1,"w":121,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":86,"w":121,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_42.png",
+	"frame": {"x":1269,"y":1,"w":115,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":78,"w":115,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_44.png",
+	"frame": {"x":327,"y":177,"w":106,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":71,"w":106,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_DoubleJam_46.png",
+	"frame": {"x":539,"y":180,"w":97,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":67,"w":97,"h":206},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_DoubleJam.png",
+	"format": "RGBA8888",
+	"size": {"w":1385,"h":411},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:02544d300a2362c27d0aad592035e9dd:58706b839d9f4d621f1c144bbdfbafd8:c21955c5984443842f8f143e6b3bcb68$"
+}
+}

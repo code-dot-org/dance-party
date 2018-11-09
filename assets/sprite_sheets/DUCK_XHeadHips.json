@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DUCK_XHeadHips_00.png",
+	"frame": {"x":743,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_02.png",
+	"frame": {"x":845,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_04.png",
+	"frame": {"x":947,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_06.png",
+	"frame": {"x":1049,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_08.png",
+	"frame": {"x":1151,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_10.png",
+	"frame": {"x":633,"y":1,"w":108,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":66,"w":108,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_12.png",
+	"frame": {"x":511,"y":1,"w":120,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":66,"w":120,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_14.png",
+	"frame": {"x":277,"y":1,"w":119,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":65,"w":119,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_16.png",
+	"frame": {"x":398,"y":1,"w":111,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":65,"w":111,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_18.png",
+	"frame": {"x":175,"y":1,"w":100,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":64,"w":100,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_20.png",
+	"frame": {"x":84,"y":1,"w":89,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":59,"w":89,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHeadHips_22.png",
+	"frame": {"x":1,"y":1,"w":81,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":57,"w":81,"h":216},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DUCK_XHeadHips.png",
+	"format": "RGBA8888",
+	"size": {"w":1252,"h":218},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:528f3a5eae2e7bd3180681f559fbd4bf:9b35c8ae4881c5c9ee03eac6280044c2:f3e95b7268c8871136ae4ebb80c4cd4c$"
+}
+}

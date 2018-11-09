@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DOG_XOle_00.png",
+	"frame": {"x":1130,"y":1,"w":117,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":89,"w":117,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_02.png",
+	"frame": {"x":1249,"y":1,"w":116,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":89,"w":116,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_04.png",
+	"frame": {"x":1015,"y":1,"w":113,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":87,"w":113,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_06.png",
+	"frame": {"x":910,"y":1,"w":103,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":82,"w":103,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_08.png",
+	"frame": {"x":801,"y":1,"w":107,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":77,"w":107,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_10.png",
+	"frame": {"x":685,"y":1,"w":114,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":73,"w":114,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_12.png",
+	"frame": {"x":562,"y":1,"w":121,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":70,"w":121,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_14.png",
+	"frame": {"x":433,"y":1,"w":127,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":68,"w":127,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_16.png",
+	"frame": {"x":310,"y":1,"w":121,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":67,"w":121,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_18.png",
+	"frame": {"x":203,"y":1,"w":105,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":66,"w":105,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_20.png",
+	"frame": {"x":1,"y":1,"w":99,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":66,"w":99,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XOle_22.png",
+	"frame": {"x":102,"y":1,"w":99,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":66,"w":99,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1366,"h":209},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:698de7881945203c81c1125c2bbabc57:a9e8e4d6f99443b06a50e9196c83da8b:51b044999d4408962c541962bc1c76c0$"
+}
+}

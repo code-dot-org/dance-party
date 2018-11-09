@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XHeadHips_00.png",
+	"frame": {"x":1,"y":1,"w":114,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":44,"w":114,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_02.png",
+	"frame": {"x":203,"y":1,"w":104,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":49,"w":104,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_04.png",
+	"frame": {"x":101,"y":233,"w":98,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":55,"w":98,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_06.png",
+	"frame": {"x":1,"y":233,"w":98,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":54,"w":98,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_08.png",
+	"frame": {"x":526,"y":225,"w":99,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":89,"y":53,"w":99,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_10.png",
+	"frame": {"x":425,"y":225,"w":99,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":52,"w":99,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_12.png",
+	"frame": {"x":518,"y":1,"w":99,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":52,"w":99,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_14.png",
+	"frame": {"x":416,"y":1,"w":100,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":52,"w":100,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_16.png",
+	"frame": {"x":322,"y":227,"w":101,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":52,"w":101,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_18.png",
+	"frame": {"x":201,"y":231,"w":119,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":52,"w":119,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_20.png",
+	"frame": {"x":309,"y":1,"w":105,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":50,"w":105,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XHeadHips_22.png",
+	"frame": {"x":117,"y":1,"w":84,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":46,"w":84,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XHeadHips.png",
+	"format": "RGBA8888",
+	"size": {"w":626,"h":454},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:736e8beaf20714f638e4e77abcb0ce45:e0a42fb359817727418ececb4d054707:44c7b58facdd972ce2e6fd3d55606342$"
+}
+}

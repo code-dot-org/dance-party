@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "DUCK_Roll_00.png",
+	"frame": {"x":1,"y":1,"w":80,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":57,"w":80,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_02.png",
+	"frame": {"x":83,"y":1,"w":79,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":57,"w":79,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_04.png",
+	"frame": {"x":245,"y":1,"w":78,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":57,"w":78,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_06.png",
+	"frame": {"x":405,"y":1,"w":75,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":57,"w":75,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_08.png",
+	"frame": {"x":635,"y":1,"w":73,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":59,"w":73,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_10.png",
+	"frame": {"x":787,"y":1,"w":72,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":61,"w":72,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_12.png",
+	"frame": {"x":936,"y":1,"w":72,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":65,"w":72,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_14.png",
+	"frame": {"x":1086,"y":1,"w":71,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":69,"w":71,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_16.png",
+	"frame": {"x":1235,"y":1,"w":72,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":73,"w":72,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_18.png",
+	"frame": {"x":1460,"y":1,"w":73,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":75,"w":73,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_20.png",
+	"frame": {"x":1535,"y":1,"w":73,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":75,"w":73,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_22.png",
+	"frame": {"x":1610,"y":1,"w":73,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":75,"w":73,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_24.png",
+	"frame": {"x":1384,"y":1,"w":74,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":75,"w":74,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_26.png",
+	"frame": {"x":1685,"y":1,"w":73,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":75,"w":73,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_28.png",
+	"frame": {"x":1760,"y":1,"w":73,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":75,"w":73,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_30.png",
+	"frame": {"x":1309,"y":1,"w":73,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":74,"w":73,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_32.png",
+	"frame": {"x":1159,"y":1,"w":74,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":72,"w":74,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_34.png",
+	"frame": {"x":1010,"y":1,"w":74,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":69,"w":74,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_36.png",
+	"frame": {"x":861,"y":1,"w":73,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":65,"w":73,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_38.png",
+	"frame": {"x":710,"y":1,"w":75,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":61,"w":75,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_40.png",
+	"frame": {"x":559,"y":1,"w":74,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":59,"w":74,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_42.png",
+	"frame": {"x":482,"y":1,"w":75,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":57,"w":75,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_44.png",
+	"frame": {"x":325,"y":1,"w":78,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":57,"w":78,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Roll_46.png",
+	"frame": {"x":164,"y":1,"w":79,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":57,"w":79,"h":216},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DUCK_Roll.png",
+	"format": "RGBA8888",
+	"size": {"w":1834,"h":218},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c9e1fe9dcf4f182dd6ce4e1ee37fd032:e1fb35fd13c33bcfee7de065faa39afb:c42f24c765f036f7be54d5130d62856b$"
+}
+}

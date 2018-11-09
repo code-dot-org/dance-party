@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "CAT_Floss_00.png",
+	"frame": {"x":1158,"y":225,"w":81,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":54,"w":81,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_02.png",
+	"frame": {"x":794,"y":227,"w":88,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":50,"w":88,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_04.png",
+	"frame": {"x":745,"y":1,"w":104,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":50,"w":104,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_06.png",
+	"frame": {"x":630,"y":1,"w":113,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":50,"w":113,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_08.png",
+	"frame": {"x":512,"y":1,"w":116,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":50,"w":116,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_10.png",
+	"frame": {"x":1,"y":228,"w":116,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":51,"w":116,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_12.png",
+	"frame": {"x":1088,"y":1,"w":110,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":52,"w":110,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_14.png",
+	"frame": {"x":980,"y":222,"w":91,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":55,"w":91,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_16.png",
+	"frame": {"x":1241,"y":218,"w":81,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":59,"w":81,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_18.png",
+	"frame": {"x":884,"y":225,"w":94,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":54,"w":94,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_20.png",
+	"frame": {"x":231,"y":228,"w":107,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":51,"w":107,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_22.png",
+	"frame": {"x":679,"y":227,"w":113,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":50,"w":113,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_24.png",
+	"frame": {"x":561,"y":227,"w":116,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":50,"w":116,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_26.png",
+	"frame": {"x":442,"y":227,"w":117,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":50,"w":117,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_28.png",
+	"frame": {"x":851,"y":1,"w":118,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":52,"w":118,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_30.png",
+	"frame": {"x":971,"y":1,"w":115,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":55,"w":115,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_32.png",
+	"frame": {"x":1200,"y":1,"w":106,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":59,"w":106,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_34.png",
+	"frame": {"x":1073,"y":225,"w":83,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":54,"w":83,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_36.png",
+	"frame": {"x":119,"y":228,"w":110,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":51,"w":110,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_38.png",
+	"frame": {"x":387,"y":1,"w":123,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":50,"w":123,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_40.png",
+	"frame": {"x":133,"y":1,"w":129,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":49,"w":129,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_42.png",
+	"frame": {"x":1,"y":1,"w":130,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":49,"w":130,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_44.png",
+	"frame": {"x":264,"y":1,"w":121,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":49,"w":121,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_Floss_46.png",
+	"frame": {"x":340,"y":228,"w":100,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":51,"w":100,"h":223},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_Floss.png",
+	"format": "RGBA8888",
+	"size": {"w":1323,"h":452},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e319a7548710d3e9b88d2da0ea407382:0ce723b5597354689af7b2b9fdfb74bb:3171eac42443789f450c78956ca5c022$"
+}
+}

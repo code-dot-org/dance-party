@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "UNICORN_Roll_00000.png",
+	"frame": {"x":1,"y":231,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":47,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00002.png",
+	"frame": {"x":1,"y":1,"w":79,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":47,"w":79,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00004.png",
+	"frame": {"x":81,"y":231,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":47,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00006.png",
+	"frame": {"x":1,"y":461,"w":78,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":48,"w":78,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00008.png",
+	"frame": {"x":81,"y":461,"w":78,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":50,"w":78,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00010.png",
+	"frame": {"x":1,"y":690,"w":78,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":122,"y":52,"w":78,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00012.png",
+	"frame": {"x":162,"y":909,"w":79,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":56,"w":79,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00014.png",
+	"frame": {"x":81,"y":913,"w":79,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":123,"y":60,"w":79,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00016.png",
+	"frame": {"x":1,"y":915,"w":78,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":63,"w":78,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00018.png",
+	"frame": {"x":162,"y":1130,"w":79,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":65,"w":79,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00020.png",
+	"frame": {"x":162,"y":1342,"w":79,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":66,"w":79,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00022.png",
+	"frame": {"x":1,"y":1555,"w":78,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":66,"w":78,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00024.png",
+	"frame": {"x":162,"y":1553,"w":78,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":66,"w":78,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00026.png",
+	"frame": {"x":81,"y":1558,"w":78,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":66,"w":78,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00028.png",
+	"frame": {"x":81,"y":1347,"w":79,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":66,"w":79,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00030.png",
+	"frame": {"x":1,"y":1343,"w":78,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":65,"w":78,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00032.png",
+	"frame": {"x":1,"y":1129,"w":78,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":63,"w":78,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00034.png",
+	"frame": {"x":81,"y":1130,"w":79,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":60,"w":79,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00036.png",
+	"frame": {"x":162,"y":688,"w":80,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":56,"w":80,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00038.png",
+	"frame": {"x":81,"y":688,"w":79,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":52,"w":79,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00040.png",
+	"frame": {"x":163,"y":230,"w":79,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":49,"w":79,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00042.png",
+	"frame": {"x":163,"y":1,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":48,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00044.png",
+	"frame": {"x":161,"y":458,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":47,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_Roll_00046.png",
+	"frame": {"x":82,"y":1,"w":79,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":47,"w":79,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "UNICORN_Roll.png",
+	"format": "RGBA8888",
+	"size": {"w":243,"h":1768},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:949d56bdf8fdd7a767ad7ee0d414138c:a644d6ea93f686965bb74c3fc2e3ac4b:222fe65a670f0e6411b3fba43c11f3f7$"
+}
+}

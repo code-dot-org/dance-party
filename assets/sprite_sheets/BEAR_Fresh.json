@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_Fresh_00000.png",
+	"frame": {"x":121,"y":226,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00002.png",
+	"frame": {"x":812,"y":228,"w":81,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":81,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00004.png",
+	"frame": {"x":1101,"y":230,"w":86,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":49,"w":86,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00006.png",
+	"frame": {"x":1188,"y":1,"w":98,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":53,"w":98,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00008.png",
+	"frame": {"x":860,"y":1,"w":111,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":55,"w":111,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00010.png",
+	"frame": {"x":264,"y":1,"w":125,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":57,"w":125,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00012.png",
+	"frame": {"x":391,"y":1,"w":122,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":57,"w":122,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00014.png",
+	"frame": {"x":515,"y":1,"w":115,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":55,"w":115,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00016.png",
+	"frame": {"x":973,"y":1,"w":108,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":52,"w":108,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00018.png",
+	"frame": {"x":497,"y":217,"w":102,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":48,"w":102,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00020.png",
+	"frame": {"x":394,"y":216,"w":101,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":46,"w":101,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00022.png",
+	"frame": {"x":291,"y":218,"w":101,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":45,"w":101,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00024.png",
+	"frame": {"x":1083,"y":1,"w":103,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":46,"w":103,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00026.png",
+	"frame": {"x":748,"y":1,"w":110,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":48,"w":110,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00028.png",
+	"frame": {"x":632,"y":1,"w":114,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":50,"w":114,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00030.png",
+	"frame": {"x":601,"y":226,"w":103,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":54,"w":103,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00032.png",
+	"frame": {"x":1189,"y":223,"w":97,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":58,"w":97,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00034.png",
+	"frame": {"x":895,"y":222,"w":102,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":63,"w":102,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00036.png",
+	"frame": {"x":999,"y":230,"w":100,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":65,"w":100,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00038.png",
+	"frame": {"x":706,"y":228,"w":104,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":62,"w":104,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00040.png",
+	"frame": {"x":136,"y":1,"w":126,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":74,"y":58,"w":126,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00042.png",
+	"frame": {"x":1,"y":1,"w":133,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":53,"w":133,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00044.png",
+	"frame": {"x":1,"y":226,"w":118,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":49,"w":118,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Fresh_00046.png",
+	"frame": {"x":201,"y":220,"w":88,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":47,"w":88,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_Fresh.png",
+	"format": "RGBA8888",
+	"size": {"w":1287,"h":456},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ebc607cc6ae5efc7685c4c5d1effa75e:b736dfdbabf918c78dcea452c901615d:7dfdb7010b05726a2c3bb2fc6f7544b8$"
+}
+}

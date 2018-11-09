@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XOle_00.png",
+	"frame": {"x":1052,"y":1,"w":104,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":72,"w":104,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_02.png",
+	"frame": {"x":1158,"y":1,"w":104,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":71,"w":104,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_04.png",
+	"frame": {"x":951,"y":1,"w":99,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":67,"w":99,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_06.png",
+	"frame": {"x":850,"y":1,"w":99,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":61,"w":99,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_08.png",
+	"frame": {"x":745,"y":1,"w":103,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":55,"w":103,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_10.png",
+	"frame": {"x":633,"y":1,"w":110,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":50,"w":110,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_12.png",
+	"frame": {"x":516,"y":1,"w":115,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":46,"w":115,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_14.png",
+	"frame": {"x":396,"y":1,"w":118,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":43,"w":118,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_16.png",
+	"frame": {"x":278,"y":1,"w":116,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":42,"w":116,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_18.png",
+	"frame": {"x":176,"y":1,"w":100,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":41,"w":100,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_20.png",
+	"frame": {"x":1,"y":1,"w":88,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":88,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XOle_22.png",
+	"frame": {"x":91,"y":1,"w":83,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":83,"h":231},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1263,"h":233},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f4afe5eda7e87c6ccf1d7a7417abf6c9:d5f5188ae47ea6474bba905e8389b418:44b01302f1ac5dfe87b016f2192b5f9e$"
+}
+}

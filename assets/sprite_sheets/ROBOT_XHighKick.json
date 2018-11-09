@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XHighKick_00.png",
+	"frame": {"x":726,"y":1,"w":178,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":75,"w":178,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_02.png",
+	"frame": {"x":906,"y":1,"w":180,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":81,"w":180,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_04.png",
+	"frame": {"x":1262,"y":1,"w":179,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":90,"w":179,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_06.png",
+	"frame": {"x":1621,"y":1,"w":179,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":20,"y":100,"w":179,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_08.png",
+	"frame": {"x":1443,"y":1,"w":176,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":28,"y":91,"w":176,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_10.png",
+	"frame": {"x":1088,"y":1,"w":172,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":38,"y":82,"w":172,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_12.png",
+	"frame": {"x":558,"y":1,"w":166,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":49,"y":73,"w":166,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_14.png",
+	"frame": {"x":402,"y":1,"w":154,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":59,"y":63,"w":154,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_16.png",
+	"frame": {"x":272,"y":1,"w":128,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":72,"y":54,"w":128,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_18.png",
+	"frame": {"x":170,"y":1,"w":100,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":47,"w":100,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_20.png",
+	"frame": {"x":84,"y":1,"w":84,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":42,"w":84,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XHighKick_22.png",
+	"frame": {"x":1,"y":1,"w":81,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":40,"w":81,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XHighKick.png",
+	"format": "RGBA8888",
+	"size": {"w":1801,"h":234},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c901e7d740e28db06297486566254864:8743b495054ea18bf348925a572f91b9:e617dcee0bf84437e2b38a8b3bcddf0f$"
+}
+}

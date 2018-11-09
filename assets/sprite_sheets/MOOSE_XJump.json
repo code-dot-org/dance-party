@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XJump_00.png",
+	"frame": {"x":479,"y":1,"w":166,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":15,"w":166,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_02.png",
+	"frame": {"x":305,"y":1,"w":172,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":16,"w":172,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_04.png",
+	"frame": {"x":116,"y":1,"w":187,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":56,"y":20,"w":187,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_06.png",
+	"frame": {"x":647,"y":1,"w":215,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":42,"y":28,"w":215,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_08.png",
+	"frame": {"x":779,"y":221,"w":228,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":35,"y":46,"w":228,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_10.png",
+	"frame": {"x":127,"y":222,"w":195,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":52,"y":64,"w":195,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_12.png",
+	"frame": {"x":324,"y":222,"w":165,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":73,"w":165,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_14.png",
+	"frame": {"x":491,"y":222,"w":148,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":77,"w":148,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_16.png",
+	"frame": {"x":864,"y":1,"w":142,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":79,"w":142,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_18.png",
+	"frame": {"x":641,"y":222,"w":136,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":77,"w":136,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_20.png",
+	"frame": {"x":1,"y":223,"w":124,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":66,"w":124,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XJump_22.png",
+	"frame": {"x":1,"y":1,"w":113,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":52,"w":113,"h":220},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XJump.png",
+	"format": "RGBA8888",
+	"size": {"w":1008,"h":436},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e108d2b213ea771f180228c9a10faea3:422129c292fcd28c147326e7249046c0:f72073c74ac570521d100bc7af1a6d28$"
+}
+}

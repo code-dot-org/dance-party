@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XFever_00.png",
+	"frame": {"x":671,"y":1,"w":149,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":53,"w":149,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_02.png",
+	"frame": {"x":822,"y":1,"w":149,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":53,"w":149,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_04.png",
+	"frame": {"x":973,"y":1,"w":148,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":53,"w":148,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_06.png",
+	"frame": {"x":1123,"y":1,"w":145,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":54,"w":145,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_08.png",
+	"frame": {"x":1270,"y":1,"w":141,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":141,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_10.png",
+	"frame": {"x":1413,"y":1,"w":136,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":57,"w":136,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_12.png",
+	"frame": {"x":1551,"y":1,"w":128,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":61,"w":128,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_14.png",
+	"frame": {"x":534,"y":1,"w":135,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":52,"w":135,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_16.png",
+	"frame": {"x":392,"y":1,"w":140,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":44,"w":140,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_18.png",
+	"frame": {"x":135,"y":1,"w":140,"h":233},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":39,"w":140,"h":233},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_20.png",
+	"frame": {"x":1,"y":1,"w":132,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":38,"w":132,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XFever_22.png",
+	"frame": {"x":277,"y":1,"w":113,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":40,"w":113,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":1680,"h":236},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6fda9735f8209fa784acbad17c55b39e:163e6dda385ea6fc8341210cfd6d19f4:f61e65a4e563e82e309bec663e7e205e$"
+}
+}

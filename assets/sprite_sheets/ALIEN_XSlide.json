@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XSlide_00.png",
+	"frame": {"x":165,"y":172,"w":135,"h":180},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":97,"w":135,"h":180},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_02.png",
+	"frame": {"x":1,"y":178,"w":135,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":97,"w":135,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_04.png",
+	"frame": {"x":561,"y":207,"w":133,"h":175},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":98,"w":133,"h":175},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_06.png",
+	"frame": {"x":696,"y":207,"w":131,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":100,"w":131,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_08.png",
+	"frame": {"x":717,"y":1,"w":128,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":103,"w":128,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_10.png",
+	"frame": {"x":478,"y":1,"w":138,"h":163},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":109,"w":138,"h":163},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_12.png",
+	"frame": {"x":327,"y":1,"w":149,"h":165},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":107,"w":149,"h":165},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_14.png",
+	"frame": {"x":165,"y":1,"w":160,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":103,"w":160,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_16.png",
+	"frame": {"x":1,"y":1,"w":162,"h":175},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":97,"w":162,"h":175},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_18.png",
+	"frame": {"x":327,"y":168,"w":136,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":85,"w":136,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_20.png",
+	"frame": {"x":618,"y":1,"w":97,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":68,"w":97,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XSlide_22.png",
+	"frame": {"x":478,"y":166,"w":81,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":54,"w":81,"h":218},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XSlide.png",
+	"format": "RGBA8888",
+	"size": {"w":846,"h":385},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:50baeb94dd6b355c88b719fa2a640292:01deb0db60a49c7305126d195bfb1977:91d925c158e16f1e442a2cd43fecdfba$"
+}
+}

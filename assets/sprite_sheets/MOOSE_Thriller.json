@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_Thriller_00.png",
+	"frame": {"x":1076,"y":207,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_02.png",
+	"frame": {"x":961,"y":210,"w":113,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":43,"w":113,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_04.png",
+	"frame": {"x":1455,"y":214,"w":117,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":46,"w":117,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_06.png",
+	"frame": {"x":292,"y":222,"w":134,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":51,"w":134,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_08.png",
+	"frame": {"x":1377,"y":1,"w":140,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":59,"w":140,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_10.png",
+	"frame": {"x":697,"y":205,"w":143,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":54,"y":66,"w":143,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_12.png",
+	"frame": {"x":1078,"y":1,"w":148,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":69,"w":148,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_14.png",
+	"frame": {"x":771,"y":1,"w":152,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":36,"y":70,"w":152,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_16.png",
+	"frame": {"x":615,"y":1,"w":154,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":34,"y":70,"w":154,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_18.png",
+	"frame": {"x":925,"y":1,"w":151,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":68,"w":151,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_20.png",
+	"frame": {"x":1228,"y":1,"w":147,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":65,"w":147,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_22.png",
+	"frame": {"x":1519,"y":1,"w":139,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":52,"y":61,"w":139,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_24.png",
+	"frame": {"x":154,"y":226,"w":136,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":59,"w":136,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_26.png",
+	"frame": {"x":428,"y":219,"w":136,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":58,"w":136,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_28.png",
+	"frame": {"x":566,"y":219,"w":129,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":59,"w":129,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_30.png",
+	"frame": {"x":1574,"y":214,"w":111,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":61,"w":111,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_32.png",
+	"frame": {"x":1332,"y":212,"w":121,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":67,"w":121,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_34.png",
+	"frame": {"x":1191,"y":210,"w":139,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":64,"w":139,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_36.png",
+	"frame": {"x":1,"y":226,"w":151,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":59,"w":151,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_38.png",
+	"frame": {"x":308,"y":1,"w":153,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":58,"w":153,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_40.png",
+	"frame": {"x":463,"y":1,"w":150,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":56,"w":150,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_42.png",
+	"frame": {"x":157,"y":1,"w":149,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":53,"w":149,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_44.png",
+	"frame": {"x":1,"y":1,"w":154,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":49,"w":154,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Thriller_46.png",
+	"frame": {"x":842,"y":212,"w":117,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":45,"w":117,"h":227},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_Thriller.png",
+	"format": "RGBA8888",
+	"size": {"w":1686,"h":440},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3bfed2701e4af7d91e655b1e96bb6c6a:687f1f490b76b27d23bb40f86df50a1f:0ce6bd877f4bbbdb7b961220ddc2d308$"
+}
+}

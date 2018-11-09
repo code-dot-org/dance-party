@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "FROG_XHop_00.png",
+	"frame": {"x":1,"y":922,"w":120,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":25,"w":120,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_02.png",
+	"frame": {"x":123,"y":922,"w":87,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":32,"w":87,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_04.png",
+	"frame": {"x":84,"y":720,"w":104,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":68,"w":104,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_06.png",
+	"frame": {"x":1,"y":1,"w":112,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":103,"w":112,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_08.png",
+	"frame": {"x":1,"y":172,"w":111,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":102,"w":111,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_10.png",
+	"frame": {"x":114,"y":175,"w":105,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":102,"w":105,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_12.png",
+	"frame": {"x":115,"y":1,"w":98,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":100,"w":98,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_14.png",
+	"frame": {"x":1,"y":344,"w":91,"h":174},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":98,"w":91,"h":174},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_16.png",
+	"frame": {"x":94,"y":347,"w":89,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":94,"w":89,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_18.png",
+	"frame": {"x":1,"y":520,"w":90,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":89,"w":90,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_20.png",
+	"frame": {"x":93,"y":527,"w":87,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":81,"w":87,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XHop_22.png",
+	"frame": {"x":1,"y":705,"w":81,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":70,"w":81,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":220,"h":1145},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:bc0d7370c9764ac21fce2a3bb9adeabd:a03b07d2bb1adcb64af5b2e20e042536:55f128177da9b126ad2a6874450e51c1$"
+}
+}

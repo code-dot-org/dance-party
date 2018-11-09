@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_Floss_00.png",
+	"frame": {"x":1317,"y":226,"w":112,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":50,"w":112,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_02.png",
+	"frame": {"x":945,"y":231,"w":112,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":45,"w":112,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_04.png",
+	"frame": {"x":693,"y":232,"w":121,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":43,"w":121,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_06.png",
+	"frame": {"x":559,"y":232,"w":132,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":43,"w":132,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_08.png",
+	"frame": {"x":286,"y":234,"w":135,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":42,"w":135,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_10.png",
+	"frame": {"x":582,"y":1,"w":131,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":43,"w":131,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_12.png",
+	"frame": {"x":980,"y":1,"w":124,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":46,"w":124,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_14.png",
+	"frame": {"x":1338,"y":1,"w":112,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":50,"w":112,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_16.png",
+	"frame": {"x":1452,"y":1,"w":113,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":55,"w":113,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_18.png",
+	"frame": {"x":1106,"y":1,"w":113,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":48,"w":113,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_20.png",
+	"frame": {"x":853,"y":1,"w":125,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":44,"w":125,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_22.png",
+	"frame": {"x":423,"y":234,"w":134,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":61,"y":42,"w":134,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_24.png",
+	"frame": {"x":304,"y":1,"w":138,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":41,"w":138,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_26.png",
+	"frame": {"x":146,"y":234,"w":138,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":57,"y":42,"w":138,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_28.png",
+	"frame": {"x":715,"y":1,"w":136,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":44,"w":136,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_30.png",
+	"frame": {"x":1182,"y":227,"w":133,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":49,"w":133,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_32.png",
+	"frame": {"x":1431,"y":225,"w":130,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":55,"w":130,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_34.png",
+	"frame": {"x":1221,"y":1,"w":115,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":49,"w":115,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_36.png",
+	"frame": {"x":816,"y":231,"w":127,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":44,"w":127,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_38.png",
+	"frame": {"x":1,"y":234,"w":143,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":42,"w":143,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_40.png",
+	"frame": {"x":1,"y":1,"w":150,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":41,"w":150,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_42.png",
+	"frame": {"x":153,"y":1,"w":149,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":41,"w":149,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_44.png",
+	"frame": {"x":444,"y":1,"w":136,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":43,"w":136,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Floss_46.png",
+	"frame": {"x":1059,"y":229,"w":121,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":46,"w":121,"h":226},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_Floss.png",
+	"format": "RGBA8888",
+	"size": {"w":1566,"h":465},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0731256c0fab6e095a7153f4eacce1d3:e951872b6604261d1cae3f92b75fe599:f7e272c8d7997ea9d069603fbc4d2cbc$"
+}
+}

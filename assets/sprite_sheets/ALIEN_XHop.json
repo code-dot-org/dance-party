@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XHop_00.png",
+	"frame": {"x":94,"y":1,"w":120,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":25,"w":120,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_02.png",
+	"frame": {"x":1,"y":1,"w":91,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":32,"w":91,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_04.png",
+	"frame": {"x":384,"y":210,"w":106,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":68,"w":106,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_06.png",
+	"frame": {"x":182,"y":221,"w":107,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":86,"w":107,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_08.png",
+	"frame": {"x":390,"y":1,"w":99,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":87,"w":99,"h":185},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_10.png",
+	"frame": {"x":492,"y":1,"w":89,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":87,"w":89,"h":185},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_12.png",
+	"frame": {"x":492,"y":188,"w":86,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":86,"w":86,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_14.png",
+	"frame": {"x":92,"y":225,"w":88,"h":189},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":83,"w":88,"h":189},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_16.png",
+	"frame": {"x":1,"y":225,"w":89,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":79,"w":89,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_18.png",
+	"frame": {"x":291,"y":220,"w":91,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":73,"w":91,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_20.png",
+	"frame": {"x":300,"y":1,"w":88,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":65,"w":88,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHop_22.png",
+	"frame": {"x":216,"y":1,"w":82,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":55,"w":82,"h":217},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":582,"h":420},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ba9425b7a3afdb6d7e83db7a9e8c29ee:7cff730cce4a3b6cfd02b6fa02e6140d:e4aad290e8efb526823305df02ce7c89$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "BEAR_XKnee_00.png",
+	"frame": {"x":672,"y":1,"w":122,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":45,"w":122,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_02.png",
+	"frame": {"x":796,"y":1,"w":121,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":45,"w":121,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_04.png",
+	"frame": {"x":1,"y":1,"w":120,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":44,"w":120,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_06.png",
+	"frame": {"x":123,"y":1,"w":118,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":44,"w":118,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_08.png",
+	"frame": {"x":243,"y":1,"w":116,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":44,"w":116,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_10.png",
+	"frame": {"x":361,"y":1,"w":110,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":44,"w":110,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_12.png",
+	"frame": {"x":473,"y":1,"w":102,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":44,"w":102,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_14.png",
+	"frame": {"x":577,"y":1,"w":93,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":44,"w":93,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_16.png",
+	"frame": {"x":919,"y":1,"w":85,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":45,"w":85,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_18.png",
+	"frame": {"x":1006,"y":1,"w":80,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":45,"w":80,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_20.png",
+	"frame": {"x":1088,"y":1,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XKnee_22.png",
+	"frame": {"x":1168,"y":1,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_XKnee.png",
+	"format": "RGBA8888",
+	"size": {"w":1247,"h":231},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b8c02070a310038d2842a9b01e4df83d:c1970ea7e3e381d32da6db1a814362c8:723c214a52a6c5e4f493c907e704667a$"
+}
+}

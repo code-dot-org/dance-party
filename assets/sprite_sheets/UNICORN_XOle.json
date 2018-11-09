@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "UNICORN_XOle_00.png",
+	"frame": {"x":1131,"y":1,"w":108,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":77,"w":108,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_02.png",
+	"frame": {"x":1023,"y":1,"w":106,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":75,"w":106,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_04.png",
+	"frame": {"x":921,"y":1,"w":100,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":71,"w":100,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_06.png",
+	"frame": {"x":826,"y":1,"w":93,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":66,"w":93,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_08.png",
+	"frame": {"x":726,"y":1,"w":98,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":59,"w":98,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_10.png",
+	"frame": {"x":618,"y":1,"w":106,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":54,"w":106,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_12.png",
+	"frame": {"x":502,"y":1,"w":114,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":50,"w":114,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_14.png",
+	"frame": {"x":380,"y":1,"w":120,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":48,"w":120,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_16.png",
+	"frame": {"x":264,"y":1,"w":114,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":114,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_18.png",
+	"frame": {"x":167,"y":1,"w":95,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":95,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_20.png",
+	"frame": {"x":1,"y":1,"w":83,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":44,"w":83,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_XOle_22.png",
+	"frame": {"x":86,"y":1,"w":79,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":44,"w":79,"h":231},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "UNICORN_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1240,"h":233},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b970dfec45b7d47de3f362e920189f4e:f9e8f74dc6583e4488d267a5b943dff7:c6f4ca5219d7efac3e999ddd8c834de5$"
+}
+}

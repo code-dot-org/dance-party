@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XArmsUp_00.png",
+	"frame": {"x":1,"y":1,"w":130,"h":237},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":35,"w":130,"h":237},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_02.png",
+	"frame": {"x":133,"y":1,"w":130,"h":237},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":35,"w":130,"h":237},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_04.png",
+	"frame": {"x":265,"y":1,"w":130,"h":235},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":37,"w":130,"h":235},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_06.png",
+	"frame": {"x":397,"y":1,"w":131,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":40,"w":131,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_08.png",
+	"frame": {"x":667,"y":1,"w":133,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":41,"w":133,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_10.png",
+	"frame": {"x":530,"y":1,"w":135,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":41,"w":135,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_12.png",
+	"frame": {"x":802,"y":1,"w":136,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":42,"w":136,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_14.png",
+	"frame": {"x":940,"y":1,"w":124,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":42,"w":124,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_16.png",
+	"frame": {"x":1066,"y":1,"w":116,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":42,"w":116,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_18.png",
+	"frame": {"x":1184,"y":1,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_20.png",
+	"frame": {"x":1299,"y":1,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XArmsUp_22.png",
+	"frame": {"x":1414,"y":1,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XArmsUp.png",
+	"format": "RGBA8888",
+	"size": {"w":1528,"h":239},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5968b6951c6a6c12fd582d5f176f105f:a6016cdac097fee4424bae1916b65763:93234c1f2ef381d0354560cedbf11254$"
+}
+}

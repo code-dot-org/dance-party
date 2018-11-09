@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XJump_00.png",
+	"frame": {"x":1259,"y":1,"w":148,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":46,"w":148,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_02.png",
+	"frame": {"x":818,"y":1,"w":159,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":37,"w":159,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_04.png",
+	"frame": {"x":282,"y":1,"w":159,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":71,"y":19,"w":159,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_06.png",
+	"frame": {"x":443,"y":1,"w":159,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":71,"y":21,"w":159,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_08.png",
+	"frame": {"x":95,"y":1,"w":185,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":57,"y":28,"w":185,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_10.png",
+	"frame": {"x":604,"y":1,"w":212,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":48,"w":212,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_12.png",
+	"frame": {"x":1087,"y":1,"w":170,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":70,"w":170,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_14.png",
+	"frame": {"x":1409,"y":1,"w":137,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":80,"w":137,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_16.png",
+	"frame": {"x":1668,"y":1,"w":124,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":83,"w":124,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_18.png",
+	"frame": {"x":1548,"y":1,"w":118,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":81,"w":118,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_20.png",
+	"frame": {"x":979,"y":1,"w":106,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":70,"w":106,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XJump_22.png",
+	"frame": {"x":1,"y":1,"w":92,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":56,"w":92,"h":218},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XJump.png",
+	"format": "RGBA8888",
+	"size": {"w":1793,"h":220},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:077e154ac8bfe9d99dee1c6d839c4965:c9566c34c6f82a7528fb67c12df11368:8d3ad61fc7fa87fde7c3623550413085$"
+}
+}

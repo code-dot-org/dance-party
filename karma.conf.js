@@ -4,6 +4,7 @@ module.exports = config => {
     frameworks: ['tap'],
     files: [
       {pattern: 'test/integration/index.js'},
+      {pattern: 'assets/sprite_sheets/**/*.*', watched: false, included: false, served: true},
     ],
     preprocessors: {
       'test/integration/*.js': ['webpack', 'sourcemap'],

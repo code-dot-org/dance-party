@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "BEAR_XBend_00.png",
+	"frame": {"x":1046,"y":1,"w":117,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":67,"w":117,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_02.png",
+	"frame": {"x":1165,"y":1,"w":115,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":67,"w":115,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_04.png",
+	"frame": {"x":936,"y":1,"w":108,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":66,"w":108,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_06.png",
+	"frame": {"x":831,"y":1,"w":103,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":65,"w":103,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_08.png",
+	"frame": {"x":732,"y":1,"w":97,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":61,"w":97,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_10.png",
+	"frame": {"x":617,"y":1,"w":113,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":58,"w":113,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_12.png",
+	"frame": {"x":486,"y":1,"w":129,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":54,"w":129,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_14.png",
+	"frame": {"x":360,"y":1,"w":124,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":52,"w":124,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_16.png",
+	"frame": {"x":253,"y":1,"w":105,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":49,"w":105,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_18.png",
+	"frame": {"x":163,"y":1,"w":88,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":47,"w":88,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_20.png",
+	"frame": {"x":1,"y":1,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":46,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XBend_22.png",
+	"frame": {"x":82,"y":1,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":46,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1281,"h":229},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1c5f319b04cc150be7e90dbb17c5c448:0d1b82e962d9a7951ac9d76bb647bdf9:1714fb6f5bc99b75216a645451b2c9b7$"
+}
+}

@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_DoubleJam_00.png",
+	"frame": {"x":463,"y":207,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_02.png",
+	"frame": {"x":1213,"y":224,"w":118,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":40,"w":118,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_04.png",
+	"frame": {"x":836,"y":208,"w":119,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":38,"w":119,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_06.png",
+	"frame": {"x":1090,"y":221,"w":121,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":39,"w":121,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_08.png",
+	"frame": {"x":957,"y":217,"w":131,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":46,"w":131,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_10.png",
+	"frame": {"x":832,"y":1,"w":157,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":63,"w":157,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_12.png",
+	"frame": {"x":175,"y":1,"w":168,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":69,"w":168,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_14.png",
+	"frame": {"x":1,"y":1,"w":172,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":70,"w":172,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_16.png",
+	"frame": {"x":1,"y":205,"w":164,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":63,"w":164,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_18.png",
+	"frame": {"x":327,"y":207,"w":134,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":53,"w":134,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_20.png",
+	"frame": {"x":1569,"y":235,"w":112,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":46,"w":112,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_22.png",
+	"frame": {"x":1579,"y":1,"w":112,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":39,"w":112,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_24.png",
+	"frame": {"x":578,"y":209,"w":127,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":34,"w":127,"h":238},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_26.png",
+	"frame": {"x":707,"y":209,"w":127,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":34,"w":127,"h":238},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_28.png",
+	"frame": {"x":1444,"y":1,"w":133,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":37,"w":133,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_30.png",
+	"frame": {"x":1147,"y":1,"w":149,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":49,"w":149,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_32.png",
+	"frame": {"x":671,"y":1,"w":159,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":71,"y":63,"w":159,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_34.png",
+	"frame": {"x":345,"y":1,"w":161,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":67,"w":161,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_36.png",
+	"frame": {"x":508,"y":1,"w":161,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":69,"w":161,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_38.png",
+	"frame": {"x":167,"y":205,"w":158,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":64,"w":158,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_40.png",
+	"frame": {"x":991,"y":1,"w":154,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":58,"w":154,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_42.png",
+	"frame": {"x":1298,"y":1,"w":144,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":51,"w":144,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_44.png",
+	"frame": {"x":1333,"y":235,"w":119,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":46,"w":119,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_DoubleJam_46.png",
+	"frame": {"x":1454,"y":235,"w":113,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":43,"w":113,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_DoubleJam.png",
+	"format": "RGBA8888",
+	"size": {"w":1692,"h":465},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:38e85e329fa1301ea36ca77d920a986a:a559c87e1d17d3270bc65f08cf5639cb:7869e3f8a5db22008f6f8943d9f6209f$"
+}
+}

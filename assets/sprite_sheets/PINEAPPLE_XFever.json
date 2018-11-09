@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "PINEAPPLE_XFever_00.png",
+	"frame": {"x":627,"y":1,"w":141,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":41,"w":141,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_02.png",
+	"frame": {"x":770,"y":1,"w":141,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":41,"w":141,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_04.png",
+	"frame": {"x":913,"y":1,"w":139,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":42,"w":139,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_06.png",
+	"frame": {"x":1183,"y":1,"w":136,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":43,"w":136,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_08.png",
+	"frame": {"x":1321,"y":1,"w":132,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":43,"w":132,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_10.png",
+	"frame": {"x":1054,"y":1,"w":127,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":42,"w":127,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_12.png",
+	"frame": {"x":505,"y":1,"w":120,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":38,"w":120,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_14.png",
+	"frame": {"x":392,"y":1,"w":111,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":32,"w":111,"h":240},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_16.png",
+	"frame": {"x":285,"y":1,"w":105,"h":247},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":25,"w":105,"h":247},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_18.png",
+	"frame": {"x":179,"y":1,"w":104,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":20,"w":104,"h":252},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_20.png",
+	"frame": {"x":1,"y":1,"w":97,"h":254},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":18,"w":97,"h":254},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XFever_22.png",
+	"frame": {"x":100,"y":1,"w":77,"h":254},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":18,"w":77,"h":254},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "PINEAPPLE_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":1454,"h":256},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d78dae7588a4921cf6cb259bd63cd128:561c38fe251d8860a62eba8465a1f3d0:09ae79adf50ea95b9f18d0a760c81fa0$"
+}
+}

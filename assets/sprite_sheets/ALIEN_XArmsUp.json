@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XArmsUp_00.png",
+	"frame": {"x":1,"y":1,"w":110,"h":235},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":37,"w":110,"h":235},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_02.png",
+	"frame": {"x":113,"y":1,"w":110,"h":235},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":37,"w":110,"h":235},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_04.png",
+	"frame": {"x":225,"y":1,"w":111,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":40,"w":111,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_06.png",
+	"frame": {"x":338,"y":1,"w":112,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":43,"w":112,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_08.png",
+	"frame": {"x":569,"y":1,"w":113,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":48,"w":113,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_10.png",
+	"frame": {"x":452,"y":1,"w":115,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":48,"w":115,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_12.png",
+	"frame": {"x":684,"y":1,"w":116,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":49,"w":116,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_14.png",
+	"frame": {"x":802,"y":1,"w":105,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":49,"w":105,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_16.png",
+	"frame": {"x":909,"y":1,"w":95,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":49,"w":95,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_18.png",
+	"frame": {"x":1006,"y":1,"w":88,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":49,"w":88,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_20.png",
+	"frame": {"x":1096,"y":1,"w":82,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":49,"w":82,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XArmsUp_22.png",
+	"frame": {"x":1180,"y":1,"w":80,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":49,"w":80,"h":223},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XArmsUp.png",
+	"format": "RGBA8888",
+	"size": {"w":1261,"h":237},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8df303fd12ed59c3b75b4ab3884afbf7:bdae3dbb517be015ae6a1f2d679a3ec3:7bb6e822edc3b14db5ce061d7dfae41c$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XKneel_00.png",
+	"frame": {"x":1,"y":1,"w":184,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":82,"w":184,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_02.png",
+	"frame": {"x":1,"y":193,"w":183,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":82,"w":183,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_04.png",
+	"frame": {"x":187,"y":1,"w":182,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":81,"w":182,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_06.png",
+	"frame": {"x":371,"y":1,"w":178,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":79,"w":178,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_08.png",
+	"frame": {"x":551,"y":1,"w":173,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":89,"y":77,"w":173,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_10.png",
+	"frame": {"x":726,"y":1,"w":159,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":73,"w":159,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_12.png",
+	"frame": {"x":186,"y":194,"w":135,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":68,"w":135,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_14.png",
+	"frame": {"x":668,"y":202,"w":119,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":61,"w":119,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_16.png",
+	"frame": {"x":789,"y":202,"w":113,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":55,"w":113,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_18.png",
+	"frame": {"x":553,"y":198,"w":113,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":49,"w":113,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_20.png",
+	"frame": {"x":438,"y":198,"w":113,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":45,"w":113,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XKneel_22.png",
+	"frame": {"x":323,"y":198,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":903,"h":429},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:70204ba4e098dff49deae5d10150a472:aec890f213dec2b4821ed5da084cc94a:b935baa33f0720abdab1046a77dcb927$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "FROG_XFever_00.png",
+	"frame": {"x":1,"y":1,"w":140,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":140,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_02.png",
+	"frame": {"x":143,"y":1,"w":140,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":140,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_04.png",
+	"frame": {"x":285,"y":1,"w":138,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":138,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_06.png",
+	"frame": {"x":425,"y":1,"w":135,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":56,"w":135,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_08.png",
+	"frame": {"x":562,"y":1,"w":131,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":57,"w":131,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_10.png",
+	"frame": {"x":695,"y":1,"w":126,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":59,"w":126,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_12.png",
+	"frame": {"x":823,"y":1,"w":119,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":63,"w":119,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_14.png",
+	"frame": {"x":1228,"y":1,"w":110,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":70,"w":110,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_16.png",
+	"frame": {"x":1340,"y":1,"w":105,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":72,"w":105,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_18.png",
+	"frame": {"x":1122,"y":1,"w":104,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":67,"w":104,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_20.png",
+	"frame": {"x":944,"y":1,"w":97,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":65,"w":97,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XFever_22.png",
+	"frame": {"x":1043,"y":1,"w":77,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":65,"w":77,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":1446,"h":219},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a8d27c385d2f4692aa8edc6810706e44:0a3736745f43ac11d6c94a388cf5c1a5:a00a0e5a587029aba9d9d64243961ec1$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XArmsUp_00.png",
+	"frame": {"x":1,"y":1,"w":144,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":49,"w":144,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_02.png",
+	"frame": {"x":147,"y":1,"w":143,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":49,"w":143,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_04.png",
+	"frame": {"x":292,"y":224,"w":144,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":51,"w":144,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_06.png",
+	"frame": {"x":292,"y":1,"w":146,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":54,"w":146,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_08.png",
+	"frame": {"x":1,"y":229,"w":150,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":61,"w":150,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_10.png",
+	"frame": {"x":285,"y":450,"w":154,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":67,"w":154,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_12.png",
+	"frame": {"x":1,"y":445,"w":148,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":67,"w":148,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_14.png",
+	"frame": {"x":291,"y":660,"w":138,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":67,"w":138,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_16.png",
+	"frame": {"x":1,"y":655,"w":146,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":68,"w":146,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_18.png",
+	"frame": {"x":149,"y":660,"w":140,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":68,"w":140,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_20.png",
+	"frame": {"x":153,"y":229,"w":134,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":68,"w":134,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XArmsUp_22.png",
+	"frame": {"x":153,"y":438,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XArmsUp.png",
+	"format": "RGBA8888",
+	"size": {"w":440,"h":869},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b47e4a5da298c917f2bcac2161efc87c:1d32bd806caf8fc68b4498585fa26e22:d7342aa08aee285246d33c867ede23d5$"
+}
+}

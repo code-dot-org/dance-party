@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "CAT_DoubleJam_00.png",
+	"frame": {"x":1,"y":404,"w":80,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":80,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_02.png",
+	"frame": {"x":187,"y":413,"w":100,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":44,"w":100,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_04.png",
+	"frame": {"x":473,"y":422,"w":93,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":42,"w":93,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_06.png",
+	"frame": {"x":289,"y":415,"w":94,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":43,"w":94,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_08.png",
+	"frame": {"x":604,"y":204,"w":104,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":50,"w":104,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_10.png",
+	"frame": {"x":688,"y":1,"w":125,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":68,"w":125,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_12.png",
+	"frame": {"x":281,"y":1,"w":137,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":76,"w":137,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_14.png",
+	"frame": {"x":1,"y":1,"w":143,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":78,"w":143,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_16.png",
+	"frame": {"x":1,"y":199,"w":133,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":70,"w":133,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_18.png",
+	"frame": {"x":262,"y":200,"w":102,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":59,"w":102,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_20.png",
+	"frame": {"x":710,"y":204,"w":83,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":50,"w":83,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_22.png",
+	"frame": {"x":385,"y":415,"w":86,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":43,"w":86,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_24.png",
+	"frame": {"x":668,"y":427,"w":97,"h":235},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":39,"w":97,"h":235},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_26.png",
+	"frame": {"x":568,"y":426,"w":98,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":39,"w":98,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_28.png",
+	"frame": {"x":83,"y":411,"w":102,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":43,"w":102,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_30.png",
+	"frame": {"x":366,"y":200,"w":120,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":56,"w":120,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_32.png",
+	"frame": {"x":555,"y":1,"w":131,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":71,"w":131,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_34.png",
+	"frame": {"x":420,"y":1,"w":133,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":76,"w":133,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_36.png",
+	"frame": {"x":146,"y":1,"w":133,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":78,"w":133,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_38.png",
+	"frame": {"x":815,"y":1,"w":129,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":72,"w":129,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_40.png",
+	"frame": {"x":136,"y":199,"w":124,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":64,"w":124,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_42.png",
+	"frame": {"x":488,"y":203,"w":114,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":57,"w":114,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_44.png",
+	"frame": {"x":795,"y":205,"w":92,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":51,"w":92,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_DoubleJam_46.png",
+	"frame": {"x":889,"y":205,"w":80,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":47,"w":80,"h":227},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_DoubleJam.png",
+	"format": "RGBA8888",
+	"size": {"w":970,"h":663},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1813e9f9fa37f25063b9b75e5dc21da9:cb3090e9a338cb53216bbcdad892b050:3e42e83810c25c9a2685a102576b9860$"
+}
+}

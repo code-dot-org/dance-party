@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XArmsSide_00.png",
+	"frame": {"x":339,"y":1,"w":123,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":41,"w":123,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_02.png",
+	"frame": {"x":464,"y":1,"w":123,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":41,"w":123,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_04.png",
+	"frame": {"x":213,"y":1,"w":124,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":41,"w":124,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_06.png",
+	"frame": {"x":86,"y":1,"w":125,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":41,"w":125,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_08.png",
+	"frame": {"x":674,"y":1,"w":124,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":124,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_10.png",
+	"frame": {"x":800,"y":1,"w":120,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":120,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_12.png",
+	"frame": {"x":922,"y":1,"w":116,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":116,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_14.png",
+	"frame": {"x":1040,"y":1,"w":106,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":106,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_16.png",
+	"frame": {"x":1148,"y":1,"w":95,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":95,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_18.png",
+	"frame": {"x":1245,"y":1,"w":85,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":42,"w":85,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_20.png",
+	"frame": {"x":589,"y":1,"w":83,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":41,"w":83,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XArmsSide_22.png",
+	"frame": {"x":1,"y":1,"w":83,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":83,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XArmsSide.png",
+	"format": "RGBA8888",
+	"size": {"w":1331,"h":234},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:583fe792f03f71f0ff16af25a92ccb7a:5d30949d20938074c6056888926f6fde:32cf9f57b7f9a8cab9be1f2acb3e8f15$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XHop_00.png",
+	"frame": {"x":1,"y":558,"w":134,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":51,"y":37,"w":134,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_02.png",
+	"frame": {"x":144,"y":172,"w":104,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":43,"w":104,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_04.png",
+	"frame": {"x":141,"y":389,"w":112,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":79,"w":112,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_06.png",
+	"frame": {"x":132,"y":974,"w":121,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":105,"w":121,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_08.png",
+	"frame": {"x":137,"y":755,"w":118,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":106,"w":118,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_10.png",
+	"frame": {"x":144,"y":1,"w":111,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":106,"w":111,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_12.png",
+	"frame": {"x":137,"y":583,"w":118,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":105,"w":118,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_14.png",
+	"frame": {"x":1,"y":974,"w":129,"h":173},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":102,"w":129,"h":173},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_16.png",
+	"frame": {"x":1,"y":379,"w":138,"h":177},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":98,"w":138,"h":177},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_18.png",
+	"frame": {"x":1,"y":1,"w":141,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":92,"w":141,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_20.png",
+	"frame": {"x":1,"y":186,"w":140,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":84,"w":140,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XHop_22.png",
+	"frame": {"x":1,"y":770,"w":133,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":73,"w":133,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":1148},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1256ceb4e0bdc17f05b6d8a96b6fdb5d:c617a2a3fd3ae4becebf8c6025abd730:b7b7afd52ac8876edf9be5bd772540cd$"
+}
+}
