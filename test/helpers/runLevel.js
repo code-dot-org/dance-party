@@ -1,8 +1,6 @@
 const {createDanceAPI} = require('./createDanceAPI');
 
-const fs = require('fs');
-const path = require('path');
-const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
+const interpreted = require('raw-loader!../../src/p5.dance.interpreted.js');
 const injectInterpreted = require('./injectInterpreted');
 
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
@@ -11,6 +9,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
+      nativeAPI.teardown();
     },
     onInit: api => {
       nativeAPI = api;
