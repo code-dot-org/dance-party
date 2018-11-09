@@ -84,9 +84,9 @@ module.exports = class DanceParty {
     this.performanceData_ = {
       // Time from the start of document load to the init() callback
       initTime: null,
-      // Time the run button was last clicked
+      // Time play() was last called
       lastPlayCall: null,
-      // Time between last run click and last time the song actually started playing
+      // Time between last play() call and last time the song actually started playing
       lastPlayDelay: null,
       // Number of frame rate samples taken since last run
       frameRateSamples: 0,
@@ -147,7 +147,7 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
-      getPerformanceData: () => JSON.parse(JSON.stringify(this.performanceData_)),
+      getPerformanceData: () => Object.assign({}, this.performanceData_),
     };
   }
 
@@ -1063,5 +1063,5 @@ function timeSinceLoad() {
   } else if (typeof process !== 'undefined') {
     return process.hrtime();
   }
-  return Date.now();
+  return 0;
 }
