@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XBend_00.png",
+	"frame": {"x":1502,"y":1,"w":135,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":53,"w":135,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_02.png",
+	"frame": {"x":1365,"y":1,"w":135,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":52,"w":135,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_04.png",
+	"frame": {"x":1230,"y":1,"w":133,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":51,"w":133,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_06.png",
+	"frame": {"x":1099,"y":1,"w":129,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":49,"w":129,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_08.png",
+	"frame": {"x":964,"y":1,"w":133,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":48,"w":133,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_10.png",
+	"frame": {"x":814,"y":1,"w":148,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":47,"w":148,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_12.png",
+	"frame": {"x":649,"y":1,"w":163,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":47,"w":163,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_14.png",
+	"frame": {"x":490,"y":1,"w":157,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":46,"w":157,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_16.png",
+	"frame": {"x":351,"y":1,"w":137,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":44,"w":137,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_18.png",
+	"frame": {"x":230,"y":1,"w":119,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":43,"w":119,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_20.png",
+	"frame": {"x":116,"y":1,"w":112,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":42,"w":112,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XBend_22.png",
+	"frame": {"x":1,"y":1,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1638,"h":232},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5b405d6af622efdd41ef4e8a1671f0de:198dae166f924d13ab7cc656efb83741:b66bafb52210e37577b8514dc2a29439$"
+}
+}

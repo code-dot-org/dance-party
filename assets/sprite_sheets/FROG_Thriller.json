@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "FROG_Thriller_00000.png",
+	"frame": {"x":370,"y":725,"w":78,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":65,"w":78,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00002.png",
+	"frame": {"x":291,"y":724,"w":77,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":67,"w":77,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00004.png",
+	"frame": {"x":119,"y":717,"w":84,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":71,"w":84,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00006.png",
+	"frame": {"x":303,"y":533,"w":97,"h":189},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":79,"w":97,"h":189},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00008.png",
+	"frame": {"x":1,"y":339,"w":99,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":89,"w":99,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00010.png",
+	"frame": {"x":108,"y":169,"w":100,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":98,"w":100,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00012.png",
+	"frame": {"x":346,"y":1,"w":107,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":103,"w":107,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00014.png",
+	"frame": {"x":117,"y":1,"w":113,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":74,"y":106,"w":113,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00016.png",
+	"frame": {"x":1,"y":1,"w":114,"h":164},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":108,"w":114,"h":164},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00018.png",
+	"frame": {"x":232,"y":1,"w":112,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":106,"w":112,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00020.png",
+	"frame": {"x":1,"y":167,"w":105,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":102,"w":105,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00022.png",
+	"frame": {"x":210,"y":169,"w":97,"h":174},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":98,"w":97,"h":174},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00024.png",
+	"frame": {"x":309,"y":172,"w":90,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":94,"w":90,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00026.png",
+	"frame": {"x":406,"y":352,"w":102,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":91,"w":102,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00028.png",
+	"frame": {"x":91,"y":524,"w":104,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":90,"w":104,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00030.png",
+	"frame": {"x":1,"y":520,"w":88,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":90,"w":88,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00032.png",
+	"frame": {"x":204,"y":345,"w":94,"h":180},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":92,"w":94,"h":180},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00034.png",
+	"frame": {"x":102,"y":343,"w":100,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":93,"w":100,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00036.png",
+	"frame": {"x":401,"y":172,"w":103,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":94,"w":103,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00038.png",
+	"frame": {"x":300,"y":352,"w":104,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":93,"w":104,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00040.png",
+	"frame": {"x":197,"y":533,"w":104,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":90,"w":104,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00042.png",
+	"frame": {"x":402,"y":535,"w":107,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":84,"w":107,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00044.png",
+	"frame": {"x":1,"y":708,"w":116,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":78,"w":116,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_Thriller_00046.png",
+	"frame": {"x":205,"y":717,"w":84,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":70,"w":84,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_Thriller.png",
+	"format": "RGBA8888",
+	"size": {"w":510,"h":933},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0d73ada12b38ef6fe8ed56741990c51a:180e001d5a3b756a5ad0baca8e985237:76a63fa7b3af1408c7823427e31ba61d$"
+}
+}

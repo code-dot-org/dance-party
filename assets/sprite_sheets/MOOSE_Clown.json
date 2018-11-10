@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_Clown_00.png",
+	"frame": {"x":484,"y":233,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_02.png",
+	"frame": {"x":599,"y":233,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_04.png",
+	"frame": {"x":714,"y":231,"w":115,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":44,"w":115,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_06.png",
+	"frame": {"x":932,"y":1,"w":123,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":46,"w":123,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_08.png",
+	"frame": {"x":831,"y":230,"w":129,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":45,"w":129,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_10.png",
+	"frame": {"x":1,"y":246,"w":134,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":45,"w":134,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_12.png",
+	"frame": {"x":1057,"y":1,"w":146,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":47,"w":146,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_14.png",
+	"frame": {"x":1147,"y":228,"w":180,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":50,"w":180,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_16.png",
+	"frame": {"x":1329,"y":225,"w":194,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":51,"y":51,"w":194,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_18.png",
+	"frame": {"x":628,"y":1,"w":169,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":46,"y":44,"w":169,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_20.png",
+	"frame": {"x":231,"y":1,"w":132,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":55,"y":34,"w":132,"h":238},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_22.png",
+	"frame": {"x":115,"y":1,"w":114,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":28,"w":114,"h":239},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_24.png",
+	"frame": {"x":1,"y":1,"w":112,"h":243},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":29,"w":112,"h":243},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_26.png",
+	"frame": {"x":365,"y":1,"w":114,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":34,"w":114,"h":238},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_28.png",
+	"frame": {"x":137,"y":242,"w":118,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":41,"w":118,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_30.png",
+	"frame": {"x":799,"y":1,"w":131,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":45,"w":131,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_32.png",
+	"frame": {"x":1205,"y":1,"w":140,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":50,"w":140,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_34.png",
+	"frame": {"x":1547,"y":1,"w":166,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":53,"w":166,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_36.png",
+	"frame": {"x":1525,"y":222,"w":191,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":55,"w":191,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_38.png",
+	"frame": {"x":1347,"y":1,"w":198,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":61,"y":53,"w":198,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_40.png",
+	"frame": {"x":962,"y":229,"w":183,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":47,"w":183,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_42.png",
+	"frame": {"x":481,"y":1,"w":145,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":42,"w":145,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_44.png",
+	"frame": {"x":371,"y":241,"w":111,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":41,"w":111,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Clown_46.png",
+	"frame": {"x":257,"y":241,"w":112,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":41,"w":112,"h":231},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_Clown.png",
+	"format": "RGBA8888",
+	"size": {"w":1717,"h":474},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:737132dd5963b5b1a4e1b80fe2b78efa:452891f9c39a684788a8bd18a2e4db67:cb3b6493c74b21fea4f995de393a8d08$"
+}
+}

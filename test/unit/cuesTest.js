@@ -1,7 +1,7 @@
 const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
-test('getCues sorts measures and seconds cues', async t => {
+test('addCues sorts measures and seconds cues', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
@@ -32,4 +32,3 @@ test('getTime returns 0 for measures and seconds before song starts', async t =>
   t.end();
   nativeAPI.reset();
 });
-

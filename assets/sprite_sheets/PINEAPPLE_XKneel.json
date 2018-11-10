@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "PINEAPPLE_XKneel_00.png",
+	"frame": {"x":79,"y":973,"w":146,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":68,"w":146,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_02.png",
+	"frame": {"x":77,"y":1179,"w":145,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":67,"w":145,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_04.png",
+	"frame": {"x":1,"y":1,"w":144,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":65,"w":144,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_06.png",
+	"frame": {"x":1,"y":210,"w":141,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":62,"w":141,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_08.png",
+	"frame": {"x":1,"y":422,"w":135,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":58,"w":135,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_10.png",
+	"frame": {"x":1,"y":638,"w":123,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":52,"w":123,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_12.png",
+	"frame": {"x":126,"y":745,"w":99,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":46,"w":99,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_14.png",
+	"frame": {"x":138,"y":509,"w":84,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":38,"w":84,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_16.png",
+	"frame": {"x":1,"y":860,"w":76,"h":241},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":31,"w":76,"h":241},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_18.png",
+	"frame": {"x":1,"y":1103,"w":74,"h":247},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":25,"w":74,"h":247},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_20.png",
+	"frame": {"x":144,"y":256,"w":77,"h":251},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":21,"w":77,"h":251},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XKneel_22.png",
+	"frame": {"x":147,"y":1,"w":78,"h":253},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":19,"w":78,"h":253},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "PINEAPPLE_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":226,"h":1385},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:fbd44c4c21057b54bd9fd5e8664844db:d29485cd8b6ce5c4b2b5873dd453af93:8474a1561878debb859bc64f20a5d63b$"
+}
+}

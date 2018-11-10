@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_XHop_00.png",
+	"frame": {"x":1,"y":1,"w":131,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":47,"y":17,"w":131,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_02.png",
+	"frame": {"x":134,"y":1,"w":118,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":57,"y":30,"w":118,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_04.png",
+	"frame": {"x":1,"y":229,"w":139,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":64,"w":139,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_06.png",
+	"frame": {"x":1,"y":435,"w":137,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":89,"y":79,"w":137,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_08.png",
+	"frame": {"x":140,"y":435,"w":126,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":76,"w":126,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_10.png",
+	"frame": {"x":268,"y":430,"w":117,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":75,"w":117,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_12.png",
+	"frame": {"x":380,"y":204,"w":113,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":73,"w":113,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_14.png",
+	"frame": {"x":369,"y":1,"w":115,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":71,"w":115,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_16.png",
+	"frame": {"x":142,"y":227,"w":118,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":67,"w":118,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_18.png",
+	"frame": {"x":262,"y":219,"w":116,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":63,"w":116,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_20.png",
+	"frame": {"x":254,"y":1,"w":113,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":56,"w":113,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_XHop_22.png",
+	"frame": {"x":387,"y":405,"w":113,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":46,"w":113,"h":226},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":501,"h":632},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3c0e89be8c03f6fdabba4e58c307d687:06a11aa6e8946300250a39aa60f28d36:1312f74963e5f7c5a4f99ab3c34906c5$"
+}
+}

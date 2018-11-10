@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XJump_00.png",
+	"frame": {"x":1,"y":393,"w":168,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":41,"w":168,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_02.png",
+	"frame": {"x":187,"y":385,"w":172,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":42,"w":172,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_04.png",
+	"frame": {"x":1,"y":195,"w":184,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":46,"w":184,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_06.png",
+	"frame": {"x":228,"y":1,"w":211,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":44,"y":54,"w":211,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_08.png",
+	"frame": {"x":1,"y":1,"w":225,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":71,"w":225,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_10.png",
+	"frame": {"x":187,"y":199,"w":191,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":54,"y":89,"w":191,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_12.png",
+	"frame": {"x":171,"y":584,"w":168,"h":176},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":99,"w":168,"h":176},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_14.png",
+	"frame": {"x":341,"y":584,"w":162,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":103,"w":162,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_16.png",
+	"frame": {"x":341,"y":758,"w":162,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":105,"w":162,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_18.png",
+	"frame": {"x":157,"y":762,"w":160,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":103,"w":160,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_20.png",
+	"frame": {"x":1,"y":592,"w":154,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":92,"w":154,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XJump_22.png",
+	"frame": {"x":361,"y":385,"w":142,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":78,"w":142,"h":197},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XJump.png",
+	"format": "RGBA8888",
+	"size": {"w":504,"h":935},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:bdb503b0897902df6d2e0d9cf3e47ca4:2d23a36c20981d3e3c61c4a154a97cfb:0bfd701d9ae5564649fa83b72119d15b$"
+}
+}

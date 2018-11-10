@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DUCK_XHop_00.png",
+	"frame": {"x":1,"y":1,"w":121,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":25,"w":121,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_02.png",
+	"frame": {"x":93,"y":960,"w":89,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":31,"w":89,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_04.png",
+	"frame": {"x":1,"y":404,"w":104,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":68,"w":104,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_06.png",
+	"frame": {"x":1,"y":223,"w":105,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":94,"w":105,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_08.png",
+	"frame": {"x":108,"y":396,"w":97,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":94,"w":97,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_10.png",
+	"frame": {"x":1,"y":607,"w":91,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":94,"w":91,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_12.png",
+	"frame": {"x":124,"y":1,"w":87,"h":180},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":93,"w":87,"h":180},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_14.png",
+	"frame": {"x":1,"y":788,"w":90,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":90,"w":90,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_16.png",
+	"frame": {"x":94,"y":771,"w":90,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":86,"w":90,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_18.png",
+	"frame": {"x":107,"y":577,"w":91,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":81,"w":91,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_20.png",
+	"frame": {"x":1,"y":973,"w":89,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":73,"w":89,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XHop_22.png",
+	"frame": {"x":124,"y":183,"w":83,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":62,"w":83,"h":211},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DUCK_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":212,"h":1185},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:34950f52e6922d79117fcb4e17c42917:98dd2d3a819ecc39c8de9d077e7f905c:b36d0b12b1cdff5915d74417c864d310$"
+}
+}

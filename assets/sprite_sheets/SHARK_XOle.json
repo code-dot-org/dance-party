@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XOle_00.png",
+	"frame": {"x":1143,"y":1,"w":134,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":91,"w":134,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_02.png",
+	"frame": {"x":1279,"y":1,"w":133,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":91,"w":133,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_04.png",
+	"frame": {"x":1414,"y":1,"w":129,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":92,"w":129,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_06.png",
+	"frame": {"x":1022,"y":1,"w":119,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":87,"w":119,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_08.png",
+	"frame": {"x":901,"y":1,"w":119,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":82,"w":119,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_10.png",
+	"frame": {"x":781,"y":1,"w":118,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":77,"w":118,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_12.png",
+	"frame": {"x":657,"y":1,"w":122,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":74,"w":122,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_14.png",
+	"frame": {"x":527,"y":1,"w":128,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":71,"w":128,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_16.png",
+	"frame": {"x":398,"y":1,"w":127,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":70,"w":127,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_18.png",
+	"frame": {"x":267,"y":1,"w":129,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":69,"w":129,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_20.png",
+	"frame": {"x":1,"y":1,"w":131,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":68,"w":131,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XOle_22.png",
+	"frame": {"x":134,"y":1,"w":131,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":131,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1544,"h":209},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0f54d92b91665c8147692946af782c32:6188d3e902f0f6e933bdc951c4269687:79d5fc091b81140f69933379ea867cd7$"
+}
+}

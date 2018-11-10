@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "FROG_XKneel_00.png",
+	"frame": {"x":129,"y":174,"w":126,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":134,"y":106,"w":126,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_02.png",
+	"frame": {"x":1,"y":341,"w":126,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":134,"y":106,"w":126,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_04.png",
+	"frame": {"x":1,"y":172,"w":126,"h":167},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":105,"w":126,"h":167},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_06.png",
+	"frame": {"x":1,"y":1,"w":126,"h":169},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":103,"w":126,"h":169},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_08.png",
+	"frame": {"x":129,"y":1,"w":124,"h":171},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":101,"w":124,"h":171},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_10.png",
+	"frame": {"x":129,"y":342,"w":115,"h":175},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":125,"y":97,"w":115,"h":175},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_12.png",
+	"frame": {"x":1,"y":509,"w":94,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":91,"w":94,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_14.png",
+	"frame": {"x":79,"y":727,"w":82,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":84,"w":82,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_16.png",
+	"frame": {"x":176,"y":721,"w":76,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":78,"w":76,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_18.png",
+	"frame": {"x":176,"y":519,"w":74,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":72,"w":74,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_20.png",
+	"frame": {"x":1,"y":692,"w":76,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":68,"w":76,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XKneel_22.png",
+	"frame": {"x":97,"y":519,"w":77,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":66,"w":77,"h":206},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":916},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2edc51238d9dcd70db5110c7ae57d77d:dd1fd517238a20d3eae41264913f66c7:2227b5d3be663c643e029208e77e5f45$"
+}
+}

@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "UNICORN_ThisOrThat_00000.png",
+	"frame": {"x":1,"y":231,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":47,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00002.png",
+	"frame": {"x":82,"y":1,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":48,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00004.png",
+	"frame": {"x":325,"y":1,"w":82,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":51,"w":82,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00006.png",
+	"frame": {"x":504,"y":1,"w":85,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":57,"w":85,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00008.png",
+	"frame": {"x":702,"y":215,"w":89,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":63,"w":89,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00010.png",
+	"frame": {"x":909,"y":211,"w":101,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":67,"w":101,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00012.png",
+	"frame": {"x":1015,"y":1,"w":109,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":69,"w":109,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00014.png",
+	"frame": {"x":794,"y":1,"w":111,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":67,"w":111,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00016.png",
+	"frame": {"x":594,"y":219,"w":106,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":63,"w":106,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00018.png",
+	"frame": {"x":415,"y":224,"w":91,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":56,"w":91,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00020.png",
+	"frame": {"x":244,"y":228,"w":85,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":51,"w":85,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00022.png",
+	"frame": {"x":81,"y":231,"w":81,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":48,"w":81,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00024.png",
+	"frame": {"x":1,"y":1,"w":79,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":47,"w":79,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00026.png",
+	"frame": {"x":163,"y":1,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":48,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00028.png",
+	"frame": {"x":331,"y":227,"w":82,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":51,"w":82,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00030.png",
+	"frame": {"x":508,"y":221,"w":84,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":57,"w":84,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00032.png",
+	"frame": {"x":702,"y":1,"w":90,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":63,"w":90,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00034.png",
+	"frame": {"x":907,"y":1,"w":106,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":67,"w":106,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00036.png",
+	"frame": {"x":1012,"y":211,"w":113,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":69,"w":113,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00038.png",
+	"frame": {"x":793,"y":215,"w":114,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":65,"w":114,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00040.png",
+	"frame": {"x":591,"y":1,"w":109,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":74,"y":59,"w":109,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00042.png",
+	"frame": {"x":409,"y":1,"w":93,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":54,"w":93,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00044.png",
+	"frame": {"x":244,"y":1,"w":79,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":50,"w":79,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "UNICORN_ThisOrThat_00046.png",
+	"frame": {"x":164,"y":230,"w":78,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":48,"w":78,"h":227},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "UNICORN_ThisOrThat.png",
+	"format": "RGBA8888",
+	"size": {"w":1126,"h":460},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8d2b7db8da1067e2156e2116341085c6:f0415297f2b1e01e52e7ae4c735c7f08:5988a9bf10c3c4e6695214831807a224$"
+}
+}

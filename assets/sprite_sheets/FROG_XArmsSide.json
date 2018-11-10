@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "FROG_XArmsSide_00.png",
+	"frame": {"x":1,"y":1,"w":135,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":65,"w":135,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_02.png",
+	"frame": {"x":138,"y":1,"w":135,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":65,"w":135,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_04.png",
+	"frame": {"x":412,"y":1,"w":134,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":65,"w":134,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_06.png",
+	"frame": {"x":275,"y":1,"w":135,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":65,"w":135,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_08.png",
+	"frame": {"x":548,"y":1,"w":135,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":66,"w":135,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_10.png",
+	"frame": {"x":685,"y":1,"w":132,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":66,"w":132,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_12.png",
+	"frame": {"x":900,"y":1,"w":124,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":67,"w":124,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_14.png",
+	"frame": {"x":1026,"y":1,"w":110,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":67,"w":110,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_16.png",
+	"frame": {"x":1138,"y":1,"w":95,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":67,"w":95,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_18.png",
+	"frame": {"x":1235,"y":1,"w":84,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":67,"w":84,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_20.png",
+	"frame": {"x":1321,"y":1,"w":80,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":67,"w":80,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XArmsSide_22.png",
+	"frame": {"x":819,"y":1,"w":79,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":66,"w":79,"h":206},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_XArmsSide.png",
+	"format": "RGBA8888",
+	"size": {"w":1402,"h":209},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1056728c4b6283e8ef44149f72d2fcf4:06bcee1cc823a367a2d8153812de7829:d5b45f8b9c1beb4f27a1e0c551aa450f$"
+}
+}

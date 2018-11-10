@@ -1,16 +1,16 @@
-const {createDanceAPI} = require('./createDanceAPI');
+const {createDanceAPIWithDefaultMoves} = require('./createDanceAPI');
 
-const fs = require('fs');
-const path = require('path');
-const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
+const interpreted = require('raw-loader!../../src/p5.dance.interpreted.js');
 const injectInterpreted = require('./injectInterpreted');
 
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
   let nativeAPI;
-  createDanceAPI({
+  createDanceAPIWithDefaultMoves({
+    assetBase: '/base/assets/sprite_sheets/',
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
+      nativeAPI.teardown();
     },
     onInit: api => {
       nativeAPI = api;
@@ -23,20 +23,6 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
         runUserEvents,
         getCueList
       } = injectInterpreted(nativeAPI, interpreted, userCode);
-
-      // Mock 4 cat and moose animation poses.
-      const moveCount = 10;
-      for (let i = 0; i < moveCount; i++) {
-        api.setAnimationSpriteSheet("CAT", i, {}, () => {});
-        api.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
-        api.setAnimationSpriteSheet("ROBOT", i, {}, () => {});
-        api.world.MOVE_NAMES.push({
-          name: `move${i}`
-        });
-      }
-
-      api.world.fullLengthMoveCount = moveCount;
-      api.world.restMoveCount = 1;
 
       api.addCues(getCueList());
       api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);

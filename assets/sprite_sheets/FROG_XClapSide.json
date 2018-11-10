@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "FROG_XClapSide_00.png",
+	"frame": {"x":1,"y":1,"w":100,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":76,"w":100,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_02.png",
+	"frame": {"x":103,"y":1,"w":100,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":76,"w":100,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_04.png",
+	"frame": {"x":1,"y":199,"w":100,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":76,"w":100,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_06.png",
+	"frame": {"x":103,"y":199,"w":101,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":74,"w":101,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_08.png",
+	"frame": {"x":1,"y":399,"w":101,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":72,"w":101,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_10.png",
+	"frame": {"x":104,"y":399,"w":96,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":70,"w":96,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_12.png",
+	"frame": {"x":1,"y":601,"w":88,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":68,"w":88,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_14.png",
+	"frame": {"x":91,"y":603,"w":82,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":67,"w":82,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_16.png",
+	"frame": {"x":1,"y":807,"w":79,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":66,"w":79,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_18.png",
+	"frame": {"x":175,"y":603,"w":77,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":66,"w":77,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_20.png",
+	"frame": {"x":82,"y":810,"w":78,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":66,"w":78,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "FROG_XClapSide_22.png",
+	"frame": {"x":162,"y":811,"w":78,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":65,"w":78,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FROG_XClapSide.png",
+	"format": "RGBA8888",
+	"size": {"w":253,"h":1019},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3beaa2c33d4a8476ca33c3cbbd266734:78e372f3bfba5359854e3f8a86393074:84f4dbf0ee26ca5102711ce5153e1fdf$"
+}
+}

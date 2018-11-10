@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DOG_XKneel_00.png",
+	"frame": {"x":1,"y":209,"w":160,"h":159},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":114,"w":160,"h":159},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_02.png",
+	"frame": {"x":163,"y":207,"w":160,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":113,"w":160,"h":160},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_04.png",
+	"frame": {"x":621,"y":169,"w":159,"h":162},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":111,"w":159,"h":162},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_06.png",
+	"frame": {"x":607,"y":1,"w":157,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":107,"w":157,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_08.png",
+	"frame": {"x":325,"y":198,"w":152,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":103,"w":152,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_10.png",
+	"frame": {"x":479,"y":192,"w":140,"h":175},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":98,"w":140,"h":175},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_12.png",
+	"frame": {"x":490,"y":1,"w":115,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":91,"w":115,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_14.png",
+	"frame": {"x":389,"y":1,"w":99,"h":189},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":84,"w":99,"h":189},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_16.png",
+	"frame": {"x":294,"y":1,"w":93,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":78,"w":93,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_18.png",
+	"frame": {"x":199,"y":1,"w":93,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":72,"w":93,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_20.png",
+	"frame": {"x":101,"y":1,"w":96,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":69,"w":96,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XKneel_22.png",
+	"frame": {"x":1,"y":1,"w":98,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":67,"w":98,"h":206},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":781,"h":369},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d3d3708ced5ae28d17b7352ada27ccd7:9980accaa09a1de471b84d6794b44bfe:de4b390f5211e231806591dc9637c81f$"
+}
+}

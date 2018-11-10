@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_Floss_00000.png",
+	"frame": {"x":917,"y":224,"w":70,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":52,"w":70,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00002.png",
+	"frame": {"x":227,"y":224,"w":80,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":51,"w":80,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00004.png",
+	"frame": {"x":989,"y":223,"w":101,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":52,"w":101,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00006.png",
+	"frame": {"x":849,"y":1,"w":112,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":52,"w":112,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00008.png",
+	"frame": {"x":616,"y":1,"w":115,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":53,"w":115,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00010.png",
+	"frame": {"x":963,"y":1,"w":111,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":53,"w":111,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00012.png",
+	"frame": {"x":730,"y":226,"w":101,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":54,"w":101,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00014.png",
+	"frame": {"x":833,"y":226,"w":82,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":55,"w":82,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00016.png",
+	"frame": {"x":1194,"y":221,"w":70,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":57,"w":70,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00018.png",
+	"frame": {"x":641,"y":223,"w":87,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":55,"w":87,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00020.png",
+	"frame": {"x":534,"y":226,"w":105,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":53,"w":105,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00022.png",
+	"frame": {"x":309,"y":224,"w":115,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":52,"w":115,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00024.png",
+	"frame": {"x":378,"y":1,"w":118,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":52,"w":118,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00026.png",
+	"frame": {"x":257,"y":1,"w":119,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":52,"w":119,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00028.png",
+	"frame": {"x":498,"y":1,"w":116,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":67,"y":53,"w":116,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00030.png",
+	"frame": {"x":1076,"y":1,"w":108,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":55,"w":108,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00032.png",
+	"frame": {"x":1092,"y":221,"w":100,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":57,"w":100,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00034.png",
+	"frame": {"x":1186,"y":1,"w":80,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":55,"w":80,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00036.png",
+	"frame": {"x":426,"y":226,"w":106,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":53,"w":106,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00038.png",
+	"frame": {"x":132,"y":1,"w":123,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":52,"w":123,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00040.png",
+	"frame": {"x":1,"y":225,"w":129,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":52,"w":129,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00042.png",
+	"frame": {"x":1,"y":1,"w":129,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":51,"w":129,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00044.png",
+	"frame": {"x":733,"y":1,"w":114,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":50,"w":114,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Floss_00046.png",
+	"frame": {"x":132,"y":224,"w":93,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":51,"w":93,"h":222},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_Floss.png",
+	"format": "RGBA8888",
+	"size": {"w":1267,"h":447},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:14cbdaa383fd4b72cce54b9c78d884c7:f8fd79e277052c186e86149ac9f36c87:e8190e3419c5bd7f7d73d9f3a30c1acd$"
+}
+}

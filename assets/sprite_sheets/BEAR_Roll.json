@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_Roll_00000.png",
+	"frame": {"x":380,"y":437,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00002.png",
+	"frame": {"x":152,"y":661,"w":79,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":44,"w":79,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00004.png",
+	"frame": {"x":233,"y":666,"w":76,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":44,"w":76,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00006.png",
+	"frame": {"x":1,"y":651,"w":73,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":44,"w":73,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00008.png",
+	"frame": {"x":229,"y":432,"w":73,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":46,"w":73,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00010.png",
+	"frame": {"x":78,"y":428,"w":73,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":48,"w":73,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00012.png",
+	"frame": {"x":375,"y":214,"w":73,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":52,"w":73,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00014.png",
+	"frame": {"x":225,"y":213,"w":72,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":56,"w":72,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00016.png",
+	"frame": {"x":76,"y":213,"w":72,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":60,"w":72,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00018.png",
+	"frame": {"x":377,"y":1,"w":73,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":62,"w":73,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00020.png",
+	"frame": {"x":1,"y":1,"w":74,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":63,"w":74,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00022.png",
+	"frame": {"x":77,"y":1,"w":73,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":63,"w":73,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00024.png",
+	"frame": {"x":152,"y":1,"w":72,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":63,"w":72,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00026.png",
+	"frame": {"x":226,"y":1,"w":73,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":63,"w":73,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00028.png",
+	"frame": {"x":301,"y":1,"w":74,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":63,"w":74,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00030.png",
+	"frame": {"x":1,"y":213,"w":73,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":62,"w":73,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00032.png",
+	"frame": {"x":150,"y":213,"w":73,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":60,"w":73,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00034.png",
+	"frame": {"x":299,"y":213,"w":74,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":56,"w":74,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00036.png",
+	"frame": {"x":1,"y":428,"w":75,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":52,"w":75,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00038.png",
+	"frame": {"x":153,"y":432,"w":74,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":48,"w":74,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00040.png",
+	"frame": {"x":304,"y":437,"w":74,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":46,"w":74,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00042.png",
+	"frame": {"x":76,"y":655,"w":74,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":44,"w":74,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00044.png",
+	"frame": {"x":311,"y":667,"w":76,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":44,"w":76,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Roll_00046.png",
+	"frame": {"x":389,"y":667,"w":79,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":44,"w":79,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_Roll.png",
+	"format": "RGBA8888",
+	"size": {"w":469,"h":897},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9fb533e67f94322db19627d67f16b408:c708a312fd62ba10a2fd403ded3ddffd:ab83b3e0556de48eda89dbed585f5ef9$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DOG_XBend_00.png",
+	"frame": {"x":1257,"y":1,"w":127,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":87,"w":127,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_02.png",
+	"frame": {"x":1131,"y":1,"w":124,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":86,"w":124,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_04.png",
+	"frame": {"x":1011,"y":1,"w":118,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":85,"w":118,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_06.png",
+	"frame": {"x":901,"y":1,"w":108,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":83,"w":108,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_08.png",
+	"frame": {"x":802,"y":1,"w":97,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":125,"y":81,"w":97,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_10.png",
+	"frame": {"x":689,"y":1,"w":111,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":79,"w":111,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_12.png",
+	"frame": {"x":554,"y":1,"w":133,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":76,"w":133,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_14.png",
+	"frame": {"x":422,"y":1,"w":130,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":73,"w":130,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_16.png",
+	"frame": {"x":307,"y":1,"w":113,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":70,"w":113,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_18.png",
+	"frame": {"x":201,"y":1,"w":104,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":68,"w":104,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_20.png",
+	"frame": {"x":101,"y":1,"w":98,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":67,"w":98,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XBend_22.png",
+	"frame": {"x":1,"y":1,"w":98,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":66,"w":98,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1385,"h":209},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0810e6d3124f8c6abe698841cb22fa27:9d8e41b6828aad1231f0ee38b8d119fd:e1f8ce8154f7b289610c6c7c2cde71c7$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XKnee_00.png",
+	"frame": {"x":1,"y":1,"w":128,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":42,"w":128,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_02.png",
+	"frame": {"x":131,"y":1,"w":127,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":42,"w":127,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_04.png",
+	"frame": {"x":260,"y":1,"w":125,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":42,"w":125,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_06.png",
+	"frame": {"x":387,"y":1,"w":124,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":42,"w":124,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_08.png",
+	"frame": {"x":513,"y":1,"w":120,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":42,"w":120,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_10.png",
+	"frame": {"x":635,"y":1,"w":116,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":43,"w":116,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_12.png",
+	"frame": {"x":753,"y":1,"w":108,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":43,"w":108,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_14.png",
+	"frame": {"x":863,"y":1,"w":98,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":44,"w":98,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_16.png",
+	"frame": {"x":963,"y":1,"w":90,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":44,"w":90,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_18.png",
+	"frame": {"x":1055,"y":1,"w":84,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":45,"w":84,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_20.png",
+	"frame": {"x":1141,"y":1,"w":82,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":45,"w":82,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKnee_22.png",
+	"frame": {"x":1225,"y":1,"w":82,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":45,"w":82,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XKnee.png",
+	"format": "RGBA8888",
+	"size": {"w":1308,"h":234},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9817801ff74d9b0e2d164b35cdaddce1:31c3e0bbcbf8ff8471ad0d43038b4887:4d3ba289810e29d89e0038559493e6ed$"
+}
+}

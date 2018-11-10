@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_Clown_00000.png",
+	"frame": {"x":294,"y":429,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00002.png",
+	"frame": {"x":374,"y":434,"w":82,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":45,"w":82,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00004.png",
+	"frame": {"x":1,"y":422,"w":91,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":47,"w":91,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00006.png",
+	"frame": {"x":746,"y":216,"w":102,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":50,"w":102,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00008.png",
+	"frame": {"x":637,"y":214,"w":107,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":51,"w":107,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00010.png",
+	"frame": {"x":399,"y":211,"w":112,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":52,"w":112,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00012.png",
+	"frame": {"x":272,"y":211,"w":125,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":57,"w":125,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00014.png",
+	"frame": {"x":670,"y":1,"w":156,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":62,"w":156,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00016.png",
+	"frame": {"x":351,"y":1,"w":172,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":65,"w":172,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00018.png",
+	"frame": {"x":828,"y":1,"w":147,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":69,"y":60,"w":147,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00020.png",
+	"frame": {"x":94,"y":425,"w":110,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":47,"w":110,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00022.png",
+	"frame": {"x":537,"y":434,"w":77,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":37,"w":77,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00024.png",
+	"frame": {"x":804,"y":441,"w":77,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":35,"w":77,"h":238},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00026.png",
+	"frame": {"x":717,"y":441,"w":85,"h":236},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":37,"w":85,"h":236},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00028.png",
+	"frame": {"x":616,"y":438,"w":99,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":43,"w":99,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00030.png",
+	"frame": {"x":850,"y":216,"w":108,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":50,"w":108,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00032.png",
+	"frame": {"x":163,"y":208,"w":107,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":58,"w":107,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00034.png",
+	"frame": {"x":525,"y":1,"w":143,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":65,"w":143,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00036.png",
+	"frame": {"x":1,"y":1,"w":169,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":69,"w":169,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00038.png",
+	"frame": {"x":172,"y":1,"w":177,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":59,"y":68,"w":177,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00040.png",
+	"frame": {"x":1,"y":207,"w":160,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":60,"w":160,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00042.png",
+	"frame": {"x":513,"y":211,"w":122,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":89,"y":52,"w":122,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00044.png",
+	"frame": {"x":206,"y":429,"w":86,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":47,"w":86,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Clown_00046.png",
+	"frame": {"x":458,"y":434,"w":77,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":45,"w":77,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_Clown.png",
+	"format": "RGBA8888",
+	"size": {"w":976,"h":680},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e6fd49fe1f61d43c6cef19481a14cdaf:201bb9e265f6d2cc822247732ec41477:2c0f2e3430e267778bf3dbb3e883b067$"
+}
+}

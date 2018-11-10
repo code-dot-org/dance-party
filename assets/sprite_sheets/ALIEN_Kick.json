@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_Kick_00.png",
+	"frame": {"x":1589,"y":225,"w":86,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":49,"w":86,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_02.png",
+	"frame": {"x":1607,"y":1,"w":84,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":50,"w":84,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_04.png",
+	"frame": {"x":1521,"y":1,"w":84,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":55,"w":84,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_06.png",
+	"frame": {"x":693,"y":1,"w":90,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":64,"w":90,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_08.png",
+	"frame": {"x":445,"y":1,"w":97,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":73,"w":97,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_10.png",
+	"frame": {"x":111,"y":1,"w":104,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":82,"w":104,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_12.png",
+	"frame": {"x":1,"y":1,"w":108,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":85,"w":108,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_14.png",
+	"frame": {"x":217,"y":1,"w":109,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":82,"w":109,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_16.png",
+	"frame": {"x":328,"y":1,"w":115,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":76,"w":115,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_18.png",
+	"frame": {"x":544,"y":1,"w":147,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":68,"w":147,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_20.png",
+	"frame": {"x":1159,"y":1,"w":168,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":49,"y":61,"w":168,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_22.png",
+	"frame": {"x":733,"y":213,"w":178,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":34,"y":58,"w":178,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_24.png",
+	"frame": {"x":913,"y":213,"w":194,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":30,"y":58,"w":194,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_26.png",
+	"frame": {"x":537,"y":211,"w":194,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":30,"y":59,"w":194,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_28.png",
+	"frame": {"x":190,"y":199,"w":193,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":30,"y":60,"w":193,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_30.png",
+	"frame": {"x":1329,"y":1,"w":190,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":30,"y":61,"w":190,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_32.png",
+	"frame": {"x":785,"y":1,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":31,"y":62,"w":185,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_34.png",
+	"frame": {"x":972,"y":1,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":62,"w":185,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_36.png",
+	"frame": {"x":1,"y":193,"w":187,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":61,"w":187,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_38.png",
+	"frame": {"x":1109,"y":214,"w":178,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":49,"y":58,"w":178,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_40.png",
+	"frame": {"x":385,"y":202,"w":150,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":55,"w":150,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_42.png",
+	"frame": {"x":1289,"y":214,"w":115,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":52,"w":115,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_44.png",
+	"frame": {"x":1406,"y":214,"w":93,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":51,"w":93,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_Kick_46.png",
+	"frame": {"x":1501,"y":220,"w":86,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":50,"w":86,"h":222},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_Kick.png",
+	"format": "RGBA8888",
+	"size": {"w":1692,"h":449},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8b5e39647de0c92de3e597693cdedf7c:3b429815c30436e2780e0237fd83b360:9037ba7b5eadb3b5d7674812ec13ee85$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XFever_00.png",
+	"frame": {"x":1,"y":1,"w":154,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":127,"y":67,"w":154,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_02.png",
+	"frame": {"x":157,"y":1,"w":153,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":67,"w":153,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_04.png",
+	"frame": {"x":312,"y":1,"w":153,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":67,"w":153,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_06.png",
+	"frame": {"x":467,"y":1,"w":152,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":67,"w":152,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_08.png",
+	"frame": {"x":621,"y":1,"w":148,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":68,"w":148,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_10.png",
+	"frame": {"x":1041,"y":1,"w":144,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":126,"y":70,"w":144,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_12.png",
+	"frame": {"x":1326,"y":1,"w":143,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":74,"w":143,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_14.png",
+	"frame": {"x":1615,"y":1,"w":143,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":81,"w":143,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_16.png",
+	"frame": {"x":1471,"y":1,"w":142,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":75,"w":142,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_18.png",
+	"frame": {"x":1187,"y":1,"w":137,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":70,"w":137,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_20.png",
+	"frame": {"x":771,"y":1,"w":136,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":136,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XFever_22.png",
+	"frame": {"x":909,"y":1,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":1759,"h":210},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b8dc2e29f0e775a1176700abb0f2697e:f21a42aec7cf29790c8d1c457c5afdaf:756b9bf38d4f373222ab01b5bb79194c$"
+}
+}

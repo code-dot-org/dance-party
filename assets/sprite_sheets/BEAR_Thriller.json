@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_Thriller_00000.png",
+	"frame": {"x":542,"y":195,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00002.png",
+	"frame": {"x":796,"y":191,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00004.png",
+	"frame": {"x":709,"y":191,"w":85,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":50,"w":85,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00006.png",
+	"frame": {"x":335,"y":208,"w":100,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":58,"w":100,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00008.png",
+	"frame": {"x":119,"y":220,"w":106,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":68,"w":106,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00010.png",
+	"frame": {"x":877,"y":195,"w":110,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":77,"w":110,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00012.png",
+	"frame": {"x":1007,"y":1,"w":120,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":82,"w":120,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00014.png",
+	"frame": {"x":749,"y":1,"w":130,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":58,"y":86,"w":130,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00016.png",
+	"frame": {"x":480,"y":1,"w":134,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":54,"y":89,"w":134,"h":185},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00018.png",
+	"frame": {"x":616,"y":1,"w":131,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":57,"y":87,"w":131,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00020.png",
+	"frame": {"x":881,"y":1,"w":124,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":82,"w":124,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00022.png",
+	"frame": {"x":1129,"y":1,"w":114,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":77,"w":114,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00024.png",
+	"frame": {"x":989,"y":195,"w":104,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":73,"w":104,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00026.png",
+	"frame": {"x":437,"y":204,"w":103,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":69,"w":103,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00028.png",
+	"frame": {"x":227,"y":213,"w":106,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":68,"w":106,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00030.png",
+	"frame": {"x":1245,"y":1,"w":86,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":69,"w":86,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00032.png",
+	"frame": {"x":1200,"y":208,"w":92,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":71,"w":92,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00034.png",
+	"frame": {"x":1095,"y":200,"w":103,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":71,"w":103,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00036.png",
+	"frame": {"x":1,"y":220,"w":116,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":72,"w":116,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00038.png",
+	"frame": {"x":358,"y":1,"w":120,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":72,"w":120,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00040.png",
+	"frame": {"x":239,"y":1,"w":117,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":68,"w":117,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00042.png",
+	"frame": {"x":122,"y":1,"w":115,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":63,"w":115,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00044.png",
+	"frame": {"x":1,"y":1,"w":119,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":56,"w":119,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_Thriller_00046.png",
+	"frame": {"x":622,"y":190,"w":85,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":49,"w":85,"h":224},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_Thriller.png",
+	"format": "RGBA8888",
+	"size": {"w":1332,"h":424},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3f3196c9272697b3d21b642465c944ad:05f3e4999bd2963e9b602a5b2679baef:7c1773c2280ea2ca3d1dfcba53c47e4f$"
+}
+}

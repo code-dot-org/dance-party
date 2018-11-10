@@ -21,5 +21,12 @@ module.exports = {
     {name: "XClapSide", mirror: false, shortBurst: true},
     {name: "XHeadHips", mirror: false, shortBurst: true},
     {name: "XHighKick", mirror: false, shortBurst: true},
+    {name: "XBend", mirror: false, shortBurst: true},
+    {name: "XFever", mirror: false, shortBurst: true},
+    {name: "XHop", mirror: false, shortBurst: true},
+    {name: "XKnee", mirror: false, shortBurst: true},
+    {name: "XKneel", mirror: false, shortBurst: true},
+    {name: "XOle", mirror: false, shortBurst: true},
+    {name: "XSlide", mirror: false, shortBurst: true},
   ],
 };

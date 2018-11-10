@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XFever_00.png",
+	"frame": {"x":198,"y":233,"w":142,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":55,"w":142,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_02.png",
+	"frame": {"x":218,"y":1,"w":142,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":55,"w":142,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_04.png",
+	"frame": {"x":342,"y":222,"w":141,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":55,"w":141,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_06.png",
+	"frame": {"x":362,"y":1,"w":138,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":55,"w":138,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_08.png",
+	"frame": {"x":485,"y":222,"w":134,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":57,"w":134,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_10.png",
+	"frame": {"x":616,"y":1,"w":129,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":58,"w":129,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_12.png",
+	"frame": {"x":621,"y":219,"w":121,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":62,"w":121,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_14.png",
+	"frame": {"x":502,"y":1,"w":112,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":57,"w":112,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_16.png",
+	"frame": {"x":1,"y":234,"w":111,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":49,"w":111,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_18.png",
+	"frame": {"x":106,"y":1,"w":110,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":44,"w":110,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_20.png",
+	"frame": {"x":1,"y":1,"w":103,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":43,"w":103,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XFever_22.png",
+	"frame": {"x":114,"y":233,"w":82,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":45,"w":82,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":746,"h":463},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4323aa25c55951886a671f2e3c551128:23059e5917902f8e2d9b3eba64c15646:fb9d272b49643638456c86d1957b3178$"
+}
+}

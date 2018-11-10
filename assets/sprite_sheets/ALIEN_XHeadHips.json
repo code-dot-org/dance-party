@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XHeadHips_00.png",
+	"frame": {"x":732,"y":1,"w":99,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":59,"w":99,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_02.png",
+	"frame": {"x":833,"y":1,"w":99,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":59,"w":99,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_04.png",
+	"frame": {"x":934,"y":1,"w":99,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":59,"w":99,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_06.png",
+	"frame": {"x":1035,"y":1,"w":99,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":59,"w":99,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_08.png",
+	"frame": {"x":1136,"y":1,"w":99,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":59,"w":99,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_10.png",
+	"frame": {"x":624,"y":1,"w":106,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":59,"w":106,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_12.png",
+	"frame": {"x":393,"y":1,"w":118,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":58,"w":118,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_14.png",
+	"frame": {"x":272,"y":1,"w":119,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":58,"w":119,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_16.png",
+	"frame": {"x":513,"y":1,"w":109,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":58,"w":109,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_18.png",
+	"frame": {"x":171,"y":1,"w":99,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":57,"w":99,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_20.png",
+	"frame": {"x":82,"y":1,"w":87,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":52,"w":87,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XHeadHips_22.png",
+	"frame": {"x":1,"y":1,"w":79,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":50,"w":79,"h":222},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XHeadHips.png",
+	"format": "RGBA8888",
+	"size": {"w":1236,"h":224},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:99238ac3a97f6085fbc074b8a721d09c:dd8b7356fd2db0d519a89ce6311e5875:0e5a881a32dc93c4ac15ca9ec86ea014$"
+}
+}

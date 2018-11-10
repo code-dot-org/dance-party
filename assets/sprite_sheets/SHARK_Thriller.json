@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "SHARK - Thriller_00000.png",
+	"frame": {"x":1,"y":185,"w":130,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00002.png",
+	"frame": {"x":133,"y":185,"w":129,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":70,"w":129,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00004.png",
+	"frame": {"x":396,"y":181,"w":129,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":75,"w":129,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00006.png",
+	"frame": {"x":527,"y":181,"w":135,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":84,"w":135,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00008.png",
+	"frame": {"x":283,"y":1,"w":123,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":94,"w":123,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00010.png",
+	"frame": {"x":647,"y":1,"w":107,"h":170},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":104,"w":107,"h":170},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00012.png",
+	"frame": {"x":532,"y":1,"w":113,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":109,"w":113,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00014.png",
+	"frame": {"x":121,"y":395,"w":117,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":78,"y":110,"w":117,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00016.png",
+	"frame": {"x":1,"y":395,"w":118,"h":166},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":110,"w":118,"h":166},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00018.png",
+	"frame": {"x":240,"y":392,"w":117,"h":168},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":108,"w":117,"h":168},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00020.png",
+	"frame": {"x":359,"y":388,"w":113,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":104,"w":113,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00022.png",
+	"frame": {"x":912,"y":1,"w":103,"h":175},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":101,"w":103,"h":175},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00024.png",
+	"frame": {"x":909,"y":182,"w":101,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":97,"w":101,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00026.png",
+	"frame": {"x":154,"y":1,"w":127,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":95,"w":127,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00028.png",
+	"frame": {"x":1,"y":1,"w":151,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":94,"w":151,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00030.png",
+	"frame": {"x":836,"y":366,"w":106,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":95,"w":106,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00032.png",
+	"frame": {"x":791,"y":1,"w":119,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":96,"w":119,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00034.png",
+	"frame": {"x":474,"y":382,"w":122,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":98,"w":122,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00036.png",
+	"frame": {"x":408,"y":1,"w":122,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":98,"w":122,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00038.png",
+	"frame": {"x":598,"y":371,"w":120,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":97,"w":120,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00040.png",
+	"frame": {"x":791,"y":182,"w":116,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":94,"w":116,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00042.png",
+	"frame": {"x":720,"y":369,"w":114,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":89,"w":114,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00044.png",
+	"frame": {"x":664,"y":173,"w":125,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":82,"w":125,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK - Thriller_00046.png",
+	"frame": {"x":264,"y":184,"w":130,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":74,"w":130,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_Thriller.png",
+	"format": "RGBA8888",
+	"size": {"w":1016,"h":562},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:23a6a6da1ae091d76915059e1ce3daf8:b4da58a971d40970ddc59959789eea50:e8f626a710beb12066347c927440445e$"
+}
+}

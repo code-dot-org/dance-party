@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "BEAR_XOle_00.png",
+	"frame": {"x":1147,"y":1,"w":104,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":70,"w":104,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_02.png",
+	"frame": {"x":1041,"y":1,"w":104,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":69,"w":104,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_04.png",
+	"frame": {"x":939,"y":1,"w":100,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":66,"w":100,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_06.png",
+	"frame": {"x":839,"y":1,"w":98,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":62,"w":98,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_08.png",
+	"frame": {"x":735,"y":1,"w":102,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":56,"w":102,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_10.png",
+	"frame": {"x":624,"y":1,"w":109,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":52,"w":109,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_12.png",
+	"frame": {"x":506,"y":1,"w":116,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":49,"w":116,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_14.png",
+	"frame": {"x":383,"y":1,"w":121,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":47,"w":121,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_16.png",
+	"frame": {"x":267,"y":1,"w":114,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":114,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_18.png",
+	"frame": {"x":169,"y":1,"w":96,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":96,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_20.png",
+	"frame": {"x":1,"y":1,"w":83,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":45,"w":83,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_XOle_22.png",
+	"frame": {"x":86,"y":1,"w":81,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":45,"w":81,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1252,"h":230},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c1305b81af4f14007c190729aeba7bb9:44595c913116fec37e2f7c7b3cab5350:5c59c5b2e4a4b3aa2275ca3e3b193aa1$"
+}
+}

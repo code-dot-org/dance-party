@@ -22,7 +22,7 @@ const WATCHED_KEYS = [
 ];
 const WATCHED_RANGES = [0, 1, 2];
 
-const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
+const ASSET_BASE = "https://curriculum.code.org/images/sprites/spritesheet_tp2/";
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
@@ -43,6 +43,7 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    assetBase,
     i18n = {
       measure: () => "Measure:",
     },
@@ -51,13 +52,7 @@ module.exports = class DanceParty {
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
-
-    this.currentFrameEvents = {
-      'this.p5_.keyWentDown': {},
-      'Dance.fft.isPeak': {},
-      'cue-seconds': {},
-      'cue-measures': {},
-    };
+    this.assetBase = assetBase || ASSET_BASE;
 
     this.world = {
       height: 400,
@@ -81,6 +76,22 @@ module.exports = class DanceParty {
     this.centroid_ = 0;
 
     this.sprites_by_type_ = {};
+    this.performanceData_ = {
+      // Time from the start of document load to the init() callback
+      initTime: null,
+      // Time play() was last called
+      lastPlayCall: null,
+      // Time between last play() call and last time the song actually started playing
+      lastPlayDelay: null,
+      // Number of frame rate samples taken since last run
+      frameRateSamples: 0,
+      // Maximum frame rate recorded since last run
+      frameRateMax: -Infinity,
+      // Minimum frame rate recorded since last run
+      frameRateMin: Infinity,
+      // Average frame rate recorded since last run
+      frameRateMean: 0
+    };
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
@@ -91,11 +102,18 @@ module.exports = class DanceParty {
 
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
-    this.world.MOVE_NAMES = this.world.MOVE_NAMES.sort((move1, move2) => (
-      !!move1.rest * -2 + !!move2.rest * 2 + !!move2.shortBurst * -1 + !!move1.shortBurst * 1
-    ));
-    this.world.restMoveCount = this.world.MOVE_NAMES.filter(move => move.rest).length;
-    this.world.fullLengthMoveCount = this.world.MOVE_NAMES.filter(move => !move.shortBurst).length;
+
+    // We can't use Array.sort() : see https://stackoverflow.com/q/3026281
+    const restMoves = this.world.MOVE_NAMES.filter(move => move.rest);
+    const nonRestingFullLengthMoves = this.world.MOVE_NAMES.filter(move => !move.rest && !move.shortBurst);
+    const shortBurstMoves = this.world.MOVE_NAMES.filter(move => move.shortBurst);
+    this.world.MOVE_NAMES = [
+      ...restMoves,
+      ...nonRestingFullLengthMoves,
+      ...shortBurstMoves,
+    ];
+    this.world.restMoveCount = restMoves.length;
+    this.world.fullLengthMoveCount = restMoves.length + nonRestingFullLengthMoves.length;
 
     this.songStartTime_ = 0;
 
@@ -108,6 +126,10 @@ module.exports = class DanceParty {
       //Allows the sprite width and height to be set independently
       this.p5_._fixedSpriteAnimationFrameSizes = true;
     }, container);
+  }
+
+  teardown() {
+    this.p5_.remove();
   }
 
   onKeyDown(keyCode) {
@@ -131,6 +153,7 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      getPerformanceData: () => Object.assign({}, this.performanceData_),
     };
   }
 
@@ -142,6 +165,11 @@ module.exports = class DanceParty {
     this.onPuzzleComplete_(false, message);
   }
 
+  /**
+   * @param {Object} timestamps
+   * @param {number[]} timestamps.measures
+   * @param {number[]} timestamps.seconds
+   */
   addCues(timestamps) {
     // Sort cues
     const numSort = (a,b) => a - b;
@@ -157,7 +185,6 @@ module.exports = class DanceParty {
       this.p5_.allSprites[0].remove();
     }
     this.p5_.noLoop();
-    this.currentFrameEvents.any = false;
 
     this.world.fg_effect = null;
     this.world.bg_effect = null;
@@ -185,7 +212,7 @@ module.exports = class DanceParty {
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        const baseUrl = `${this.assetBase}${this_sprite}_${name}`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
           // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
           // it to load the image as a Image (instead of a p5.Image), which avoids
@@ -221,6 +248,7 @@ module.exports = class DanceParty {
       }
     }
 
+    this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
 
     if (this.showMeasureLabel) {
@@ -241,6 +269,7 @@ module.exports = class DanceParty {
   }
 
   play(songData, callback) {
+    this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
     }
@@ -248,6 +277,7 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.playSound_(this.songMetadata_.file, playSuccess => {
       this.songStartTime_ = new Date();
+      this.performanceData_.lastPlayDelay = timeSinceLoad() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
     }, () => {
       this.reset();
@@ -297,7 +327,7 @@ module.exports = class DanceParty {
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
-    sprite.previous_move = 0;
+    sprite.previous_move = 0; // I don't think this is used?
 
     for (var i = 0; i < ANIMATIONS[costume].length; i++) {
       sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
@@ -942,19 +972,23 @@ module.exports = class DanceParty {
     return this.p5_.allSprites.indexOf(sprite) > -1;
   }
 
+  /**
+   * @return {Object} TODO: describe
+   */
   updateEvents_() {
-    const events = this.currentFrameEvents;
     const { analysis } = this.songMetadata_ || {};
-    events.any = false;
-    events['this.p5_.keyWentDown'] = {};
-    events['Dance.fft.isPeak'] = {};
-    events['cue-seconds'] = {};
-    events['cue-measures'] = {};
+
+    // Will potentially set the following:
+    // this.p5_.keyWentDown
+    // Dance.fft.isPeak
+    // cue-seconds
+    // cue-measures
+    const events = {};
     this.peakThisFrame_ = false;
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events.any = true;
+        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {}
         events['this.p5_.keyWentDown'][key] = true;
       }
     }
@@ -966,7 +1000,7 @@ module.exports = class DanceParty {
       this.energy_ = energy;
       for (let range of WATCHED_RANGES) {
         if (beats[range]) {
-          events.any = true;
+          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {}
           events['Dance.fft.isPeak'][range] = true;
           this.peakThisFrame_ = true;
         }
@@ -975,14 +1009,40 @@ module.exports = class DanceParty {
     }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
-      events.any = true;
+      events['cue-seconds'] = events['cue-seconds'] || {}
       events['cue-seconds'][this.world.cues.seconds.splice(0, 1)] = true;
     }
 
     while (this.world.cues.measures.length > 0 && this.world.cues.measures[0] < this.getCurrentMeasure()) {
-      events.any = true;
+      events['cue-measures'] = events['cue-measures'] || {};
       events['cue-measures'][this.world.cues.measures.splice(0, 1)] = true;
     }
+
+    return events;
+  }
+
+  resetPerformanceDataForRun_() {
+    this.performanceData_.lastPlayCall = timeSinceLoad();
+    this.performanceData_.lastPlayDelay = null;
+    this.performanceData_.frameRateSamples = 0;
+    this.performanceData_.frameRateMax = -Infinity;
+    this.performanceData_.frameRateMin = Infinity;
+    this.performanceData_.frameRateMean = 0;
+  }
+
+  sampleFrameRate_() {
+    // Sampling rate: Every 15 frames, roughly twice per second.
+    if (this.p5_.frameCount % 15 !== 0) {
+      return;
+    }
+
+    const frameRate = this.p5_.frameRate();
+    this.performanceData_.frameRateMax = Math.max(this.performanceData_.frameRateMax, frameRate);
+    this.performanceData_.frameRateMin = Math.min(this.performanceData_.frameRateMin, frameRate);
+    this.performanceData_.frameRateMean =
+      (frameRate + this.performanceData_.frameRateSamples * this.performanceData_.frameRateMean) /
+      (this.performanceData_.frameRateSamples + 1);
+    this.performanceData_.frameRateSamples++;
   }
 
   registerValidation(callback) {
@@ -990,7 +1050,8 @@ module.exports = class DanceParty {
   }
 
   draw() {
-    this.updateEvents_();
+    const events = this.updateEvents_();
+    this.sampleFrameRate_();
 
     const { bpm, artist, title } = this.songMetadata_ || {};
 
@@ -1042,8 +1103,8 @@ module.exports = class DanceParty {
       this.drawMeasureMeter();
     }
 
-    if (this.currentFrameEvents.any && this.onHandleEvents) {
-      this.onHandleEvents(this.currentFrameEvents);
+    if (Object.keys(events).length && this.onHandleEvents) {
+      this.onHandleEvents(events);
     }
   }
 };
@@ -1058,4 +1119,13 @@ function queryParam(key) {
     return decodeURIComponent(pair[1]);
   }
   return undefined;
+}
+
+function timeSinceLoad() {
+  if (typeof performance !== 'undefined') {
+    return performance.now()
+  } else if (typeof process !== 'undefined') {
+    return process.hrtime();
+  }
+  return 0;
 }
