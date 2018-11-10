@@ -801,6 +801,9 @@ module.exports = class DanceParty {
   }
 
   drawMeasure(measure, offset, size) {
+    if (measure < 1 && offset === 0) {
+      return;
+    }
     let x = offset > 0 ?
       50 + ((offset - measure % 1) * 150) : 50;
     this.p5_.push();
