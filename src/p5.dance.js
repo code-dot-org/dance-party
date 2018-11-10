@@ -846,12 +846,13 @@ module.exports = class DanceParty {
     this.p5_.fill("white");
     this.p5_.stroke("#00adbc");
     this.p5_.strokeWeight(5);
-    this.p5_.ellipse(x, 450, size, size);
+    this.p5_.line(x, 430, x, 460);
+    this.p5_.ellipse(x, 430, size, size);
     this.p5_.noStroke();
     this.p5_.fill("black");
     this.p5_.textSize(size / 2);
     this.p5_.textAlign(this.p5_.CENTER, this.p5_.CENTER);
-    this.p5_.text(Math.floor(measure) + offset, x, 450);
+    this.p5_.text(Math.floor(measure) + offset, x, 430);
     this.p5_.pop();
   }
 
@@ -1098,7 +1099,7 @@ module.exports = class DanceParty {
     this.p5_.textSize(20);
 
     this.world.validationCallback(this.world, this, this.sprites_);
-    if (this.showMeasureLabel) {
+    if (this.showMeasureLabel && this.songStartTime_ > 0) {
       //this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
       this.drawMeasureMeter();
     }
