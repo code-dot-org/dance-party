@@ -222,6 +222,12 @@ module.exports = class DanceParty {
     }
 
     this.onInit && this.onInit(this);
+
+    if (this.showMeasureLabel) {
+      this.p5_.resizeCanvas(400, 500, false);
+      // Prevent effects that rely on canvas size from extending into the measure visualizer space
+      this.p5_.height = 400;
+    }
   }
 
   getBackgroundEffect() {
@@ -810,30 +816,35 @@ module.exports = class DanceParty {
     this.p5_.fill("white");
     this.p5_.stroke("#00adbc");
     this.p5_.strokeWeight(5);
-    this.p5_.ellipse(x, 50, size, size);
+    this.p5_.ellipse(x, 450, size, size);
     this.p5_.noStroke();
     this.p5_.fill("black");
     this.p5_.textSize(size / 2);
     this.p5_.textAlign(this.p5_.CENTER, this.p5_.CENTER);
-    this.p5_.text(Math.floor(measure) + offset, x, 50);
+    this.p5_.text(Math.floor(measure) + offset, x, 450);
     this.p5_.pop();
   }
 
   drawMeasureMeter() {
     let current = this.getCurrentMeasure();
+    this.p5_.push();
+    this.p5_.fill("white");
+    this.p5_.noStroke();
+    this.p5_.rect(0, 400, 400, 100);
     this.p5_.stroke("#00adbc");
     this.p5_.strokeWeight(5);
-    this.p5_.line(50, 50, 350, 50);
+    this.p5_.line(50, 450, 350, 450);
     let beatX = 50 + (0 - current % 1) * 150;
     while (beatX <= 350) {
       if (beatX > 50) {
-        this.p5_.line(beatX, 45, beatX, 55);
+        this.p5_.line(beatX, 445, beatX, 455);
       }
       beatX += 37.5;
     }
-    this.showMeasure(current, 2, 30);
-    this.showMeasure(current, 1, 30);
-    this.showMeasure(current, 0, 35);
+    this.drawMeasure(current, 2, 30);
+    this.drawMeasure(current, 1, 30);
+    this.drawMeasure(current, 0, 35);
+    this.p5_.pop();
   }
 
   // Behaviors
