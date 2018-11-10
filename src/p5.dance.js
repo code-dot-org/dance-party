@@ -197,6 +197,10 @@ module.exports = class DanceParty {
         ANIMATIONS[costume] = [];
         this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
           const animationData = jsonData[costume.toLowerCase()][moveName.toLowerCase()];
+          if (!animationData) {
+            console.warn(`No animation data for ${costume} ${moveName}`);
+            return;
+          }
           const spritesheetUrl = `${this.assetBase}${animationData.spritesheet}`;
           // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
           // it to load the image as a Image (instead of a p5.Image), which avoids
