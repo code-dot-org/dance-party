@@ -22,7 +22,7 @@ const WATCHED_KEYS = [
 ];
 const WATCHED_RANGES = [0, 1, 2];
 
-const ASSET_BASE = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
+const ASSET_BASE = "https://curriculum.code.org/images/sprites/spritesheet_tp2/";
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
