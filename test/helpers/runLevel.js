@@ -1,12 +1,12 @@
-const {createDanceAPIWithDefaultMoves} = require('./createDanceAPI');
-
+const {createDanceAPI} = require('./createDanceAPI');
+const ResourceLoader = require('../../src/ResourceLoader');
 const interpreted = require('raw-loader!../../src/p5.dance.interpreted.js');
 const injectInterpreted = require('./injectInterpreted');
 
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
   let nativeAPI;
-  createDanceAPIWithDefaultMoves({
-    assetBase: '/base/assets/sprite_sheets/',
+  createDanceAPI({
+    resourceLoader: new ResourceLoader('/base/assets/sprite_sheets/'),
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
