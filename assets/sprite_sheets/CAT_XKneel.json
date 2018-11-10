@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XKneel_00.png",
+	"frame": {"x":1,"y":189,"w":154,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":89,"w":154,"h":185},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_02.png",
+	"frame": {"x":1,"y":1,"w":154,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":88,"w":154,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_04.png",
+	"frame": {"x":1,"y":376,"w":152,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":87,"w":152,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_06.png",
+	"frame": {"x":1,"y":565,"w":147,"h":189},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":85,"w":147,"h":189},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_08.png",
+	"frame": {"x":1,"y":756,"w":144,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":82,"w":144,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_10.png",
+	"frame": {"x":112,"y":1110,"w":132,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":78,"w":132,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_12.png",
+	"frame": {"x":1,"y":1110,"w":109,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":72,"w":109,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_14.png",
+	"frame": {"x":150,"y":671,"w":94,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":65,"w":94,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_16.png",
+	"frame": {"x":157,"y":1,"w":87,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":59,"w":87,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_18.png",
+	"frame": {"x":155,"y":448,"w":82,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":53,"w":82,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_20.png",
+	"frame": {"x":147,"y":882,"w":81,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":48,"w":81,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XKneel_22.png",
+	"frame": {"x":157,"y":218,"w":82,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":46,"w":82,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":245,"h":1313},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0d78e8a679543a9ad2b8708a16bdaa6f:af98bf907d6999d860672d0bc8a67f0c:a0142299cdea0f0718d33604348b41f1$"
+}
+}

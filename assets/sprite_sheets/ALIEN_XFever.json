@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XFever_00.png",
+	"frame": {"x":290,"y":1,"w":140,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":140,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_02.png",
+	"frame": {"x":432,"y":1,"w":140,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":140,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_04.png",
+	"frame": {"x":574,"y":1,"w":138,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":55,"w":138,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_06.png",
+	"frame": {"x":714,"y":1,"w":135,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":56,"w":135,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_08.png",
+	"frame": {"x":851,"y":1,"w":131,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":57,"w":131,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_10.png",
+	"frame": {"x":1093,"y":1,"w":126,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":59,"w":126,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_12.png",
+	"frame": {"x":1221,"y":1,"w":119,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":63,"w":119,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_14.png",
+	"frame": {"x":1342,"y":1,"w":110,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":64,"w":110,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_16.png",
+	"frame": {"x":984,"y":1,"w":107,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":125,"y":57,"w":107,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_18.png",
+	"frame": {"x":181,"y":1,"w":107,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":52,"w":107,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_20.png",
+	"frame": {"x":80,"y":1,"w":99,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":50,"w":99,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XFever_22.png",
+	"frame": {"x":1,"y":1,"w":77,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":49,"w":77,"h":223},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XFever.png",
+	"format": "RGBA8888",
+	"size": {"w":1453,"h":225},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:375b2a1f8cc758b51938130169cf4578:0ae04148a7c68eb777f122e21f1512af:237896e34ac1f93d789ddc6216f2e40f$"
+}
+}

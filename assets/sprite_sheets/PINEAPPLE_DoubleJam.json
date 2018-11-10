@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "PINEAPPLE_DoubleJam_00.png",
+	"frame": {"x":649,"y":222,"w":78,"h":254},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":18,"w":78,"h":254},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_02.png",
+	"frame": {"x":729,"y":224,"w":99,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":16,"w":99,"h":256},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_04.png",
+	"frame": {"x":1088,"y":235,"w":85,"h":258},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":14,"w":85,"h":258},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_06.png",
+	"frame": {"x":908,"y":227,"w":86,"h":257},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":15,"w":86,"h":257},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_08.png",
+	"frame": {"x":208,"y":216,"w":95,"h":245},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":24,"w":95,"h":245},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_10.png",
+	"frame": {"x":904,"y":1,"w":119,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":44,"w":119,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_12.png",
+	"frame": {"x":396,"y":1,"w":130,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":56,"w":130,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_14.png",
+	"frame": {"x":130,"y":1,"w":137,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":60,"w":137,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_16.png",
+	"frame": {"x":776,"y":1,"w":126,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":50,"w":126,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_18.png",
+	"frame": {"x":1,"y":214,"w":97,"h":233},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":36,"w":97,"h":233},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_20.png",
+	"frame": {"x":305,"y":216,"w":77,"h":245},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":24,"w":77,"h":245},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_22.png",
+	"frame": {"x":830,"y":227,"w":76,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":16,"w":76,"h":256},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_24.png",
+	"frame": {"x":1175,"y":235,"w":89,"h":259},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":13,"w":89,"h":259},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_26.png",
+	"frame": {"x":996,"y":233,"w":90,"h":257},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":15,"w":90,"h":257},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_28.png",
+	"frame": {"x":472,"y":220,"w":95,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":20,"w":95,"h":250},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_30.png",
+	"frame": {"x":1142,"y":1,"w":111,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":35,"w":111,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_32.png",
+	"frame": {"x":528,"y":1,"w":123,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":52,"w":123,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_34.png",
+	"frame": {"x":269,"y":1,"w":125,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":59,"w":125,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_36.png",
+	"frame": {"x":1,"y":1,"w":127,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":61,"w":127,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_38.png",
+	"frame": {"x":653,"y":1,"w":121,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":53,"w":121,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_40.png",
+	"frame": {"x":1025,"y":1,"w":115,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":42,"w":115,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_42.png",
+	"frame": {"x":100,"y":215,"w":106,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":32,"w":106,"h":240},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_44.png",
+	"frame": {"x":384,"y":218,"w":86,"h":247},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":25,"w":86,"h":247},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_DoubleJam_46.png",
+	"frame": {"x":569,"y":220,"w":78,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":20,"w":78,"h":252},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "PINEAPPLE_DoubleJam.png",
+	"format": "RGBA8888",
+	"size": {"w":1265,"h":495},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:7f281d109dd8952fa733e77b61267c00:78e61511e60df06845bb7bc6bdda7950:d0cd5a0dafc5ae3aa1758d1b27ea3166$"
+}
+}

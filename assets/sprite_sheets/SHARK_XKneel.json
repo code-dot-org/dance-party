@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XKneel_00.png",
+	"frame": {"x":1,"y":209,"w":155,"h":154},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":121,"w":155,"h":154},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_02.png",
+	"frame": {"x":158,"y":207,"w":155,"h":154},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":121,"w":155,"h":154},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_04.png",
+	"frame": {"x":315,"y":202,"w":154,"h":157},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":118,"w":154,"h":157},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_06.png",
+	"frame": {"x":544,"y":1,"w":153,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":115,"w":153,"h":160},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_08.png",
+	"frame": {"x":392,"y":1,"w":150,"h":165},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":110,"w":150,"h":165},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_10.png",
+	"frame": {"x":699,"y":1,"w":138,"h":171},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":104,"w":138,"h":171},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_12.png",
+	"frame": {"x":703,"y":174,"w":115,"h":178},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":97,"w":115,"h":178},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_14.png",
+	"frame": {"x":593,"y":174,"w":108,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":89,"w":108,"h":186},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_16.png",
+	"frame": {"x":471,"y":168,"w":120,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":82,"w":120,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_18.png",
+	"frame": {"x":264,"y":1,"w":126,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":76,"w":126,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_20.png",
+	"frame": {"x":133,"y":1,"w":129,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":71,"w":129,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XKneel_22.png",
+	"frame": {"x":1,"y":1,"w":130,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":69,"w":130,"h":206},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":838,"h":364},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:311eb30a240f952727074bd8602e3a17:00b404591f797d369420f798da0a997e:b2c71f07c45e30c218678b08d06d8643$"
+}
+}

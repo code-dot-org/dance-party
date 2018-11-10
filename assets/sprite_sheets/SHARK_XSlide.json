@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XSlide_00.png",
+	"frame": {"x":278,"y":526,"w":142,"h":173},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":108,"w":142,"h":173},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_02.png",
+	"frame": {"x":1,"y":489,"w":142,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":108,"w":142,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_04.png",
+	"frame": {"x":141,"y":319,"w":140,"h":168},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":109,"w":140,"h":168},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_06.png",
+	"frame": {"x":1,"y":310,"w":138,"h":164},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":111,"w":138,"h":164},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_08.png",
+	"frame": {"x":155,"y":157,"w":140,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":115,"w":140,"h":160},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_10.png",
+	"frame": {"x":1,"y":153,"w":152,"h":155},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":120,"w":152,"h":155},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_12.png",
+	"frame": {"x":1,"y":1,"w":166,"h":150},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":125,"w":166,"h":150},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_14.png",
+	"frame": {"x":169,"y":1,"w":177,"h":154},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":80,"y":121,"w":177,"h":154},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_16.png",
+	"frame": {"x":297,"y":191,"w":177,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":77,"y":115,"w":177,"h":160},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_18.png",
+	"frame": {"x":283,"y":353,"w":151,"h":171},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":104,"w":151,"h":171},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_20.png",
+	"frame": {"x":348,"y":1,"w":136,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":87,"w":136,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XSlide_22.png",
+	"frame": {"x":145,"y":489,"w":131,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":73,"w":131,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XSlide.png",
+	"format": "RGBA8888",
+	"size": {"w":485,"h":700},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b419b8781dd5ff44f14227005655644f:917f047e9bd2c04ed77dd36b9ce943ba:290797a8f9e0fa0d895992302d3f921c$"
+}
+}

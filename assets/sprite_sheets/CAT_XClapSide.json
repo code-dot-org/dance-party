@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XClapSide_00.png",
+	"frame": {"x":749,"y":1,"w":105,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":55,"w":105,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_02.png",
+	"frame": {"x":960,"y":1,"w":103,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":57,"w":103,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_04.png",
+	"frame": {"x":1065,"y":1,"w":101,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":57,"w":101,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_06.png",
+	"frame": {"x":856,"y":1,"w":102,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":55,"w":102,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_08.png",
+	"frame": {"x":645,"y":1,"w":102,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":54,"w":102,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_10.png",
+	"frame": {"x":539,"y":1,"w":104,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":52,"w":104,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_12.png",
+	"frame": {"x":434,"y":1,"w":103,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":49,"w":103,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_14.png",
+	"frame": {"x":250,"y":1,"w":94,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":47,"w":94,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_16.png",
+	"frame": {"x":346,"y":1,"w":86,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":47,"w":86,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_18.png",
+	"frame": {"x":1,"y":1,"w":82,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":82,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_20.png",
+	"frame": {"x":85,"y":1,"w":81,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":81,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XClapSide_22.png",
+	"frame": {"x":168,"y":1,"w":80,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":46,"w":80,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XClapSide.png",
+	"format": "RGBA8888",
+	"size": {"w":1167,"h":230},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d574e0d38f0744abfad6308857f8aa67:74a4f8b40902a482e6cd2d4d0b7950f4:86c502668d321df58247c3ba5e081fb6$"
+}
+}

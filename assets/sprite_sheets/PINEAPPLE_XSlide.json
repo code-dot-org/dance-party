@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "PINEAPPLE_XSlide_00.png",
+	"frame": {"x":163,"y":210,"w":139,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":130,"y":94,"w":139,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_02.png",
+	"frame": {"x":274,"y":489,"w":137,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":93,"w":137,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_04.png",
+	"frame": {"x":274,"y":674,"w":134,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":91,"w":134,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_06.png",
+	"frame": {"x":141,"y":602,"w":131,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":133,"y":88,"w":131,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_08.png",
+	"frame": {"x":139,"y":412,"w":128,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":84,"w":128,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_10.png",
+	"frame": {"x":1,"y":632,"w":138,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":80,"w":138,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_12.png",
+	"frame": {"x":165,"y":1,"w":149,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":76,"w":149,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_14.png",
+	"frame": {"x":1,"y":210,"w":160,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":72,"w":160,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_16.png",
+	"frame": {"x":1,"y":1,"w":162,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":65,"w":162,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_18.png",
+	"frame": {"x":1,"y":412,"w":136,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":54,"w":136,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_20.png",
+	"frame": {"x":316,"y":1,"w":97,"h":235},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":37,"w":97,"h":235},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "PINEAPPLE_XSlide_22.png",
+	"frame": {"x":304,"y":238,"w":81,"h":249},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":23,"w":81,"h":249},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "PINEAPPLE_XSlide.png",
+	"format": "RGBA8888",
+	"size": {"w":414,"h":857},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0a7c8af3a5d1d535f383b275efc0935c:08f4d7fb699ab762c3ce831ecbff2664:cde84fd24bc8bdc85685f912cb70bb5f$"
+}
+}

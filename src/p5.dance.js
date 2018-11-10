@@ -22,7 +22,7 @@ const WATCHED_KEYS = [
 ];
 const WATCHED_RANGES = [0, 1, 2];
 
-const img_base = "https://curriculum.code.org/images/sprites/spritesheet_tp/";
+const ASSET_BASE = "https://curriculum.code.org/images/sprites/spritesheet_tp2/";
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
@@ -43,6 +43,7 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    assetBase,
     i18n = {
       measure: () => "Measure:",
     },
@@ -51,6 +52,7 @@ module.exports = class DanceParty {
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
+    this.assetBase = assetBase || ASSET_BASE;
 
     this.world = {
       height: 400,
@@ -210,7 +212,7 @@ module.exports = class DanceParty {
     this.world.SPRITE_NAMES.forEach(this_sprite => {
       ANIMATIONS[this_sprite] = [];
       this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        const baseUrl = `${this.assetBase}${this_sprite}_${name}`;
         this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
           // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
           // it to load the image as a Image (instead of a p5.Image), which avoids

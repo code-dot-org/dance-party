@@ -10,5 +10,14 @@ module.exports = {
         ...props
       });
     });
-  }
+  },
+  createDanceAPIWithDefaultMoves: (props) => {
+    return new Promise(resolve => {
+      new DanceParty({
+        playSound: (url, callback) => callback(),
+        onInit: nativeAPI => resolve(nativeAPI),
+        ...props
+      });
+    });
+  },
 };

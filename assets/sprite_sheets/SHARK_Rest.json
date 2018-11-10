@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "SHARK_Rest_00000.png",
+	"frame": {"x":1,"y":1427,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00002.png",
+	"frame": {"x":133,"y":1429,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00004.png",
+	"frame": {"x":270,"y":1015,"w":131,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":69,"w":131,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00006.png",
+	"frame": {"x":134,"y":1221,"w":132,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":69,"w":132,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00008.png",
+	"frame": {"x":134,"y":1014,"w":134,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":70,"w":134,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00010.png",
+	"frame": {"x":136,"y":808,"w":136,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":71,"w":136,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00012.png",
+	"frame": {"x":277,"y":604,"w":137,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":72,"w":137,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00014.png",
+	"frame": {"x":136,"y":604,"w":139,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":73,"w":139,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00016.png",
+	"frame": {"x":139,"y":402,"w":139,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":75,"w":139,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00018.png",
+	"frame": {"x":1,"y":201,"w":139,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":76,"w":139,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00020.png",
+	"frame": {"x":142,"y":201,"w":139,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":76,"w":139,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00022.png",
+	"frame": {"x":1,"y":1,"w":138,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":81,"y":77,"w":138,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00024.png",
+	"frame": {"x":141,"y":1,"w":137,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":77,"w":137,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00026.png",
+	"frame": {"x":280,"y":1,"w":137,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":77,"w":137,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00028.png",
+	"frame": {"x":1,"y":402,"w":136,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":76,"w":136,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00030.png",
+	"frame": {"x":283,"y":201,"w":135,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":76,"w":135,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00032.png",
+	"frame": {"x":280,"y":402,"w":134,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":82,"y":75,"w":134,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00034.png",
+	"frame": {"x":1,"y":603,"w":133,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":73,"w":133,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00036.png",
+	"frame": {"x":1,"y":807,"w":133,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":72,"w":133,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00038.png",
+	"frame": {"x":274,"y":809,"w":131,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":71,"w":131,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00040.png",
+	"frame": {"x":1,"y":1012,"w":131,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":70,"w":131,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00042.png",
+	"frame": {"x":1,"y":1219,"w":131,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":69,"w":131,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00044.png",
+	"frame": {"x":268,"y":1223,"w":130,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":69,"w":130,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Rest_00046.png",
+	"frame": {"x":265,"y":1431,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_Rest.png",
+	"format": "RGBA8888",
+	"size": {"w":419,"h":1639},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:deb5bca0e3f3a11943e7eda7db921f0d:b2f00c678324cfaa7043d8438a0d58d5:b8f9dc01bbaaf16602ae7bccf3dfe091$"
+}
+}

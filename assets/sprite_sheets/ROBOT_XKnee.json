@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XKnee_00.png",
+	"frame": {"x":1008,"y":1,"w":118,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":43,"w":118,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_02.png",
+	"frame": {"x":1128,"y":1,"w":117,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":43,"w":117,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_04.png",
+	"frame": {"x":774,"y":1,"w":115,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":42,"w":115,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_06.png",
+	"frame": {"x":891,"y":1,"w":115,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":42,"w":115,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_08.png",
+	"frame": {"x":545,"y":1,"w":114,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":41,"w":114,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_10.png",
+	"frame": {"x":661,"y":1,"w":111,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":41,"w":111,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_12.png",
+	"frame": {"x":1,"y":1,"w":104,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":40,"w":104,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_14.png",
+	"frame": {"x":107,"y":1,"w":96,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":40,"w":96,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_16.png",
+	"frame": {"x":205,"y":1,"w":88,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":40,"w":88,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_18.png",
+	"frame": {"x":295,"y":1,"w":82,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":82,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_20.png",
+	"frame": {"x":379,"y":1,"w":81,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":81,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKnee_22.png",
+	"frame": {"x":462,"y":1,"w":81,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":81,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XKnee.png",
+	"format": "RGBA8888",
+	"size": {"w":1246,"h":234},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:46f758c1e8dc7f26f3a1dd1a04e3dffd:663ed7faf6a7bebd26197ac389029ee1:3ee828330bf61a26f24442687cba06c9$"
+}
+}

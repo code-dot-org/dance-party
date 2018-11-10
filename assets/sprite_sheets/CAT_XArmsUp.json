@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XArmsUp_00.png",
+	"frame": {"x":1186,"y":1,"w":112,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":54,"w":112,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_02.png",
+	"frame": {"x":1072,"y":1,"w":112,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":47,"w":112,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_04.png",
+	"frame": {"x":1,"y":1,"w":112,"h":237},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":37,"w":112,"h":237},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_06.png",
+	"frame": {"x":115,"y":1,"w":112,"h":237},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":37,"w":112,"h":237},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_08.png",
+	"frame": {"x":229,"y":1,"w":113,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":40,"w":113,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_10.png",
+	"frame": {"x":583,"y":1,"w":115,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":45,"w":115,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_12.png",
+	"frame": {"x":464,"y":1,"w":117,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":45,"w":117,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_14.png",
+	"frame": {"x":344,"y":1,"w":118,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":45,"w":118,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_16.png",
+	"frame": {"x":700,"y":1,"w":102,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":46,"w":102,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_18.png",
+	"frame": {"x":804,"y":1,"w":94,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":46,"w":94,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_20.png",
+	"frame": {"x":900,"y":1,"w":86,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":46,"w":86,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XArmsUp_22.png",
+	"frame": {"x":988,"y":1,"w":82,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":46,"w":82,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XArmsUp.png",
+	"format": "RGBA8888",
+	"size": {"w":1299,"h":239},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:45427d3e53d5c540b6eb547d0c18b7f1:1a23aabd3627a35adc525ed96131e026:31d41235ce0552512b54680444df68e4$"
+}
+}

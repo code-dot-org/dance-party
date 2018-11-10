@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "BEAR_ClapHigh_00000.png",
+	"frame": {"x":1121,"y":1,"w":78,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":78,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00002.png",
+	"frame": {"x":1110,"y":231,"w":79,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":46,"w":79,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00004.png",
+	"frame": {"x":129,"y":233,"w":75,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":48,"w":75,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00006.png",
+	"frame": {"x":606,"y":232,"w":77,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":52,"w":77,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00008.png",
+	"frame": {"x":813,"y":232,"w":80,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":55,"w":80,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00010.png",
+	"frame": {"x":1201,"y":1,"w":83,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":56,"w":83,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00012.png",
+	"frame": {"x":1191,"y":231,"w":95,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":56,"w":95,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00014.png",
+	"frame": {"x":895,"y":232,"w":110,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":56,"w":110,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00016.png",
+	"frame": {"x":685,"y":232,"w":126,"h":218},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":86,"y":55,"w":126,"h":218},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00018.png",
+	"frame": {"x":450,"y":232,"w":154,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":52,"w":154,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00020.png",
+	"frame": {"x":206,"y":233,"w":142,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":50,"w":142,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00022.png",
+	"frame": {"x":1,"y":233,"w":126,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":48,"w":126,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00024.png",
+	"frame": {"x":350,"y":232,"w":98,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":47,"w":98,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00026.png",
+	"frame": {"x":1007,"y":231,"w":101,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":46,"w":101,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00028.png",
+	"frame": {"x":927,"y":1,"w":111,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":45,"w":111,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00030.png",
+	"frame": {"x":408,"y":1,"w":125,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":44,"w":125,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00032.png",
+	"frame": {"x":269,"y":1,"w":137,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":44,"w":137,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00034.png",
+	"frame": {"x":1,"y":1,"w":137,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":43,"w":137,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00036.png",
+	"frame": {"x":140,"y":1,"w":127,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":43,"w":127,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00038.png",
+	"frame": {"x":535,"y":1,"w":114,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":44,"w":114,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00040.png",
+	"frame": {"x":651,"y":1,"w":101,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":44,"w":101,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00042.png",
+	"frame": {"x":754,"y":1,"w":89,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":44,"w":89,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00044.png",
+	"frame": {"x":845,"y":1,"w":80,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":44,"w":80,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "BEAR_ClapHigh_00046.png",
+	"frame": {"x":1040,"y":1,"w":79,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":45,"w":79,"h":228},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BEAR_ClapHigh.png",
+	"format": "RGBA8888",
+	"size": {"w":1287,"h":459},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:348edbce1297c538008152a0e5795f3b:6dbc74e4495ddb82a470289e59f76177:b7be21f39de2167db136abadf49d3f50$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XBend_00.png",
+	"frame": {"x":837,"y":1,"w":114,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":68,"w":114,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_02.png",
+	"frame": {"x":953,"y":1,"w":112,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":68,"w":112,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_04.png",
+	"frame": {"x":1067,"y":1,"w":105,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":68,"w":105,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_06.png",
+	"frame": {"x":1174,"y":1,"w":97,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":68,"w":97,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_08.png",
+	"frame": {"x":739,"y":1,"w":96,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":63,"w":96,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_10.png",
+	"frame": {"x":625,"y":1,"w":112,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":57,"w":112,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_12.png",
+	"frame": {"x":495,"y":1,"w":128,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":120,"y":52,"w":128,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_14.png",
+	"frame": {"x":372,"y":1,"w":121,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":48,"w":121,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_16.png",
+	"frame": {"x":263,"y":1,"w":107,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":45,"w":107,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_18.png",
+	"frame": {"x":169,"y":1,"w":92,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":114,"y":42,"w":92,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_20.png",
+	"frame": {"x":1,"y":1,"w":82,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":40,"w":82,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XBend_22.png",
+	"frame": {"x":85,"y":1,"w":82,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":82,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1272,"h":234},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:fec836efa8cc645b13ff71eb5c951cb4:42bfa70a458734f6dd0f02234ceb8afa:ce117cc638c74c9f346283d653f67644$"
+}
+}

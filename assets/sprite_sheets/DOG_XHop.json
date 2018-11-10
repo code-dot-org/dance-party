@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DOG_XHop_00.png",
+	"frame": {"x":110,"y":358,"w":130,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":49,"y":46,"w":130,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_02.png",
+	"frame": {"x":242,"y":358,"w":92,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":52,"w":92,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_04.png",
+	"frame": {"x":222,"y":175,"w":112,"h":181},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":88,"w":112,"h":181},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_06.png",
+	"frame": {"x":1,"y":1,"w":120,"h":171},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":102,"w":120,"h":171},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_08.png",
+	"frame": {"x":123,"y":1,"w":116,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":101,"w":116,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_10.png",
+	"frame": {"x":241,"y":1,"w":108,"h":172},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":101,"w":108,"h":172},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_12.png",
+	"frame": {"x":351,"y":1,"w":106,"h":173},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":100,"w":106,"h":173},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_14.png",
+	"frame": {"x":1,"y":174,"w":108,"h":176},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":97,"w":108,"h":176},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_16.png",
+	"frame": {"x":111,"y":175,"w":109,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":94,"w":109,"h":179},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_18.png",
+	"frame": {"x":336,"y":176,"w":109,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":89,"w":109,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_20.png",
+	"frame": {"x":1,"y":352,"w":107,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":81,"w":107,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_XHop_22.png",
+	"frame": {"x":336,"y":362,"w":101,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":71,"w":101,"h":202},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_XHop.png",
+	"format": "RGBA8888",
+	"size": {"w":458,"h":565},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:47de78eddc7b42a38ff3ca5a5e96bd36:94ad11e3f921dcac8d95ebac3bb55ba6:a08fa04ea2512c99e9380c4a8e6408e2$"
+}
+}

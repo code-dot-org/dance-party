@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "MOOSE_Dab_00.png",
+	"frame": {"x":921,"y":235,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_02.png",
+	"frame": {"x":679,"y":235,"w":113,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":41,"w":113,"h":231},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_04.png",
+	"frame": {"x":927,"y":1,"w":122,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":40,"w":122,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_06.png",
+	"frame": {"x":314,"y":1,"w":132,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":38,"w":132,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_08.png",
+	"frame": {"x":176,"y":1,"w":136,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":38,"w":136,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_10.png",
+	"frame": {"x":448,"y":1,"w":133,"h":233},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":39,"w":133,"h":233},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_12.png",
+	"frame": {"x":1,"y":237,"w":123,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":43,"w":123,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_14.png",
+	"frame": {"x":1239,"y":1,"w":112,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":49,"w":112,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_16.png",
+	"frame": {"x":1727,"y":1,"w":114,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":52,"w":114,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_18.png",
+	"frame": {"x":1511,"y":225,"w":142,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":50,"w":142,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_20.png",
+	"frame": {"x":1151,"y":226,"w":169,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":55,"y":49,"w":169,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_22.png",
+	"frame": {"x":1353,"y":1,"w":183,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":44,"y":50,"w":183,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_24.png",
+	"frame": {"x":1538,"y":1,"w":187,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":40,"y":51,"w":187,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_26.png",
+	"frame": {"x":1655,"y":224,"w":187,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":40,"y":51,"w":187,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_28.png",
+	"frame": {"x":1322,"y":226,"w":187,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":40,"y":50,"w":187,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_30.png",
+	"frame": {"x":1051,"y":1,"w":186,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":41,"y":49,"w":186,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_32.png",
+	"frame": {"x":310,"y":237,"w":184,"h":224},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":48,"w":184,"h":224},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_34.png",
+	"frame": {"x":126,"y":237,"w":182,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":45,"y":45,"w":182,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_36.png",
+	"frame": {"x":496,"y":236,"w":181,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":49,"y":42,"w":181,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_38.png",
+	"frame": {"x":583,"y":1,"w":178,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":55,"y":40,"w":178,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_40.png",
+	"frame": {"x":1,"y":1,"w":173,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":38,"w":173,"h":234},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_42.png",
+	"frame": {"x":763,"y":1,"w":162,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":40,"w":162,"h":232},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_44.png",
+	"frame": {"x":794,"y":235,"w":125,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":90,"y":42,"w":125,"h":230},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "MOOSE_Dab_46.png",
+	"frame": {"x":1036,"y":235,"w":113,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":42,"w":113,"h":230},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "MOOSE_Dab.png",
+	"format": "RGBA8888",
+	"size": {"w":1843,"h":467},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2fb4020ba6cd414c7a1d4eb5f5180018:3ee56d938960a0f62275cec6d88f9a1f:76fda32daecd18865fbaf06a6ee6e2c2$"
+}
+}

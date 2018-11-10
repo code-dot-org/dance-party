@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_ClapHigh_00.png",
+	"frame": {"x":211,"y":1,"w":86,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":49,"w":86,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_02.png",
+	"frame": {"x":441,"y":1,"w":86,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":50,"w":86,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_04.png",
+	"frame": {"x":687,"y":222,"w":81,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":53,"w":81,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_06.png",
+	"frame": {"x":898,"y":1,"w":82,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":57,"w":82,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_08.png",
+	"frame": {"x":1160,"y":214,"w":85,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":115,"y":61,"w":85,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_10.png",
+	"frame": {"x":1263,"y":1,"w":90,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":62,"w":90,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_12.png",
+	"frame": {"x":1247,"y":214,"w":101,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":62,"w":101,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_14.png",
+	"frame": {"x":1144,"y":1,"w":117,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":61,"w":117,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_16.png",
+	"frame": {"x":1025,"y":217,"w":133,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":60,"w":133,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_18.png",
+	"frame": {"x":982,"y":1,"w":160,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":73,"y":58,"w":160,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_20.png",
+	"frame": {"x":874,"y":220,"w":149,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":57,"w":149,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_22.png",
+	"frame": {"x":767,"y":1,"w":129,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":55,"w":129,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_24.png",
+	"frame": {"x":770,"y":220,"w":102,"h":217},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":55,"w":102,"h":217},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_26.png",
+	"frame": {"x":660,"y":1,"w":105,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":53,"w":105,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_28.png",
+	"frame": {"x":570,"y":224,"w":115,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":52,"w":115,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_30.png",
+	"frame": {"x":529,"y":1,"w":129,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":51,"w":129,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_32.png",
+	"frame": {"x":299,"y":1,"w":140,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":50,"w":140,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_34.png",
+	"frame": {"x":293,"y":226,"w":141,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":50,"w":141,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_36.png",
+	"frame": {"x":436,"y":225,"w":132,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":50,"w":132,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_38.png",
+	"frame": {"x":1,"y":1,"w":118,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":49,"w":118,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_40.png",
+	"frame": {"x":1,"y":226,"w":105,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":49,"w":105,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_42.png",
+	"frame": {"x":108,"y":226,"w":94,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":49,"w":94,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_44.png",
+	"frame": {"x":121,"y":1,"w":88,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":49,"w":88,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_ClapHigh_46.png",
+	"frame": {"x":204,"y":226,"w":87,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":49,"w":87,"h":223},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_ClapHigh.png",
+	"format": "RGBA8888",
+	"size": {"w":1354,"h":450},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:aedcd21d1155c47d54842934e4e020cf:97ec856a5e79d0dc339f5383c66eac71:dd2c4ce0f413f20f64defa679ad37333$"
+}
+}

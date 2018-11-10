@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ROBOT_XKneel_00.png",
+	"frame": {"x":145,"y":1,"w":142,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":90,"w":142,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_02.png",
+	"frame": {"x":1,"y":1,"w":142,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":89,"w":142,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_04.png",
+	"frame": {"x":360,"y":1,"w":140,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":87,"w":140,"h":185},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_06.png",
+	"frame": {"x":360,"y":188,"w":139,"h":188},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":84,"w":139,"h":188},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_08.png",
+	"frame": {"x":129,"y":417,"w":136,"h":192},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":80,"w":136,"h":192},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_10.png",
+	"frame": {"x":1,"y":420,"w":126,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":74,"w":126,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_12.png",
+	"frame": {"x":360,"y":378,"w":105,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":67,"w":105,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_14.png",
+	"frame": {"x":267,"y":406,"w":91,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":60,"w":91,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_16.png",
+	"frame": {"x":249,"y":185,"w":84,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":53,"w":84,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_18.png",
+	"frame": {"x":168,"y":185,"w":79,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":112,"y":47,"w":79,"h":225},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_20.png",
+	"frame": {"x":85,"y":186,"w":81,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":43,"w":81,"h":229},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ROBOT_XKneel_22.png",
+	"frame": {"x":1,"y":186,"w":82,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":40,"w":82,"h":232},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ROBOT_XKneel.png",
+	"format": "RGBA8888",
+	"size": {"w":501,"h":619},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c42d54b50bd9851273fc687f4b1ed578:0957f8e8297a89831f5aac99c2610406:c2cfecd571077659acc62c4733aec72d$"
+}
+}

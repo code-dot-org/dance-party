@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "DOG_Kick_00.png",
+	"frame": {"x":1385,"y":185,"w":98,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":65,"w":98,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_02.png",
+	"frame": {"x":1585,"y":1,"w":96,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":66,"w":96,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_04.png",
+	"frame": {"x":1683,"y":1,"w":93,"h":204},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":69,"w":93,"h":204},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_06.png",
+	"frame": {"x":1683,"y":207,"w":91,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":76,"w":91,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_08.png",
+	"frame": {"x":1586,"y":210,"w":94,"h":190},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":116,"y":83,"w":94,"h":190},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_10.png",
+	"frame": {"x":1485,"y":211,"w":99,"h":184},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":89,"w":99,"h":184},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_12.png",
+	"frame": {"x":1379,"y":1,"w":102,"h":182},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":117,"y":91,"w":102,"h":182},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_14.png",
+	"frame": {"x":1273,"y":1,"w":104,"h":183},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":90,"w":104,"h":183},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_16.png",
+	"frame": {"x":1145,"y":1,"w":126,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":86,"w":126,"h":187},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_18.png",
+	"frame": {"x":984,"y":1,"w":159,"h":191},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":82,"w":159,"h":191},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_20.png",
+	"frame": {"x":802,"y":1,"w":180,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":76,"w":180,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_22.png",
+	"frame": {"x":796,"y":204,"w":187,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":28,"y":71,"w":187,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_24.png",
+	"frame": {"x":1,"y":1,"w":202,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":70,"w":202,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_26.png",
+	"frame": {"x":205,"y":1,"w":201,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":70,"w":201,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_28.png",
+	"frame": {"x":408,"y":1,"w":200,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":71,"w":200,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_30.png",
+	"frame": {"x":202,"y":206,"w":197,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":73,"w":197,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_32.png",
+	"frame": {"x":600,"y":205,"w":194,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":74,"w":194,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_34.png",
+	"frame": {"x":401,"y":206,"w":197,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":27,"y":75,"w":197,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_36.png",
+	"frame": {"x":1,"y":206,"w":199,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":31,"y":74,"w":199,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_38.png",
+	"frame": {"x":610,"y":1,"w":190,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":72,"w":190,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_40.png",
+	"frame": {"x":985,"y":194,"w":162,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":64,"y":70,"w":162,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_42.png",
+	"frame": {"x":1149,"y":190,"w":127,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":67,"w":127,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_44.png",
+	"frame": {"x":1278,"y":186,"w":105,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":66,"w":105,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DOG_Kick_46.png",
+	"frame": {"x":1485,"y":1,"w":98,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":65,"w":98,"h":208},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DOG_Kick.png",
+	"format": "RGBA8888",
+	"size": {"w":1777,"h":407},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2feaa2ee57e09dd18076ef0416287632:6c24e4e437f87a485b7c9b96af10dc8d:0872a13369d4762a7b5ba98b0d746852$"
+}
+}

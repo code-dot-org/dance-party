@@ -15,7 +15,20 @@ var MOVES = {
   Kick: 8,
   Roll: 9,
   ThisOrThat: 10,
-  Thriller: 11
+  Thriller: 11,
+  XArmsSide: 12,
+  XArmsUp: 13,
+  XJump: 14,
+  XClapSide: 15,
+  XHeadHips: 16,
+  XHighKick: 17,
+  XBend: 18,
+  XFever: 19,
+  XHop: 20,
+  XKnee: 21,
+  XKneel: 22,
+  XOle: 23,
+  XSlide: 24,
 };
 
 var QueueType = {

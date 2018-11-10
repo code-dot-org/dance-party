@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "DUCK_Fresh_00.png",
+	"frame": {"x":1,"y":1,"w":80,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":57,"w":80,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_02.png",
+	"frame": {"x":105,"y":218,"w":81,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":58,"w":81,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_04.png",
+	"frame": {"x":400,"y":1,"w":86,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":62,"w":86,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_06.png",
+	"frame": {"x":702,"y":209,"w":96,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":67,"w":96,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_08.png",
+	"frame": {"x":730,"y":1,"w":108,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":70,"w":108,"h":203},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_10.png",
+	"frame": {"x":938,"y":1,"w":120,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":95,"y":72,"w":120,"h":200},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_12.png",
+	"frame": {"x":1038,"y":203,"w":119,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":96,"y":72,"w":119,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_14.png",
+	"frame": {"x":923,"y":205,"w":113,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":98,"y":68,"w":113,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_16.png",
+	"frame": {"x":489,"y":213,"w":107,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":64,"w":107,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_18.png",
+	"frame": {"x":386,"y":214,"w":101,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":61,"w":101,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_20.png",
+	"frame": {"x":185,"y":1,"w":99,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":59,"w":99,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_22.png",
+	"frame": {"x":83,"y":1,"w":100,"h":215},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":58,"w":100,"h":215},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_24.png",
+	"frame": {"x":1,"y":219,"w":102,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":59,"w":102,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_26.png",
+	"frame": {"x":276,"y":217,"w":108,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":99,"y":61,"w":108,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_28.png",
+	"frame": {"x":488,"y":1,"w":112,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":63,"w":112,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_30.png",
+	"frame": {"x":598,"y":213,"w":102,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":66,"w":102,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_32.png",
+	"frame": {"x":840,"y":1,"w":96,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":74,"y":71,"w":96,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_34.png",
+	"frame": {"x":1159,"y":201,"w":100,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":70,"y":76,"w":100,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_36.png",
+	"frame": {"x":1163,"y":1,"w":98,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":72,"y":79,"w":98,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_38.png",
+	"frame": {"x":1060,"y":1,"w":101,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":76,"y":77,"w":101,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_40.png",
+	"frame": {"x":800,"y":206,"w":121,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":79,"y":73,"w":121,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_42.png",
+	"frame": {"x":602,"y":1,"w":126,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":69,"w":126,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_44.png",
+	"frame": {"x":286,"y":1,"w":112,"h":211},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":65,"w":112,"h":211},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_Fresh_46.png",
+	"frame": {"x":188,"y":217,"w":86,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":61,"w":86,"h":214},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DUCK_Fresh.png",
+	"format": "RGBA8888",
+	"size": {"w":1262,"h":434},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:86497a7db6a54209e1dcdcc102b8d5b9:3a164435f7b255c75f53a59f10530586:61006f8b486d30be5f55fc1b245570af$"
+}
+}

@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "CAT_XOle_00.png",
+	"frame": {"x":1096,"y":1,"w":108,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":101,"y":65,"w":108,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_02.png",
+	"frame": {"x":1206,"y":1,"w":107,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":65,"w":107,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_04.png",
+	"frame": {"x":989,"y":1,"w":105,"h":210},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":63,"w":105,"h":210},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_06.png",
+	"frame": {"x":882,"y":1,"w":105,"h":213},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":59,"w":105,"h":213},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_08.png",
+	"frame": {"x":771,"y":1,"w":109,"h":219},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":53,"w":109,"h":219},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_10.png",
+	"frame": {"x":655,"y":1,"w":114,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":103,"y":49,"w":114,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_12.png",
+	"frame": {"x":533,"y":1,"w":120,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":47,"w":120,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_14.png",
+	"frame": {"x":405,"y":1,"w":126,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":46,"w":126,"h":226},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_16.png",
+	"frame": {"x":284,"y":1,"w":119,"h":227},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":45,"w":119,"h":227},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_18.png",
+	"frame": {"x":88,"y":1,"w":103,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":45,"w":103,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_20.png",
+	"frame": {"x":193,"y":1,"w":89,"h":228},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":45,"w":89,"h":228},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "CAT_XOle_22.png",
+	"frame": {"x":1,"y":1,"w":85,"h":229},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":45,"w":85,"h":229},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "CAT_XOle.png",
+	"format": "RGBA8888",
+	"size": {"w":1314,"h":231},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9ab79d862694ee5c72c976560394796b:13665e46827a4efb95440dc587a9d5f6:ec361e07c7d14ffa09960aba8bd7af26$"
+}
+}

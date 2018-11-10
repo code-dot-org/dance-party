@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "DUCK_XBend_00.png",
+	"frame": {"x":807,"y":1,"w":117,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":67,"w":117,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_02.png",
+	"frame": {"x":690,"y":1,"w":115,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":66,"w":115,"h":207},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_04.png",
+	"frame": {"x":483,"y":1,"w":109,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":100,"y":65,"w":109,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_06.png",
+	"frame": {"x":594,"y":1,"w":94,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":65,"w":94,"h":208},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_08.png",
+	"frame": {"x":1054,"y":1,"w":91,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":119,"y":68,"w":91,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_10.png",
+	"frame": {"x":1147,"y":1,"w":108,"h":201},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":123,"y":72,"w":108,"h":201},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_12.png",
+	"frame": {"x":926,"y":1,"w":126,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":124,"y":68,"w":126,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_14.png",
+	"frame": {"x":359,"y":1,"w":122,"h":209},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":123,"y":64,"w":122,"h":209},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_16.png",
+	"frame": {"x":254,"y":1,"w":103,"h":212},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":121,"y":61,"w":103,"h":212},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_18.png",
+	"frame": {"x":165,"y":1,"w":87,"h":214},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":118,"y":59,"w":87,"h":214},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_20.png",
+	"frame": {"x":1,"y":1,"w":80,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":113,"y":57,"w":80,"h":216},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "DUCK_XBend_22.png",
+	"frame": {"x":83,"y":1,"w":80,"h":216},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":57,"w":80,"h":216},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DUCK_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1256,"h":218},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5e33b4c8eb417ac4177957c1358235de:18069e4a92ff259f229807b6efb206f2:7cb843ce7a92ca5438d1a6ba3c7f3a20$"
+}
+}

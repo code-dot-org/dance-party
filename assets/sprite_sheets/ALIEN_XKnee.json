@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "ALIEN_XKnee_00.png",
+	"frame": {"x":1002,"y":1,"w":123,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":83,"y":52,"w":123,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_02.png",
+	"frame": {"x":1127,"y":1,"w":122,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":84,"y":52,"w":122,"h":220},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_04.png",
+	"frame": {"x":758,"y":1,"w":121,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":51,"w":121,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_06.png",
+	"frame": {"x":881,"y":1,"w":119,"h":221},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":89,"y":51,"w":119,"h":221},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_08.png",
+	"frame": {"x":421,"y":1,"w":116,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":93,"y":50,"w":116,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_10.png",
+	"frame": {"x":539,"y":1,"w":112,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":97,"y":50,"w":112,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_12.png",
+	"frame": {"x":653,"y":1,"w":103,"h":222},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":50,"w":103,"h":222},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_14.png",
+	"frame": {"x":1,"y":1,"w":92,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":49,"w":92,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_16.png",
+	"frame": {"x":95,"y":1,"w":84,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":49,"w":84,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_18.png",
+	"frame": {"x":181,"y":1,"w":80,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":49,"w":80,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_20.png",
+	"frame": {"x":263,"y":1,"w":77,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":49,"w":77,"h":223},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "ALIEN_XKnee_22.png",
+	"frame": {"x":342,"y":1,"w":77,"h":223},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":111,"y":49,"w":77,"h":223},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ALIEN_XKnee.png",
+	"format": "RGBA8888",
+	"size": {"w":1250,"h":225},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e3f255fa15ada8913a3f504943e2f83f:83a7274502e21ba535579ee60fd62ef5:ccfff6b275c8daf7e3a1a8572d3296d3$"
+}
+}

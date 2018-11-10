@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "SHARK_XBend_00.png",
+	"frame": {"x":903,"y":1,"w":129,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":78,"w":129,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_02.png",
+	"frame": {"x":1034,"y":1,"w":128,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":78,"w":128,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_04.png",
+	"frame": {"x":653,"y":1,"w":125,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":77,"w":125,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_06.png",
+	"frame": {"x":780,"y":1,"w":121,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":77,"w":121,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_08.png",
+	"frame": {"x":1298,"y":1,"w":111,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":125,"y":80,"w":111,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_10.png",
+	"frame": {"x":1411,"y":1,"w":120,"h":193},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":126,"y":82,"w":120,"h":193},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_12.png",
+	"frame": {"x":1164,"y":1,"w":132,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":125,"y":79,"w":132,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_14.png",
+	"frame": {"x":521,"y":1,"w":130,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":122,"y":76,"w":130,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_16.png",
+	"frame": {"x":394,"y":1,"w":125,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":73,"w":125,"h":202},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_18.png",
+	"frame": {"x":265,"y":1,"w":127,"h":205},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":94,"y":70,"w":127,"h":205},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_20.png",
+	"frame": {"x":133,"y":1,"w":130,"h":206},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":69,"w":130,"h":206},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_XBend_22.png",
+	"frame": {"x":1,"y":1,"w":130,"h":207},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":68,"w":130,"h":207},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_XBend.png",
+	"format": "RGBA8888",
+	"size": {"w":1532,"h":209},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b6cad8c1f461e3a305eb7a4739a01c7c:e0f19386f5ec248d26ecfb8925aad93f:4820a299500261c493ed43c85b69922d$"
+}
+}

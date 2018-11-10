@@ -1,0 +1,204 @@
+{"frames": [
+
+{
+	"filename": "SHARK_Floss_00000.png",
+	"frame": {"x":248,"y":1,"w":116,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":92,"y":76,"w":116,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00002.png",
+	"frame": {"x":366,"y":1,"w":110,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":76,"w":110,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00004.png",
+	"frame": {"x":1156,"y":200,"w":119,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":78,"w":119,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00006.png",
+	"frame": {"x":1046,"y":1,"w":129,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":78,"w":129,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00008.png",
+	"frame": {"x":912,"y":1,"w":132,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":78,"w":132,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00010.png",
+	"frame": {"x":615,"y":201,"w":128,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":107,"y":79,"w":128,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00012.png",
+	"frame": {"x":244,"y":202,"w":116,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":109,"y":80,"w":116,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00014.png",
+	"frame": {"x":1408,"y":1,"w":93,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":81,"w":93,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00016.png",
+	"frame": {"x":1398,"y":198,"w":99,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":88,"y":81,"w":99,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00018.png",
+	"frame": {"x":362,"y":202,"w":116,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":75,"y":80,"w":116,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00020.png",
+	"frame": {"x":1177,"y":1,"w":125,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":79,"w":125,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00022.png",
+	"frame": {"x":1022,"y":200,"w":132,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":63,"y":78,"w":132,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00024.png",
+	"frame": {"x":885,"y":200,"w":135,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":60,"y":78,"w":135,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00026.png",
+	"frame": {"x":774,"y":1,"w":136,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":59,"y":78,"w":136,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00028.png",
+	"frame": {"x":480,"y":201,"w":133,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":60,"y":79,"w":133,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00030.png",
+	"frame": {"x":117,"y":202,"w":125,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":80,"w":125,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00032.png",
+	"frame": {"x":1,"y":203,"w":114,"h":194},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":72,"y":81,"w":114,"h":194},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00034.png",
+	"frame": {"x":1304,"y":1,"w":102,"h":195},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":85,"y":80,"w":102,"h":195},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00036.png",
+	"frame": {"x":1277,"y":199,"w":119,"h":196},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":79,"w":119,"h":196},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00038.png",
+	"frame": {"x":745,"y":200,"w":138,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":78,"w":138,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00040.png",
+	"frame": {"x":626,"y":1,"w":146,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":78,"w":146,"h":197},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00042.png",
+	"frame": {"x":478,"y":1,"w":146,"h":198},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":106,"y":77,"w":146,"h":198},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00044.png",
+	"frame": {"x":115,"y":1,"w":131,"h":199},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":108,"y":76,"w":131,"h":199},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "SHARK_Floss_00046.png",
+	"frame": {"x":1,"y":1,"w":112,"h":200},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":110,"y":75,"w":112,"h":200},
+	"sourceSize": {"w":300,"h":300}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "SHARK_Floss.png",
+	"format": "RGBA8888",
+	"size": {"w":1502,"h":398},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:60c1fccb0d174d9b74e82575185763ec:dfc70fde1648771c1ddf6bbeb3b4d4b3:cee8aa52046420c9f3f76fdba9b77dfc$"
+}
+}
