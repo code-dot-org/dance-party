@@ -800,6 +800,39 @@ module.exports = class DanceParty {
     }
   }
 
+  drawMeasure(measure, offset, size) {
+    let x = offset > 0 ?
+      50 + ((offset - measure % 1) * 150) : 50;
+    this.p5_.push();
+    this.p5_.fill("white");
+    this.p5_.stroke("#00adbc");
+    this.p5_.strokeWeight(5);
+    this.p5_.ellipse(x, 50, size, size);
+    this.p5_.noStroke();
+    this.p5_.fill("black");
+    this.p5_.textSize(size / 2);
+    this.p5_.textAlign(this.p5_.CENTER, this.p5_.CENTER);
+    this.p5_.text(Math.floor(measure) + offset, x, 50);
+    this.p5_.pop();
+  }
+
+  drawMeasureMeter() {
+    let current = this.getCurrentMeasure();
+    this.p5_.stroke("#00adbc");
+    this.p5_.strokeWeight(5);
+    this.p5_.line(50, 50, 350, 50);
+    let beatX = 50 + (0 - current % 1) * 150;
+    while (beatX <= 350) {
+      if (beatX > 50) {
+        this.p5_.line(beatX, 45, beatX, 55);
+      }
+      beatX += 37.5;
+    }
+    this.showMeasure(current, 2, 30);
+    this.showMeasure(current, 1, 30);
+    this.showMeasure(current, 0, 35);
+  }
+
   // Behaviors
 
   /**
@@ -991,7 +1024,8 @@ module.exports = class DanceParty {
 
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel) {
-      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
+      //this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
+      this.drawMeasureMeter();
     }
 
     if (this.currentFrameEvents.any && this.onHandleEvents) {
