@@ -1,7 +1,23 @@
 const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
-test('setBackground changes the bgEffect to color_cycle effect', async t => {
+test('setBackground clears the bgEffect and sets background_color', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.setBackgroundEffect('diamonds');
+
+  // Initial Values
+  t.equal(nativeAPI.world.bg_effect, 'diamonds');
+
+  nativeAPI.setBackground('purple');
+
+  t.equal(nativeAPI.world.background_color, 'purple');
+  t.equal(nativeAPI.world.bg_effect, null);
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('setBackgroundEffect changes the bgEffect to color_cycle effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
   // Initial Values
