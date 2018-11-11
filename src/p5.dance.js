@@ -134,6 +134,49 @@ module.exports = class DanceParty {
     this.p5_.remove();
   }
 
+  ensureSpritesAreLoaded(sprite_names) {
+    sprite_names = sprite_names || this.world.SPRITE_NAMES;
+    const promises = [];
+
+    // Load spritesheet JSON files
+    sprite_names.forEach(this_sprite => {
+      if (ANIMATIONS[this_sprite].length === this.world.MOVE_NAMES.length) {
+        // Already loaded, nothing to do:
+        return;
+      }
+      this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
+        const baseUrl = `${img_base}${this_sprite}_${name}`;
+        promises.push(new Promise(resolve => {
+          this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
+            // Passing a callback as the 3rd arg to loadSpriteSheet() indicates that
+            // we want it to load the image as a Image (instead of a p5.Image), which
+            // avoids a canvas creation. This makes it possible to run on mobile
+            // Safari in iOS 12 with canvas memory limits.
+            const spriteSheet = this.p5_.loadSpriteSheet(
+              `${baseUrl}.png`,
+              jsonData.frames,
+              () => {
+                const animation = this.p5_.loadAnimation(spriteSheet);
+                this.setAnimationSpriteSheet(
+                  this_sprite,
+                  moveIndex,
+                  spriteSheet,
+                  mirror,
+                  animation);
+                resolve();
+              });
+          });
+        }));  
+      });
+    });
+
+    const promise = Promise.all(promises);
+    promise.then(() => {
+      this.allSpritesLoaded = true;
+    });
+    return promise;
+  }
+
   onKeyDown(keyCode) {
     this.p5_._onkeydown({ which: keyCode });
   }
@@ -181,6 +224,7 @@ module.exports = class DanceParty {
   }
 
   reset() {
+    this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
     while (this.p5_.allSprites.length > 0) {
@@ -193,31 +237,20 @@ module.exports = class DanceParty {
   }
 
   preload() {
-    this.resourceLoader_.getAnimationData(animationData => {
-      this.world.SPRITE_NAMES.forEach(costume => {
-        const costumeData = animationData[costume.toLowerCase()];
-        ANIMATIONS[costume] = [];
-        this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
-          const moveData = costumeData[moveName.toLowerCase()];
-          this.setAnimationSpriteSheet(
-            costume,
-            moveIndex,
-            this.resourceLoader_.loadSpriteSheet(moveData.spritesheet, moveData.frames),
-            mirror
-          );
-        });
-      });
+    // Initialize ANIMATIONS object with empty arrays for each character
+    this.world.SPRITE_NAMES.forEach(costume=> {
+      ANIMATIONS[costume] = [];
     });
   }
 
-  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror){
+  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
     if (!ANIMATIONS[sprite]) {
       ANIMATIONS[sprite] = [];
     }
     ANIMATIONS[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
-      animation: 'missing',
+      animation: animation || 'missing',
     };
   }
 
@@ -225,15 +258,6 @@ module.exports = class DanceParty {
     this.bgEffects_ = new Effects(this.p5_, 1);
     this.fgEffects_ = new Effects(this.p5_, 0.8);
 
-    // Create animations from spritesheets
-    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-      let this_sprite = this.world.SPRITE_NAMES[i];
-      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
-      }
-    }
-
-    this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
   }
 
@@ -988,6 +1012,10 @@ module.exports = class DanceParty {
   }
 
   draw() {
+    this.p5_.background(this.world.background_color || "white");
+    if (!this.allSpritesLoaded) {
+      return;
+    }
     const events = this.updateEvents_();
     this.sampleFrameRate_();
 
