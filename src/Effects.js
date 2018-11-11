@@ -185,7 +185,40 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+    this.sparkles = {
+      sparkles: [],
+      maxSparkles: 80,
+      makeRandomSparkle: function () {
+        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColor()};
+      },
+      init: function () {
+        for (let i=0;i<this.maxSparkles;i++) {
+          this.sparkles.push(this.makeRandomSparkle());
+        }
+      },
+      update: function () {
 
+      },
+      draw: function ({bpm}) {
+        if (this.sparkles.length<1) {
+          this.init();
+        }
+        p5.background("#2b1e45");
+        let velocity = Math.floor(bpm/90*3);
+        for (let i = 0;i<this.maxSparkles;i++){
+          p5.push();
+          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>390)) {
+            this.sparkles[i]=this.makeRandomSparkle();
+          }
+
+          this.sparkles[i].x-=velocity;
+          this.sparkles[i].y+=velocity;
+          p5.translate(this.sparkles[i].x,this.sparkles[i].y);
+          drawSparkle(p5._renderer.drawingContext,this.sparkles[i].color);
+          p5.pop();
+        }
+      },
+    };
     this.text = {
       texts: [],
       maxTexts: 100,
@@ -598,5 +631,58 @@ function drawSpiral(ctx) {
   ctx.bezierCurveTo(7453,12798,7297,12802,7221,12785);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
+}
+function drawSparkle(ctx,color) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(12,0);
+  ctx.lineTo(12,12);
+  ctx.lineTo(0,12);
+  ctx.closePath();
+  ctx.clip();
+  ctx.translate(0,0);
+  ctx.translate(0,0);
+  ctx.scale(0.22099447513812157,0.22099447513812157);
+  ctx.translate(0,0);
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(54.3,27.2);
+  ctx.bezierCurveTo(30.699999999999996,29.099999999999998,29.099999999999998,30.7,27.199999999999996,54.3);
+  ctx.bezierCurveTo(25.2,30.7,23.6,29.1,0,27.2);
+  ctx.bezierCurveTo(23.6,25.2,25.2,23.6,27.2,0);
+  ctx.bezierCurveTo(29.1,23.6,30.7,25.2,54.3,27.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(26.7,54.3);
+  ctx.bezierCurveTo(24.8,31.1,23.3,29.6,0,27.7);
+  ctx.lineTo(0,26.7);
+  ctx.bezierCurveTo(23.3,24.8,24.8,23.3,26.7,0);
+  ctx.lineTo(27.7,0);
+  ctx.bezierCurveTo(29.599999999999998,23.3,31.099999999999998,24.8,54.4,26.7);
+  ctx.lineTo(54.4,27.7);
+  ctx.bezierCurveTo(31.099999999999998,29.599999999999998,29.599999999999998,31.099999999999998,27.7,54.4);
+  ctx.lineTo(26.7,54.4);
+  ctx.closePath();
+  ctx.moveTo(5.6,27.2);
+  ctx.bezierCurveTo(22.5,28.9,25.5,31.9,27.200000000000003,48.8);
+  ctx.bezierCurveTo(28.900000000000002,31.9,31.900000000000002,28.9,48.800000000000004,27.199999999999996);
+  ctx.bezierCurveTo(31.900000000000006,25.499999999999996,28.900000000000006,22.499999999999996,27.200000000000003,5.599999999999994);
+  ctx.bezierCurveTo(25.4,22.5,22.5,25.4,5.6,27.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
   ctx.restore();
 }
