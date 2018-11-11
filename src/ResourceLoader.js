@@ -22,12 +22,12 @@ module.exports = class ResourceLoader {
     });
   }
 
-  loadSpriteSheet(baseName, frameData) {
-    // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
+  loadSpriteSheet(baseName, frameData, callback) {
+    // Passing callback as the 3rd arg to loadSpriteSheet() indicates that we want
     // it to load the image as a Image (instead of a p5.Image), which avoids
     // a canvas creation. This makes it possible to run on mobile Safari in
     // iOS 12 with canvas memory limits.
     const spriteSheetUrl = `${this.assetBase_}${baseName}`;
-    return this.p5_.loadSpriteSheet(spriteSheetUrl, frameData, true);
+    return this.p5_.loadSpriteSheet(spriteSheetUrl, frameData, callback);
   }
 };

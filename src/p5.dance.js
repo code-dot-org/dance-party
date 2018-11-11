@@ -136,11 +136,11 @@ module.exports = class DanceParty {
 
   ensureSpritesAreLoaded(sprite_names) {
     sprite_names = sprite_names || this.world.SPRITE_NAMES;
-    const promises = [];
 
-    promises.push(new Promise(resolveAnimationData => {
+    const promise = new Promise(resolveAllSpritesLoaded => {
       this.resourceLoader_.getAnimationData(animationData => {
-        this.world.SPRITE_NAMES.forEach(costume => {
+        const promises = [];
+        sprite_names.forEach(costume => {
           const costumeData = animationData[costume.toLowerCase()];
           ANIMATIONS[costume] = [];
           this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
@@ -169,14 +169,13 @@ module.exports = class DanceParty {
             }));
           });
         });
-        resolveAnimationData();
+        Promise.all(promises).then(() => {
+          this.allSpritesLoaded = true;
+          resolveAllSpritesLoaded();
+        })
       });
-    }));
-
-    const promise = Promise.all(promises);
-    promise.then(() => {
-      this.allSpritesLoaded = true;
     });
+
     return promise;
   }
 
@@ -1016,13 +1015,6 @@ module.exports = class DanceParty {
   }
 
   draw() {
-    this.getBackgroundEffect().draw(context);
-    if (!this.allSpritesLoaded) {
-      return;
-    }
-    const events = this.updateEvents_();
-    this.sampleFrameRate_();
-
     const { bpm, artist, title } = this.songMetadata_ || {};
 
     const context = {
@@ -1033,6 +1025,15 @@ module.exports = class DanceParty {
       artist,
       title,
     };
+
+    this.getBackgroundEffect().draw(context);
+
+    if (!this.allSpritesLoaded) {
+      return;
+    }
+
+    const events = this.updateEvents_();
+    this.sampleFrameRate_();
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors
