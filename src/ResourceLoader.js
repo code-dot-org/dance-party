@@ -17,9 +17,7 @@ module.exports = class ResourceLoader {
   }
 
   getAnimationData(callback) {
-    this.p5_.loadJSON(`${this.assetBase_}characters.json`, (json) => {
-      callback(json);
-    });
+    this.p5_.loadJSON(`${this.assetBase_}characters.json`, callback);
   }
 
   loadSpriteSheet(baseName, frameData) {
