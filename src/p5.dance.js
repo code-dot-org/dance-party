@@ -865,6 +865,7 @@ module.exports = class DanceParty {
     this.p5_.stroke("#00adbc");
     this.p5_.strokeWeight(5);
     this.p5_.line(50, 450, 350, 450);
+
     let beatX = 50 + (0 - current % 1) * 150;
     while (beatX <= 350) {
       if (beatX > 50) {
@@ -872,9 +873,18 @@ module.exports = class DanceParty {
       }
       beatX += 37.5;
     }
+
     this.drawMeasure(current, 2, 30);
     this.drawMeasure(current, 1, 30);
     this.drawMeasure(current, 0, 35);
+
+    for (let i = 0; this.world.cues.measures[i] < this.getCurrentMeasure() + 2; i++) {
+      beatX = 50 + ((this.world.cues.measures[i] - this.getCurrentMeasure()) * 150);
+      this.p5_.stroke("#ffa400");
+      this.p5_.strokeWeight(10);
+      this.p5_.point(beatX, 450);
+    }
+
     if (events['cue-measures'] || events['cue-seconds']) {
       this.p5_.noFill();
       this.p5_.strokeWeight(8);
