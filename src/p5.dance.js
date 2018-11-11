@@ -856,7 +856,7 @@ module.exports = class DanceParty {
     this.p5_.pop();
   }
 
-  drawMeasureMeter() {
+  drawMeasureMeter(events) {
     let current = this.getCurrentMeasure();
     this.p5_.push();
     this.p5_.fill("white");
@@ -875,6 +875,12 @@ module.exports = class DanceParty {
     this.drawMeasure(current, 2, 30);
     this.drawMeasure(current, 1, 30);
     this.drawMeasure(current, 0, 35);
+    if (events['cue-measures'] || events['cue-seconds']) {
+      this.p5_.noFill();
+      this.p5_.strokeWeight(8);
+      this.p5_.stroke("#ffa400");
+      this.p5_.ellipse(50, 430, 35, 35);
+    }
     this.p5_.pop();
   }
 
@@ -1101,7 +1107,7 @@ module.exports = class DanceParty {
     this.world.validationCallback(this.world, this, this.sprites_);
     if (this.showMeasureLabel && this.songStartTime_ > 0) {
       //this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
-      this.drawMeasureMeter();
+      this.drawMeasureMeter(events);
     }
 
     if (Object.keys(events).length && this.onHandleEvents) {
