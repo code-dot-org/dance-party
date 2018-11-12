@@ -24,7 +24,12 @@ module.exports = class UnitTestResourceLoader {
     callback(data);
   }
 
-  loadSpriteSheet(baseName, frameData) {
-    return this.p5_.loadSpriteSheet(new Image(), frameData, true);
+  loadSpriteSheet(baseName, frameData, callback) {
+    const image = new Image();
+    const sheet = this.p5_.loadSpriteSheet(image, frameData);
+    setTimeout(() => {
+      callback(image);
+    }, 0);
+    return sheet;
   }
 };

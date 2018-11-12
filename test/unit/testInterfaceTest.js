@@ -1,4 +1,4 @@
-const test = require('tape');
+const test = require('tape-async');
 const helpers = require('../helpers/createDanceAPI');
 
 test('testInterface getSprites', async t => {
@@ -7,7 +7,7 @@ test('testInterface getSprites', async t => {
 
   t.equal(testInterface.getSprites().length, 0);
 
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 

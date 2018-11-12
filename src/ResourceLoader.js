@@ -17,8 +17,16 @@ module.exports = class ResourceLoader {
   }
 
   getAnimationData(callback) {
+    // This function caches the animation data so multiple calls will not
+    // result in multiple network requests. The animation data is presumed
+    // to be fixed for the lifetime of the application.
+    if (this.animationData_) {
+      callback(this.animationData_);
+      return;
+    }
     this.p5_.loadJSON(`${this.assetBase_}characters.json`, (json) => {
-      callback(json);
+      this.animationData_ = json;
+      callback(this.animationData_);
     });
   }
 

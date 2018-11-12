@@ -1,5 +1,5 @@
 const helpers = require('../helpers/createDanceAPI');
-const test = require('tape');
+const test = require('tape-async');
 
 const minX = 20;
 const maxX = 400 - minX;
@@ -8,7 +8,7 @@ const maxY = 400 - 40;
 
 async function runLayoutTest(t, fn) {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});

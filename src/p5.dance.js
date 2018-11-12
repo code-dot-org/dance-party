@@ -101,6 +101,11 @@ module.exports = class DanceParty {
       spriteConfig(this.world);
     }
 
+    // Initialize ANIMATIONS object with empty arrays for each character
+    this.world.SPRITE_NAMES.forEach(costume=> {
+      ANIMATIONS[costume] = [];
+    });
+
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
 
@@ -122,7 +127,6 @@ module.exports = class DanceParty {
       this.p5_ = p5Inst;
       this.resourceLoader_.initWithP5(p5Inst);
       this.sprites_ = p5Inst.createGroup();
-      p5Inst.preload = () => this.preload();
       p5Inst.setup = () => this.setup();
       p5Inst.draw = () => this.draw();
       //Allows the sprite width and height to be set independently
@@ -134,49 +138,61 @@ module.exports = class DanceParty {
     this.p5_.remove();
   }
 
-  ensureSpritesAreLoaded(sprite_names) {
-    sprite_names = sprite_names || this.world.SPRITE_NAMES;
+  loadSprites(animationData, spriteNames) {
+    const promises = [];
+    spriteNames.forEach(costume => {
+      if (ANIMATIONS[costume].length === this.world.MOVE_NAMES.length) {
+        // Already loaded, nothing to do:
+        return;
+      }
+      const costumeData = animationData[costume.toLowerCase()];
+      this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
+        const moveData = costumeData[moveName.toLowerCase()];
 
-    const promise = new Promise(resolveAllSpritesLoaded => {
-      this.resourceLoader_.getAnimationData(animationData => {
-        const promises = [];
-        sprite_names.forEach(costume => {
-          const costumeData = animationData[costume.toLowerCase()];
-          ANIMATIONS[costume] = [];
-          this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
-            const moveData = costumeData[moveName.toLowerCase()];
-
-            promises.push(new Promise(resolveSpriteSheet => {
-              // Passing a callback as the 3rd arg to loadSpriteSheet() indicates that
-              // we want it to load the image as a Image (instead of a p5.Image), which
-              // avoids a canvas creation. This makes it possible to run on mobile
-              // Safari in iOS 12 with canvas memory limits.
-              const spriteSheet = this.resourceLoader_.loadSpriteSheet(
-                moveData.spritesheet,
-                moveData.frames,
-                () => {
-                  const animation = this.p5_.loadAnimation(spriteSheet);
-                  this.setAnimationSpriteSheet(
-                    costume,
-                    moveIndex,
-                    spriteSheet,
-                    mirror,
-                    animation
-                  );
-                  resolveSpriteSheet();
-                }
+        promises.push(new Promise(resolveSpriteSheet => {
+          // Passing a callback as the 3rd arg to loadSpriteSheet() indicates that
+          // we want it to load the image as a Image (instead of a p5.Image), which
+          // avoids a canvas creation. This makes it possible to run on mobile
+          // Safari in iOS 12 with canvas memory limits.
+          const spriteSheet = this.resourceLoader_.loadSpriteSheet(
+            moveData.spritesheet,
+            moveData.frames,
+            () => {
+              const animation = this.p5_.loadAnimation(spriteSheet);
+              this.setAnimationSpriteSheet(
+                costume,
+                moveIndex,
+                spriteSheet,
+                mirror,
+                animation
               );
-            }));
-          });
-        });
-        Promise.all(promises).then(() => {
-          this.allSpritesLoaded = true;
-          resolveAllSpritesLoaded();
-        })
+              resolveSpriteSheet();
+            }
+          );
+        }));
+      });
+    });
+    return Promise.all(promises);
+  }
+
+  async ensureSpritesAreLoaded(spriteNames) {
+    spriteNames = spriteNames || this.world.SPRITE_NAMES;
+
+    if (this.lastEnsureSpritesPromise_) {
+      // If we are still waiting for a previous call to ensureSpritesAreLoaded()
+      // to complete, wait for that here and then continue:
+      await this.lastEnsureSpritesPromise_;
+    }
+
+    this.lastEnsureSpritesPromise_ = new Promise(async (resolveAllSpritesLoaded) => {
+      this.resourceLoader_.getAnimationData(async (animationData) => {
+        await this.loadSprites(animationData, spriteNames);
+        this.allSpritesLoaded = true;
+        resolveAllSpritesLoaded();
       });
     });
 
-    return promise;
+    return this.lastEnsureSpritesPromise_;
   }
 
   onKeyDown(keyCode) {
@@ -238,13 +254,6 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
   }
 
-  preload() {
-    // Initialize ANIMATIONS object with empty arrays for each character
-    this.world.SPRITE_NAMES.forEach(costume=> {
-      ANIMATIONS[costume] = [];
-    });
-  }
-
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
     if (!ANIMATIONS[sprite]) {
       ANIMATIONS[sprite] = [];
@@ -274,7 +283,14 @@ module.exports = class DanceParty {
     }
   }
 
-  play(songData, callback) {
+  async play(songData, callback) {
+    if (!this.lastEnsureSpritesPromise_) {
+      // The host has never called ensureSpritesAreLoaded(). We will call it ourselves here,
+      // effectively ensuring that all sprites are loaded.
+      this.ensureSpritesAreLoaded();
+    }
+    await this.lastEnsureSpritesPromise_;
+
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();

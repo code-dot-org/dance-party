@@ -1,4 +1,4 @@
-const test = require('tape');
+const test = require('tape-async');
 const helpers = require('../helpers/createDanceAPI');
 
 test('setBackground changes the bgEffect to color_cycle effect', async t => {
@@ -17,7 +17,7 @@ test('setBackground changes the bgEffect to color_cycle effect', async t => {
 
 test('text background effect updates with song text', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 

@@ -1,10 +1,10 @@
-const test = require('tape');
+const test = require('tape-async');
 const sinon = require('sinon');
 const helpers = require('../helpers/createDanceAPI');
 
 test('Background effects', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 

@@ -1,9 +1,9 @@
 const helpers = require('../helpers/createDanceAPI');
-const test = require('tape');
+const test = require('tape-async');
 
 test('changing dance moves for all updates all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -34,7 +34,7 @@ test('changing dance moves for all updates all dancers', async t => {
 
 test('changing dance moves for empty group does nothing without error', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 
@@ -52,7 +52,7 @@ test('changing dance moves for empty group does nothing without error', async t 
 
 test('changing visibility for all updates all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -79,7 +79,7 @@ test('changing visibility for all updates all dancers', async t => {
 
 test('changing dance moves for all cats updates only all cat dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -113,7 +113,7 @@ test('changing dance moves for all cats updates only all cat dancers', async t =
 
 test('changing dance moves for all to rand sets same dance for all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 
@@ -152,7 +152,7 @@ test('changing dance moves for all to rand sets same dance for all dancers', asy
 
 test('GetGroupByName returns the expected number of sprites ', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -176,7 +176,7 @@ test('GetGroupByName returns the expected number of sprites ', async t => {
 
 test('MakeNewDanceSpriteGroup returns the expected number of the given costumed sprites ', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -191,7 +191,7 @@ test('MakeNewDanceSpriteGroup returns the expected number of the given costumed 
 
 test('LayoutSprites sets the x position of sprites in the expected orientation', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -211,7 +211,7 @@ test('LayoutSprites sets the x position of sprites in the expected orientation',
 test('LayoutSprites is safe to call with any layout on an empty group', async t => {
   // Checking for divide-by-zero errors
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 
@@ -226,7 +226,7 @@ test('LayoutSprites is safe to call with any layout on an empty group', async t 
 
 test('LayoutSprites resets rotation', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});

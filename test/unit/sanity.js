@@ -1,9 +1,9 @@
-const test = require('tape');
+const test = require('tape-async');
 const helpers = require('../helpers/createDanceAPI');
 
 test('sanity', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 120,
   });
 
@@ -19,7 +19,7 @@ test('i18n', async t => {
       measure: () => 'hello'
     },
   });
-  nativeAPI.play({
+  await nativeAPI.play({
     bpm: 0,
   });
 
