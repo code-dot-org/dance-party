@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dance Party</title>
-
     <style>
       .loading {
-        position:fixed;
-        top: 100px;
-        left: 150px;
+        width: 400px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     </style>
-
-    <div id="p5_loading" class="loading">
-      <img src="dancepartyloader.gif" style="width:100px;height:100px;" class="left">
-    </div>
-
   </head>
 
   <body>
 
-    <div id="dance"></div>
+    <div id="dance">
+      <div id="p5_loading" class="loading">
+        <img src="dancepartyloader.gif" style="width:100px;height:100px;" class="left">
+      </div>
+    </div>
 
     <button id="run" style="display: none;">Reset</button><br/><br/>
     <textarea id="code" rows="10" cols="80"></textarea>
