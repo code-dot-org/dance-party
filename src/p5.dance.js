@@ -145,6 +145,8 @@ module.exports = class DanceParty {
         // Already loaded, nothing to do:
         return;
       }
+      // We have found a new sprite to load, reset allSpritesLoaded to false
+      this.allSpritesLoaded = false;
       const costumeData = animationData[costume.toLowerCase()];
       this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
         const moveData = costumeData[moveName.toLowerCase()];
@@ -172,7 +174,11 @@ module.exports = class DanceParty {
         }));
       });
     });
-    return Promise.all(promises);
+    const promise = Promise.all(promises);
+    promise.then(() => {
+      this.allSpritesLoaded = true;
+    });
+    return promise;
   }
 
   async ensureSpritesAreLoaded(spriteNames) {
@@ -187,7 +193,6 @@ module.exports = class DanceParty {
     this.lastEnsureSpritesPromise_ = new Promise(async (resolveAllSpritesLoaded) => {
       this.resourceLoader_.getAnimationData(async (animationData) => {
         await this.loadSprites(animationData, spriteNames);
-        this.allSpritesLoaded = true;
         resolveAllSpritesLoaded();
       });
     });

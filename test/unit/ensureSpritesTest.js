@@ -132,7 +132,7 @@ test('ensureSpritesAreLoaded can be called multiple times after play/reset', asy
   await nativeAPI.play({
     bpm: 120,
   });
-  
+
   t.deepEqual(testInterface.getAvailableSpriteNames(), ["BEAR", "CAT"]);
 
   const spriteCat = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
