@@ -10,6 +10,7 @@ module.exports = class ResourceLoader {
   constructor(assetBase = ASSET_BASE) {
     this.p5_ = null;
     this.assetBase_ = assetBase;
+    this.imageCache_ = {};
   }
 
   initWithP5(p5) {
@@ -36,6 +37,16 @@ module.exports = class ResourceLoader {
     // a canvas creation. This makes it possible to run on mobile Safari in
     // iOS 12 with canvas memory limits.
     const spriteSheetUrl = `${this.assetBase_}${baseName}`;
-    return this.p5_.loadSpriteSheet(spriteSheetUrl, frameData, callback);
+    if (this.imageCache_[spriteSheetUrl]) {
+      // If already in the imageCache, trigger the callback ourselves since we
+      // aren't calling loadImageElement()
+      setTimeout(() => {
+        callback(this.imageCache_[spriteSheetUrl]);
+      }, 0);
+    } else {
+      this.imageCache_[spriteSheetUrl] = this.p5_.loadImageElement(spriteSheetUrl, callback);
+    }
+    const sheet = this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData);
+    return sheet;
   }
 };
