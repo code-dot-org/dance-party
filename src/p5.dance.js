@@ -235,6 +235,12 @@ module.exports = class DanceParty {
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
+
+    if (this.showMeasureLabel) {
+      this.p5_.resizeCanvas(400, 500, false);
+      // Prevent effects that rely on canvas size from extending into the measure visualizer space
+      this.p5_.height = 400;
+    }
   }
 
   getBackgroundEffect() {
@@ -815,6 +821,64 @@ module.exports = class DanceParty {
     }
   }
 
+  drawMeasure(measure, offset, size) {
+    if (measure < 1 && offset === 0) {
+      return;
+    }
+    let x = offset > 0 ?
+      50 + ((offset - measure % 1) * 150) : 50;
+    this.p5_.push();
+    this.p5_.fill("white");
+    this.p5_.stroke("#00adbc");
+    this.p5_.strokeWeight(5);
+    this.p5_.line(x, 430, x, 460);
+    this.p5_.ellipse(x, 430, size, size);
+    this.p5_.noStroke();
+    this.p5_.fill("black");
+    this.p5_.textSize(size / 2);
+    this.p5_.textAlign(this.p5_.CENTER, this.p5_.CENTER);
+    this.p5_.text(Math.floor(measure) + offset, x, 430);
+    this.p5_.pop();
+  }
+
+  drawMeasureMeter(events) {
+    let current = this.getCurrentMeasure();
+    this.p5_.push();
+    this.p5_.fill("white");
+    this.p5_.noStroke();
+    this.p5_.rect(0, 400, 400, 100);
+    this.p5_.stroke("#00adbc");
+    this.p5_.strokeWeight(5);
+    this.p5_.line(50, 450, 350, 450);
+
+    let beatX = 50 + (0 - current % 1) * 150;
+    while (beatX <= 350) {
+      if (beatX > 50) {
+        this.p5_.line(beatX, 445, beatX, 455);
+      }
+      beatX += 37.5;
+    }
+
+    this.drawMeasure(current, 2, 30);
+    this.drawMeasure(current, 1, 30);
+    this.drawMeasure(current, 0, 35);
+
+    for (let i = 0; this.world.cues.measures[i] < this.getCurrentMeasure() + 2; i++) {
+      beatX = 50 + ((this.world.cues.measures[i] - this.getCurrentMeasure()) * 150);
+      this.p5_.stroke("#ffa400");
+      this.p5_.strokeWeight(10);
+      this.p5_.point(beatX, 450);
+    }
+
+    if (events['cue-measures'] || events['cue-seconds']) {
+      this.p5_.noFill();
+      this.p5_.strokeWeight(8);
+      this.p5_.stroke("#ffa400");
+      this.p5_.ellipse(50, 430, 35, 35);
+    }
+    this.p5_.pop();
+  }
+
   // Behaviors
 
   /**
@@ -1036,8 +1100,9 @@ module.exports = class DanceParty {
     this.p5_.textSize(20);
 
     this.world.validationCallback(this.world, this, this.sprites_);
-    if (this.showMeasureLabel) {
-      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
+    if (this.showMeasureLabel && this.songStartTime_ > 0) {
+      //this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
+      this.drawMeasureMeter(events);
     }
 
     if (Object.keys(events).length && this.onHandleEvents) {
