@@ -26,8 +26,9 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
 
       api.addCues(getCueList());
       api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
-      await api.play({bpm: bpm, delay: 0});
+      await api.ensureSpritesAreLoaded();
       runUserSetup();
+      api.play({bpm: bpm, delay: 0});
     },
   });
 };
