@@ -5,6 +5,7 @@ const Effects = require('./Effects');
 const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
+const ResourceLoader = require('./ResourceLoader');
 
 function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
@@ -22,7 +23,6 @@ const WATCHED_KEYS = [
 ];
 const WATCHED_RANGES = [0, 1, 2];
 
-const ASSET_BASE = "https://curriculum.code.org/images/sprites/spritesheet_tp2/";
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 const ANIMATIONS = {};
@@ -38,21 +38,22 @@ module.exports = class DanceParty {
     onInit,
     onPuzzleComplete,
     playSound,
-    moveNames,
     recordReplayLog,
     showMeasureLabel = true,
     container,
     spriteConfig,
-    assetBase,
     i18n = {
       measure: () => "Measure:",
     },
+    // For testing: Can provide a custom resource loader class
+    // to load fixtures and/or isolate us entirely from network activity
+    resourceLoader = new ResourceLoader(),
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
-    this.assetBase = assetBase || ASSET_BASE;
+    this.resourceLoader_ = resourceLoader;
 
     this.world = {
       height: 400,
@@ -94,7 +95,7 @@ module.exports = class DanceParty {
     };
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
-    this.world.MOVE_NAMES = moveNames || constants.MOVE_NAMES;
+    this.world.MOVE_NAMES = constants.MOVE_NAMES;
 
     if (spriteConfig) {
       spriteConfig(this.world);
@@ -119,6 +120,7 @@ module.exports = class DanceParty {
 
     new P5(p5Inst => {
       this.p5_ = p5Inst;
+      this.resourceLoader_.initWithP5(p5Inst);
       this.sprites_ = p5Inst.createGroup();
       p5Inst.preload = () => this.preload();
       p5Inst.setup = () => this.setup();
@@ -191,35 +193,18 @@ module.exports = class DanceParty {
   }
 
   preload() {
-    // Load spritesheets compressed to various levels of quality with pngquant
-    // Pass queryparam ?quality=<quality> to try a particular quality level.
-    // Only those png assets will be downlaoded.
-    // Available quality levels:
-    // 50 - 40% smaller
-    // 25 - 46%
-    // 10 - 51%
-    //  5 - 55%
-    //  1 - 55%
-    //  0 - 63% smaller
-    let qualitySuffix = '-q50'; // Default to q50 for now.  Set to '' to go back to full-quality.
-    const qualitySetting = queryParam('quality');
-    if (qualitySetting) {
-      qualitySuffix = `-q${qualitySetting}`;
-      document.title = `q${qualitySetting} - ${document.title}`;
-    }
-
-    // Load spritesheet JSON files
-    this.world.SPRITE_NAMES.forEach(this_sprite => {
-      ANIMATIONS[this_sprite] = [];
-      this.world.MOVE_NAMES.forEach(({ name, mirror }, moveIndex) => {
-        const baseUrl = `${this.assetBase}${this_sprite}_${name}`;
-        this.p5_.loadJSON(`${baseUrl}.json`, jsonData => {
-          // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
-          // it to load the image as a Image (instead of a p5.Image), which avoids
-          // a canvas creation. This makes it possible to run on mobile Safari in
-          // iOS 12 with canvas memory limits.
-          this.setAnimationSpriteSheet(this_sprite, moveIndex,
-            this.p5_.loadSpriteSheet(`${baseUrl}${qualitySuffix}.png`, jsonData.frames, true), mirror)
+    this.resourceLoader_.getAnimationData(animationData => {
+      this.world.SPRITE_NAMES.forEach(costume => {
+        const costumeData = animationData[costume.toLowerCase()];
+        ANIMATIONS[costume] = [];
+        this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
+          const moveData = costumeData[moveName.toLowerCase()];
+          this.setAnimationSpriteSheet(
+            costume,
+            moveIndex,
+            this.resourceLoader_.loadSpriteSheet(moveData.spritesheet, moveData.frames),
+            mirror
+          );
         });
       });
     });

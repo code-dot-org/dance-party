@@ -1,5 +1,7 @@
 const test = require('tape');
+const constants = require('../../src/constants');
 const helpers = require('../helpers/createDanceAPI');
+const UnitTestResourceLoader = require('../helpers/UnitTestResourceLoader');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
   const nativeAPI = await helpers.createDanceAPI();
@@ -177,7 +179,10 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
 test('Sprite dance changes will throw with invalid parameters', async t => {
 
   const subTest = async ({ moveCount = 3, testCode }) => {
-    const nativeAPI = await helpers.createDanceAPI();
+    // These tests set up their own moves, assuming no initial moves
+    const nativeAPI = await helpers.createDanceAPI({
+      spriteConfig: world => world.MOVE_NAMES = []
+    });
     nativeAPI.play({
       bpm: 120,
     });
@@ -252,26 +257,11 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
 });
 
 test('Sprite move sorting works reliably', async t => {
-
-  const P5 = require('../../src/loadP5');
-
-  P5.prototype.loadJSON = function (_url, callback) {
-    setTimeout(() => {
-      this._preloadCount--;
-      this._runIfPreloadsAreDone();
-      callback('{"frames":{}}');
-    }, 0);
-  };
-  P5.prototype.loadImageElement = function (_url, callback) {
-    setTimeout(() => {
-      this._preloadCount--;
-      this._runIfPreloadsAreDone();
-      callback(new Image());
-    }, 0);
-  };
-
   const subTest = async ({ moveNames, testCode }) => {
-    const nativeAPI = await helpers.createDanceAPI({ moveNames, spriteConfig: world => { world.SPRITE_NAMES = ['foo']; } });
+    const nativeAPI = await helpers.createDanceAPI({
+      spriteConfig: world => { world.MOVE_NAMES = moveNames; },
+      resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNames),
+    });
 
     nativeAPI.p5_.noLoop();
 
