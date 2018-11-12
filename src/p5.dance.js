@@ -25,7 +25,6 @@ const WATCHED_RANGES = [0, 1, 2];
 
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
-const ANIMATIONS = {};
 
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
@@ -101,9 +100,10 @@ module.exports = class DanceParty {
       spriteConfig(this.world);
     }
 
-    // Initialize ANIMATIONS object with empty arrays for each character
+    // Initialize animations object with empty arrays for each character
+    this.animations = {};
     this.world.SPRITE_NAMES.forEach(costume=> {
-      ANIMATIONS[costume] = [];
+      this.animations[costume] = [];
     });
 
     // Sort after spriteConfig function has executed to ensure that
@@ -141,7 +141,7 @@ module.exports = class DanceParty {
   loadSprites(animationData, spriteNames) {
     const promises = [];
     spriteNames.forEach(costume => {
-      if (ANIMATIONS[costume].length === this.world.MOVE_NAMES.length) {
+      if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
         // Already loaded, nothing to do:
         return;
       }
@@ -216,6 +216,11 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      getAvailableSpriteNames: () => (
+        Object.entries(this.animations)
+          .filter(keyval => keyval[1].length > 0)
+          .map(keyval => keyval[0])
+      ),
       getPerformanceData: () => Object.assign({}, this.performanceData_),
     };
   }
@@ -255,10 +260,7 @@ module.exports = class DanceParty {
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
-    if (!ANIMATIONS[sprite]) {
-      ANIMATIONS[sprite] = [];
-    }
-    ANIMATIONS[sprite][moveIndex] = {
+    this.animations[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
       animation: animation || 'missing',
@@ -351,8 +353,8 @@ module.exports = class DanceParty {
     sprite.current_move = 0;
     sprite.previous_move = 0; // I don't think this is used?
 
-    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
-      sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
+    for (var i = 0; i < this.animations[costume].length; i++) {
+      sprite.addAnimation("anim" + i, this.animations[costume][i].animation);
     }
     sprite.animation.stop();
     this.sprites_.add(sprite);
@@ -378,7 +380,7 @@ module.exports = class DanceParty {
         }
 
         if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+          if (this.animations[sprite.style][sprite.current_move].mirror) {
             sprite.mirroring *= -1;
           }
           if (sprite.animation.looping) {
