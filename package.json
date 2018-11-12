@@ -3,6 +3,10 @@
   "version": "0.0.28",
   "description": "",
   "main": "dist/main.js",
+  "files": [
+    "dist/main.js",
+    "src/*.interpreted.js"
+  ],
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --mode development",
