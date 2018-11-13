@@ -142,3 +142,106 @@ test('non-conflicting atTimestamp cues, both take effect', async t => {
   t.end();
   nativeAPI.reset();
 });
+
+test('conflicting everyMeasures cues, rarer definition wins - rarer first', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(2, "measures", () => setBackground("purple"));
+    everySeconds(1, "measures", () => setBackground("orange"));
+  `);
+
+  function goToMeasuresAndVerify(n, expectedColor) {
+    interpretedAPI.runUserEvents({
+      any: true,
+      'cue-measures': {
+        [n]: true,
+      }
+    });
+    t.deepEqual(nativeAPI.world.background_color, expectedColor);
+  }
+
+  goToMeasuresAndVerify(1, undefined);
+  goToMeasuresAndVerify(2, 'orange');
+  goToMeasuresAndVerify(3, 'purple');
+  goToMeasuresAndVerify(4, 'orange');
+  goToMeasuresAndVerify(5, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures cues, rarer definition wins - rarer last', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(1, "measures", () => setBackground("orange"));
+    everySeconds(2, "measures", () => setBackground("purple"));
+  `);
+
+  function goToMeasuresAndVerify(n, expectedColor) {
+    interpretedAPI.runUserEvents({
+      any: true,
+      'cue-measures': {
+        [n]: true,
+      }
+    });
+    t.deepEqual(nativeAPI.world.background_color, expectedColor);
+  }
+
+  goToMeasuresAndVerify(1, undefined);
+  goToMeasuresAndVerify(2, 'orange');
+  goToMeasuresAndVerify(3, 'purple');
+  goToMeasuresAndVerify(4, 'orange');
+  goToMeasuresAndVerify(5, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures and atTimestamp cues, rarer definition wins - rarer first', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(2, "measures", () => setBackground("purple"));
+    atTimestamp(1, "measures", () => setBackground("orange"));
+  `);
+
+  function goToMeasuresAndVerify(n, expectedColor) {
+    interpretedAPI.runUserEvents({
+      any: true,
+      'cue-measures': {
+        [n]: true,
+      }
+    });
+    t.deepEqual(nativeAPI.world.background_color, expectedColor);
+  }
+
+  goToMeasuresAndVerify(1, undefined);
+  goToMeasuresAndVerify(2, 'orange');
+  goToMeasuresAndVerify(3, 'purple');
+  goToMeasuresAndVerify(4, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures cues and atTimestamp cues, rarer definition wins - rarer last', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(1, "measures", () => setBackground("orange"));
+    atTimestamp(3, "measures", () => setBackground("purple"));
+  `);
+
+  function goToMeasuresAndVerify(n, expectedColor) {
+    interpretedAPI.runUserEvents({
+      any: true,
+      'cue-measures': {
+        [n]: true,
+      }
+    });
+    t.deepEqual(nativeAPI.world.background_color, expectedColor);
+  }
+
+  goToMeasuresAndVerify(1, undefined);
+  goToMeasuresAndVerify(2, 'orange');
+  goToMeasuresAndVerify(3, 'orange');
+  goToMeasuresAndVerify(4, 'purple');
+  goToMeasuresAndVerify(5, 'orange');
+
+  t.end();
+  nativeAPI.reset();
+});
