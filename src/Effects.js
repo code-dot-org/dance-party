@@ -188,7 +188,7 @@ module.exports = class Effects {
 
     this.text = {
       texts: [],
-      maxTexts: 100,
+      maxTexts: 10,
       update: function (text, hue, size) {
         this.texts.push({
           x: randomNumber(25, 375),
