@@ -497,7 +497,7 @@ module.exports = class DanceParty {
 
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    if (move === "rand") {
+    if ((move === "rand") && (group.length>0)) {
       move = this.getNewChangedMove(move, group[0].current_move, false);
     }
     group.forEach(sprite => {
@@ -507,7 +507,7 @@ module.exports = class DanceParty {
 
   doMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    if (move === "rand") {
+    if ((move === "rand") && (group.length>0)) {
       move = this.getNewChangedMove(move, group[0].current_move, true);
     }
     group.forEach(sprite => {
