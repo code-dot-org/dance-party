@@ -42,11 +42,14 @@ module.exports = {
     frame.sprites = spritesToLog.map((sprite) => ({
       animationFrame: sprite.animation && sprite.animation.getFrame(),
       animationLabel: sprite.getAnimationLabel(),
+      height: sprite.height,
       mirrorX: sprite.mirrorX(),
       rotation: sprite.rotation,
       scale: sprite.scale,
       style: sprite.style,
       tint: sprite.tint === undefined ? undefined : p5.hue(p5.color(sprite.tint || 0)),
+      visible: sprite.visible,
+      width: sprite.width,
       x: sprite.x,
       y: sprite.y,
     }));
