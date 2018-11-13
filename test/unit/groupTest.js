@@ -50,6 +50,26 @@ test('changing dance moves for empty group does nothing without error', async t 
   nativeAPI.reset();
 });
 
+test('changing to a random dance for empty group does nothing without error', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  t.equal(catSprite.current_move, 0);
+  nativeAPI.changeMoveEachLR("BEAR", "rand");
+  t.equal(catSprite.current_move, 0);
+  nativeAPI.doMoveEachLR("BEAR", "rand");
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+
 test('changing visibility for all updates all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
