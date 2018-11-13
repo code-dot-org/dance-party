@@ -63,7 +63,7 @@ test('changing to a random dance for empty group does nothing without error', as
   nativeAPI.changeMoveEachLR("BEAR", "rand");
   t.equal(catSprite.current_move, 0);
   nativeAPI.doMoveEachLR("BEAR", "rand");
-
+  t.equal(catSprite.current_move, 0);
   t.end();
 
   nativeAPI.reset();
