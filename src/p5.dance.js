@@ -442,34 +442,41 @@ module.exports = class DanceParty {
    * Returns a next/prev/rand move
    * @param {string} requestedChange - 'prev'/'next'/'rand' move request
    * @param {number} currentMove - value representing current move of sprite
+   * @param {boolean} doMoveMode - is this coming from a doMove request
    */
-  getNewChangedMove(requestedChange, currentMove) {
+  getNewChangedMove(requestedChange, currentMove, doMoveMode) {
     // Number of valid full length moves
     const { fullLengthMoveCount, restMoveCount } = this.world;
     const firstNonRestingMoveIndex = restMoveCount;
     // The "rest" moves are assumed to always be at the beginning
     const nonRestingFullLengthMoveCount = fullLengthMoveCount - restMoveCount;
-    if (nonRestingFullLengthMoveCount <= 1) {
-      throw new Error("next/prev/rand requires that we have 2 or more non-resting full length moves");
+    const selectableMoves = doMoveMode ? this.world.MOVE_NAMES.length : nonRestingFullLengthMoveCount;
+    if (selectableMoves <= 1) {
+      throw new Error("next/prev/rand requires that we have 2 or more selectable moves");
     }
     let move = currentMove;
-    if (requestedChange === "next") {
+    if (requestedChange === "next" && !doMoveMode) {
       move = currentMove + 1;
       if (move >= fullLengthMoveCount) {
         move = firstNonRestingMoveIndex;
       }
-    } else if (requestedChange === "prev") {
+    } else if (requestedChange === "prev" && !doMoveMode) {
       move = currentMove - 1;
       if (move < firstNonRestingMoveIndex) {
         move = fullLengthMoveCount - 1;
       }
-    } else if (requestedChange === "rand") {
-      // Make sure random switches to a new move
+    } else if (requestedChange === "rand" && !doMoveMode) {
+      // Make sure random switches to a new move from the full length non resting options
       while (move === currentMove) {
         move = randomInt(this.world.restMoveCount, this.world.fullLengthMoveCount - 1);
       }
+    } else if (requestedChange === "rand" && doMoveMode) {
+      // Make sure random switches to a new move
+      while (move === currentMove) {
+        move = randomInt(0, this.world.MOVE_NAMES.length - 1);
+      }
     } else {
-      throw new Error(`Unexpected move value: ${move}`);
+      throw new Error(`Unexpected requestedChange value: ${requestedChange}`);
     }
     return move;
   }
@@ -485,7 +492,7 @@ module.exports = class DanceParty {
         throw new Error("Not moving to a valid full length move index!");
       }
     } else {
-      move = this.getNewChangedMove(move, sprite.current_move);
+      move = this.getNewChangedMove(move, sprite.current_move, false);
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
@@ -506,7 +513,7 @@ module.exports = class DanceParty {
         throw new Error(`Invalid move index: ${move}`);
       }
     } else {
-      move = this.getNewChangedMove(move, sprite.current_move);
+      move = this.getNewChangedMove(move, sprite.current_move, true);
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
@@ -541,7 +548,7 @@ module.exports = class DanceParty {
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
     if (move === "rand") {
-      move = this.getNewChangedMove(move, group[0].current_move);
+      move = this.getNewChangedMove(move, group[0].current_move, false);
     }
     group.forEach(sprite => {
       this.changeMoveLR(sprite, move, dir);
@@ -551,7 +558,7 @@ module.exports = class DanceParty {
   doMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
     if (move === "rand") {
-      move = this.getNewChangedMove(move, group[0].current_move);
+      move = this.getNewChangedMove(move, group[0].current_move, true);
     }
     group.forEach(sprite => {
       this.doMoveLR(sprite, move, dir);

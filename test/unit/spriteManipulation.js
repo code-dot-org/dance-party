@@ -214,7 +214,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "invalid string parameter");
+    t.equal(error.toString(), "Error: Unexpected requestedChange value: some_string");
   }});
 
   // Verify invalid move index behavior for changeMoveLR():
@@ -226,7 +226,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "invalid move index for changeMoveLR");
+    t.equal(error.toString(), "Error: Not moving to a valid full length move index!");
   }});
 
   // Verify invalid rand move because we don't have any different, non-resting moves:
@@ -238,7 +238,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "invalid rand move");
+    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
   }});
 
   // Verify invalid move index behavior for doMoveLR():
@@ -250,7 +250,29 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "invalid move index for doMoveLR");
+    t.equal(error.toString(), "Error: Invalid move index: 3");
+  }});
+
+  // Verify "next" is not allowed for doMoveLR():
+  await subTest({ testCode: ({ nativeAPI, sprite }) => {
+    let error = null;
+    try {
+      nativeAPI.doMoveLR(sprite, 'next', 1);
+    } catch (e) {
+      error = e;
+    }
+    t.equal(error.toString(), "Error: Unexpected requestedChange value: next");
+  }});
+
+  // Verify "prev" is not allowed for doMoveLR():
+  await subTest({ testCode: ({ nativeAPI, sprite }) => {
+    let error = null;
+    try {
+      nativeAPI.doMoveLR(sprite, 'prev', 1);
+    } catch (e) {
+      error = e;
+    }
+    t.equal(error.toString(), "Error: Unexpected requestedChange value: prev");
   }});
 
   t.end();
@@ -330,6 +352,43 @@ test('Sprite move sorting works reliably', async t => {
     t.equal(nativeAPI.world.restMoveCount, 1);
     t.equal(nativeAPI.world.fullLengthMoveCount, 2);
   }});
+
+  t.end();
+});
+
+test('Sprite doMove rand will choose short burst', async t => {
+  const moveNamesOneFullLengthOneShortBurst = [
+    {
+      name: 'rest',
+      rest: true,
+    },
+    {
+      name: 'shortBurst1',
+      shortBurst: true,
+    },
+  ];
+
+  const nativeAPI = await helpers.createDanceAPI({
+    spriteConfig: world => { world.MOVE_NAMES = moveNamesOneFullLengthOneShortBurst; },
+    resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNamesOneFullLengthOneShortBurst),
+  });
+
+  nativeAPI.world.moveNames = moveNamesOneFullLengthOneShortBurst;
+  nativeAPI.world.fullLengthMoveCount = 1;
+  nativeAPI.world.restMoveCount = 1;
+
+  nativeAPI.p5_.noLoop();
+
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  t.equal(sprite.getAnimationLabel(), 'anim0');
+
+  nativeAPI.doMoveLR(sprite, 'rand', 1);
+
+  // Verify the animation has changed to anim1
+  t.equal(sprite.getAnimationLabel(), 'anim1');
+
+  nativeAPI.reset();
 
   t.end();
 });
@@ -507,7 +566,9 @@ test('changing width and height accounted for during p5 draw', async t => {
 test('prev, next, and rand dance move will throw when not enough dance moves', async t => {
 
   const subTest = async ({moveCount = 1, testCode}) => {
-    const nativeAPI = await helpers.createDanceAPI();
+    const nativeAPI = await helpers.createDanceAPI({
+      spriteConfig: world => world.MOVE_NAMES = []
+    });
     await nativeAPI.play({
       bpm: 120,
     });
@@ -535,11 +596,11 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'rand' when only one dance should fail
-      nativeAPI.getNewChangedMove(sprite, 'rand', 1);
+      nativeAPI.changeMoveLR(sprite, 'rand', 1);
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
   }});
 
   // Verify invalid move index behavior for changeMoveLR():
@@ -547,11 +608,11 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'next' when only one dance should fail
-      nativeAPI.getNewChangedMove(sprite, 'next', 1);
+      nativeAPI.changeMoveLR(sprite, 'next', 1);
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
   }});
 
   // Verify invalid rand move because we don't have any different, non-resting moves:
@@ -559,11 +620,11 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     let error = null;
     try {
       // Requesting 'prev' when only one dance should fail
-      nativeAPI.getNewChangedMove(sprite, 'prev', 1);
+      nativeAPI.changeMoveLR(sprite, 'prev', 1);
     } catch (e) {
       error = e;
     }
-    t.notEqual(error, null, "next/prev/rand requires that we have 2 or more non-resting full length moves");
+    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
   }});
 
   t.end();
