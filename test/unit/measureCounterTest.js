@@ -12,7 +12,7 @@ test('Shows 0 for current measure when current measure is negative', async t => 
     "delay": 4.0,
   };
   await nativeAPI.ensureSpritesAreLoaded();
-  
+
   const clock = sinon.useFakeTimers(Date.now());
   await nativeAPI.play(fakeSongData);
 
