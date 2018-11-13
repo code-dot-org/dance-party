@@ -14,6 +14,16 @@ async function runUserCode(userCode) {
   };
 }
 
+function goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, n, expectedColor) {
+  interpretedAPI.runUserEvents({
+    any: true,
+    'cue-measures': {
+      [n]: true,
+    }
+  });
+  t.deepEqual(nativeAPI.world.background_color, expectedColor);
+}
+
 test('atTimestamp adds a cue to the cue list', async t => {
   const {nativeAPI, interpretedAPI} = await runUserCode(`
     atTimestamp(2, "seconds", function () {});
@@ -149,21 +159,11 @@ test('conflicting everyMeasures cues, rarer definition wins - rarer first', asyn
     everySeconds(1, "measures", () => setBackground("orange"));
   `);
 
-  function goToMeasuresAndVerify(n, expectedColor) {
-    interpretedAPI.runUserEvents({
-      any: true,
-      'cue-measures': {
-        [n]: true,
-      }
-    });
-    t.deepEqual(nativeAPI.world.background_color, expectedColor);
-  }
-
-  goToMeasuresAndVerify(1, undefined);
-  goToMeasuresAndVerify(2, 'orange');
-  goToMeasuresAndVerify(3, 'purple');
-  goToMeasuresAndVerify(4, 'orange');
-  goToMeasuresAndVerify(5, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
 
   t.end();
   nativeAPI.reset();
@@ -175,21 +175,11 @@ test('conflicting everyMeasures cues, rarer definition wins - rarer last', async
     everySeconds(2, "measures", () => setBackground("purple"));
   `);
 
-  function goToMeasuresAndVerify(n, expectedColor) {
-    interpretedAPI.runUserEvents({
-      any: true,
-      'cue-measures': {
-        [n]: true,
-      }
-    });
-    t.deepEqual(nativeAPI.world.background_color, expectedColor);
-  }
-
-  goToMeasuresAndVerify(1, undefined);
-  goToMeasuresAndVerify(2, 'orange');
-  goToMeasuresAndVerify(3, 'purple');
-  goToMeasuresAndVerify(4, 'orange');
-  goToMeasuresAndVerify(5, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
 
   t.end();
   nativeAPI.reset();
@@ -201,20 +191,10 @@ test('conflicting everyMeasures and atTimestamp cues, rarer definition wins - ra
     atTimestamp(1, "measures", () => setBackground("orange"));
   `);
 
-  function goToMeasuresAndVerify(n, expectedColor) {
-    interpretedAPI.runUserEvents({
-      any: true,
-      'cue-measures': {
-        [n]: true,
-      }
-    });
-    t.deepEqual(nativeAPI.world.background_color, expectedColor);
-  }
-
-  goToMeasuresAndVerify(1, undefined);
-  goToMeasuresAndVerify(2, 'orange');
-  goToMeasuresAndVerify(3, 'purple');
-  goToMeasuresAndVerify(4, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
 
   t.end();
   nativeAPI.reset();
@@ -226,21 +206,11 @@ test('conflicting everyMeasures cues and atTimestamp cues, rarer definition wins
     atTimestamp(3, "measures", () => setBackground("purple"));
   `);
 
-  function goToMeasuresAndVerify(n, expectedColor) {
-    interpretedAPI.runUserEvents({
-      any: true,
-      'cue-measures': {
-        [n]: true,
-      }
-    });
-    t.deepEqual(nativeAPI.world.background_color, expectedColor);
-  }
-
-  goToMeasuresAndVerify(1, undefined);
-  goToMeasuresAndVerify(2, 'orange');
-  goToMeasuresAndVerify(3, 'orange');
-  goToMeasuresAndVerify(4, 'purple');
-  goToMeasuresAndVerify(5, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'orange');
 
   t.end();
   nativeAPI.reset();
