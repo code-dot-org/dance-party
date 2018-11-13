@@ -212,6 +212,7 @@ module.exports = class Effects {
           this.update(text, centroid, randomNumber(14, 48));
         }
         p5.push();
+        p5.background(colorFromHue(0, 0, 23));
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
