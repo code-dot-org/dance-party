@@ -175,7 +175,6 @@ module.exports = {
         doMoveLR(right_dancer, MOVES.XArmsUp, -1);
       });
     `,
-    // TODO: (JoshC) add real validation for this level.
     validationCode: `
       if (World.validationStatus == undefined) {
         World.validationStatus = 3;
@@ -185,7 +184,7 @@ module.exports = {
        
       if (nativeAPI.getTime("measures") > 8) { 
         if (World.validationStatus > 0) {
-          nativeAPI.fail('Make sure you add a \'when key\' event and press the key to test it.');
+          nativeAPI.fail("Make sure you add a 'when key' event and press the key to test it.");
         } else {
           nativeAPI.pass();
         }

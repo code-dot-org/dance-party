@@ -15,7 +15,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200, keyPre
     onInit: api => {
       nativeAPI = api;
 
-      const validationCallback = new Function('World', 'nativeAPI', 'sprites', validationCode);
+      const validationCallback = new Function('World', 'nativeAPI', 'sprites', 'events', validationCode);
       api.registerValidation(validationCallback);
 
       const {
