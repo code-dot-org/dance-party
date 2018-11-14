@@ -1009,6 +1009,7 @@ module.exports = class DanceParty {
       title,
     };
 
+    this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);
 
     if (this.p5_.frameCount > 2) {
