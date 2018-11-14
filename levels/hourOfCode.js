@@ -184,7 +184,7 @@ module.exports = {
        
       if (nativeAPI.getTime("measures") > 8) { 
         if (World.validationStatus > 0) {
-          nativeAPI.fail("Make sure you add a 'when key' event and press the key to test it.");
+          nativeAPI.fail("Make sure you add a \`when key\` event and press the key to test it.");
         } else {
           nativeAPI.pass();
         }

@@ -108,7 +108,16 @@ test('Dance 10: Pass the level', t => {
   attempt(level.solution, level.validationCode, (result) => {
     t.true(result);
     t.end();
-  }, 240, {
+  }, 320, {
     1000: KEY_UP_ARROW,
   });
+});
+
+test('Dance 10: Fail the level', t => {
+  const level = levels.hoc10;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Make sure you add a `when key` event and press the key to test it.');
+    t.end();
+  }, 320);
 });
