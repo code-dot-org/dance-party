@@ -156,4 +156,31 @@ module.exports = {
       }
     `,
   },
+  hoc10: {
+    solution: `
+      var left_dancer;
+      var right_dancer;
+
+      whenSetup(function () {
+        setBackgroundEffect("splatter");
+        left_dancer = makeNewDanceSprite("CAT", left_dancer, {x: 100, y: 200});
+        right_dancer = makeNewDanceSprite("ROBOT", right_dancer, {x: 300, y: 200});
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(left_dancer, "next", -1);
+      });
+
+      whenKey("up", function () {
+        doMoveLR(right_dancer, MOVES.XArmsUp, -1);
+      });
+    `,
+    // TODO: (JoshC) add real validation for this level.
+    validationCode: `
+      if (nativeAPI.getTime("measures") > 8){
+        // Always succeed
+        nativeAPI.pass();
+      }
+    `,
+  },
 };
