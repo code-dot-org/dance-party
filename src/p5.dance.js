@@ -1042,7 +1042,7 @@ module.exports = class DanceParty {
     this.p5_.textAlign(this.p5_.TOP, this.p5_.LEFT);
     this.p5_.textSize(20);
 
-    this.world.validationCallback(this.world, this, this.sprites_);
+    this.world.validationCallback(this.world, this, this.sprites_, events);
     if (this.showMeasureLabel && this.getCurrentMeasure() >= 1) {
       this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
     }
