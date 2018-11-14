@@ -177,9 +177,18 @@ module.exports = {
     `,
     // TODO: (JoshC) add real validation for this level.
     validationCode: `
-      if (nativeAPI.getTime("measures") > 8){
-        // Always succeed
-        nativeAPI.pass();
+      if (World.validationStatus == undefined) {
+        World.validationStatus = 3;
+      } else if (events['this.p5_.keyWentDown']) {
+        World.validationStatus = 0;
+      }
+       
+      if (nativeAPI.getTime("measures") > 8) { 
+        if (World.validationStatus > 0) {
+          nativeAPI.fail('Make sure you add a \'when key\' event and press the key to test it.');
+        } else {
+          nativeAPI.pass();
+        }
       }
     `,
   },
