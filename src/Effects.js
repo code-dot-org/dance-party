@@ -20,6 +20,7 @@ module.exports = class Effects {
       }
     };
 
+    //background
     this.rainbow = {
       lengths: [0, 0, 0, 0, 0, 0, 0],
       current: 0,
@@ -50,6 +51,7 @@ module.exports = class Effects {
       }
     };
 
+    //background
     this.color_cycle = {
       color: colorFromHue(0),
       update: function () {
@@ -63,6 +65,7 @@ module.exports = class Effects {
       }
     };
 
+    //background
     this.disco = {
       bg: undefined,
       colors: [],
@@ -106,6 +109,7 @@ module.exports = class Effects {
       }
     };
 
+    //background
     this.diamonds = {
       hue: 0,
       update: function () {
@@ -129,6 +133,7 @@ module.exports = class Effects {
       }
     };
 
+    //to be removed
     this.strobe = {
       waitTime: 0,
       flashing: false,
@@ -152,6 +157,7 @@ module.exports = class Effects {
       }
     };
 
+    //foreground
     this.rain = {
       drops: [],
       init: function () {
@@ -186,6 +192,7 @@ module.exports = class Effects {
       }
     };
 
+    //foreground
     this.text = {
       texts: [],
       maxTexts: 10,
@@ -223,9 +230,10 @@ module.exports = class Effects {
       }
     };
 
+    //foreground
     this.raining_tacos = {
       tacos: [],
-      size: 50,
+      size: 30,
       init: function () {
         for (let i = 0; i < 20; i++) {
           this.tacos.push({
@@ -261,6 +269,248 @@ module.exports = class Effects {
         }
       }
     };
+
+    //foreground
+    this.raining_unicorns = {
+      unicorn: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.unicorn.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.unicorn.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.unicorn.length; i++) {
+          p5.push();
+          const unicorn = this.unicorn[i];
+          p5.translate(unicorn.x, unicorn.y);
+          p5.rotate(unicorn.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(55358, 56708), 0, 0);
+          unicorn.y += unicorn.speed;
+          unicorn.rot++;
+          if (unicorn.y > 450) {
+            unicorn.x = randomNumber(20, 380);
+            unicorn.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //foreground
+    this.raining_poop = {
+      poop: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.poop.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.poop.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.poop.length; i++) {
+          p5.push();
+          const poop = this.poop[i];
+          p5.translate(poop.x, poop.y);
+          p5.rotate(poop.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(55357, 56489), 0, 0);
+          poop.y += poop.speed;
+          poop.rot++;
+          if (poop.y > 450) {
+            poop.x = randomNumber(20, 380);
+            poop.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //foreground
+    this.raining_smiley = {
+      smiley: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.smiley.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.smiley.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.smiley.length; i++) {
+          p5.push();
+          const smiley = this.smiley[i];
+          p5.translate(smiley.x, smiley.y);
+          p5.rotate(smiley.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(55357, 56898), 0, 0);
+          smiley.y += smiley.speed;
+          smiley.rot++;
+          if (smiley.y > 450) {
+            smiley.x = randomNumber(20, 380);
+            smiley.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //foreground
+    this.raining_music = {
+      music: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.music.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            //rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.music.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.music.length; i++) {
+          p5.push();
+          const music = this.music[i];
+          p5.translate(music.x, music.y);
+          p5.rotate(music.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(55356, 57270), 0, 0);
+          music.y += music.speed;
+          //music.rot++;
+          if (music.y > 450) {
+            music.x = randomNumber(20, 380);
+            music.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //foreground
+    this.raining_heart_red = {
+      heart_red: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.heart_red.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            //rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.heart_red.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.heart_red.length; i++) {
+          p5.push();
+          const heart_red = this.heart_red[i];
+          p5.translate(heart_red.x, heart_red.y);
+          p5.rotate(heart_red.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(10084, 65039), 0, 0);
+          heart_red.y += heart_red.speed;
+          //heart_red.rot++;
+          if (heart_red.y > 450) {
+            heart_red.x = randomNumber(20, 380);
+            heart_red.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //foreground
+    this.raining_heart_purple = {
+      heart_purple: [],
+      size: 30,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.heart_purple.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            //rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.heart_purple.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.heart_purple.length; i++) {
+          p5.push();
+          const heart_purple = this.heart_purple[i];
+          p5.translate(heart_purple.x, heart_purple.y);
+          p5.rotate(heart_purple.rot);
+          p5.textAlign(p5.CENTER, p5.CENTER);
+          p5.textSize(this.size);
+          p5.text(String.fromCodePoint(55357, 56476), 0, 0);
+          heart_purple.y += heart_purple.speed;
+          //heart_purple.rot++;
+          if (heart_purple.y > 450) {
+            heart_purple.x = randomNumber(20, 380);
+            heart_purple.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    //background
     this.splatter = {
       splats:[],
       numSplats:100,
@@ -298,6 +548,8 @@ module.exports = class Effects {
         }
       }
     };
+
+    //background
     this.swirl = {
       angle: 0,
       color: null,
@@ -320,6 +572,8 @@ module.exports = class Effects {
 
       }
     };
+
+    //background
     this.spiral = {
       angle: 0,
       color: null,
@@ -348,6 +602,8 @@ module.exports = class Effects {
 
       }
     };
+
+    //foreground
     this.spotlight = {
       x: 200,
       y: 200,
@@ -389,6 +645,8 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+
+    //foreground
     this.color_lights = {
       lights: [],
       newLight: function (x, arc, offset) {
@@ -430,7 +688,8 @@ module.exports = class Effects {
       }
     };
 
-    this.snowflakes = {
+    //background
+    this.snowflakes_blue = {
       flake: [],
       draw: function () {
         p5.background('lightblue');
@@ -461,7 +720,107 @@ module.exports = class Effects {
       }
     };
 
-    this.color_confetti = {
+    //foreground
+    this.confetti_neon_pink = {
+      confetti: [],
+      draw: function () {
+        p5.background('white');
+        let confetti = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(250, 5, 111),
+        };
+        this.confetti.push(confetti);
+        p5.noStroke();
+        this.confetti.forEach(function (confetti){
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          for (let i = 0; i < 5; i++) {
+            p5.rotate(180);
+            p5.rect(0, 0, 3, confetti.size);
+          }
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
+      }
+    };
+
+    //foreground
+    this.confetti_neon_green = {
+      confetti: [],
+      draw: function () {
+        p5.background('white');
+        let confetti = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(50, 250, 5),
+        };
+        this.confetti.push(confetti);
+        p5.noStroke();
+        this.confetti.forEach(function (confetti){
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          for (let i = 0; i < 5; i++) {
+            p5.rotate(180);
+            p5.rect(0, 0, 3, confetti.size);
+          }
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
+      }
+    };
+
+    //foreground
+    this.confetti_pastel_blue = {
+      confetti: [],
+      draw: function () {
+        p5.background('white');
+        let confetti = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(5, 234, 250),
+        };
+        this.confetti.push(confetti);
+        p5.noStroke();
+        this.confetti.forEach(function (confetti){
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          for (let i = 0; i < 5; i++) {
+            p5.rotate(180);
+            p5.rect(0, 0, 3, confetti.size);
+          }
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
+      }
+    };
+
+    //foreground
+    this.confetti_pastel = {
       confetti: [],
       draw: function () {
         p5.background('white');
