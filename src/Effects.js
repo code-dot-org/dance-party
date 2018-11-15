@@ -430,6 +430,74 @@ module.exports = class Effects {
       }
     };
 
+    this.kaleidoscope = {
+      init: function () {
+        this.shapes = p5.createGraphics(200, 200);
+        this.shapes.pixelDensity(1);
+        this.shapes.fill('white');
+        this.shapes.noStroke();
+        this.h = Math.sqrt(3) / 2 * 100;
+      },
+      hex: function () {
+        for (let i = 0; i < 3; i++) {
+          p5.image(this.shapes, -50, 0);
+          p5.scale(-1, 1);
+          p5.rotate(60);
+          p5.image(this.shapes, -50, 0);
+          p5.rotate(60);
+          p5.scale(-1, 1);
+        }
+      },
+      tessellate: function () {
+        p5.push();
+        p5.translate(100, this.h / 2);
+        for (let i = 0; i < 3; i++) {
+          this.hex();
+          p5.translate(0, this.h * 2);
+          this.hex();
+          p5.translate(0, this.h * 2);
+          this.hex();
+          p5.translate(150, this.h * -3);
+        }
+        p5.pop();
+      },
+      draw: function () {
+        if (!this.shapes) {
+          this.init();
+        }
+
+        p5.background('black');
+
+        const ctx = this.shapes._renderer.drawingContext;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(100, this.h);
+        ctx.lineTo(0, this.h);
+        ctx.clip();
+        this.shapes.background('#333');
+        this.shapes.rotate(p5.frameCount / 80);
+        ctx.fillRect(20, 20, 50, 50);
+        this.shapes.fill('red');
+        this.shapes.triangle(0, 10, 80, 90, 0, 100);
+        this.shapes.fill('orange');
+        this.shapes.triangle(20, 0, 50, 30, 30, 60);
+        this.shapes.fill('#0f0');
+        this.shapes.ellipse(100, 50, 80);
+        this.shapes.fill('blue');
+        this.shapes.ellipse(-50, -50, 50, 50);
+        this.shapes.rotate(17);
+        this.shapes.fill('pink');
+        this.shapes.rect(30, 40, 10, 40);
+        this.shapes.rotate(37);
+        this.shapes.fill('white');
+        this.shapes.rect(30, 40, 20, 40);
+        ctx.restore();
+
+        this.tessellate();
+      }
+    };
+
     this.snowflakes = {
       flake: [],
       draw: function () {
