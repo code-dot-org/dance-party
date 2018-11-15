@@ -449,16 +449,36 @@ module.exports = class Effects {
         }
       },
       tessellate: function () {
+        const offset = this.h * 2 / -3;
         p5.push();
-        p5.translate(100, this.h / 2);
-        for (let i = 0; i < 3; i++) {
-          this.hex();
-          p5.translate(0, this.h * 2);
-          this.hex();
-          p5.translate(0, this.h * 2);
-          this.hex();
-          p5.translate(150, this.h * -3);
-        }
+        p5.translate(50, offset);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.pop();
+
+        p5.push();
+        p5.translate(200, this.h + offset);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.pop();
+
+        p5.push();
+        p5.translate(350, offset);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
+        p5.translate(0, this.h * 2);
+        this.hex();
         p5.pop();
       },
       draw: function () {
