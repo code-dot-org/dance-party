@@ -34,13 +34,17 @@ test('text background effect updates with song text', async t => {
   nativeAPI.reset();
 });
 
-test('swirl and spiral background effects', async t => {
+// TODO: this would be a good candidate for pixelmatch tests (Erin P).
+test('other background effects', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
   nativeAPI.setBackgroundEffect('swirl');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
   nativeAPI.setBackgroundEffect('spiral');
+  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+
+  nativeAPI.setBackgroundEffect('sparkles');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
   t.end();
