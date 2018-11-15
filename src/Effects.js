@@ -436,49 +436,61 @@ module.exports = class Effects {
         this.shapes.pixelDensity(1);
         this.shapes.fill('white');
         this.shapes.noStroke();
+        this.shapes.angleMode(p5.DEGREES);
         this.h = Math.sqrt(3) / 2 * 100;
       },
-      hex: function () {
-        for (let i = 0; i < 3; i++) {
-          p5.image(this.shapes, -50, 0);
-          p5.scale(-1, 1);
-          p5.rotate(60);
-          p5.image(this.shapes, -50, 0);
-          p5.rotate(60);
-          p5.scale(-1, 1);
-        }
+      diamondA: function () {
+        p5.push();
+        p5.image(this.shapes, -50, 0);
+        p5.rotate(-30);
+        p5.scale(-1, 1);
+        p5.rotate(30);
+        p5.image(this.shapes, -50, 0);
+        p5.pop();
+      },
+      diamondB: function () {
+        p5.push();
+        p5.translate(150, this.h);
+        p5.rotate(120);
+        p5.image(this.shapes, -50, 0);
+        p5.rotate(30);
+        p5.scale(-1, 1);
+        p5.rotate(-30);
+        p5.image(this.shapes, -50, 0);
+        p5.pop();
+      },
+      diamondC: function () {
+        p5.push();
+        p5.translate(150, this.h);
+        p5.rotate(-120);
+        p5.image(this.shapes, -50, 0);
+        p5.translate(100, 0);
+        p5.rotate(120);
+        p5.translate(200, 0);
+        p5.rotate(30);
+        p5.scale(-1, 1);
+        p5.rotate(-30);
+        p5.image(this.shapes, -50, 0);
+        p5.pop();
       },
       tessellate: function () {
-        const offset = this.h * 2 / -3;
         p5.push();
-        p5.translate(50, offset);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
+        this.diamondA();
+        this.diamondB();
+        this.diamondC();
+        p5.translate(300, 0);
+        this.diamondA();
+        this.diamondB();
         p5.pop();
 
         p5.push();
-        p5.translate(200, this.h + offset);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.pop();
-
-        p5.push();
-        p5.translate(350, offset);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
-        p5.translate(0, this.h * 2);
-        this.hex();
+        p5.translate(-150, this.h);
+        this.diamondB();
+        this.diamondC();
+        p5.translate(300, 0);
+        this.diamondA();
+        this.diamondB();
+        this.diamondC();
         p5.pop();
       },
       draw: function () {
@@ -495,27 +507,42 @@ module.exports = class Effects {
         ctx.lineTo(100, this.h);
         ctx.lineTo(0, this.h);
         ctx.clip();
-        this.shapes.rotate(p5.frameCount / 80);
-        ctx.fillRect(20, 20, 50, 50);
-        this.shapes.fill('red');
+        this.shapes.rotate(p5.frameCount);
+        this.shapes.rect(20, 20, 50, 50);
+        this.shapes.fill('#082036');
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
-        this.shapes.fill('orange');
+        this.shapes.fill('#3C565C');
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill('#0f0');
+        this.shapes.fill('#CB5612');
         this.shapes.ellipse(100, 50, 80);
-        this.shapes.fill('blue');
+        this.shapes.fill('#A6906E');
         this.shapes.ellipse(-50, -50, 50);
-        this.shapes.fill('tan');
+        this.shapes.fill('#F0DFA2');
         this.shapes.rect(-45, 0, 30, 30);
         this.shapes.rotate(17);
-        this.shapes.fill('pink');
+        this.shapes.fill('#271A3A');
         this.shapes.rect(30, 40, 10, 40);
         this.shapes.rotate(37);
         this.shapes.fill('white');
         this.shapes.rect(30, 40, 20, 40);
         ctx.restore();
 
+        p5.push();
+        // p5.translate(200, 200);
+        // p5.rotate(-p5.frameCount);
+        // p5.translate(-200, -200);
+        p5.translate(0, -this.h / 3);
         this.tessellate();
+        p5.translate(0, this.h * 2);
+        this.tessellate();
+        p5.translate(0, this.h * 2);
+        this.diamondA();
+        this.diamondB();
+        this.diamondC();
+        p5.translate(300, 0);
+        this.diamondA();
+        this.diamondB();
+        p5.pop();
       }
     };
 
