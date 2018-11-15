@@ -486,7 +486,7 @@ module.exports = class Effects {
           this.init();
         }
 
-        p5.background('black');
+        p5.background('#333');
 
         const ctx = this.shapes._renderer.drawingContext;
         ctx.save();
@@ -495,7 +495,6 @@ module.exports = class Effects {
         ctx.lineTo(100, this.h);
         ctx.lineTo(0, this.h);
         ctx.clip();
-        this.shapes.background('#333');
         this.shapes.rotate(p5.frameCount / 80);
         ctx.fillRect(20, 20, 50, 50);
         this.shapes.fill('red');
@@ -505,7 +504,9 @@ module.exports = class Effects {
         this.shapes.fill('#0f0');
         this.shapes.ellipse(100, 50, 80);
         this.shapes.fill('blue');
-        this.shapes.ellipse(-50, -50, 50, 50);
+        this.shapes.ellipse(-50, -50, 50);
+        this.shapes.fill('tan');
+        this.shapes.rect(-45, 0, 30, 30);
         this.shapes.rotate(17);
         this.shapes.fill('pink');
         this.shapes.rect(30, 40, 10, 40);
