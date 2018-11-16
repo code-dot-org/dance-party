@@ -17,109 +17,42 @@ async function createScreenshot(effectName) {
 async function testBackground(t, effect) {
   await createScreenshot(effect);
 
-  var img1 = fs.createReadStream(`test/visual/fixtures/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
-    img2 = fs.createReadStream(`test/visual/fixtures/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
-    filesRead = 0;
+  const actual = fs.createReadStream(`test/visual/fixtures/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
+    expected = fs.createReadStream(`test/visual/fixtures/${effect}.png`).pipe(new PNG()).on('parsed', doneReading);
+  let filesRead = 0;
 
   function doneReading() {
     if (++filesRead < 2) {
       return;
     }
-    var diff = new PNG({width: img1.width, height: img1.height});
+    const diff = new PNG({width: actual.width, height: actual.height});
 
-    let pixelDiff = pixelmatch(img1.data, img2.data, diff.data, img1.width, img1.height, {threshold: 0.1});
+    let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
     t.equal(pixelDiff, 0, effect);
   }
 }
 
-test('background - none', async t => {
-  await testBackground(t, 'none');
-
-  t.end();
-});
-
-test('background - swirl', async t => {
-  await testBackground(t, 'swirl');
-
-  t.end();
-});
-
-test('background - rainbow', async t => {
-  await testBackground(t, 'rainbow');
-
-  t.end();
-});
-
-test('background - color_cycle', async t => {
-  await testBackground(t, 'color_cycle');
-
-  t.end();
-});
-
-test('background - disco', async t => {
-  await testBackground(t, 'disco');
-
-  t.end();
-});
-
-test('background - diamonds', async t => {
-  await testBackground(t, 'diamonds');
-
-  t.end();
-});
-
-test('background - strobe', async t => {
-  await testBackground(t, 'strobe');
-
-  t.end();
-});
-
-test('background - rain', async t => {
-  await testBackground(t, 'rain');
-
-  t.end();
-});
-
-test('background - text', async t => {
-  await testBackground(t, 'text');
-
-  t.end();
-});
-
-test('background - raining_tacos', async t => {
-  await testBackground(t, 'raining_tacos');
-
-  t.end();
-});
-
-test('background - splatter', async t => {
-  await testBackground(t, 'splatter');
-
-  t.end();
-});
-
-test('background - spiral', async t => {
-  await testBackground(t, 'spiral');
-
-  t.end();
-});
-
-test('background - spotlight', async t => {
-  await testBackground(t, 'spotlight');
-
-  t.end();
-});
-
-test('background - color_lights', async t => {
-  await testBackground(t, 'color_lights');
-
-  t.end();
-});
-
-test('background - snowflakes', async t => {
-  await testBackground(t, 'snowflakes');
-
-  t.end();
+[
+  'none',
+  'swirl',
+  'rainbow',
+  'color_cycle',
+  'disco',
+  'diamonds',
+  'strobe',
+  'rain',
+  'text',
+  'raining_tacos',
+  'splatter',
+  'spiral',
+  'spotlight',
+  'color_lights',
+  'snowflakes'
+].forEach(effect => {
+  test(`background - ${effect}`, async t => {
+    await testBackground(t, effect);
+    t.end();
+  });
 });
 
 test('teardown', async t => {
