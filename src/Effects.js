@@ -1,9 +1,10 @@
 module.exports = class Effects {
-  constructor(p5, alpha, blend) {
+  constructor(p5, alpha, blend, deterministic) {
     this.blend = blend || p5.BLEND;
 
     function randomNumber(min, max) {
-      return Math.round(p5.random(min, max));
+      deterministic++;
+      return deterministic ? (Math.round((max + min)/2) + deterministic) % max : Math.round(p5.random(min, max));
     }
 
     function colorFromHue(h, s=100, l=80, a=alpha) {
