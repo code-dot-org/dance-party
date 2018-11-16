@@ -1,34 +1,21 @@
 const test = require('tape');
-const helpers = require('../helpers/createDanceAPI');
-const parseDataURL = require('data-urls');
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
+const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot');
 
-let nativeAPI = null;
-
-async function createBackgroundScreenshot(effectName) {
-  nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.p5_.randomSeed(0);
-  nativeAPI.setBackgroundEffect(effectName);
-  for (let i = 0; i < 100; i++) {
-    nativeAPI.getBackgroundEffect().draw({bpm: 0});
-  }
-
-  const buffer = parseDataURL(nativeAPI.p5_.canvas.toDataURL()).body;
+async function createScreenshot(effectName) {
+  await createBackgroundScreenshot(effectName, `test/visual/images/temp/`);
 
   // If there is no accepted image for this background (ex: it's a new background),
   // use this screenshot as accepted image
   if (!fs.existsSync(`test/visual/images/${effectName}.png`)) {
-    fs.writeFileSync(`test/visual/images/${effectName}.png`, buffer);
+    await createBackgroundScreenshot(effectName, `test/visual/images/`);
   }
-  fs.writeFileSync(`test/visual/images/temp/${effectName}.png`, buffer);
-
-  nativeAPI.reset();
 }
 
 async function testBackground(t, effect) {
-  await createBackgroundScreenshot(effect);
+  await createScreenshot(effect);
 
   var img1 = fs.createReadStream(`test/visual/images/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
     img2 = fs.createReadStream(`test/visual/images/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
@@ -57,13 +44,11 @@ test('background - swirl', async t => {
   t.end();
 });
 
-
 test('background - rainbow', async t => {
   await testBackground(t, 'rainbow');
 
   t.end();
 });
-
 
 test('background - color_cycle', async t => {
   await testBackground(t, 'color_cycle');
@@ -137,13 +122,16 @@ test('background - snowflakes', async t => {
   t.end();
 });
 
-
 test('teardown', async t => {
   //Clean-up testing artifacts after test complete
   await fs.readdir('test/visual/images/temp/', (err, files) => {
     files.forEach((file) => {
       fs.unlinkSync(`test/visual/images/temp/${file}`);
     });
+
+    if (fs.existsSync(`test/visual/images/temp`)) {
+      fs.rmdirSync(`test/visual/images/temp`);
+    }
   });
 
   t.end();

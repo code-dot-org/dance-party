@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js src test",
     "test": "npm run lint && nyc npm run test:unit && npm run test:integration && npm run test:visual",
     "test:unit": "tape ./test/unit/*.js",
-    "test:visual": "tape ./test/visual/backgrounds.js",
+    "test:visual": "tape ./test/visual/*.js",
     "test:integration": "karma start",
     "preversion": "npm install && npm run test",
     "version": "npm run build",
