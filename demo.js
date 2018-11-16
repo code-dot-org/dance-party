@@ -35,10 +35,8 @@ function runCode() {
 }
 
 textareaCode.value = textareaCode.value || `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-
-atTimestamp(2, "measures", function () {
-  setBackgroundEffect("disco");
-});
+setBackgroundEffect("matrix");
+setForegroundEffect("snowflakes");
 `;
 
 document.querySelector('#run').addEventListener('click', () => {

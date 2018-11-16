@@ -20,6 +20,18 @@ module.exports = class Effects {
       }
     };
 
+    this.matrix = {
+      draw: function () {
+        p5.push();
+        p5.background("blue");
+        p5.translate(200, 200);
+        p5.rotate(p5.frameCount);
+        p5.noStroke();
+        p5.rect(0, 0, 100, 50);
+        p5.pop();
+      }
+    };
+
     this.rainbow = {
       lengths: [0, 0, 0, 0, 0, 0, 0],
       current: 0,
@@ -573,7 +585,7 @@ module.exports = class Effects {
     this.snowflakes = {
       flake: [],
       draw: function () {
-        p5.background('lightblue');
+        //p5.background('lightblue');
         let flake = {
           x: p5.random(-100, 400),
           y: -10,
@@ -582,7 +594,7 @@ module.exports = class Effects {
         };
         this.flake.push(flake);
         p5.noStroke();
-        p5.fill('white');
+        p5.fill('red');
         this.flake.forEach(function (flake){
           p5.push();
           p5.translate(flake.x, flake.y);
