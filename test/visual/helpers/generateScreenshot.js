@@ -1,4 +1,4 @@
-const helpers = require('../helpers/createDanceAPI');
+const helpers = require('../../helpers/createDanceAPI');
 const parseDataURL = require('data-urls');
 const fs = require('fs');
 
