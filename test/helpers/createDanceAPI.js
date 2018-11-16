@@ -8,6 +8,7 @@ module.exports = {
         playSound: (url, callback) => callback(),
         onInit: nativeAPI => resolve(nativeAPI),
         resourceLoader: new UnitTestResourceLoader(),
+        deterministic: props.deterministic,
         ...props
       });
     });
