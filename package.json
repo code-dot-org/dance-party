@@ -8,9 +8,9 @@
     "dev": "webpack-dev-server --mode development",
     "codecov": "mkdir -p coverage && nyc report --reporter=text-lcov > ./coverage/unit.lcov && codecov",
     "lint": "eslint --ext .js src test",
-    "test": "npm run lint && nyc npm run test:unit && npm run test:integration",
+    "test": "npm run lint && nyc npm run test:unit && npm run test:integration && npm run test:visual",
     "test:unit": "tape ./test/unit/*.js",
-    "test:visual": "tape ./test/visual/*.js",
+    "test:visual": "tape ./test/visual/backgrounds.js",
     "test:integration": "karma start",
     "preversion": "npm install && npm run test",
     "version": "npm run build",
@@ -54,5 +54,8 @@
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
   "homepage": "https://github.com/code-dot-org/dance-party#readme",
-  "dependencies": {}
+  "dependencies": {
+    "pixelmatch": "^4.0.2",
+    "pngjs": "^3.3.3"
+  }
 }

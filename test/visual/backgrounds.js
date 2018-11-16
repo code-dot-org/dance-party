@@ -10,7 +10,7 @@ let nativeAPI = null;
 async function createBackgroundScreenshot(effectName) {
   nativeAPI = await helpers.createDanceAPI({deterministic: true});
   nativeAPI.setBackgroundEffect(effectName);
-  for(let i = 0; i < 100; i++){
+  for (let i = 0; i < 100; i++) {
     nativeAPI.getBackgroundEffect().draw({bpm: 0});
   }
 
@@ -34,7 +34,9 @@ async function testBackground(t, effect) {
     filesRead = 0;
 
   function doneReading() {
-    if (++filesRead < 2) return;
+    if (++filesRead < 2) {
+      return;
+    }
     var diff = new PNG({width: img1.width, height: img1.height});
 
     let pixelDiff = pixelmatch(img1.data, img2.data, diff.data, img1.width, img1.height, {threshold: 0.1});
@@ -140,7 +142,7 @@ test('background - snowflakes', async t => {
 test('teardown', async t => {
   //Clean-up testing artifacts after test complete
   await fs.readdir('test/visual/images/temp/', (err, files) => {
-    files.forEach((file, index) => {
+    files.forEach((file) => {
       fs.unlinkSync(`test/visual/images/temp/${file}`);
     });
   });

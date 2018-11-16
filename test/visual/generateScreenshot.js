@@ -16,7 +16,7 @@ const fs = require('fs');
 async function createBackgroundScreenshot(effectName){
   let nativeAPI = await helpers.createDanceAPI({deterministic: true});
   nativeAPI.setBackgroundEffect(effectName);
-  for(let i = 0; i < 100; i++){
+  for (let i = 0; i < 100; i++) {
     nativeAPI.getBackgroundEffect().draw({bpm: 0});
   }
 
