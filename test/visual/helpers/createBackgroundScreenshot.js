@@ -3,7 +3,7 @@ const parseDataURL = require('data-urls');
 const fs = require('fs');
 
 /*
-  Set the background to given effect and save a screenshot to test/visual/images/temp
+  Set the background to given effect and save a screenshot to pathname
  */
 async function createBackgroundScreenshot(effectName, pathname){
   let nativeAPI = await helpers.createDanceAPI();

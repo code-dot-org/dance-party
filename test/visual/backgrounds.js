@@ -5,20 +5,20 @@ const pixelmatch = require('pixelmatch');
 const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot');
 
 async function createScreenshot(effectName) {
-  await createBackgroundScreenshot(effectName, `test/visual/images/temp/`);
+  await createBackgroundScreenshot(effectName, `test/visual/fixtures/temp/`);
 
   // If there is no accepted image for this background (ex: it's a new background),
   // use this screenshot as accepted image
-  if (!fs.existsSync(`test/visual/images/${effectName}.png`)) {
-    await createBackgroundScreenshot(effectName, `test/visual/images/`);
+  if (!fs.existsSync(`test/visual/fixtures/${effectName}.png`)) {
+    await createBackgroundScreenshot(effectName, `test/visual/fixtures/`);
   }
 }
 
 async function testBackground(t, effect) {
   await createScreenshot(effect);
 
-  var img1 = fs.createReadStream(`test/visual/images/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
-    img2 = fs.createReadStream(`test/visual/images/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
+  var img1 = fs.createReadStream(`test/visual/fixtures/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
+    img2 = fs.createReadStream(`test/visual/fixtures/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
     filesRead = 0;
 
   function doneReading() {
@@ -124,13 +124,13 @@ test('background - snowflakes', async t => {
 
 test('teardown', async t => {
   //Clean-up testing artifacts after test complete
-  await fs.readdir('test/visual/images/temp/', (err, files) => {
+  await fs.readdir('test/visual/fixtures/temp/', (err, files) => {
     files.forEach((file) => {
-      fs.unlinkSync(`test/visual/images/temp/${file}`);
+      fs.unlinkSync(`test/visual/fixtures/temp/${file}`);
     });
 
-    if (fs.existsSync(`test/visual/images/temp`)) {
-      fs.rmdirSync(`test/visual/images/temp`);
+    if (fs.existsSync(`test/visual/fixtures/temp`)) {
+      fs.rmdirSync(`test/visual/fixtures/temp`);
     }
   });
 

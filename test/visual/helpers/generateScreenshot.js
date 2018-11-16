@@ -4,7 +4,7 @@ const createBackgroundScreenshot = require('./createBackgroundScreenshot');
  *
  * For debugging 'npm run test:visual' failures.
  * Saves a screenshot of the background with the given effect name
- * to the test visual images folder.
+ * to the test visual fixtures folder.
  */
 
 var args = process.argv.slice(2);
