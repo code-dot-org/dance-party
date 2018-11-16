@@ -432,7 +432,9 @@ module.exports = class Effects {
 
     this.kaleidoscope = {
       init: function () {
-        this.shapes = p5.createGraphics(200, 200);
+        this.h = Math.sqrt(3) / 2 * 100;
+
+        this.shapes = p5.createGraphics(100, Math.ceil(this.h));
         this.shapes.pixelDensity(1);
         this.shapes.fill('white');
         this.shapes.noStroke();
@@ -441,8 +443,6 @@ module.exports = class Effects {
         this.hex = p5.createGraphics(200, 200);
         this.hex.pixelDensity(1);
         this.hex.angleMode(p5.DEGREES);
-
-        this.h = Math.sqrt(3) / 2 * 100;
       },
       blitHex: function () {
         this.hex.push();
