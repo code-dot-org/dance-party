@@ -8,7 +8,8 @@ const pixelmatch = require('pixelmatch');
 let nativeAPI = null;
 
 async function createBackgroundScreenshot(effectName) {
-  nativeAPI = await helpers.createDanceAPI({deterministic: true});
+  nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.p5_.randomSeed(0);
   nativeAPI.setBackgroundEffect(effectName);
   for (let i = 0; i < 100; i++) {
     nativeAPI.getBackgroundEffect().draw({bpm: 0});

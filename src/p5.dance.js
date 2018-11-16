@@ -47,8 +47,7 @@ module.exports = class DanceParty {
     },
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
-    resourceLoader = new ResourceLoader(),
-    deterministic
+    resourceLoader = new ResourceLoader()
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -76,7 +75,6 @@ module.exports = class DanceParty {
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
-    this.deterministic = deterministic ? 0 : false;
 
     this.sprites_by_type_ = {};
     this.performanceData_ = {
@@ -224,8 +222,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new Effects(this.p5_, 1, null, this.deterministic);
-    this.fgEffects_ = new Effects(this.p5_, 0.8, null, this.deterministic);
+    this.bgEffects_ = new Effects(this.p5_, 1);
+    this.fgEffects_ = new Effects(this.p5_, 0.8);
 
     // Create animations from spritesheets
     for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
