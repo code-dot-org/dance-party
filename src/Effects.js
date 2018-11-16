@@ -483,6 +483,7 @@ module.exports = class Effects {
         ctx.clip();
         this.shapes.clear();
         this.shapes.rotate(p5.frameCount);
+        this.shapes.fill('#146030');
         this.shapes.rect(20, 20, 50, 50);
         this.shapes.fill('#082036');
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
@@ -490,16 +491,27 @@ module.exports = class Effects {
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
         this.shapes.fill('#CB5612');
         this.shapes.ellipse(100, 50, 80);
-        this.shapes.fill('#A6906E');
+        this.shapes.fill('#3C565C');
         this.shapes.ellipse(-50, -50, 50);
+        this.shapes.fill('#CB5612');
+        this.shapes.ellipse(-40, -46, 20);
+        this.shapes.fill('#146030');
+        this.shapes.triangle(-60, 0, -30, -40, -30, 0);
         this.shapes.fill('#F0DFA2');
-        this.shapes.rect(-45, 0, 30, 30);
+        this.shapes.rect(-45, 0, 40, 300);
         this.shapes.rotate(17);
         this.shapes.fill('#717171');
         this.shapes.rect(30, 40, 10, 40);
         this.shapes.rotate(37);
         this.shapes.fill('#5b2c6e');
         this.shapes.rect(30, 40, 20, 40);
+        this.shapes.rotate(180);
+        this.shapes.fill('#146030');
+        this.shapes.triangle(10, 20, 80, 90, 0, 100);
+        this.shapes.translate(20, 0);
+        this.shapes.rotate(20);
+        this.shapes.fill('#F0DFA2');
+        this.shapes.rect(0, 0, 20, 200);
         ctx.restore();
 
         p5.push();
@@ -520,7 +532,6 @@ module.exports = class Effects {
         this.row(4);
         p5.translate(this.h, 150);
         this.row(3);
-
 
         p5.pop();
       }

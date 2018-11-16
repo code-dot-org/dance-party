@@ -53,6 +53,9 @@ test('text background effect updates with song text', async t => {
 test('swirl and spiral background effects', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
+  nativeAPI.setBackgroundEffect('kaleidoscope');
+  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+
   nativeAPI.setBackgroundEffect('swirl');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
