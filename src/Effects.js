@@ -185,7 +185,40 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+    this.sparkles = {
+      sparkles: [],
+      maxSparkles: 80,
+      makeRandomSparkle: function () {
+        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColor()};
+      },
+      init: function () {
+        for (let i=0;i<this.maxSparkles;i++) {
+          this.sparkles.push(this.makeRandomSparkle());
+        }
+      },
+      update: function () {
 
+      },
+      draw: function ({bpm}) {
+        if (this.sparkles.length<1) {
+          this.init();
+        }
+        p5.background("#2b1e45");
+        let velocity = Math.floor(bpm/90*3);
+        for (let i = 0;i<this.maxSparkles;i++){
+          p5.push();
+          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>390)) {
+            this.sparkles[i]=this.makeRandomSparkle();
+          }
+
+          this.sparkles[i].x-=velocity;
+          this.sparkles[i].y+=velocity;
+          p5.translate(this.sparkles[i].x,this.sparkles[i].y);
+          drawSparkle(p5._renderer.drawingContext,this.sparkles[i].color);
+          p5.pop();
+        }
+      },
+    };
     this.text = {
       texts: [],
       maxTexts: 10,
@@ -597,6 +630,20 @@ function drawSpiral(ctx) {
   ctx.bezierCurveTo(11583,9768,10054,11699,7965,12602);
   ctx.bezierCurveTo(7814,12668,7604,12750,7520,12777);
   ctx.bezierCurveTo(7453,12798,7297,12802,7221,12785);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+function drawSparkle(ctx, color) {
+  ctx.save();
+  ctx.scale(0.25,0.25);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(54.3,27.2);
+  ctx.bezierCurveTo(30.7,29.1,29.1,30.7,27.2,54.3);
+  ctx.bezierCurveTo(25.2,30.7,23.6,29.1,0,27.2);
+  ctx.bezierCurveTo(23.6,25.2,25.2,23.6,27.2,0);
+  ctx.bezierCurveTo(29.1,23.6,30.7,25.2,54.3,27.2);
   ctx.closePath();
   ctx.fill();
   ctx.restore();
