@@ -43,6 +43,8 @@
     "karma-tap-pretty-reporter": "^4.1.0",
     "karma-webpack": "4.0.0-rc.2",
     "nyc": "^13.1.0",
+    "pixelmatch": "^4.0.2",
+    "pngjs": "^3.3.3",
     "raw-loader": "^0.5.1",
     "sinon": "^7.1.1",
     "tape": "^4.9.1",
@@ -53,9 +55,5 @@
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
-  "homepage": "https://github.com/code-dot-org/dance-party#readme",
-  "dependencies": {
-    "pixelmatch": "^4.0.2",
-    "pngjs": "^3.3.3"
-  }
+  "homepage": "https://github.com/code-dot-org/dance-party#readme"
 }
