@@ -602,123 +602,123 @@ module.exports = class Effects {
     };
 
     this.fireworks = {
-      fireworks:[],
+      particles:[],
+      minExplosion:20,
+      maxExplosion:50,
+      minPotential:200,
+      maxPotential:300,
 
-      makeRandomFirework: function () {
-        var ret =  {
-          rocket:null,
-          particles:[],
-          exploded:false,
-
-          update: function() {
-            this.rocket.update()
-            if (this.rocket.vel.y >= 0 && !this.rocket.exploded) {
-              this.explode();
-            }
-
-            for (var i = 0 ; i < this.particles.length; i++) {
-              this.particles[i].update();
-
-              if (this.particles[i].done()) {
-                this.particles.splice(i,1);
-              }
-            }
+      makeParticle: function (type, pos, vel, color, potential) {
+        return  {
+          type:type,
+          pos:pos,
+          vel:vel,
+          gravity: p5.createVector(0.0, 0.1),
+          potential:potential,
+          acc:p5.createVector(0, 0),
+          color:color,
+          update: function () {
+            this.acc.add(this.gravity);
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0, 0);
           },
-
-          draw: function() {
-            if (!this.exploded) {
-              this.rocket.draw();
-            } 
-
-            for (var i = 0; i < this.particles.length; i++) {
-              this.particles[i].draw();
-            }
-          },
-
-          makeParticle: function(x, y, color, isRocket) {
-            return {
-              pos: p5.createVector(x, y),
-              acc: p5.createVector(0, 0),
-              vel: p5.createVector(isRocket ? 0 : p5.random(-5, 5), isRocket ? p5.random(-9, -7) : p5.random(-5, 5)),
-              color:color,
-              lifespan:p5.random(50, 150),
-    
-              update: function() {
-                this.acc.add(0, 0.1); // gravity?
-                this.vel.add(this.acc);
-                this.pos.add(this.vel);
-                this.acc.mult(0);
-
-                this.lifespan -= 1;
-              },
-    
-              draw: function() {
-                if (isRocket) {
-                  p5.strokeWeight(3);
-                  p5.stroke(this.color);
-                  p5.point(this.pos.x, this.pos.y);
-                } else {
-                  p5.push()
-                  p5.translate(this.pos.x,this.pos.y);  
-                  drawSparkle(p5._renderer.drawingContext, this.color);
-                  p5.pop()
-                }
-              },
-
-              done: function() {
-                return this.lifespan <= 0 || this.pos.x < 0 || this.pos.x > p5.width || this.pos.y < 0 || this.pos.y > p5.height;
-              }
-            }
-          },
-    
-
-          explode: function() {
-            if (this.exploded) {
-              return;
-            }
-
-            this.exploded = true;
-            for (var i = 0; i < p5.random(20, 100); i++) {
-              var p = this.makeParticle(this.rocket.pos.x, this.rocket.pos.y, this.rocket.color, false);
-              this.particles.push(p);
-            }     
-          },
-
-          done: function() {
-            return this.exploded && this.particles.length == 0
-          }
         };
-
-        // make the initial partical that is the rocket that launches from the bottom
-        ret.rocket = ret.makeParticle(randomNumber(0, 400), 400, randomColor(), true)
-        return ret;
       },
 
-      init: function () {
-        for (let i = 0; i < 5; i++) {
-          this.fireworks.push(this.makeRandomFirework());
-        }
-      },
-
-      draw: function ({bpm}) {
-        if (this.fireworks.length < 1) {
-          this.init();
-        }
+      draw: function () {
         p5.background("#000000");
 
-        for (let i = 0; i < this.fireworks.length; i++){
+        p5.push();
+        this.drawParticles();
+        p5.pop();
+
+        this.particles = this.nextParticles();
+        if (this.particles.length > this.maxPotential) {
+          console.log(this.particles.length);
+        }
+      },
+
+      drawParticles: function () {
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+          p.update();
+
           p5.push();
-
-          if (this.fireworks[i].done()) {
-            this.fireworks[i]=this.makeRandomFirework();
+          if (p.type === "rocket") {
+            p5.strokeWeight(3);
+            p5.stroke(p.color);
+            p5.point(p.pos.x, p.pos.y);
+          } else if (p.type === "particle") {
+            p5.translate(p.pos.x, p.pos.y);
+            drawSparkle(p5._renderer.drawingContext, p.color);
           }
-
-          this.fireworks[i].update();
-          this.fireworks[i].draw();
-
           p5.pop();
         }
       },
+
+      nextParticles: function () {
+        let ret = [];
+
+        // total potential is the number of particles active, or the number represented
+        // in unexploded rockets. This is now we manage total number of objects
+        var totalPotential = 0;
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+
+          if (p.type === "rocket") {
+            // explode a rocket when it reaches it peak height
+            if (p.vel.y <= 0) {
+              ret.push(p);
+            } else {
+              ret = ret.concat(this.explode(p));
+            }
+
+            // the rocket exploded to its potential or its still waiting
+            totalPotential += p.potential;
+          } else if (p.type === "particle") {
+
+            // remove things when they leave the window, except allow particles
+            // to fall back down into the view from above
+            if (p.pos.x > 0 && p.pos.x < p5.width && p.pos.y < p5.height) {
+              ret.push(p);
+              totalPotential += p.potential;
+            }
+          }
+        }
+
+        // make sure the total potential for particles is between the min and max potential
+        if (totalPotential < this.minPotential) {
+
+          // fire rockets until we fill the potential
+          while (totalPotential < this.maxPotential) {
+            let p = this.makeParticle(
+              "rocket",
+              p5.createVector(randomNumber(0, p5.height), p5.width),
+              p5.createVector(0, p5.random(-9, -7)),
+              randomColor(),
+              p5.random(this.minExplosion, this.maxExplosion),
+            );
+            totalPotential += p.potential;
+            ret.push(p);
+          }
+        }
+        return ret;
+      },
+
+      explode: function (p) {
+        let ret = [];
+        for (var i = 0; i < p.potential; i++) {
+          ret.push(this.makeParticle(
+            "particle",
+            p5.createVector(p.pos.x, p.pos.y),
+            p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
+            p.color,
+            1,
+          ));
+        }
+        return ret;
+      }
     };
   }
 };
