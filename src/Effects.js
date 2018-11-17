@@ -600,8 +600,132 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.fireworks = {
+      fireworks:[],
+
+      makeRandomFirework: function () {
+        var ret =  {
+          rocket:null,
+          particles:[],
+          exploded:false,
+
+          update: function() {
+            this.rocket.update()
+            if (this.rocket.vel.y >= 0 && !this.rocket.exploded) {
+              this.explode();
+            }
+
+            for (var i = 0 ; i < this.particles.length; i++) {
+              this.particles[i].update();
+
+              if (this.particles[i].done()) {
+                this.particles.splice(i,1);
+              }
+            }
+          },
+
+          draw: function() {
+            if (!this.exploded) {
+              this.rocket.draw();
+            } 
+
+            for (var i = 0; i < this.particles.length; i++) {
+              this.particles[i].draw();
+            }
+          },
+
+          makeParticle: function(x, y, color, isRocket) {
+            return {
+              pos: p5.createVector(x, y),
+              acc: p5.createVector(0, 0),
+              vel: p5.createVector(isRocket ? 0 : p5.random(-5, 5), isRocket ? p5.random(-9, -7) : p5.random(-5, 5)),
+              color:color,
+              lifespan:p5.random(50, 150),
+    
+              update: function() {
+                this.acc.add(0, 0.1); // gravity?
+                this.vel.add(this.acc);
+                this.pos.add(this.vel);
+                this.acc.mult(0);
+
+                this.lifespan -= 1;
+              },
+    
+              draw: function() {
+                if (isRocket) {
+                  p5.strokeWeight(3);
+                  p5.stroke(this.color);
+                  p5.point(this.pos.x, this.pos.y);
+                } else {
+                  p5.push()
+                  p5.translate(this.pos.x,this.pos.y);  
+                  drawSparkle(p5._renderer.drawingContext, this.color);
+                  p5.pop()
+                }
+              },
+
+              done: function() {
+                return this.lifespan <= 0 || this.pos.x < 0 || this.pos.x > p5.width || this.pos.y < 0 || this.pos.y > p5.height;
+              }
+            }
+          },
+    
+
+          explode: function() {
+            if (this.exploded) {
+              return;
+            }
+
+            this.exploded = true;
+            for (var i = 0; i < p5.random(20, 100); i++) {
+              var p = this.makeParticle(this.rocket.pos.x, this.rocket.pos.y, this.rocket.color, false);
+              this.particles.push(p);
+            }     
+          },
+
+          done: function() {
+            return this.exploded && this.particles.length == 0
+          }
+        };
+
+        // make the initial partical that is the rocket that launches from the bottom
+        ret.rocket = ret.makeParticle(randomNumber(0, 400), 400, randomColor(), true)
+        return ret;
+      },
+
+      init: function () {
+        for (let i = 0; i < 5; i++) {
+          this.fireworks.push(this.makeRandomFirework());
+        }
+      },
+
+      draw: function ({bpm}) {
+        if (this.fireworks.length < 1) {
+          this.init();
+        }
+        p5.background("#000000");
+
+        for (let i = 0; i < this.fireworks.length; i++){
+          p5.push();
+
+          if (this.fireworks[i].done()) {
+            this.fireworks[i]=this.makeRandomFirework();
+          }
+
+          this.fireworks[i].update();
+          this.fireworks[i].draw();
+
+          p5.pop();
+        }
+      },
+    };
   }
 };
+
+
+
+
 
 function drawSwirl(ctx) {
   ctx.save();
