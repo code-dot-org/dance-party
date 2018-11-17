@@ -3,22 +3,24 @@ const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot');
+const fixturePath = 'test/visual/fixtures/';
+const tempDir = fs.mkdtempSync(fixturePath);
 
 async function createScreenshot(effectName) {
-  await createBackgroundScreenshot(effectName, `test/visual/fixtures/temp/`);
+  await createBackgroundScreenshot(effectName, tempDir);
 
   // If there is no accepted image for this background (ex: it's a new background),
   // use this screenshot as accepted image
-  if (!fs.existsSync(`test/visual/fixtures/${effectName}.png`)) {
-    await createBackgroundScreenshot(effectName, `test/visual/fixtures/`);
+  if (!fs.existsSync(`${fixturePath}${effectName}.png`)) {
+    await createBackgroundScreenshot(effectName, fixturePath);
   }
 }
 
 async function testBackground(t, effect) {
   await createScreenshot(effect);
 
-  const actual = fs.createReadStream(`test/visual/fixtures/temp/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
-    expected = fs.createReadStream(`test/visual/fixtures/${effect}.png`).pipe(new PNG()).on('parsed', doneReading);
+  const actual = fs.createReadStream(`${tempDir}/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
+    expected = fs.createReadStream(`${fixturePath}${effect}.png`).pipe(new PNG()).on('parsed', doneReading);
   let filesRead = 0;
 
   function doneReading() {
@@ -57,13 +59,13 @@ async function testBackground(t, effect) {
 
 test('teardown', async t => {
   //Clean-up testing artifacts after test complete
-  await fs.readdir('test/visual/fixtures/temp/', (err, files) => {
+  await fs.readdir(tempDir, (err, files) => {
     files.forEach((file) => {
-      fs.unlinkSync(`test/visual/fixtures/temp/${file}`);
+      fs.unlinkSync(`${tempDir}/${file}`);
     });
 
-    if (fs.existsSync(`test/visual/fixtures/temp`)) {
-      fs.rmdirSync(`test/visual/fixtures/temp`);
+    if (fs.existsSync(tempDir)) {
+      fs.rmdirSync(tempDir);
     }
   });
 

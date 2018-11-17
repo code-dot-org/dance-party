@@ -19,7 +19,7 @@ async function createBackgroundScreenshot(effectName, pathname){
     fs.mkdirSync(pathname);
   }
 
-  fs.writeFileSync(`${pathname}${effectName}.png`, buffer);
+  fs.writeFileSync(`${pathname}/${effectName}.png`, buffer);
   nativeAPI.reset();
 }
 
