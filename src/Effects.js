@@ -600,6 +600,34 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.strobe_lights = {
+      strobe: [],
+      draw: function () {
+        p5.background('black');
+        p5.strokeWeight(5);
+        p5.stroke(255);
+        let strobe = {
+          lineH: 25,
+          lineW: 1,
+          lineX: 0,
+          lightH: 50,
+          lightD: 40,
+        };
+        this.strobe.push(strobe);
+        this.strobe.forEach(function (strobe) {
+          p5.push();
+          for (var x = 50; x <= 400; x += 100) {
+            p5.fill(p5.random(255), p5.random(255), p5.random(255));
+            p5.ellipse(x, strobe.lightH, strobe.lightD, strobe.lightD);
+          }
+          for (var y = 50; y <= 400; y += 100) {
+            p5.rect(y, strobe.lineX, strobe.lineW, strobe.lineH);
+          }
+          p5.pop();
+        });
+      }
+    };
   }
 };
 
