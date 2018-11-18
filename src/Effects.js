@@ -294,6 +294,44 @@ module.exports = class Effects {
         }
       }
     };
+
+    this.hearts = {
+      heart: [],
+      size: 50,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.heart.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.heart.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.heart.length; i++) {
+          p5.push();
+          const heart = this.heart[i];
+          p5.translate(heart.x, heart.y);
+          p5.rotate(heart.rot);
+          drawHeart(p5._renderer.drawingContext);
+          heart.y += heart.speed;
+          heart.rot++;
+          if (heart.y > 450) {
+            heart.x = randomNumber(20, 380);
+            heart.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
     this.splatter = {
       splats:[],
       numSplats:100,
@@ -753,5 +791,82 @@ function drawSparkle(ctx, color) {
   ctx.bezierCurveTo(29.1,23.6,30.7,25.2,54.3,27.2);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
+}
+
+function drawHeart(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(18,0);
+  ctx.lineTo(18,16);
+  ctx.lineTo(0,16);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = "#dc1c4b";
+  ctx.beginPath();
+  ctx.moveTo(0,5.016);
+  ctx.bezierCurveTo(0,6.718,0.84,7.959,2.014,9.128);
+  ctx.lineTo(8.85,15.937999999999999);
+  ctx.translate(9,15.785369727773288);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,0.214,2.3475033371885377,0.7940893164012557,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-9,-15.785369727773288);
+  ctx.lineTo(15.986,9.128);
+  ctx.bezierCurveTo(17.16,7.958,18,6.718,18,5.016);
+  ctx.bezierCurveTo(18,2.246,15.684,0,12.828,0);
+  ctx.translate(12.806054971254465,5.231953976834406);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.232,-1.5666019282681247,-2.385404775142245,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-12.806054971254465,-5.231953976834406);
+  ctx.translate(5.193945028745534,5.231953976834407);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.232,-0.7561878784475481,-1.5749907253216684,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-5.193945028745534,-5.231953976834407);
+  ctx.bezierCurveTo(2.316,0,0,2.246,0,5.016);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ffffff";
+  ctx.globalAlpha = 0.3;
+  ctx.beginPath();
+  ctx.moveTo(5.052,0.508);
+  ctx.bezierCurveTo(7.589196140722665,0.508,9.646,2.490483127749246,9.646,4.936);
+  ctx.bezierCurveTo(9.646,7.381516872250754,7.589196140722665,9.364,5.052,9.364);
+  ctx.bezierCurveTo(2.514803859277334,9.364,0.4579999999999993,7.381516872250754,0.4579999999999993,4.936);
+  ctx.bezierCurveTo(0.4579999999999993,2.490483127749246,2.514803859277334,0.508,5.052,0.508);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#dc1c4b";
+  ctx.beginPath();
+  ctx.moveTo(5.775,1.3979999999999997);
+  ctx.bezierCurveTo(8.312196140722666,1.3979999999999997,10.369,3.3804831277492458,10.369,5.826);
+  ctx.bezierCurveTo(10.369,8.271516872250753,8.312196140722666,10.254,5.775,10.254);
+  ctx.bezierCurveTo(3.2378038592773346,10.254,1.181,8.271516872250753,1.181,5.826);
+  ctx.bezierCurveTo(1.181,3.3804831277492458,3.2378038592773346,1.3979999999999997,5.775,1.3979999999999997);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
   ctx.restore();
 }
