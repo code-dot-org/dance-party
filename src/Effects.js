@@ -607,6 +607,8 @@ module.exports = class Effects {
       maxExplosion:50,
       minPotential:200,
       maxPotential:300,
+      enableTracers:true,
+      buffer:null,
 
       makeParticle: function (type, pos, vel, color, potential) {
         return  {
@@ -627,16 +629,34 @@ module.exports = class Effects {
       },
 
       draw: function () {
-        p5.background("#000000");
+        if (this.buffer === null) {
+          this.buffer = p5;
+          // We get the tracer effect by writing frames to a
+          // offscreen buffer that has a transparent background
+          if (this.enableTracers) {
+            this.buffer = p5.createGraphics(p5.width, p5.height);
+            this.buffer.pixelDensity(1);
+          }
+        }
+
+        p5.background(0);
+
+        // if we are using the offscreen buffer, use a transparent background
+        if (this.buffer !== p5) {
+          this.buffer.background(0, 25);
+        }
 
         p5.push();
         this.drawParticles();
+
+        // if we are drawing to offscreen buffer, copy it to the canvas
+        if (this.buffer !== p5) {
+          p5.image(this.buffer);
+        }
+
         p5.pop();
 
         this.particles = this.nextParticles();
-        if (this.particles.length > this.maxPotential) {
-          console.log(this.particles.length);
-        }
       },
 
       drawParticles: function () {
@@ -644,16 +664,16 @@ module.exports = class Effects {
           let p = this.particles[i];
           p.update();
 
-          p5.push();
+          this.buffer.push();
           if (p.type === "rocket") {
-            p5.strokeWeight(3);
-            p5.stroke(p.color);
-            p5.point(p.pos.x, p.pos.y);
+            this.buffer.strokeWeight(3);
+            this.buffer.stroke(p.color);
+            this.buffer.point(p.pos.x, p.pos.y);
           } else if (p.type === "particle") {
-            p5.translate(p.pos.x, p.pos.y);
-            drawSparkle(p5._renderer.drawingContext, p.color);
+            this.buffer.translate(p.pos.x, p.pos.y);
+            drawSparkle(this.buffer._renderer.drawingContext, p.color);
           }
-          p5.pop();
+          this.buffer.pop();
         }
       },
 
@@ -661,7 +681,7 @@ module.exports = class Effects {
         let ret = [];
 
         // total potential is the number of particles active, or the number represented
-        // in unexploded rockets. This is now we manage total number of objects
+        // in unexploded rockets. This is how we manage total number of objects
         var totalPotential = 0;
         for (var i = 0; i < this.particles.length; i++) {
           let p = this.particles[i];
