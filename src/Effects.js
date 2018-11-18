@@ -618,8 +618,8 @@ module.exports = class Effects {
           p5.fill(bubble.color);
           p5.translate(bubble.x, bubble.y);
           for (let i = 0; i < 1; i++) {
-              p5.ellipse(0, 0, bubble.size, bubble.size);
-          };
+            p5.ellipse(0, 0, bubble.size, bubble.size);
+          }
           let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
           bubble.y -= fallSpeed;
           bubble.x += bubble.velocityX;
@@ -648,14 +648,14 @@ module.exports = class Effects {
           p5.fill(confetti.color);
           p5.translate(confetti.x, confetti.y);
           let confettiFlash = p5.random(1, 5);
+          //flash on / off
           for (let i = 0; i < 1; i++) {
             if (confettiFlash <= 2) {
-              //flash on / off
             }
             else if (confettiFlash <= 5) {
               p5.rect(0, 0, 4, confetti.size);
             }
-          };
+          }
           let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
           confetti.y += fallSpeed;
           confetti.x += confetti.velocityX;
