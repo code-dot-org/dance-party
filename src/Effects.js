@@ -320,7 +320,7 @@ module.exports = class Effects {
           const pizza = this.pizza[i];
           p5.translate(pizza.x, pizza.y);
           p5.rotate(pizza.rot);
-          drawPizza(p5._renderer.drawingContext);          
+          drawPizza(p5._renderer.drawingContext);
           pizza.y += pizza.speed;
           pizza.rot++;
           if (pizza.y > 450) {
