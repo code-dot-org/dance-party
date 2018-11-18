@@ -600,6 +600,72 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.bubbles = {
+      bubble: [],
+      draw: function () {
+        let bubble = {
+          x: p5.random(-100, 400),
+          y: 410,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(100, 50, 0.25),
+        };
+        this.bubble.push(bubble);
+        p5.noStroke();
+        this.bubble.forEach(function (bubble) {
+          p5.push();
+          p5.fill(bubble.color);
+          p5.translate(bubble.x, bubble.y);
+          for (let i = 0; i < 1; i++) {
+              p5.ellipse(0, 0, bubble.size, bubble.size);
+          };
+          let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
+          bubble.y -= fallSpeed;
+          bubble.x += bubble.velocityX;
+          p5.pop();
+        });
+        this.bubble = this.bubble.filter(function (bubble) {
+          return bubble.y > 0;
+        });
+      }
+    };
+
+    this.confetti = {
+      confetti: [],
+      draw: function () {
+        let confetti = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(100, 50, 0.25),
+        };
+        this.confetti.push(confetti);
+        p5.noStroke();
+        this.confetti.forEach(function (confetti) {
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          let confettiFlash = p5.random(1, 5);
+          for (let i = 0; i < 1; i++) {
+            if (confettiFlash <= 2) {
+              //flash on / off
+            }
+            else if (confettiFlash <= 5) {
+              p5.rect(0, 0, 4, confetti.size);
+            }
+          };
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
+      }
+    };
   }
 };
 
