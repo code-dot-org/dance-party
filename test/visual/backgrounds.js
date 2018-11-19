@@ -7,6 +7,14 @@ const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot
 const fixturePath = 'test/visual/fixtures/';
 const tempDir = fs.mkdtempSync(fixturePath);
 
+function readPNG(pngPath){
+  return new Promise(resolve => {
+    const stream = fs.createReadStream(pngPath)
+      .pipe(new PNG())
+      .on('parsed', () => resolve(stream));
+  });
+}
+
 async function createScreenshot(effectName) {
   await createBackgroundScreenshot(effectName, tempDir);
 
@@ -20,19 +28,15 @@ async function createScreenshot(effectName) {
 async function testBackground(t, effect) {
   await createScreenshot(effect);
 
-  const actual = fs.createReadStream(`${tempDir}/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
-    expected = fs.createReadStream(`${fixturePath}${effect}.png`).pipe(new PNG()).on('parsed', doneReading);
-  let filesRead = 0;
+  const [actual, expected] = await Promise.all([
+      readPNG(`${tempDir}/${effect}.png`),
+      readPNG(`${fixturePath}${effect}.png`)
+  ]);
 
-  function doneReading() {
-    if (++filesRead < 2) {
-      return;
-    }
-    let diff = new PNG({width: actual.width, height: actual.height});
+  let diff = new PNG({width: actual.width, height: actual.height});
 
-    let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
-    t.equal(pixelDiff, 0, effect);
-  }
+  let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
+  t.equal(pixelDiff, 0, effect);
 }
 
 [
