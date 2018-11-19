@@ -1,6 +1,6 @@
 {
   "name": "@code-dot-org/dance-party",
-  "version": "0.0.28",
+  "version": "0.0.33",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "npm run lint && nyc npm run test:unit && npm run test:integration",
     "test:unit": "tape ./test/unit/*.js",
     "test:integration": "karma start",
-    "preversion": "npm run test",
+    "preversion": "npm install && npm run test",
     "version": "npm run build",
     "postversion": "git push && git push --tags && npm publish"
   },

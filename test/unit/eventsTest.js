@@ -215,3 +215,41 @@ test('conflicting everyMeasures cues and atTimestamp cues, rarer definition wins
   t.end();
   nativeAPI.reset();
 });
+
+test('silently clamp maximum event rate in seconds', async t => {
+  // Try and create an event that's waaay too frequent
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(0.00314, "seconds", function () {});
+  `);
+
+  const assertClose = (a, b) => t.ok(Math.abs(a - b) < 1.0e-7, `${a} and ${b} were within 1.0e-7`);
+  const cueList = interpretedAPI.getCueList();
+  assertClose(cueList.seconds[0], 0.1);
+  assertClose(cueList.seconds[1], 0.2);
+  assertClose(cueList.seconds[2], 0.3);
+  assertClose(cueList.seconds[3], 0.4);
+  assertClose(cueList.seconds[4], 0.5);
+  assertClose(cueList.seconds[5], 0.6);
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('silently clamp maximum event rate in measures', async t => {
+  // Try and create an event that's waaay too frequent
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(0.00314, "measures", function () {});
+  `);
+
+  const assertClose = (a, b) => t.ok(Math.abs(a - b) < 1e-7, `${a} and ${b} were within 1e-7`);
+  const cueList = interpretedAPI.getCueList();
+  assertClose(cueList.measures[0], 1.1);
+  assertClose(cueList.measures[1], 1.2);
+  assertClose(cueList.measures[2], 1.3);
+  assertClose(cueList.measures[3], 1.4);
+  assertClose(cueList.measures[4], 1.5);
+  assertClose(cueList.measures[5], 1.6);
+
+  t.end();
+  nativeAPI.reset();
+});

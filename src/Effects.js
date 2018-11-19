@@ -185,10 +185,43 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+    this.sparkles = {
+      sparkles: [],
+      maxSparkles: 80,
+      makeRandomSparkle: function () {
+        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColor()};
+      },
+      init: function () {
+        for (let i=0;i<this.maxSparkles;i++) {
+          this.sparkles.push(this.makeRandomSparkle());
+        }
+      },
+      update: function () {
 
+      },
+      draw: function ({bpm}) {
+        if (this.sparkles.length<1) {
+          this.init();
+        }
+        p5.background("#2b1e45");
+        let velocity = Math.floor(bpm/90*3);
+        for (let i = 0;i<this.maxSparkles;i++){
+          p5.push();
+          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>390)) {
+            this.sparkles[i]=this.makeRandomSparkle();
+          }
+
+          this.sparkles[i].x-=velocity;
+          this.sparkles[i].y+=velocity;
+          p5.translate(this.sparkles[i].x,this.sparkles[i].y);
+          drawSparkle(p5._renderer.drawingContext,this.sparkles[i].color);
+          p5.pop();
+        }
+      },
+    };
     this.text = {
       texts: [],
-      maxTexts: 100,
+      maxTexts: 10,
       update: function (text, hue, size) {
         this.texts.push({
           x: randomNumber(25, 375),
@@ -212,6 +245,7 @@ module.exports = class Effects {
           this.update(text, centroid, randomNumber(14, 48));
         }
         p5.push();
+        p5.background(colorFromHue(0, 0, 23));
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
@@ -429,6 +463,113 @@ module.exports = class Effects {
       }
     };
 
+    this.kaleidoscope = {
+      init: function () {
+        this.h = Math.sqrt(3) / 2 * 100;
+
+        this.shapes = p5.createGraphics(100, Math.ceil(this.h));
+        this.shapes.pixelDensity(1);
+        this.shapes.fill('white');
+        this.shapes.noStroke();
+        this.shapes.angleMode(p5.DEGREES);
+
+        this.hex = p5.createGraphics(200, 200);
+        this.hex.pixelDensity(1);
+        this.hex.angleMode(p5.DEGREES);
+      },
+      blitHex: function () {
+        this.hex.push();
+        this.hex.clear();
+        this.hex.translate(100, 100);
+        this.hex.rotate(30);
+        for (let i = 0; i < 3; i++) {
+          this.hex.image(this.shapes, -50, 0);
+          this.hex.scale(-1, 1);
+          this.hex.rotate(60);
+          this.hex.image(this.shapes, -50, 0);
+          this.hex.rotate(60);
+          this.hex.scale(-1, 1);
+        }
+        this.hex.pop();
+      },
+      row: function (n) {
+        p5.push();
+        for (let i = 0; i < n; i++) {
+          p5.image(this.hex, 0, 0);
+          p5.translate(this.h * 2, 0);
+        }
+        p5.pop();
+      },
+      draw: function () {
+        if (!this.shapes) {
+          this.init();
+        }
+
+        p5.background('#333');
+
+        const ctx = this.shapes._renderer.drawingContext;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(100, this.h);
+        ctx.lineTo(0, this.h);
+        ctx.clip();
+        this.shapes.clear();
+        this.shapes.rotate(p5.frameCount);
+        this.shapes.fill('#146030');
+        this.shapes.rect(20, 20, 50, 50);
+        this.shapes.fill('#082036');
+        this.shapes.triangle(0, 10, 80, 90, 0, 100);
+        this.shapes.fill('#3C565C');
+        this.shapes.triangle(20, 0, 50, 30, 30, 60);
+        this.shapes.fill('#CB5612');
+        this.shapes.ellipse(100, 50, 80);
+        this.shapes.fill('#3C565C');
+        this.shapes.ellipse(-50, -50, 50);
+        this.shapes.fill('#CB5612');
+        this.shapes.ellipse(-40, -46, 20);
+        this.shapes.fill('#146030');
+        this.shapes.triangle(-60, 0, -30, -40, -30, 0);
+        this.shapes.fill('#F0DFA2');
+        this.shapes.rect(-45, 0, 40, 300);
+        this.shapes.rotate(17);
+        this.shapes.fill('#717171');
+        this.shapes.rect(30, 40, 10, 40);
+        this.shapes.rotate(37);
+        this.shapes.fill('#5b2c6e');
+        this.shapes.rect(30, 40, 20, 40);
+        this.shapes.rotate(180);
+        this.shapes.fill('#146030');
+        this.shapes.triangle(10, 20, 80, 90, 0, 100);
+        this.shapes.translate(20, 0);
+        this.shapes.rotate(20);
+        this.shapes.fill('#F0DFA2');
+        this.shapes.rect(0, 0, 20, 200);
+        ctx.restore();
+
+        p5.push();
+        this.blitHex();
+        p5.imageMode(p5.CENTER);
+
+        p5.translate(200, 200);
+        p5.rotate(p5.frameCount);
+        p5.scale(0.8);
+
+        p5.translate(this.h * -2, -300);
+        this.row(3);
+        p5.translate(-this.h, 150);
+        this.row(4);
+        p5.translate(-this.h, 150);
+        this.row(5);
+        p5.translate(this.h, 150);
+        this.row(4);
+        p5.translate(this.h, 150);
+        this.row(3);
+
+        p5.pop();
+      }
+    };
+
     this.snowflakes = {
       flake: [],
       draw: function () {
@@ -596,6 +737,20 @@ function drawSpiral(ctx) {
   ctx.bezierCurveTo(11583,9768,10054,11699,7965,12602);
   ctx.bezierCurveTo(7814,12668,7604,12750,7520,12777);
   ctx.bezierCurveTo(7453,12798,7297,12802,7221,12785);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+function drawSparkle(ctx, color) {
+  ctx.save();
+  ctx.scale(0.25,0.25);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(54.3,27.2);
+  ctx.bezierCurveTo(30.7,29.1,29.1,30.7,27.2,54.3);
+  ctx.bezierCurveTo(25.2,30.7,23.6,29.1,0,27.2);
+  ctx.bezierCurveTo(23.6,25.2,25.2,23.6,27.2,0);
+  ctx.bezierCurveTo(29.1,23.6,30.7,25.2,54.3,27.2);
   ctx.closePath();
   ctx.fill();
   ctx.restore();

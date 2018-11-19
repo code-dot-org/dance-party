@@ -228,6 +228,20 @@ function everySecondsRange(n, unit, start, stop, func) {
     return;
   }
 
+  // Limit minimum event interval to avoid performance problems
+  // from student code like `every 0.001 seconds do...`
+  if ('seconds' === unit) {
+    // Maximum of 10 events per second
+    // Our fastest song is 169bpm
+    // This allows events on eighth-notes in that song.
+    n = Math.max(0.1, n);
+  } else {
+    // Maximum of ten events per measure
+    // Our fastest song is 169bpm
+    // This allows events every 142ms in that song
+    n = Math.max(0.1, n);
+  }
+
   // Offset by n so that we don't generate an event at the beginning
   // of the first period.
   var timestamp = start + n;
