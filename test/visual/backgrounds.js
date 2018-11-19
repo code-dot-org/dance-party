@@ -7,7 +7,13 @@ const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot
 const fixturePath = 'test/visual/fixtures/';
 const tempDir = fs.mkdtempSync(fixturePath);
 
-const readPNG = (pngPath) => new Promise(resolve => fs.createReadStream(pngPath).pipe(new PNG()).on('parsed', resolve));
+function readPNG(pngPath){
+  return new Promise(resolve => {
+    const stream = fs.createReadStream(pngPath)
+      .pipe(new PNG())
+      .on('parsed', () => resolve(stream));
+  });
+}
 
 async function createScreenshot(effectName) {
   await createBackgroundScreenshot(effectName, tempDir);
@@ -27,7 +33,7 @@ async function testBackground(t, effect) {
     readPNG(`${fixturePath}${effect}.png`)
   ]);
 
-  const diff = new PNG({width: actual.width, height: actual.height});
+  let diff = new PNG({width: actual.width, height: actual.height});
 
   let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
   t.equal(pixelDiff, 0, effect);
@@ -43,7 +49,7 @@ async function testBackground(t, effect) {
   'strobe',
   'rain',
   'text',
-  'raining_tacos',
+  //'raining_tacos', temporarily disable: to figure out emoji compatibility
   'splatter',
   'spiral',
   'spotlight',
