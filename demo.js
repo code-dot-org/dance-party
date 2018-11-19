@@ -20,18 +20,21 @@ const nativeAPI = window.nativeAPI = new DanceParty({
 });
 
 function runCode() {
-  const {
-    runUserSetup,
-    runUserEvents,
-    getCueList,
-  } = injectInterpreted(nativeAPI, interpreted, textareaCode.value);
+  nativeAPI.ensureSpritesAreLoaded().then(() => {
+    const {
+      runUserSetup,
+      runUserEvents,
+      getCueList,
+    } = injectInterpreted(nativeAPI, interpreted, textareaCode.value);
 
-  // Setup event tracking.
-  nativeAPI.addCues(getCueList());
-  nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
-  runUserSetup();
+    // Setup event tracking.
+    nativeAPI.addCues(getCueList());
+    nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
 
-  nativeAPI.play(jazzy_beats);
+    runUserSetup();
+
+    nativeAPI.play(jazzy_beats);
+  });
 }
 
 textareaCode.value = textareaCode.value || `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
