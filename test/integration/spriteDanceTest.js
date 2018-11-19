@@ -17,35 +17,3 @@ test('Dance collision: every measures - rarer move first', t => {
     t.end();
   }, 500);
 });
-
-test('Dance collision: every seconds - rarer move second', t => {
-  const level = levels.collisionEveryNSeconds;
-  attempt(level.solutions[0], level.validationCode, (result) => {
-    t.true(result);
-    t.end();
-  }, 500);
-});
-
-test('Dance collision: every seconds - rarer move first', t => {
-  const level = levels.collisionEveryNSeconds;
-  attempt(level.solutions[1], level.validationCode, (result) => {
-    t.true(result);
-    t.end();
-  }, 500);
-});
-
-test('Dance collision: every measures and at timestamp - rarer move second', t => {
-  const level = levels.collisionEveryNSeconds;
-  attempt(level.solutions[0], level.validationCode, (result) => {
-    t.true(result);
-    t.end();
-  }, 500);
-});
-
-test('Dance collision: every measures and at timestamp - rarer move first', t => {
-  const level = levels.collisionEveryNSeconds;
-  attempt(level.solutions[1], level.validationCode, (result) => {
-    t.true(result);
-    t.end();
-  }, 500);
-});
