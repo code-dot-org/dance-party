@@ -600,6 +600,37 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.stars = {
+      star: [],
+      draw: function () {
+        p5.background('black');
+        let star = {
+          x: p5.random(0, 400),
+          y: p5.random(0, 400),
+          velocityX: p5.random(-2, 2),
+          size: p5.random(15, 30),
+        };
+        this.star.push(star);
+        p5.noStroke();
+        p5.fill(255, 255, 0);
+        this.star.forEach(function (star){
+          p5.push();
+          p5.translate(star.x, star.y);
+          for (let i = 0; i < 3; i++) {
+            p5.rotate(360 / 5);
+            p5.ellipse(0, 0, 1, star.size);
+          }
+          star.x = star.x + 1;
+          star.y = star.y - 0.50;
+          star.size = star.size - 1;
+          p5.pop();
+        });
+        this.star = this.star.filter(function (star) {
+          return star.size > 0.1;
+        });
+      }
+    };
   }
 };
 
