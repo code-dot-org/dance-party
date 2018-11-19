@@ -2,6 +2,8 @@ const test = require('tape');
 const attempt = require('../helpers/runLevel.js');
 const levels = require('../../levels/hourOfCode');
 
+const KEY_UP_ARROW = 38;
+
 test('Dance 1: Pass the level', t => {
   const level = levels.hoc01;
   attempt(level.solution, level.validationCode, (result) => {
@@ -99,4 +101,23 @@ test('Dance 9: Fail the level', t => {
     t.equals(message, 'Try adding the `right_pineapple begins size following bass` block to your program.');
     t.end();
   });
+});
+
+test('Dance 10: Pass the level', t => {
+  const level = levels.hoc10;
+  attempt(level.solution, level.validationCode, (result) => {
+    t.true(result);
+    t.end();
+  }, 320, {
+    1000: KEY_UP_ARROW,
+  });
+});
+
+test('Dance 10: Fail the level', t => {
+  const level = levels.hoc10;
+  attempt('', level.validationCode, (result, message) => {
+    t.false(result);
+    t.equals(message, 'Make sure you add a `when key` event and press the key to test it.');
+    t.end();
+  }, 320);
 });

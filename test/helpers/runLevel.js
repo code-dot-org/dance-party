@@ -3,7 +3,7 @@ const ResourceLoader = require('../../src/ResourceLoader');
 const interpreted = require('raw-loader!../../src/p5.dance.interpreted.js');
 const injectInterpreted = require('./injectInterpreted');
 
-module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
+module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200, keyPresses = {}) => {
   let nativeAPI;
   createDanceAPI({
     resourceLoader: new ResourceLoader('/base/assets/sprite_sheets/'),
@@ -15,7 +15,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
     onInit: api => {
       nativeAPI = api;
 
-      const validationCallback = new Function('World', 'nativeAPI', 'sprites', validationCode);
+      const validationCallback = new Function('World', 'nativeAPI', 'sprites', 'events', validationCode);
       api.registerValidation(validationCallback);
 
       const {
@@ -28,6 +28,12 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200) => {
       api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
       runUserSetup();
       api.play({bpm: bpm, delay: 0});
+
+      for (let [time, whichKey] of Object.entries(keyPresses)) {
+        setTimeout(() => {
+          api.onKeyDown(whichKey);
+        }, time);
+      }
     },
   });
 };
