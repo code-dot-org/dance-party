@@ -251,10 +251,16 @@ test('LayoutSprites resets rotation', async t => {
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
   nativeAPI.makeNewDanceSpriteGroup(3, 'CAT', 'circle');
-  nativeAPI.layoutSprites('CAT', 'circle');
-  nativeAPI.layoutSprites('CAT', 'grid');
 
+  nativeAPI.layoutSprites('CAT', 'grid');
   let cats = nativeAPI.getGroupByName_('CAT');
+  for (let i = 0; i < cats.length; i++) {
+    t.equal(cats[i].rotation, 0);
+  }
+
+  nativeAPI.layoutSprites('CAT', 'circle');
+  nativeAPI.layoutSprites('CAT', 'border');
+  cats = nativeAPI.getGroupByName_('CAT');
   for (let i = 0; i < cats.length; i++) {
     t.equal(cats[i].rotation, 0);
   }
