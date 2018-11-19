@@ -16,21 +16,19 @@ test('Shows 0 for current measure when current measure is negative', async t => 
   const clock = sinon.useFakeTimers(Date.now());
   await nativeAPI.play(fakeSongData);
 
-  // text() draw call shows zero measures
+  // text() draw call doesn't display measure text yet
   // getCurrentMeasure() still gives negative value for other work
   nativeAPI.draw();
-  t.equal(nativeAPI.p5_.text.callCount, 1);
-  t.equal(nativeAPI.p5_.text.firstCall.args[0], 'Measure: 0');
+  t.equal(nativeAPI.p5_.text.callCount, 0);
   t.equal(nativeAPI.getCurrentMeasure(), -1);
 
   // // Advance one measure
   clock.tick(2000);
 
-  // text() draw call still shows zero measures
+  // text() draw call still doesn't display measure text
   // getCurrentMeasure() has advanced to zero
   nativeAPI.draw();
-  t.equal(nativeAPI.p5_.text.callCount, 2);
-  t.equal(nativeAPI.p5_.text.secondCall.args[0], 'Measure: 0');
+  t.equal(nativeAPI.p5_.text.callCount, 0);
   t.equal(nativeAPI.getCurrentMeasure(), 0);
 
   // Advance one more measure
@@ -38,12 +36,11 @@ test('Shows 0 for current measure when current measure is negative', async t => 
 
   // draw call and getCurrentMeasure() are now advancing together
   nativeAPI.draw();
-  t.equal(nativeAPI.p5_.text.callCount, 3);
-  t.equal(nativeAPI.p5_.text.thirdCall.args[0], 'Measure: 1');
+  t.equal(nativeAPI.p5_.text.callCount, 1);
+  t.equal(nativeAPI.p5_.text.firstCall.args[0], 'Measure: 1');
   t.equal(nativeAPI.getCurrentMeasure(), 1);
 
   t.end();
   nativeAPI.reset();
   clock.restore();
 });
-

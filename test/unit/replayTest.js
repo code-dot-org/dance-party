@@ -17,14 +17,14 @@ class mockP5 {
 test('replay', t => {
   const p5Inst = new mockP5();
 
-  replayLog.logSprites(p5Inst);
+  replayLog.logFrame({p5: p5Inst});
   t.equal(replayLog.getLog().length, 1);
-  t.equal(replayLog.getLog()[0].length, 0);
+  t.equal(replayLog.getLog()[0].sprites.length, 0);
 
   p5Inst.createSprite();
-  replayLog.logSprites(p5Inst);
+  replayLog.logFrame({p5: p5Inst});
   t.equal(replayLog.getLog().length, 2);
-  t.equal(replayLog.getLog()[1].length, 1);
+  t.equal(replayLog.getLog()[1].sprites.length, 1);
 
   t.end();
 });

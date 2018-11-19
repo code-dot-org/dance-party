@@ -547,7 +547,7 @@ module.exports = class DanceParty {
 
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    if (move === "rand") {
+    if ((move === "rand") && (group.length>0)) {
       move = this.getNewChangedMove(move, group[0].current_move, false);
     }
     group.forEach(sprite => {
@@ -557,7 +557,7 @@ module.exports = class DanceParty {
 
   doMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
-    if (move === "rand") {
+    if ((move === "rand") && (group.length>0)) {
       move = this.getNewChangedMove(move, group[0].current_move, true);
     }
     group.forEach(sprite => {
@@ -1056,6 +1056,7 @@ module.exports = class DanceParty {
       title,
     };
 
+    this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);
 
     if (!this.allSpritesLoaded) {
@@ -1096,8 +1097,8 @@ module.exports = class DanceParty {
     this.p5_.textAlign(this.p5_.TOP, this.p5_.LEFT);
     this.p5_.textSize(20);
 
-    this.world.validationCallback(this.world, this, this.sprites_);
-    if (this.showMeasureLabel) {
+    this.world.validationCallback(this.world, this, this.sprites_, events);
+    if (this.showMeasureLabel && this.getCurrentMeasure() >= 1) {
       this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
     }
 
