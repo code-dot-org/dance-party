@@ -294,6 +294,81 @@ module.exports = class Effects {
         }
       }
     };
+
+    this.pineapples = {
+      pineapple: [],
+      size: 50,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.pineapple.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.pineapple.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.pineapple.length; i++) {
+          p5.push();
+          const pineapple = this.pineapple[i];
+          p5.translate(pineapple.x, pineapple.y);
+          p5.rotate(pineapple.rot);
+          drawPineapple(p5._renderer.drawingContext);
+          pineapple.y += pineapple.speed;
+          pineapple.rot++;
+          if (pineapple.y > 450) {
+            pineapple.x = randomNumber(20, 380);
+            pineapple.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    this.pizzas = {
+      pizza: [],
+      size: 50,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.pizza.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.pizza.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.pizza.length; i++) {
+          p5.push();
+          const pizza = this.pizza[i];
+          p5.translate(pizza.x, pizza.y);
+          p5.rotate(pizza.rot);
+          drawPizza(p5._renderer.drawingContext);
+          pizza.y += pizza.speed;
+          pizza.rot++;
+          if (pizza.y > 450) {
+            pizza.x = randomNumber(20, 380);
+            pizza.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
     this.splatter = {
       splats:[],
       numSplats:100,
@@ -668,6 +743,42 @@ module.exports = class Effects {
       }
     };
 
+    this.confetti = {
+      confetti: [],
+      draw: function () {
+        let confetti = {
+          x: p5.random(-100, 400),
+          y: -10,
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6, 12, 18),
+          color: randomColor(255, 255, 100),
+        };
+        this.confetti.push(confetti);
+        p5.noStroke();
+        this.confetti.forEach(function (confetti) {
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          let confettiFlash = p5.random(1, 5);
+          for (let i = 0; i < 1; i++) {
+            if (confettiFlash <= 2) {
+              //causes the confetti to flash on / off
+            }
+            if (confettiFlash <= 5) {
+              p5.rect(0, 0, 4, confetti.size);
+            }
+          }
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
+      }
+    };
+
     this.music_notes = {
       notes: [],
       size: 50,
@@ -702,6 +813,36 @@ module.exports = class Effects {
           }
           p5.pop();
         }
+      }
+    };
+
+    this.stars = {
+      star: [],
+      draw: function () {
+        p5.background('black');
+        let star = {
+          x: p5.random(0, 400),
+          y: p5.random(0, 400),
+          size: p5.random(15, 30),
+        };
+        this.star.push(star);
+        p5.noStroke();
+        p5.fill(255, 255, 0);
+        this.star.forEach(function (star){
+          p5.push();
+          p5.translate(star.x, star.y);
+          for (let i = 0; i < 3; i++) {
+            p5.rotate(360 / 5);
+            p5.ellipse(0, 0, 1, star.size);
+          }
+          let fadeSpeed = p5.map(star.size, 15, 30, 1, 2);
+          star.size = star.size - fadeSpeed;
+          star.y = star.y - 2;
+          p5.pop();
+        });
+        this.star = this.star.filter(function (star) {
+          return star.size > 0.1;
+        });
       }
     };
   }
@@ -1070,6 +1211,366 @@ function drawMusicNote(ctx) {
   ctx.lineTo(5.5,0.58);
   ctx.quadraticCurveTo(5.5,0.41,5.6,0.41);
   ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawPineapple(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(10,0);
+  ctx.lineTo(10,18);
+  ctx.lineTo(0,18);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = "#30b1ad";
+  ctx.beginPath();
+  ctx.moveTo(6.118,2.025);
+  ctx.lineTo(6.205,2.025);
+  ctx.bezierCurveTo(7.043,1.6269999999999998,7.965,1.6749999999999998,7.965,1.6749999999999998);
+  ctx.bezierCurveTo(7.965,1.6749999999999998,8.015,2.705,7.545,3.58);
+  ctx.bezierCurveTo(8.532,3.535,9.36,3.8040000000000003,9.36,3.8040000000000003);
+  ctx.bezierCurveTo(9.36,3.8040000000000003,8.921999999999999,5.834,7.438999999999999,6.692);
+  ctx.bezierCurveTo(6.664999999999999,7.139,5.7589999999999995,7.179,5.0699999999999985,7.115);
+  ctx.bezierCurveTo(4.379999999999999,7.179,3.4749999999999988,7.139,2.6999999999999984,6.692);
+  ctx.bezierCurveTo(1.219,5.834,0.78,3.804,0.78,3.804);
+  ctx.bezierCurveTo(0.78,3.804,1.476,3.577,2.3529999999999998,3.574);
+  ctx.bezierCurveTo(1.8859999999999997,2.6999999999999997,1.9359999999999997,1.674,1.9359999999999997,1.674);
+  ctx.bezierCurveTo(1.9359999999999997,1.674,2.8579999999999997,1.627,3.6959999999999997,2.025);
+  ctx.lineTo(3.8289999999999997,2.025);
+  ctx.bezierCurveTo(4.009,0.878,4.97,0,4.97,0);
+  ctx.bezierCurveTo(4.97,0,5.935,0.878,6.117,2.025);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(5.0009999999999994,5.112);
+  ctx.lineTo(5,5.112);
+  ctx.quadraticCurveTo(9.991,5.112,9.991,10.103);
+  ctx.lineTo(9.991,13.008000000000003);
+  ctx.quadraticCurveTo(9.991,17.999000000000002,5,17.999000000000002);
+  ctx.lineTo(5.0009999999999994,17.999000000000002);
+  ctx.quadraticCurveTo(0.01,17.999000000000002,0.01,13.008000000000003);
+  ctx.lineTo(0.01,10.103);
+  ctx.quadraticCurveTo(0.01,5.112,5.0009999999999994,5.112);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ec7523";
+  ctx.globalAlpha = 0.5;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(-4.844,15.18);
+  ctx.lineTo(6.953,3.297);
+  ctx.lineTo(7.353000000000001,3.7);
+  ctx.lineTo(-4.444,15.582);
+  ctx.closePath();
+  ctx.moveTo(-3.346,16.689);
+  ctx.lineTo(8.451,4.806);
+  ctx.lineTo(8.851,5.208);
+  ctx.lineTo(-2.9459999999999997,17.091);
+  ctx.closePath();
+  ctx.moveTo(-1.846,18.198);
+  ctx.lineTo(9.951,6.316);
+  ctx.lineTo(10.351,6.718);
+  ctx.lineTo(-1.4459999999999997,18.601);
+  ctx.closePath();
+  ctx.moveTo(-0.348,19.707);
+  ctx.lineTo(11.45,7.824);
+  ctx.lineTo(11.85,8.227);
+  ctx.lineTo(0.052,20.109);
+  ctx.closePath();
+  ctx.moveTo(1.15,21.217);
+  ctx.lineTo(12.947,9.334);
+  ctx.lineTo(13.347,9.737);
+  ctx.lineTo(1.55,21.619);
+  ctx.closePath();
+  ctx.moveTo(2.648,22.726);
+  ctx.lineTo(14.445,10.843);
+  ctx.lineTo(14.845,NaN);
+  ctx.lineTo(17.893,NaN);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(3.046,3.298);
+  ctx.lineTo(14.843,15.18);
+  ctx.lineTo(14.443,15.583);
+  ctx.lineTo(2.646,3.7);
+  ctx.closePath();
+  ctx.moveTo(1.548,4.807);
+  ctx.lineTo(13.345,16.689);
+  ctx.lineTo(12.945,17.092);
+  ctx.lineTo(1.148,5.209);
+  ctx.closePath();
+  ctx.moveTo(0.05,6.317);
+  ctx.lineTo(11.849,18.2);
+  ctx.lineTo(11.449,18.602);
+  ctx.lineTo(-0.349,6.72);
+  ctx.closePath();
+  ctx.moveTo(-1.448,7.826);
+  ctx.lineTo(10.349,19.71);
+  ctx.lineTo(9.949,20.112000000000002);
+  ctx.lineTo(-1.848,8.23);
+  ctx.closePath();
+  ctx.moveTo(-2.947,9.335);
+  ctx.lineTo(8.85,21.218);
+  ctx.lineTo(8.45,21.62);
+  ctx.lineTo(-3.347,9.737);
+  ctx.closePath();
+  ctx.moveTo(-4.445,10.844);
+  ctx.lineTo(7.352,22.726);
+  ctx.lineTo(6.952,23.128999999999998);
+  ctx.lineTo(-4.845000000000001,11.245999999999999);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawPizza(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(18,0);
+  ctx.lineTo(18,18);
+  ctx.lineTo(0,18);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.restore();
+  ctx.save();
+  ctx.save();
+  ctx.fillStyle = "#ffa31a";
+  ctx.beginPath();
+  ctx.moveTo(17.4,3.168);
+  ctx.lineTo(8.984,18.092);
+  ctx.lineTo(0.6,3.219);
+  ctx.translate(9.029231629626716,13.015827554576049);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,12.924,-2.281299643347812,-0.8662453736196343,0);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-9.029231629626716,-13.015827554576049);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#dc1c4b";
+  ctx.beginPath();
+  ctx.moveTo(17.4,6.262);
+  ctx.lineTo(8.984,21.186);
+  ctx.lineTo(0.6,6.312);
+  ctx.translate(9.029231629626716,16.108827554576052);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,12.924,-2.281299643347812,-0.8662453736196343,0);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-9.029231629626716,-16.108827554576052);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ffdf40";
+  ctx.beginPath();
+  ctx.moveTo(17.4,6.824);
+  ctx.lineTo(8.984,21.748);
+  ctx.lineTo(0.6,6.875);
+  ctx.translate(9.029231629626716,16.671827554576048);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,12.924,-2.281299643347812,-0.8662453736196343,0);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-9.029231629626716,-16.671827554576048);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ffdf40";
+  ctx.beginPath();
+  ctx.moveTo(17.4,6.824);
+  ctx.lineTo(8.984,21.748);
+  ctx.lineTo(0.6,6.875);
+  ctx.translate(9.029231629626716,16.671827554576048);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,12.924,-2.281299643347812,-0.8662453736196343,0);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-9.029231629626716,-16.671827554576048);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.restore();
+  ctx.save();
+  ctx.save();
+  ctx.fillStyle = "#e3482c";
+  ctx.beginPath();
+  ctx.moveTo(6.731,6.112);
+  ctx.bezierCurveTo(7.7483085091883215,6.112,8.573,6.955495531318785,8.573,7.996);
+  ctx.bezierCurveTo(8.573,9.036504468681215,7.7483085091883215,9.88,6.731,9.88);
+  ctx.bezierCurveTo(5.713691490811678,9.88,4.888999999999999,9.036504468681215,4.888999999999999,7.996);
+  ctx.bezierCurveTo(4.888999999999999,6.955495531318785,5.713691490811678,6.112,6.731,6.112);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(7.545,4.258);
+  ctx.bezierCurveTo(7.853174890405583,4.258,8.103,4.513645407846616,8.103,4.829);
+  ctx.bezierCurveTo(8.103,5.144354592153383,7.853174890405583,5.3999999999999995,7.545,5.3999999999999995);
+  ctx.bezierCurveTo(7.236825109594417,5.3999999999999995,6.987,5.144354592153383,6.987,4.829);
+  ctx.bezierCurveTo(6.987,4.513645407846616,7.236825109594417,4.258,7.545,4.258);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(3.179,6.571000000000001);
+  ctx.bezierCurveTo(3.4871748904055826,6.571000000000001,3.737,6.826645407846617,3.737,7.142);
+  ctx.bezierCurveTo(3.737,7.457354592153384,3.4871748904055826,7.713,3.179,7.713);
+  ctx.bezierCurveTo(2.870825109594417,7.713,2.6209999999999996,7.457354592153384,2.6209999999999996,7.142);
+  ctx.bezierCurveTo(2.6209999999999996,6.826645407846617,2.870825109594417,6.571000000000001,3.179,6.571000000000001);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(7.626,10.581);
+  ctx.bezierCurveTo(7.9341748904055835,10.581,8.184000000000001,10.836645407846616,8.184000000000001,11.152);
+  ctx.bezierCurveTo(8.184000000000001,11.467354592153383,7.9341748904055835,11.722999999999999,7.626,11.722999999999999);
+  ctx.bezierCurveTo(7.317825109594417,11.722999999999999,7.0680000000000005,11.467354592153383,7.0680000000000005,11.152);
+  ctx.bezierCurveTo(7.0680000000000005,10.836645407846616,7.317825109594417,10.581,7.626,10.581);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(10.515,14.053);
+  ctx.bezierCurveTo(10.823174890405584,14.053,11.073,14.308645407846617,11.073,14.624);
+  ctx.bezierCurveTo(11.073,14.939354592153384,10.823174890405584,15.195,10.515,15.195);
+  ctx.bezierCurveTo(10.206825109594417,15.195,9.957,14.939354592153384,9.957,14.624);
+  ctx.bezierCurveTo(9.957,14.308645407846617,10.206825109594417,14.053,10.515,14.053);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(12.96,8.432);
+  ctx.bezierCurveTo(13.268174890405584,8.432,13.518,8.687645407846617,13.518,9.003);
+  ctx.bezierCurveTo(13.518,9.318354592153383,13.268174890405584,9.574,12.96,9.574);
+  ctx.bezierCurveTo(12.651825109594418,9.574,12.402000000000001,9.318354592153383,12.402000000000001,9.003);
+  ctx.bezierCurveTo(12.402000000000001,8.687645407846617,12.651825109594418,8.432,12.96,8.432);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.moveTo(14.657,5.4350000000000005);
+  ctx.bezierCurveTo(14.965174890405583,5.4350000000000005,15.215,5.690645407846617,15.215,6.006);
+  ctx.bezierCurveTo(15.215,6.321354592153384,14.965174890405583,6.577,14.657,6.577);
+  ctx.bezierCurveTo(14.348825109594417,6.577,14.099,6.321354592153384,14.099,6.006);
+  ctx.bezierCurveTo(14.099,5.690645407846617,14.348825109594417,5.4350000000000005,14.657,5.4350000000000005);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#e3482c";
+  ctx.beginPath();
+  ctx.moveTo(11.34,4.256);
+  ctx.bezierCurveTo(12.386579600929354,4.256,13.235,5.123672154827922,13.235,6.194);
+  ctx.bezierCurveTo(13.235,7.264327845172078,12.386579600929354,8.132,11.34,8.132);
+  ctx.bezierCurveTo(10.293420399070646,8.132,9.445,7.264327845172078,9.445,6.194);
+  ctx.bezierCurveTo(9.445,5.123672154827922,10.293420399070646,4.256,11.34,4.256);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#e3482c";
+  ctx.beginPath();
+  ctx.moveTo(7.55,12.43);
+  ctx.bezierCurveTo(8.46900182371844,12.43,9.214,13.192011355787988,9.214,14.132);
+  ctx.bezierCurveTo(9.214,15.071988644212011,8.46900182371844,15.834,7.55,15.834);
+  ctx.bezierCurveTo(6.630998176281559,15.834,5.886,15.071988644212011,5.886,14.132);
+  ctx.bezierCurveTo(5.886,13.192011355787988,6.630998176281559,12.43,7.55,12.43);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#e3482c";
+  ctx.beginPath();
+  ctx.moveTo(10.664,9.39);
+  ctx.bezierCurveTo(11.58300182371844,9.39,12.328,10.15201135578799,12.328,11.092);
+  ctx.bezierCurveTo(12.328,12.031988644212012,11.58300182371844,12.794,10.664,12.794);
+  ctx.bezierCurveTo(9.744998176281559,12.794,9,12.031988644212012,9,11.092);
+  ctx.bezierCurveTo(9,10.15201135578799,9.744998176281559,9.39,10.664,9.39);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ffa319";
+  ctx.beginPath();
+  ctx.moveTo(1.753,3.954);
+  ctx.bezierCurveTo(2.1029999999999998,4.55,2.987,4.024,3.178,3.6420000000000003);
+  ctx.bezierCurveTo(3.368,2.7950000000000004,3.04,2.4460000000000006,2.443,3.2920000000000003);
+  ctx.bezierCurveTo(1.847,2.9920000000000004,1.241,3.2750000000000004,1.0030000000000001,3.575);
+  ctx.bezierCurveTo(0.7660000000000001,4.369,2.146,4.325,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
   ctx.fill();
   ctx.stroke();
   ctx.restore();
