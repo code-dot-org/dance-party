@@ -1,4 +1,5 @@
 const test = require('tape');
+const sinon = require('sinon');
 const constants = require('../../src/constants');
 const helpers = require('../helpers/createDanceAPI');
 const UnitTestResourceLoader = require('../helpers/UnitTestResourceLoader');
@@ -607,6 +608,65 @@ test('startMapping/stopMapping adds and removes behaviors', async t => {
   t.equal(sprite.behaviors.length, 3);
 
   t.end();
-
   nativeAPI.reset();
+});
+
+test('startMapping results in sprite properties being updated', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite2 = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite3 = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+
+  // hard code the energy values at different levels
+  const getEnergy = sinon.stub(nativeAPI, 'getEnergy');
+  getEnergy.withArgs('bass').returns(0);
+  getEnergy.withArgs('mid').returns(128);
+  getEnergy.withArgs('treble').returns(255);
+
+  nativeAPI.startMapping(sprite, 'x', 'bass');
+  nativeAPI.startMapping(sprite, 'y', 'treble');
+
+  nativeAPI.startMapping(sprite2, 'scale', 'bass');
+  nativeAPI.startMapping(sprite2, 'width', 'mid');
+  nativeAPI.startMapping(sprite2, 'height', 'treble');
+
+  nativeAPI.startMapping(sprite3, 'rotation', 'bass');
+  nativeAPI.startMapping(sprite3, 'tint', 'treble');
+
+  const initials = {
+    x: sprite.x,
+    y: sprite.y,
+
+    scale: sprite.scale,
+    width: sprite.width,
+    height: sprite.height,
+
+    rotation: sprite.rotation,
+  };
+
+  setTimeout(() => {
+    // x and y position is relative to initial position
+    t.equal(sprite.x, initials.x - 150);
+    t.equal(sprite.y, initials.y + 150);
+
+    t.equal(sprite2.scale, initials.scale * 0.5);
+    // sprite2.width should be effectively 1, but not necessarily exactly due to
+    // how we do our mpping
+    t.ok(Math.abs(sprite2.width - initials.width) < 1/255);
+    t.equal(sprite2.height, initials.height * 1.5);
+
+    t.equal(sprite3.rotation, initials.rotation - 90);
+
+    // tint is still absolute (not relative)
+    t.equal(sprite3.tint, 'hsb(360,100%,100%)');
+
+    t.end();
+
+    nativeAPI.reset();
+    nativeAPI.getEnergy.restore();
+  }, 100);
 });
