@@ -47,7 +47,7 @@ module.exports = class DanceParty {
     },
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
-    resourceLoader = new ResourceLoader(),
+    resourceLoader = new ResourceLoader()
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
