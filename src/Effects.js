@@ -435,10 +435,10 @@ module.exports = class Effects {
       draw: function () {
         p5.background('lightblue');
         let flake = {
-          x: randomNumber(-100, 400),
+          x: p5.random(-100, 400),
           y: -10,
-          velocityX: randomNumber(-2, 2),
-          size: randomNumber(6,12),
+          velocityX: p5.random(-2, 2),
+          size: p5.random(6,12),
         };
         this.flake.push(flake);
         p5.noStroke();
