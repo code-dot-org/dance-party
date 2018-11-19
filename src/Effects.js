@@ -779,6 +779,40 @@ module.exports = class Effects {
       }
     };
 
+    this.starfield = {
+      stars: [],
+      draw: function () {
+        p5.background('black');
+        for (let i = 0; i < 3; i ++) {
+          let stars = {
+            x: 200,
+            y: 200,
+            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+            size: 0.01,
+          };
+          this.stars.push(stars);
+        }
+        p5.noStroke();
+        p5.fill('white');
+        this.stars.forEach(function (stars){
+          p5.push();
+          p5.translate(stars.x, stars.y);
+          p5.ellipse(0, 0, stars.size, stars.size);
+          let speedMultiplier = p5.pow(stars.size, 2) /2;
+          stars.x += stars.velocity.x * speedMultiplier;
+          stars.y += stars.velocity.y * speedMultiplier;
+          stars.size += 0.1;
+          p5.pop();
+        });
+        this.stars = this.stars.filter(function (stars) {
+          if (stars.x < -5 || stars.x > 405 || stars.y < -5 || stars.y > 405) {
+            return false;
+          }
+          return true;
+        });
+      }
+    };
+
     this.music_notes = {
       notes: [],
       size: 50,
