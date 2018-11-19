@@ -320,7 +320,7 @@ module.exports = class Effects {
           const rainbow = this.rainbow[i];
           p5.translate(rainbow.x, rainbow.y);
           p5.rotate(rainbow.rot);
-          drawRainbow(p5._renderer.drawingContext);          
+          drawRainbow(p5._renderer.drawingContext);
           rainbow.y += rainbow.speed;
           rainbow.rot++;
           if (rainbow.y > 450) {
