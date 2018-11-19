@@ -667,6 +667,43 @@ module.exports = class Effects {
         });
       }
     };
+
+    this.music_notes = {
+      notes: [],
+      size: 50,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.notes.push({
+            x: randomNumber(10, 390),
+            y: -50,
+            rot: randomNumber(0, 359),
+            speed: p5.random(1,5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.notes.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.notes.length; i++) {
+          p5.push();
+          const notes = this.notes[i];
+          p5.translate(notes.x, notes.y);
+          p5.rotate(notes.rot);
+          drawMusicNote(p5._renderer.drawingContext);
+          notes.y += notes.speed;
+          notes.rot++;
+          if (notes.y > 410) {
+            notes.x = randomNumber(10, 390);
+            notes.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
   }
 };
 
@@ -958,6 +995,80 @@ function drawFallingPoop(ctx) {
   ctx.translate(-9.175,-12.692);
   ctx.lineTo(6.8950000000000005,12.627);
   ctx.lineTo(11.455,12.627);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawMusicNote(ctx) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = "#143441";
+  ctx.beginPath();
+  ctx.moveTo(5.8,0);
+  ctx.bezierCurveTo(5.2,0,4.7,0.45,4.7,1.0);
+  ctx.lineTo(4.7,7.0);
+  ctx.bezierCurveTo(4.2,6.7,3.6,6.6,3.0,6.6);
+  ctx.bezierCurveTo(1.3,6.6,0,7.8,0,9.3);
+  ctx.bezierCurveTo(0,10.7,1.3,12,3.0,12);
+  ctx.bezierCurveTo(4.7,12,6.1,10.7,6.1,9.3);
+  ctx.bezierCurveTo(6.1,9.2,6.1,9.2,6.1,9.2);
+  ctx.lineTo(6.1,1.7);
+  ctx.lineTo(14.5,1.7);
+  ctx.lineTo(14.5,7.0);
+  ctx.bezierCurveTo(14.1,6.7,13.5,6.6,12.9,6.6);
+  ctx.bezierCurveTo(11.2,6.6,9.8,7.8,9.8,9.3);
+  ctx.bezierCurveTo(9.8,10.7,11.2,12,12.9,12);
+  ctx.bezierCurveTo(14.6,12,15.9,10.8,16,9.3);
+  ctx.lineTo(16,9.3);
+  ctx.lineTo(16,1.0);
+  ctx.bezierCurveTo(16,0.45,15.4,0,14.8,0);
+  ctx.lineTo(5.8,0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#7d8e9e";
+  ctx.beginPath();
+  ctx.moveTo(2.5,7.3);
+  ctx.bezierCurveTo(3.1,7.3,3.6,7.8,3.6,8.3);
+  ctx.bezierCurveTo(3.6,8.8,3.1,9.3,2.5,9.3);
+  ctx.bezierCurveTo(1.9,9.3,1.4,8.8,1.4,8.3);
+  ctx.bezierCurveTo(1.4,7.8,1.9,7.3,2.5,7.3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#7d8e9e";
+  ctx.beginPath();
+  ctx.moveTo(12.7,7.3);
+  ctx.bezierCurveTo(13.3,7.3,13.8,7.8,13.8,8.3);
+  ctx.bezierCurveTo(13.8,8.8,13.3,9.3,12.7,9.3);
+  ctx.bezierCurveTo(12.1,9.3,11.6,8.8,11.6,8.3);
+  ctx.bezierCurveTo(11.6,7.8,12.1,7.3,12.7,7.3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#7d8e9e";
+  ctx.beginPath();
+  ctx.moveTo(5.67,0.41);
+  ctx.lineTo(14.89,0.41);
+  ctx.quadraticCurveTo(15.0,0.41,15.0,0.58);
+  ctx.lineTo(15.0,0.58);
+  ctx.quadraticCurveTo(15.0,0.75,14.8,0.75);
+  ctx.lineTo(5.6,0.75);
+  ctx.quadraticCurveTo(5.5,0.75,5.5,0.58);
+  ctx.lineTo(5.5,0.58);
+  ctx.quadraticCurveTo(5.5,0.41,5.6,0.41);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
