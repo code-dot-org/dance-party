@@ -29,8 +29,8 @@ async function testBackground(t, effect) {
   await createScreenshot(effect);
 
   const [actual, expected] = await Promise.all([
-      readPNG(`${tempDir}/${effect}.png`),
-      readPNG(`${fixturePath}${effect}.png`)
+    readPNG(`${tempDir}/${effect}.png`),
+    readPNG(`${fixturePath}${effect}.png`)
   ]);
 
   let diff = new PNG({width: actual.width, height: actual.height});
