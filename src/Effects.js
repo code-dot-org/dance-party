@@ -294,6 +294,44 @@ module.exports = class Effects {
         }
       }
     };
+
+    this.rainbows = {
+      rainbow: [],
+      size: 50,
+      init: function () {
+        for (let i = 0; i < 20; i++) {
+          this.rainbow.push({
+            x: randomNumber(20, 380),
+            y: randomNumber(20, 380),
+            rot: randomNumber(0, 359),
+            speed: randomNumber(2, 5),
+          });
+        }
+      },
+      update: function () {
+        this.size += randomNumber(-5, 5);
+      },
+      draw: function () {
+        if (this.rainbow.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.rainbow.length; i++) {
+          p5.push();
+          const rainbow = this.rainbow[i];
+          p5.translate(rainbow.x, rainbow.y);
+          p5.rotate(rainbow.rot);
+          drawRainbow(p5._renderer.drawingContext);          
+          rainbow.y += rainbow.speed;
+          rainbow.rot++;
+          if (rainbow.y > 450) {
+            rainbow.x = randomNumber(20, 380);
+            rainbow.y = -50;
+          }
+          p5.pop();
+        }
+      }
+    };
+
     this.splatter = {
       splats:[],
       numSplats:100,
@@ -753,5 +791,74 @@ function drawSparkle(ctx, color) {
   ctx.bezierCurveTo(29.1,23.6,30.7,25.2,54.3,27.2);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
+}
+
+function drawRainbow(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(20,0);
+  ctx.lineTo(20,10);
+  ctx.lineTo(0,10);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.restore();
+  ctx.save();
+  ctx.save();
+  ctx.fillStyle = "#dd527c";
+  ctx.beginPath();
+  ctx.arc(10,10,10,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.beginPath();
+  ctx.arc(10,10,9,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#fff79c";
+  ctx.beginPath();
+  ctx.arc(10,10,8,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#8fc23f";
+  ctx.beginPath();
+  ctx.arc(10,10,7,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#30b1ad";
+  ctx.beginPath();
+  ctx.arc(10,10,6,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#5e79bc";
+  ctx.beginPath();
+  ctx.arc(10,10,5,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
   ctx.restore();
 }
