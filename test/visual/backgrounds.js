@@ -49,7 +49,7 @@ async function testBackground(t, effect) {
   'strobe',
   'rain',
   'text',
-  'raining_tacos',
+  //'raining_tacos', temporarily disable: to figure out emoji compatibility
   'splatter',
   'spiral',
   'spotlight',
