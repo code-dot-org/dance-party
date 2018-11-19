@@ -22,15 +22,17 @@ async function createScreenshot(effectName) {
 async function testBackground(t, effect) {
   await createScreenshot(effect);
 
-  const [actual, expected] = await Promise.all([
-    readPNG(`${tempDir}/${effect}.png`),
-    readPNG(`${fixturePath}${effect}.png`)
-  ]);
+  const actual = fs.createReadStream(`${tempDir}/${effect}.png`).pipe(new PNG()).on('parsed', doneReading),
+    expected = fs.createReadStream(`${fixturePath}${effect}.png`).pipe(new PNG()).on('parsed', doneReading);
+  let filesRead = 0;
 
-  const diff = new PNG({width: actual.width, height: actual.height});
+  function doneReading() {
+    if (++filesRead < 2) return;
+    let diff = new PNG({width: actual.width, height: actual.height});
 
-  let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
-  t.equal(pixelDiff, 0, effect);
+    let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
+    t.equal(pixelDiff, 0, effect);
+  }
 }
 
 [
