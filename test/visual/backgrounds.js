@@ -7,8 +7,6 @@ const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot
 const fixturePath = 'test/visual/fixtures/';
 const tempDir = fs.mkdtempSync(fixturePath);
 
-const readPNG = (pngPath) => new Promise(resolve => fs.createReadStream(pngPath).pipe(new PNG()).on('parsed', resolve));
-
 async function createScreenshot(effectName) {
   await createBackgroundScreenshot(effectName, tempDir);
 
@@ -27,7 +25,9 @@ async function testBackground(t, effect) {
   let filesRead = 0;
 
   function doneReading() {
-    if (++filesRead < 2) return;
+    if (++filesRead < 2) {
+      return;
+    }
     let diff = new PNG({width: actual.width, height: actual.height});
 
     let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
