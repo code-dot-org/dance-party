@@ -97,6 +97,29 @@ test('changing visibility for all updates all dancers', async t => {
   nativeAPI.reset();
 });
 
+test('changing dance speed for all updates all dancers', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+
+  const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
+
+  t.equal(catSprite.dance_speed, 1);
+  t.equal(bearSprite.dance_speed, 1);
+
+  nativeAPI.setDanceSpeedEach('all', 2);
+  t.equal(nativeAPI.getProp(catSprite, 'dance_speed'), 2);
+  t.equal(nativeAPI.getProp(bearSprite, 'dance_speed'), 2);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
 test('changing dance moves for all cats updates only all cat dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({

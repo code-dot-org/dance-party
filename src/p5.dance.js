@@ -792,6 +792,10 @@ module.exports = class DanceParty {
     sprite.dance_speed = speed;
   }
 
+  setDanceSpeedEach(group, val) {
+    this.setPropEach(group, "dance_speed", val);
+  }
+
   // Music Helpers
 
   getEnergy(range) {
