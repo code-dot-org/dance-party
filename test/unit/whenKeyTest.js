@@ -9,7 +9,7 @@ test('make sure we are checking all relevant keys', async t => {
 
   const p5 = nativeAPI.p5_;
 
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 0,
   });
 

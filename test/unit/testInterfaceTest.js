@@ -7,7 +7,7 @@ test('testInterface getSprites', async t => {
 
   t.equal(testInterface.getSprites().length, 0);
 
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 

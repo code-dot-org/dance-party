@@ -33,7 +33,7 @@ test('setBackgroundEffect changes the bgEffect to color_cycle effect', async t =
 
 test('text background effect updates with song text', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 

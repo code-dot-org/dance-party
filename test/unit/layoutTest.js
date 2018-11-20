@@ -8,7 +8,7 @@ const maxY = 400 - 40;
 
 async function runLayoutTest(t, fn) {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});

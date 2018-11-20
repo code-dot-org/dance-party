@@ -3,11 +3,11 @@ const helpers = require('../helpers/createDanceAPI');
 const constants = require('../../src/constants');
 
 test('ensureSpritesAreLoaded sanity test', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -23,53 +23,50 @@ test('ensureSpritesAreLoaded sanity test', async t => {
   nativeAPI.reset();
 });
 
-test('Awaiting play without awaiting ensureSpritesAreLoaded sanity test', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
-  const testInterface = nativeAPI.getTestInterface();
+test('Calling play without awaiting ensureSpritesAreLoaded should throw test', async t => {
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
 
   nativeAPI.ensureSpritesAreLoaded();
-  await nativeAPI.play({
-    bpm: 120,
-  });
-
-  t.deepEqual(testInterface.getAvailableSpriteNames(), constants.SPRITE_NAMES);
-
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-
-  t.equal(testInterface.getSprites().length, 1);
-  t.equal(testInterface.getSprites()[0], sprite);
-
+  // This should fail since we didn't wait for the promise!
+  let error = null;
+  try {
+    nativeAPI.play({
+      bpm: 120,
+    });
+  } catch (e) {
+    error = e;
+  }
+  t.equal(error.toString(), "Error: play() called before ensureSpritesAreLoaded() has completed!");
   t.end();
 
   nativeAPI.reset();
 });
 
-test('Awaiting play without calling ensureSpritesAreLoaded sanity test', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
-  const testInterface = nativeAPI.getTestInterface();
 
-  await nativeAPI.play({
-    bpm: 120,
-  });
+test('Calling play without calling ensureSpritesAreLoaded should throw test', async t => {
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
 
-  t.deepEqual(testInterface.getAvailableSpriteNames(), constants.SPRITE_NAMES);
-
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-
-  t.equal(testInterface.getSprites().length, 1);
-  t.equal(testInterface.getSprites()[0], sprite);
-
+  // This should fail since we didn't call ensureSpritesAreLoaded() before play()
+  let error = null;
+  try {
+    nativeAPI.play({
+      bpm: 120,
+    });
+  } catch (e) {
+    error = e;
+  }
+  t.equal(error.toString(), "Error: play() called before ensureSpritesAreLoaded() has completed!");
   t.end();
 
   nativeAPI.reset();
 });
 
 test('ensureSpritesAreLoaded with filtered sprite list', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded(["CAT"]);
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -86,12 +83,12 @@ test('ensureSpritesAreLoaded with filtered sprite list', async t => {
 });
 
 test('ensureSpritesAreLoaded can be called multiple times and they are additive', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   nativeAPI.ensureSpritesAreLoaded(["CAT"]);
   await nativeAPI.ensureSpritesAreLoaded(["BEAR"]);
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -111,11 +108,11 @@ test('ensureSpritesAreLoaded can be called multiple times and they are additive'
 
 
 test('ensureSpritesAreLoaded can be called multiple times after play/reset', async t => {
-  const nativeAPI = await helpers.createDanceAPI();
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded(["CAT"]);
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -129,7 +126,7 @@ test('ensureSpritesAreLoaded can be called multiple times after play/reset', asy
   nativeAPI.reset();
 
   await nativeAPI.ensureSpritesAreLoaded(["BEAR"]);
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 

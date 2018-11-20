@@ -282,13 +282,10 @@ module.exports = class DanceParty {
     }
   }
 
-  async play(songData, callback) {
-    if (!this.lastEnsureSpritesPromise_) {
-      // The host has never called ensureSpritesAreLoaded(). We will call it ourselves here,
-      // effectively ensuring that all sprites are loaded.
-      this.ensureSpritesAreLoaded();
+  play(songData, callback) {
+    if (!this.allSpritesLoaded) {
+      throw new Error('play() called before ensureSpritesAreLoaded() has completed!');
     }
-    await this.lastEnsureSpritesPromise_;
 
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {

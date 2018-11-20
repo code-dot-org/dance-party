@@ -4,7 +4,7 @@ const helpers = require('../helpers/createDanceAPI');
 
 test('Background effects', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 

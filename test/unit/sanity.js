@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 test('sanity', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -15,7 +15,7 @@ test('sanity', async t => {
 });
 
 test('i18n', async t => {
-  const nativeAPI = await helpers.createDanceAPI({
+  const nativeAPI = await helpers.createDanceAPIWithoutLoading({
     i18n: {
       measure: () => 'hello'
     },
@@ -23,7 +23,7 @@ test('i18n', async t => {
   await nativeAPI.ensureSpritesAreLoaded();
 
   const clock = sinon.useFakeTimers(Date.now());
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
     delay: 0,
   });
@@ -49,7 +49,6 @@ test('draw without songData', async t => {
   // we have a valid scenario where draw is called without having set any song
   // metadata. make sure that we dont hit any exceptions in that path
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.ensureSpritesAreLoaded();
   nativeAPI.draw();
 
   t.end();

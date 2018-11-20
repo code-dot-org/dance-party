@@ -3,7 +3,7 @@ const helpers = require('../helpers/createDanceAPI');
 
 test('addCues sorts measures and seconds cues', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
