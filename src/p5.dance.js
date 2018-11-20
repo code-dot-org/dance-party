@@ -634,18 +634,22 @@ module.exports = class DanceParty {
       if (count > 0) {
         group[0].x = minX;
         group[0].y = minY;
+        group[0].rotation = 0;
       }
       if (count > 1) {
         group[1].x = maxX;
         group[1].y = minY;
+        group[1].rotation = 0;
       }
       if (count > 2) {
         group[2].x = maxX;
         group[2].y = maxY;
+        group[2].rotation = 0;
       }
       if (count > 3) {
         group[3].x = minX;
         group[3].y = maxY;
+        group[3].rotation = 0;
       }
       if (count > 4) {
         const topCount = Math.ceil((count - 4 - 0) / 4);
