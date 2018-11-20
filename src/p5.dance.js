@@ -842,7 +842,9 @@ module.exports = class DanceParty {
       return;
     }
 
-    sprite.depth = sprite.scale + sprite.y / 400 + sprite.x / 40000;
+    // Bias scale heavily (especially since it largely hovers around 1.0) but use
+    // Y coordinate as the first tie-breaker and X coordinate as the second.
+    sprite.depth = sprite.scale * 100 + sprite.y / 400 + sprite.x / 40000;
   }
 
   // Behaviors
