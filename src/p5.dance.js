@@ -151,27 +151,21 @@ module.exports = class DanceParty {
       this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
         const moveData = costumeData[moveName.toLowerCase()];
 
-        promises.push(new Promise(resolveSpriteSheet => {
-          // Passing a callback as the 3rd arg to loadSpriteSheet() indicates that
-          // we want it to load the image as a Image (instead of a p5.Image), which
-          // avoids a canvas creation. This makes it possible to run on mobile
-          // Safari in iOS 12 with canvas memory limits.
-          const spriteSheet = this.resourceLoader_.loadSpriteSheet(
+        const loadSpriteSheetAndSetAnimation = async () => {
+          const spriteSheet = await this.resourceLoader_.loadSpriteSheet(
             moveData.spritesheet,
             moveData.frames,
-            () => {
-              const animation = this.p5_.loadAnimation(spriteSheet);
-              this.setAnimationSpriteSheet(
-                costume,
-                moveIndex,
-                spriteSheet,
-                mirror,
-                animation
-              );
-              resolveSpriteSheet();
-            }
           );
-        }));
+          const animation = this.p5_.loadAnimation(spriteSheet);
+          this.setAnimationSpriteSheet(
+            costume,
+            moveIndex,
+            spriteSheet,
+            mirror,
+            animation
+          );
+        };
+        promises.push(loadSpriteSheetAndSetAnimation());
       });
     });
     const promise = Promise.all(promises);

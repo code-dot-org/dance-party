@@ -24,12 +24,13 @@ module.exports = class UnitTestResourceLoader {
     callback(data);
   }
 
-  loadSpriteSheet(baseName, frameData, callback) {
-    const image = new Image();
-    const sheet = this.p5_.loadSpriteSheet(image, frameData);
-    setTimeout(() => {
-      callback(image);
-    }, 0);
-    return sheet;
+  loadSpriteSheet(baseName, frameData) {
+    return new Promise(resolve => {
+      const image = new Image();
+      const sheet = this.p5_.loadSpriteSheet(image, frameData);
+      setTimeout(() => {
+        resolve(sheet);
+      }, 0);
+    });
   }
 };

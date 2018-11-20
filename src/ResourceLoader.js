@@ -31,22 +31,24 @@ module.exports = class ResourceLoader {
     });
   }
 
-  loadSpriteSheet(baseName, frameData, callback) {
-    // Passing callback as the 3rd arg to loadSpriteSheet() indicates that we want
-    // it to load the image as a Image (instead of a p5.Image), which avoids
-    // a canvas creation. This makes it possible to run on mobile Safari in
-    // iOS 12 with canvas memory limits.
-    const spriteSheetUrl = `${this.assetBase_}${baseName}`;
-    if (this.imageCache_[spriteSheetUrl]) {
-      // If already in the imageCache, trigger the callback ourselves since we
-      // aren't calling loadImageElement()
-      setTimeout(() => {
-        callback(this.imageCache_[spriteSheetUrl]);
-      }, 0);
-    } else {
-      this.imageCache_[spriteSheetUrl] = this.p5_.loadImageElement(spriteSheetUrl, callback);
-    }
-    const sheet = this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData);
-    return sheet;
+  loadSpriteSheet(baseName, frameData) {
+    return new Promise(resolve => {
+      const spriteSheetUrl = `${this.assetBase_}${baseName}`;
+      const resolveWithImageFromCache = () => {
+        resolve(this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData));
+      };
+      if (this.imageCache_[spriteSheetUrl]) {
+        resolveWithImageFromCache();
+      } else {
+        // Passing callback as the 3rd arg to loadSpriteSheet() indicates that we want
+        // it to load the image as a Image (instead of a p5.Image), which avoids
+        // a canvas creation. This makes it possible to run on mobile Safari in
+        // iOS 12 with canvas memory limits.
+        this.imageCache_[spriteSheetUrl] = this.p5_.loadImageElement(
+          spriteSheetUrl,
+          resolveWithImageFromCache
+        );
+      }
+    });
   }
 };
