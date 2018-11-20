@@ -168,11 +168,9 @@ module.exports = class DanceParty {
         promises.push(loadSpriteSheetAndSetAnimation());
       });
     });
-    const promise = Promise.all(promises);
-    promise.then(() => {
+    return Promise.all(promises).then(() => {
       this.allSpritesLoaded = true;
     });
-    return promise;
   }
 
   async ensureSpritesAreLoaded(spriteNames) {
