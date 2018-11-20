@@ -262,7 +262,6 @@ module.exports = class Effects {
           p5.rotate(taco.rot);
           p5.scale(2, 2);
           drawTaco(p5._renderer.drawingContext);
-          p5.pop();
           taco.y += taco.speed;
           taco.rot++;
           if (taco.y > 450) {
@@ -301,7 +300,6 @@ module.exports = class Effects {
           p5.rotate(pineapple.rot);
           p5.scale(2, 2);
           drawPineapple(p5._renderer.drawingContext);
-          p5.pop();
           pineapple.y += pineapple.speed;
           pineapple.rot++;
           if (pineapple.y > 450) {
@@ -340,7 +338,6 @@ module.exports = class Effects {
           p5.rotate(pizza.rot);
           p5.scale(2, 2);
           drawPizza(p5._renderer.drawingContext);
-          p5.pop();
           pizza.y += pizza.speed;
           pizza.rot++;
           if (pizza.y > 450) {
@@ -655,7 +652,6 @@ module.exports = class Effects {
           const poop = this.poop[i];
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
-          p5.push();
           p5.scale(2, 2);
           drawFallingPoop(p5._renderer.drawingContext);
           p5.pop();
@@ -671,11 +667,11 @@ module.exports = class Effects {
     };
 
     this.hearts = {
-      heart: [],
+      heartList: [],
       size: 50,
       init: function () {
         for (let i = 0; i < 20; i++) {
-          this.heart.push({
+          this.heartList.push({
             x: randomNumber(10, 390),
             y: -50,
             rot: randomNumber(0, 359),
@@ -687,17 +683,16 @@ module.exports = class Effects {
         this.size += randomNumber(-5, 5);
       },
       draw: function () {
-        if (this.heart.length < 1) {
+        if (this.heartList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.heart.length; i++) {
+        for (let i = 0; i < this.heartList.length; i++) {
           p5.push();
-          const heart = this.heart[i];
+          const heart = this.heartList[i];
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
           p5.scale(2, 2);
           drawHeart(p5._renderer.drawingContext);
-          p5.pop();
           heart.y += heart.speed;
           heart.rot++;
           if (heart.y > 410) {
@@ -734,10 +729,8 @@ module.exports = class Effects {
           const rainbow = this.rainbow[i];
           p5.translate(rainbow.x, rainbow.y);
           p5.rotate(rainbow.rot);
-          p5.push();
           p5.scale(2, 2);
           drawRainbow(p5._renderer.drawingContext);
-          p5.pop();
           rainbow.y += rainbow.speed;
           rainbow.rot++;
           if (rainbow.y > 410) {
