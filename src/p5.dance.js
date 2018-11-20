@@ -371,10 +371,15 @@ module.exports = class DanceParty {
         sprite.x = position.x;
         sprite.y = position.y;
       }
+      this.adjustSpriteDepth_(sprite);
     };
     sprite.setScale = function (scale) {
       sprite.scale = scale;
+      this.adjustSpriteDepth_(sprite);
     };
+
+    this.adjustSpriteDepth_(sprite);
+
     return sprite;
   }
 
@@ -697,7 +702,9 @@ module.exports = class DanceParty {
     // that are higher.
     // We also add a fractional component based on x to avoid z-fighting (except
     // in cases where we have identical x and y).
-    group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
+    group.forEach(sprite => {
+      this.adjustSpriteDepth_(sprite);
+    });
   }
 
   // Properties
@@ -715,10 +722,12 @@ module.exports = class DanceParty {
 
     if (property === "scale") {
       sprite.scale = val / 100;
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "width" || property === "height") {
       sprite[property] = SIZE * (val / 100);
     } else if (property === "y") {
       sprite.y = this.world.height - val;
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "costume") {
       sprite.setAnimation(val);
     } else if (property === "tint" && typeof (val) === "number") {
@@ -737,6 +746,7 @@ module.exports = class DanceParty {
       sprite[property] = SIZE * (randomInt(0,100)/100);
     } else if (property === "y" || property === "x"){
       sprite[property] = randomInt(50, 350);
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "rotation"){
       sprite[property] = randomInt(0, 359);
     } else if (property === "tint") {
@@ -785,6 +795,7 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) return;
     sprite.x = location.x;
     sprite.y = location.y;
+    this.adjustSpriteDepth_(sprite);
   }
 
   setDanceSpeed(sprite, speed) {
@@ -824,6 +835,14 @@ module.exports = class DanceParty {
     } else {
       return this.getCurrentTime();
     }
+  }
+
+  adjustSpriteDepth_(sprite) {
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
+
+    sprite.depth = sprite.scale + sprite.y / 400 + sprite.x / 40000;
   }
 
   // Behaviors
