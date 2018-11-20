@@ -45,7 +45,10 @@ module.exports = class Effects {
 
         // Change the drawing color, so the remaining circles are a different color.
         p5.drawingContext.shadowColor = "pink";
-        p5.ellipse(280, 160, 60);
+        let x = 280;
+        let y = 160;
+        let radius = 60 + p5.sin(p5.frameCount) * 20;
+        p5.ellipse(x, y, radius);
 
         // Restore the canvas state.
         p5.pop();
