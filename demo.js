@@ -34,11 +34,9 @@ function runCode() {
   nativeAPI.play(jazzy_beats);
 }
 
-textareaCode.value = textareaCode.value || `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-
-atTimestamp(2, "measures", function () {
-  setBackgroundEffect("disco");
-});
+textareaCode.value = `
+makeNewDanceSprite("MOOSE");
+setBackgroundEffect("bokeh");
 `;
 
 document.querySelector('#run').addEventListener('click', () => {

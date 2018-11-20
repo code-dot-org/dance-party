@@ -20,6 +20,38 @@ module.exports = class Effects {
       }
     };
 
+    this.bokeh = {
+      draw: function () {
+        // Fill the entire background with a solid color.
+        p5.background("black");
+
+        // Save the canvas state, so we can restore it below.
+        p5.push();
+
+        // Set the draw settings. "SCREEN" will make overlapping dots blend
+        // together instead of just overlaying them.
+        p5.noStroke();
+        p5.fill("black");
+        p5.blendMode(p5.SCREEN);
+
+        // Set the color of our blurry circle.
+        p5.drawingContext.shadowColor = "orange";
+        p5.drawingContext.shadowBlur = 15;
+
+        // Draw some circles in random locations!
+        p5.ellipse(200, 210, 30);
+        p5.ellipse(100, 180, 50);
+        p5.ellipse(250, 150, 80);
+
+        // Change the drawing color, so the remaining circles are a different color.
+        p5.drawingContext.shadowColor = "pink";
+        p5.ellipse(280, 160, 60);
+
+        // Restore the canvas state.
+        p5.pop();
+      }
+    };
+
     this.rainbow = {
       lengths: [0, 0, 0, 0, 0, 0, 0],
       current: 0,
