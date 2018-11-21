@@ -43,7 +43,7 @@ function valueOrDefault(value, defaultValue) {
  */
 function getFrequencyEnergy(energy, options = {}) {
   const numDeviations = valueOrDefault(options.numDeviations, 1.5);
-  const smoothFactor = valueOrDefault(options.smoothFactor, 0.7);
+  const smoothFactor = valueOrDefault(options.smoothFactor, 0.6);
   const representativeIndexRange = valueOrDefault(options.representativeIndexRange ||
     [0, energy.length]);
 
