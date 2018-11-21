@@ -46,7 +46,7 @@ module.exports = class DanceParty {
     },
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
-    resourceLoader = new ResourceLoader(),
+    resourceLoader = new ResourceLoader()
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -673,18 +673,22 @@ module.exports = class DanceParty {
       if (count > 0) {
         group[0].x = minX;
         group[0].y = minY;
+        group[0].rotation = 0;
       }
       if (count > 1) {
         group[1].x = maxX;
         group[1].y = minY;
+        group[1].rotation = 0;
       }
       if (count > 2) {
         group[2].x = maxX;
         group[2].y = maxY;
+        group[2].rotation = 0;
       }
       if (count > 3) {
         group[3].x = minX;
         group[3].y = maxY;
+        group[3].rotation = 0;
       }
       if (count > 4) {
         const topCount = Math.ceil((count - 4 - 0) / 4);
@@ -829,6 +833,10 @@ module.exports = class DanceParty {
   setDanceSpeed(sprite, speed) {
     if (!this.spriteExists_(sprite)) return;
     sprite.dance_speed = speed;
+  }
+
+  setDanceSpeedEach(group, val) {
+    this.setPropEach(group, "dance_speed", val);
   }
 
   // Music Helpers
