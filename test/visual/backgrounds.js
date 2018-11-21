@@ -49,12 +49,25 @@ async function testBackground(t, effect) {
   //'strobe',
   'rain',
   'text',
-  //'raining_tacos', temporarily disable: to figure out emoji compatibility
+  'raining_tacos',
   'splatter',
   'spiral',
   'spotlight',
   'color_lights',
-  'snowflakes'
+  'snowflakes',
+  'sparkles',
+  'pineapples',
+  'pizzas',
+  'kaleidoscope',
+  'falling_poop',
+  'hearts',
+  'falling_rainbows',
+  'bubbles',
+  'stars',
+  'starspace',
+  'strobe_lights',
+  'confetti',
+  'music_notes'
 ].forEach(effect => {
   test(`background - ${effect}`, async t => {
     await testBackground(t, effect);
