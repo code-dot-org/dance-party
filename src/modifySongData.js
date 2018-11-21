@@ -1,3 +1,10 @@
+// This is derived from DanceParty.getCurrentMeasure, but don't want to explicitly
+// depend on DanceParty so that this could be easily moved to a preRender step in
+// the future.
+function getMeasureForTime(songMetadata, time) {
+  return songMetadata.bpm * ((time - songMetadata.delay) / 240) + 1;
+}
+
 function clamp(min, max, val) {
   return Math.max(
     min,
@@ -10,6 +17,13 @@ function calculateMean(vals) {
   return sum / vals.length;
 }
 
+function valueOrDefault(value, defaultValue) {
+  if (value === undefined) {
+    return defaultValue;
+  }
+  return value;
+}
+
 /**
  * This method takes an input list of energy values, and outputs a new list. THe
  * methodology for figuring out the new list is to calculate the mean and standard
@@ -19,13 +33,21 @@ function calculateMean(vals) {
  * we do some smoothing between frames, based on our smooth factor
  * @param {number[]} energy - A list of energy values for a single frequency band
  *   (i.e. bass, mid, high) with values ranging from 0, 255
- * @param {number} numDeviations - How many standard deviations in either direction
- *   from the mean we want to include in our new range
- * @param {number} smoothFactor - What percentage of previous frames to average
- *   into next frame (should be a number between 0 and 1
+ * @param {options} object
+ * @param {number} options.numDeviations - How many standard deviations in either
+ *   direction from the mean we want to include in our new range
+ * @param {number} options.smoothFactor - What percentage of previous frames to
+ *   average into next frame (should be a number between 0 and 1
+ * @param {number[2]} representativeIndexRange - The min/max index in the range
+ *   of indices we want to look at when calculating our mean/std deviation
  */
-function getFrequencyEnergy(energy, numDeviations=1.5, smoothFactor=0.7) {
-  const nonZero = energy.filter(e => e > 0);
+function getFrequencyEnergy(energy, options = {}) {
+  const numDeviations = valueOrDefault(options.numDeviations, 1.5);
+  const smoothFactor = valueOrDefault(options.smoothFactor, 0.7);
+  const representativeIndexRange = valueOrDefault(options.representativeIndexRange ||
+    [0, energy.length]);
+
+  const nonZero = energy.slice(...representativeIndexRange).filter(e => e > 0);
   const mean = calculateMean(nonZero);
 
   const stdDev = Math.sqrt(
@@ -67,20 +89,48 @@ function smooth(rg, smoothFactor) {
  * world (and hopefully in the future) this happens as part of our pre-render
  * pipeline, but for now it's easier to do this at runtime than it is for us to
  * regenerate all of our .json files.
+ * We also look for a field called energyCustomization on songData that should
+ * allow us to tune some of these settings on a song by song basis (by updating
+ * the relevant .json files).
  */
-function modifySongData(songData, numDeviations=1.5, smoothFactor=0.7) {
+function modifySongData(songData) {
   const { analysis } = songData;
   if (!analysis) {
     return songData;
   }
 
+  let customizationOptions = Object.assign({
+    numDeviations: 1.5,
+    smoothFactor: 0.7,
+    representativeMeasureRange: [5, 12],
+    // Any of the above options can be tuned per song by setting the respective
+    // fields in songData.energyCustomization
+  }, songData.energyCustomization);
+
+  // Get the indices of the songData.analysis frames that fit within our measure
+  // range
+  const representativeIndices = analysis.map((item, index) => {
+    const measure = getMeasureForTime(songData, item.time);
+    if (measure >= customizationOptions.representativeMeasureRange[0] &&
+        measure < customizationOptions.representativeMeasureRange[1] + 1) {
+      return index;
+    }
+    return null;
+  }).filter(x => x !== null);
+
+  // The first and last indices into songData.analysis
+  customizationOptions.representativeIndexRange = [
+    representativeIndices[0],
+    representativeIndices[representativeIndices.length - 1] + 1
+  ];
+
   // One thing to note with the approach we've chosen: each song/energy band is
   // independently normalized around energy 128. This means even if a song is
   // very base heavy, the average bass and average treble will end up being the
   // same.
-  const bass = getFrequencyEnergy(analysis.map(x => x.energy[0]), numDeviations, smoothFactor);
-  const mid = getFrequencyEnergy(analysis.map(x => x.energy[1]), numDeviations, smoothFactor);
-  const treble = getFrequencyEnergy(analysis.map(x => x.energy[2]), numDeviations, smoothFactor);
+  const bass = getFrequencyEnergy(analysis.map(x => x.energy[0]), customizationOptions);
+  const mid = getFrequencyEnergy(analysis.map(x => x.energy[1]), customizationOptions);
+  const treble = getFrequencyEnergy(analysis.map(x => x.energy[2]), customizationOptions);
 
   // Create a new analysis that duplicates each frame, but replaces energy values
   // with our new ones
