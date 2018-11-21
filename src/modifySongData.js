@@ -43,7 +43,7 @@ function valueOrDefault(value, defaultValue) {
  */
 function getFrequencyEnergy(energy, options = {}) {
   const numDeviations = valueOrDefault(options.numDeviations, 1.5);
-  const smoothFactor = valueOrDefault(options.smoothFactor, 0.7);
+  const smoothFactor = valueOrDefault(options.smoothFactor, 0.6);
   const representativeIndexRange = valueOrDefault(options.representativeIndexRange ||
     [0, energy.length]);
 
@@ -84,6 +84,14 @@ function smooth(rg, smoothFactor) {
   return rg;
 }
 
+// Any of the these options can be tuned per song by setting the respective
+// fields in songData.energyCustomization
+let defaultEnergyCustomization = {
+  numDeviations: 1.5,
+  smoothFactor: 0.7,
+  representativeMeasureRange: [5, 12],
+};
+
 /**
  * This method takes our song data and modifies the energy values. In an ideal
  * world (and hopefully in the future) this happens as part of our pre-render
@@ -99,13 +107,8 @@ function modifySongData(songData) {
     return songData;
   }
 
-  let customizationOptions = Object.assign({
-    numDeviations: 1.5,
-    smoothFactor: 0.7,
-    representativeMeasureRange: [5, 12],
-    // Any of the above options can be tuned per song by setting the respective
-    // fields in songData.energyCustomization
-  }, songData.energyCustomization);
+  let customizationOptions = Object.assign({}, defaultEnergyCustomization,
+    songData.energyCustomization);
 
   // Get the indices of the songData.analysis frames that fit within our measure
   // range
@@ -141,3 +144,13 @@ function modifySongData(songData) {
 }
 
 module.exports = modifySongData;
+
+window.__TestInterface = window.__TestInterface || {};
+
+// TODO: comment
+window.__TestInterface.customizeEnergyOptions = function (numDeviations=1.5,
+    smoothFactor=0.7, representativeMeasureRange=[5,12]) {
+  defaultEnergyCustomization.numDeviations = numDeviations;
+  defaultEnergyCustomization.smoothFactor = smoothFactor;
+  defaultEnergyCustomization.representativeMeasureRange = representativeMeasureRange;
+};
