@@ -654,7 +654,6 @@ module.exports = class Effects {
           p5.rotate(poop.rot);
           p5.scale(2, 2);
           drawFallingPoop(p5._renderer.drawingContext);
-          p5.pop();
           poop.y += poop.speed;
           poop.rot++;
           if (poop.y > 410) {
