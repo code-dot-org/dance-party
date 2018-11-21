@@ -902,7 +902,9 @@ module.exports = class Effects {
           y: -10,
           velocityX: p5.random(-2, 2),
           size: p5.random(6, 12, 18),
-          spin: 0,
+          // https://github.com/Automattic/node-canvas/issues/702
+          // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
+          spin: 1,
           color: randomColor(255, 255, 100),
         };
         this.confetti.push(confetti);
