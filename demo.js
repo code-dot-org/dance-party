@@ -34,11 +34,9 @@ function runCode() {
   nativeAPI.play(jazzy_beats);
 }
 
-textareaCode.value = textareaCode.value || `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+textareaCode.value = textareaCode.value || `//makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 
-atTimestamp(2, "measures", function () {
-  setBackgroundEffect("disco");
-});
+  setBackgroundEffect("disco_ball");
 `;
 
 document.querySelector('#run').addEventListener('click', () => {

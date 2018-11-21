@@ -20,6 +20,33 @@ module.exports = class Effects {
       }
     };
 
+    this.disco_ball = {
+      rows: 10,
+      cols: 10,
+      draw: function () {
+        p5.background("black");
+
+        for (let j = 0; j < this.cols; j++) {
+          p5.push();
+          const phase = 360 / this.cols * j;
+          const theta = (p5.frameCount * 2 + phase) % 360;
+          if (theta > 180) {
+            continue;
+          }
+          for (let i = 0; i < this.rows; i++) {
+            let y = 200 - p5.sin(p5.map(i, 0, this.rows, 90, 270)) * 200;
+
+            const curvature = p5.map(i, 0, this.rows, 0, 180);
+            const width = p5.map(p5.sin(curvature), 0, 1, 0, 400);
+            const offset = (400 - width) / 2;
+            const x = p5.map(p5.cos(theta), -1, 1, offset, 400 - offset);
+            p5.text(i, x, y);
+          }
+          p5.pop();
+        }
+      }
+    };
+
     this.rainbow = {
       lengths: [0, 0, 0, 0, 0, 0, 0],
       current: 0,
@@ -666,43 +693,46 @@ module.exports = class Effects {
       }
     };
 
-    this.hearts = {
-      heartList: [],
-      size: 50,
-      init: function () {
-        for (let i = 0; i < 20; i++) {
-          this.heartList.push({
-            x: randomNumber(10, 390),
-            y: -50,
-            rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
-          });
-        }
-      },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
-      draw: function () {
-        if (this.heartList.length < 1) {
-          this.init();
-        }
-        for (let i = 0; i < this.heartList.length; i++) {
-          p5.push();
-          const heart = this.heartList[i];
-          p5.translate(heart.x, heart.y);
-          p5.rotate(heart.rot);
-          p5.scale(2, 2);
-          drawHeart(p5._renderer.drawingContext);
-          heart.y += heart.speed;
-          heart.rot++;
-          if (heart.y > 410) {
-            heart.x = randomNumber(10, 390);
-            heart.y = -50;
-          }
-          p5.pop();
-        }
+this.hearts = {
+  heartList: [],
+  size: 50,
+  init: function () {
+    for (let i = 0; i < 50; i++) {
+      this.heartList.push({
+        x: randomNumber(10, 390),
+        y: randomNumber(10, 390),
+        rot: randomNumber(0, 359),
+        life: randomNumber(10, 120),
+        color: randomColor(100, 50, 0.25),
+      });
+    }
+  },
+  update: function () {
+    this.size += randomNumber(-5, 5);
+  },
+  draw: function () {
+    if (this.heartList.length < 1) {
+      this.init();
+    }
+    for (let i = 0; i < this.heartList.length; i++) {
+      p5.push();
+      const heart = this.heartList[i];
+      p5.translate(heart.x, heart.y);
+      p5.rotate(heart.rot);
+      p5.scale(heart.life / 20);
+      p5.drawingContext.globalAlpha = 0.5;
+      drawHeart(p5._renderer.drawingContext, heart.color);
+      //heart.y += heart.speed;
+      heart.life--;
+      if (heart.life < 0) {
+        heart.x = randomNumber(10, 390);
+        heart.y = randomNumber(10, 390);
+        heart.life = randomNumber(10, 120);
       }
-    };
+      p5.pop();
+    }
+  }
+};
 
     this.falling_rainbows = {
       rainbow: [],
@@ -934,29 +964,37 @@ module.exports = class Effects {
         for (let i = 0; i < 20; i++) {
           this.notes.push({
             x: randomNumber(10, 390),
-            y: -50,
+            y: randomNumber(-400, 0),
             rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
+            speed: 3,
+            size: p5.random(1.5, 3),
           });
         }
-      },
-      update: function () {
-        this.size += randomNumber(-5, 5);
+
+        this.image = p5.createGraphics(70, 50);
+        this.image.pixelDensity(1);
+        this.image.scale(4);
+        drawMusicNote(this.image.drawingContext);
+
+        document.body.appendChild(this.image.elt);
+        this.image.elt.style = "border 5px solid #0f0";
       },
       draw: function (context) {
         const centroid = context.centroid;
         if (this.notes.length < 1) {
           this.init();
         }
-        let scale = p5.map(centroid, 5000, 8000, 0, 1.5);
-        scale = p5.constrain(scale, 0, 3);
+
         for (let i = 0; i < this.notes.length; i++) {
           p5.push();
           const notes = this.notes[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
+          scale = p5.constrain(scale, 0, 3);
           p5.translate(notes.x, notes.y);
           p5.rotate(notes.rot);
-          p5.scale(scale);
-          drawMusicNote(p5._renderer.drawingContext);
+          p5.scale(scale / 4);
+          p5.image(this.image);
+          //drawMusicNote(p5._renderer.drawingContext);
           notes.y += notes.speed;
           notes.rot++;
           if (notes.y > 410) {
@@ -1838,7 +1876,7 @@ function drawPizza(ctx) {
   ctx.restore();
 }
 
-function drawHeart(ctx) {
+function drawHeart(ctx, color) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
   ctx.beginPath();
@@ -1853,7 +1891,7 @@ function drawHeart(ctx) {
   ctx.lineJoin = 'miter';
   ctx.miterLimit = 4;
   ctx.save();
-  ctx.fillStyle = "#dc1c4b";
+  ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(0,5.016);
   ctx.bezierCurveTo(0,6.718,0.84,7.959,2.014,9.128);
