@@ -375,10 +375,17 @@ module.exports = class Effects {
           this.init();
         }
         p5.strokeWeight(0);
-        for (var i=0;i<this.splats.length;i++) {
+        // first make a pass and remove items, traversing in reverse so that removals
+        // dont affect traversal
+        for (var i=this.splats.length-1;i>=0;i--) {
           if (randomNumber(0,50) === 0) {
-            this.splats[i]=this.randomSplat();
+            // remove existing
+            this.splats.splice(i, 1);
+            // add new item to end of array, so that it gets rendered above older ones
+            this.splats.push(this.randomSplat());
           }
+        }
+        for (i=0;i<this.splats.length;i++) {
           p5.fill(this.splats[i].color);
           this.splats[i].width+=randomNumber(0,4);
           this.splats[i].height+=randomNumber(0,4);
