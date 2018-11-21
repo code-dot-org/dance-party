@@ -906,6 +906,7 @@ module.exports = class DanceParty {
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
+      this.adjustSpriteDepth_(sprite);
     }, id, [property, range]);
     this.addBehavior_(sprite, behavior);
   }
