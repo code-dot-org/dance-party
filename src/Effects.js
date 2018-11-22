@@ -21,13 +21,80 @@ module.exports = class Effects {
     };
 
     this.disco_ball = {
-      rows: 10,
-      cols: 10,
+      globify: function (u, v) {
+        u = p5.constrain(u, -90, 90);
+        return {
+          x: (1 + p5.sin(u) * p5.sin(v)) * 200,
+          y: (1 + p5.cos(v)) * 200,
+        }
+      },
+      quad: function (i, j, faceSize, rotation = 0) {
+        const k = (i + rotation) % 360 - 180;
+        if (k < -90 - faceSize || k > 90) {
+          return;
+        }
+        const color = p5.noise(i, j, p5.frameCount / 50) * 255;
+        const highlight = 200 * p5.pow(p5.cos(k - 20), 2);
+        p5.fill(color + highlight);
+        const a = this.globify(k, j);
+        const b = this.globify(k + faceSize, j);
+        const c = this.globify(k + faceSize, j + faceSize);
+        const d = this.globify(k, j + faceSize);
+        p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
+      },
       draw: function () {
         p5.background("black");
 
+        p5.push();
+        p5.noStroke();
+        p5.noiseDetail(2, 0.2);
+        const step = 30;
+        for (let i = 0; i <= 360; i += step) {
+          for (let j = 0; j < 180; j += step) {
+            this.quad(i, j, step, p5.frameCount * 3);
+          }
+        }
+        p5.pop();
+      }
+    };
+
+    this.disco_ball_old = {
+      rows: 10,
+      cols: 20,
+      globify: function (u, v) {
+        // const x = 1 + p5.sin(u);
+        // const y = 1 + p5.cos(v);
+        // const width = p5.sin(v);
+        //
+        // p5.push();
+        // p5.text('x', (1 + p5.sin(u) * p5.sin(v)) * 200, (1 + p5.cos(v)) * 200);
+        // p5.pop();
+
+        return {
+          x: (1 + p5.sin(u) * p5.sin(v)) * 200,
+          y: (1 + p5.cos(v)) * 200,
+        }
+      },
+      quad: function (i, j) {
+        const p = this.globify(i, j);
+        const q = this.globify(i + 18, j + 18);
+        return [p.x, p.y, q.x - p.x, q.y - p.y];
+      },
+      draw: function () {
+        p5.background("black");
+
+        const step = 30;
+        for (let i = -90; i <= 90; i += step) {
+          for (let j = 0; j < 180; j += step) {
+            const a = this.globify(i, j);
+            const b = this.globify(i + step, j);
+            const c = this.globify(i + step, j + step);
+            const d = this.globify(i, j + step);
+            p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
+          }
+        }
+
         for (let j = 0; j < this.cols; j++) {
-          p5.push();
           const phase = 360 / this.cols * j;
           const theta = (p5.frameCount * 2 + phase) % 360;
           if (theta > 180) {
@@ -40,9 +107,8 @@ module.exports = class Effects {
             const width = p5.map(p5.sin(curvature), 0, 1, 0, 400);
             const offset = (400 - width) / 2;
             const x = p5.map(p5.cos(theta), -1, 1, offset, 400 - offset);
-            p5.text(i, x, y);
+            //p5.text(i, x, y);
           }
-          p5.pop();
         }
       }
     };
