@@ -33,8 +33,8 @@ module.exports = class Effects {
         if (k < -90 - faceSize || k > 90) {
           return;
         }
-        const color = p5.noise(i, j, p5.frameCount / 50) * 255;
-        const highlight = 200 * p5.pow(p5.cos(k - 20), 2);
+        const color = p5.noise(i, j, p5.frameCount / 100) * 200;
+        const highlight = 100 * p5.pow(p5.cos(k), 2);
         p5.fill(color + highlight);
         const a = this.globify(k, j);
         const b = this.globify(k + faceSize, j);
@@ -47,11 +47,11 @@ module.exports = class Effects {
 
         p5.push();
         p5.noStroke();
-        p5.noiseDetail(2, 0.2);
-        const step = 30;
+        p5.noiseDetail(4, 0.5);
+        const step = 180 / 7;
         for (let i = 0; i <= 360; i += step) {
           for (let j = 0; j < 180; j += step) {
-            this.quad(i, j, step, p5.frameCount * 3);
+            this.quad(i, j, step, p5.frameCount);
           }
         }
         p5.pop();
