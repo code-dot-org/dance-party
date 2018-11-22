@@ -1046,14 +1046,14 @@ module.exports = class DanceParty {
       this.p5_.pop();
     }
 
-    this.p5_.fill("black");
+    this.p5_.fill("#333");
     this.p5_.textStyle(this.p5_.BOLD);
     this.p5_.textAlign(this.p5_.TOP, this.p5_.LEFT);
     this.p5_.textSize(20);
 
     this.world.validationCallback(this.world, this, this.sprites_, events);
     if (this.showMeasureLabel && this.getCurrentMeasure() >= 1) {
-      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 10, 20);
+      this.p5_.text(`${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`, 7, 23);
     }
 
     if (Object.keys(events).length && this.onHandleEvents) {
