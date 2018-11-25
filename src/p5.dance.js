@@ -1058,13 +1058,13 @@ module.exports = class DanceParty {
       // Background rectangle.
       this.p5_.noStroke();
       this.p5_.fill("rgba(255,255,255,.8)");
-      this.p5_.rect(2, 2, this.p5_.textWidth(text) + 10, 30);
+      this.p5_.rect(4, 4, this.p5_.textWidth(text) + 10, 28);
 
       // The text.
       this.p5_.fill("#333");
       this.p5_.textAlign(this.p5_.TOP, this.p5_.LEFT);
       this.p5_.textSize(20);
-      this.p5_.text(text, 7, 23);
+      this.p5_.text(text, 9, 25);
     }
 
     if (Object.keys(events).length && this.onHandleEvents) {
