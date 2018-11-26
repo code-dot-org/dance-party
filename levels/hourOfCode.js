@@ -33,7 +33,7 @@ module.exports = {
       });
     `,
     validationCode: `
-      if ((nativeAPI.getTime("measures") < 3) && (nativeAPI.getTime("measures")>0)) {
+      if ((nativeAPI.getTime("measures") > 1) && (nativeAPI.getTime("measures") < 3)) {
         if (sprites.length > 0) {
           World.startingMove = sprites[0].current_move;
         } else {

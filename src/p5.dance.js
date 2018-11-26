@@ -465,6 +465,12 @@ module.exports = class DanceParty {
     } else {
       move = this.getNewChangedMove(move, sprite.current_move, true);
     }
+    // Short burst moves start in the middle of the animation so sometimes
+    // they don't appear to line up with the requested direction.
+    // We've custom-authored which ones should be flipped in this case.
+    if (this.world.MOVE_NAMES[move].burstReversed) {
+      dir = -dir;
+    }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
     sprite.animation.looping = false;

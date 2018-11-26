@@ -429,9 +429,13 @@ module.exports = class Effects {
           this.init();
         }
         p5.strokeWeight(0);
+        // first make a pass and remove items, traversing in reverse so that removals
+        // dont affect traversal
         for (var i=this.splats.length-1;i>=0;i--) {
           if (randomNumber(0,50) === 0) {
+            // remove existing
             this.splats.splice(i, 1);
+            // add new item to end of array, so that it gets rendered above older ones
             this.splats.push(this.randomSplat());
           }
         }
@@ -1054,7 +1058,9 @@ module.exports = class Effects {
           y: -10,
           velocityX: p5.random(-2, 2),
           size: p5.random(6, 12, 18),
-          spin: 0,
+          // https://github.com/Automattic/node-canvas/issues/702
+          // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
+          spin: 1,
           color: randomColor(255, 255, 100),
         };
         this.confetti.push(confetti);

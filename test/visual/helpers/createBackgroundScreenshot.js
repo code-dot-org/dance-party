@@ -10,7 +10,8 @@ async function createBackgroundScreenshot(effectName, pathname){
   nativeAPI.p5_.randomSeed(0);
   nativeAPI.setBackgroundEffect(effectName);
   for (let i = 0; i < 100; i++) {
-    nativeAPI.getBackgroundEffect().draw({bpm: 0});
+    nativeAPI.p5_.background('#fff');
+    nativeAPI.getBackgroundEffect().draw({bpm: 0, centroid: 7000, artist: 'artist', title: 'title', isPeak: i % 6 === 0});
   }
 
   const buffer = parseDataURL(nativeAPI.p5_.canvas.toDataURL()).body;
