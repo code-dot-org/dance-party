@@ -541,14 +541,16 @@ module.exports = class Effects {
       laser: [],
       draw: function () {
         p5.background('black');
-        let laser = {
-          w: 200,
-          x: 200,
-          y: 1700,
-          z: 400,
-          color: randomColor(255,255,255),
-        };
-        this.laser.push(laser);
+        if (this.laser.length < 100) {
+          let laser = {
+            w: 200,
+            x: 200,
+            y: 1700,
+            z: 400,
+            color: randomColor(255,255,255),
+          };
+          this.laser.push(laser);
+        }
         p5.stroke('white');
         p5.line(0,200,400,200);
         this.laser.forEach(laser => {

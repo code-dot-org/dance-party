@@ -46,6 +46,7 @@ async function testBackground(t, effect) {
   'color_cycle',
   'disco',
   'diamonds',
+  'lasers',
   //'strobe',
   'rain',
   'text',
