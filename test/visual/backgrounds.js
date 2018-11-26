@@ -44,6 +44,7 @@ async function testBackground(t, effect) {
   'swirl',
   'rainbow',
   'color_cycle',
+  'circles',
   'disco',
   'disco_ball',
   'diamonds',
@@ -58,11 +59,12 @@ async function testBackground(t, effect) {
   'color_lights',
   'snowflakes',
   'sparkles',
-  //'pineapples', temporarily removed
-  //'pizzas', temporarily removed
+  // 'pineapples', need to debug
+  // 'pizzas', need to debug
   //'kaleidoscope', temporarily removed
-  'smiling_poop',
-  'hearts_red',
+  'smile_face',
+  // 'smiling_poop', need to debug
+  // 'hearts_red', need to debug
   'floating_rainbows',
   'bubbles',
   'stars',
