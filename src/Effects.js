@@ -1,6 +1,18 @@
 module.exports = class Effects {
-  constructor(p5, alpha, blend) {
+  constructor(p5, alpha, blend, currentPalette = 'default') {
     this.blend = blend || p5.BLEND;
+    this.currentPalette = currentPalette;
+
+    this.palettes = {
+      default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
+      electronic: ['#fc71ee', '#3f0f6e', '#030a24', '#222152', '#00f7eb'],
+      vintage: ['#594c51', '#97bcb2', '#f1ebc4', '#e9b76f', '#de6965'],
+      cool: ['#2b5ef6', '#408ae1', '#69d5fb', '#6ee4d4', '#7afaae'],
+      warm: ['#ba2744', '#d85422', '#ed7c49', '#f1a54b', '#f6c54f'],
+      iceCream: ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'],
+      tropical: ['#7efaaa', '#eb6493', '#72d7fb', '#fffe5c', '#ee8633'],
+      neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
+    };
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -13,6 +25,11 @@ module.exports = class Effects {
     function randomColor(s=100, l=80, a=alpha) {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
+
+    const randomColorFromPalette = () => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[randomNumber(0, palette.length - 1)];
+    };
 
     this.none = {
       draw: function ({backgroundColor}) {
@@ -74,14 +91,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = randomColor();
+          this.colors[i] = randomColorFromPalette();
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = randomColor();
+          this.colors[loc] = randomColorFromPalette();
         }
       },
       draw: function ({isPeak}) {
@@ -167,7 +184,7 @@ module.exports = class Effects {
       sparkles: [],
       maxSparkles: 80,
       makeRandomSparkle: function () {
-        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColor()};
+        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColorFromPalette()};
       },
       init: function () {
         for (let i=0;i<this.maxSparkles;i++) {
@@ -356,7 +373,7 @@ module.exports = class Effects {
         let r = randomNumber(30,60);
         return {x: randomNumber(0,400),
             y: randomNumber(0,400),
-            color: randomColor(),
+            color: randomColorFromPalette(),
             width: r,
             height: r,
         };
