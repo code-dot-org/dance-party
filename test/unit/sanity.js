@@ -41,6 +41,7 @@ test('i18n', async t => {
 
   t.end();
   nativeAPI.reset();
+  clock.restore();
 });
 
 test('draw without songData', async t => {
