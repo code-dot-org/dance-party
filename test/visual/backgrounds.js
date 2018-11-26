@@ -51,7 +51,7 @@ async function testBackground(t, effect) {
   'lasers',
   //'strobe',
   'rain',
-  'text',
+  // 'text', Font rendering differences across devices cause problems
   'raining_tacos',
   'splatter',
   'spiral',
