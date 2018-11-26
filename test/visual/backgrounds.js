@@ -56,8 +56,8 @@ async function testBackground(t, effect) {
   'color_lights',
   'snowflakes',
   'sparkles',
-  'pineapples',
-  'pizzas',
+  //'pineapples', temporarily removed
+  //'pizzas', temporarily removed
   //'kaleidoscope', temporarily removed
   'falling_poop',
   'hearts',
