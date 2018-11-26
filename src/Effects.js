@@ -660,33 +660,37 @@ module.exports = class Effects {
         this.h = Math.sqrt(3) / 2 * 100;
 
         this.shapes = p5.createGraphics(100, Math.ceil(this.h));
-        this.shapes.pixelDensity(1);
         this.shapes.noStroke();
         this.shapes.angleMode(p5.DEGREES);
 
         this.hex = p5.createGraphics(200, 200);
-        this.hex.pixelDensity(1);
         this.hex.angleMode(p5.DEGREES);
       },
       blitHex: function () {
         this.hex.push();
         this.hex.clear();
         this.hex.translate(100, 100);
+        this.hex.push();
+        this.hex.scale(1 / p5.pixelDensity());
         this.hex.rotate(30);
         for (let i = 0; i < 3; i++) {
-          this.hex.image(this.shapes, -50, 0);
+          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
           this.hex.scale(-1, 1);
           this.hex.rotate(60);
-          this.hex.image(this.shapes, -50, 0);
+          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
           this.hex.rotate(60);
           this.hex.scale(-1, 1);
         }
+        this.hex.pop();
         this.hex.pop();
       },
       row: function (n) {
         p5.push();
         for (let i = 0; i < n; i++) {
-          p5.image(this.hex, 0, 0);
+          p5.push();
+          p5.scale(1 / p5.pixelDensity());
+          p5.drawingContext.drawImage(this.hex.elt, -100 * p5.pixelDensity(), -100 * p5.pixelDensity());
+          p5.pop();
           p5.translate(this.h * 2, 0);
         }
         p5.pop();
