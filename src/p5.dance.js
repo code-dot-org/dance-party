@@ -55,6 +55,8 @@ module.exports = class DanceParty {
     this.i18n = i18n;
     this.resourceLoader_ = resourceLoader;
 
+    this.rtl = getComputedStyle(document.getElementById(container)).direction === "rtl";
+
     this.world = {
       height: 400,
       cues: {
@@ -1050,18 +1052,27 @@ module.exports = class DanceParty {
     if (this.showMeasureLabel && this.getCurrentMeasure() >= 1) {
       const text = `${this.i18n.measure()} ${Math.floor(Math.max(0, this.getCurrentMeasure()))}`;
 
-      // Properties that adjust textWidth.
+      // Calculate text width.
       this.p5_.textStyle(this.p5_.BOLD);
       this.p5_.textSize(20);
+      const textWidth = this.p5_.textWidth(text);
 
       // Background rectangle.
       this.p5_.noStroke();
       this.p5_.fill("rgba(255,255,255,.8)");
-      this.p5_.rect(4, 4, this.p5_.textWidth(text) + 10, 28);
+      if (this.rtl) {
+        this.p5_.rect(399 - 13 - textWidth, 4, textWidth + 10, 28);
+      } else {
+        this.p5_.rect(4, 4, this.p5_.textWidth(text) + 10, 28);
+      }
 
       // The text.
       this.p5_.fill("#333");
-      this.p5_.text(text, 9, 25);
+      if (this.rtl) {
+        this.p5_.text(text, 399 - 9, 25);
+      } else {
+        this.p5_.text(text, 9, 25);
+      }
     }
 
     if (Object.keys(events).length && this.onHandleEvents) {
