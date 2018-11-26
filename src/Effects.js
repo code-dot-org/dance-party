@@ -556,10 +556,8 @@ module.exports = class Effects {
         this.laser.forEach(laser => {
           p5.push();
           p5.translate(this.laser.w, this.laser.x, this.laser.y, this.laser.z);
-          for (let i = 0; i < 1; i++) {
-            p5.stroke(laser.color);
-            p5.line(laser.w, laser.x, laser.y, laser.z);
-          }
+          p5.stroke(laser.color);
+          p5.line(laser.w, laser.x, laser.y, laser.z);
           laser.y = laser.y -100;
           p5.pop();
           if (laser.y <= -1400) {
@@ -911,9 +909,7 @@ module.exports = class Effects {
           p5.push();
           p5.fill(bubble.color);
           p5.translate(bubble.x, bubble.y);
-          for (let i = 0; i < 1; i++) {
-            p5.ellipse(0, 0, bubble.size, bubble.size);
-          }
+          p5.ellipse(0, 0, bubble.size, bubble.size);
           let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
           bubble.y -= fallSpeed;
           bubble.x += bubble.velocityX;
@@ -993,15 +989,13 @@ module.exports = class Effects {
       pizza: [],
       draw: function () {
         p5.background('black');
-        for (let i = 0; i < 1; i ++) {
-          let pizza = {
-            x: 200,
-            y: 200,
-            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-            size: 0.1,
-          };
-          this.pizza.push(pizza);
-        }
+        let pizza = {
+          x: 200,
+          y: 200,
+          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+          size: 0.1,
+        };
+        this.pizza.push(pizza);
         p5.noStroke();
         this.pizza.forEach(function (pizza){
           p5.push();
@@ -1026,15 +1020,13 @@ module.exports = class Effects {
       smile: [],
       draw: function () {
         p5.background("#D3D3D3");
-        for (let i = 0; i < 1; i ++) {
-          let smile = {
-            x: 200,
-            y: 200,
-            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-            size: 0.1,
-          };
-          this.smile.push(smile);
-        }
+        let smile = {
+          x: 200,
+          y: 200,
+          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+          size: 0.1,
+        };
+        this.smile.push(smile);
         p5.noStroke();
         this.smile.forEach(function (smile){
           p5.push();
