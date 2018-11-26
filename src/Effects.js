@@ -21,11 +21,12 @@ module.exports = class Effects {
     };
 
     this.disco_ball = {
+      stars: [],
       globify: function (u, v) {
         u = p5.constrain(u, -90, 90);
         return {
-          x: (1 + p5.sin(u) * p5.sin(v)) * 200,
-          y: (1 + p5.cos(v)) * 200,
+          x: (1 + p5.sin(u) * p5.sin(v)) * 40 + 160,
+          y: (1 + p5.cos(v)) * 40 + 10,
         }
       },
       quad: function (i, j, faceSize, rotation = 0) {
@@ -33,8 +34,8 @@ module.exports = class Effects {
         if (k < -90 - faceSize || k > 90) {
           return;
         }
-        const color = p5.noise(i, j, p5.frameCount / 100) * 200;
-        const highlight = 100 * p5.pow(p5.cos(k), 2);
+        const color = p5.noise(i, j, p5.frameCount / 100) * 140 + 100;
+        const highlight = 50 * p5.pow(p5.cos(k), 2);
         p5.fill(color + highlight);
         const a = this.globify(k, j);
         const b = this.globify(k + faceSize, j);
@@ -42,20 +43,54 @@ module.exports = class Effects {
         const d = this.globify(k, j + faceSize);
         p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
       },
+      init: function () {
+        for (let i = 0; i < 50; i++) {
+          this.stars.push({
+            x: p5.random(-5,405),
+            y: p5.random(0,200),
+            color: "#fff",
+          });
+        }
+      },
       draw: function () {
-        p5.background("black");
-
-        p5.push();
+        if (this.stars.length === 0) {
+          this.init();
+        }
+        p5.background("#DA70D6");
         p5.noStroke();
-        p5.noiseDetail(4, 0.5);
-        const step = 180 / 7;
+
+        this.stars.forEach(star => {
+          const distanceFromCenter = 200 - star.x;
+          const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 1);
+          const heightFade = p5.constrain(200 - star.y, 0, 50);
+          p5.push();
+          p5.translate(star.x, star.y);
+          p5.drawingContext.globalAlpha = opacity * (heightFade / 100);
+          drawSparkle(p5._renderer.drawingContext, star.color);
+          p5.pop();
+
+          // Move the star to the left.
+          star.x -= 5 - opacity * 1.2;
+
+          // If we've gone off-screen, loop around to the right.
+          if (star.x < -5) {
+            star.x = 405;
+          }
+        });
+
+        p5.noiseDetail(75, .5);
+        const step = 20;
         for (let i = 0; i <= 360; i += step) {
+          p5.fill("#C0C0C0");
+          p5.rect(199.5, 0, 2, 10.25);
           for (let j = 0; j < 180; j += step) {
-            this.quad(i, j, step, p5.frameCount);
+            p5.push();
+            p5.fill(p5.noise(i, j, p5.frameCount / 50) * 255 + 100);
+            this.quad(i, j, step, p5.frameCount * 2);
+            p5.pop();
           }
         }
-        p5.pop();
-      }
+      },
     };
 
     this.disco_ball_old = {
