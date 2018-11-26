@@ -26,6 +26,11 @@ module.exports = class Effects {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 
+    const colorFromPalette = (n) => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[n % (palette.length)];
+    };
+
     const randomColorFromPalette = () => {
       const palette = this.palettes[this.currentPalette];
       return palette[randomNumber(0, palette.length - 1)];
@@ -543,7 +548,6 @@ module.exports = class Effects {
 
         this.shapes = p5.createGraphics(100, Math.ceil(this.h));
         this.shapes.pixelDensity(1);
-        this.shapes.fill('white');
         this.shapes.noStroke();
         this.shapes.angleMode(p5.DEGREES);
 
@@ -579,9 +583,9 @@ module.exports = class Effects {
           this.init();
         }
 
-        p5.background('#333');
+        p5.background(colorFromPalette(2));
 
-        const ctx = this.shapes._renderer.drawingContext;
+        const ctx = this.shapes.drawingContext;
         ctx.save();
         ctx.beginPath();
         ctx.moveTo(50, 0);
@@ -590,34 +594,34 @@ module.exports = class Effects {
         ctx.clip();
         this.shapes.clear();
         this.shapes.rotate(p5.frameCount);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.rect(20, 20, 50, 50);
-        this.shapes.fill('#082036');
+        this.shapes.fill(colorFromPalette(2));
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(100, 50, 80);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.ellipse(-50, -50, 50);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(-40, -46, 20);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(-60, 0, -30, -40, -30, 0);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(-45, 0, 40, 300);
         this.shapes.rotate(17);
-        this.shapes.fill('#717171');
+        this.shapes.fill(colorFromPalette(4));
         this.shapes.rect(30, 40, 10, 40);
         this.shapes.rotate(37);
-        this.shapes.fill('#5b2c6e');
+        this.shapes.fill(colorFromPalette(6));
         this.shapes.rect(30, 40, 20, 40);
         this.shapes.rotate(180);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(10, 20, 80, 90, 0, 100);
         this.shapes.translate(20, 0);
         this.shapes.rotate(20);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(0, 0, 20, 200);
         ctx.restore();
 
