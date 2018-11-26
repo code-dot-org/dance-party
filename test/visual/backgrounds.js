@@ -44,17 +44,33 @@ async function testBackground(t, effect) {
   'swirl',
   'rainbow',
   'color_cycle',
+  'circles',
   'disco',
+  'disco_ball',
   'diamonds',
+  'lasers',
   //'strobe',
   'rain',
-  'text',
-  //'raining_tacos', temporarily disable: to figure out emoji compatibility
+  // 'text', Font rendering differences across devices cause problems
+  'raining_tacos',
   'splatter',
   'spiral',
   'spotlight',
   'color_lights',
-  'snowflakes'
+  'snowflakes',
+  'sparkles',
+  // 'pineapples', need to debug
+  // 'pizzas', need to debug
+  //'kaleidoscope', temporarily removed
+  'smile_face',
+  // 'smiling_poop', need to debug
+  // 'hearts_red', need to debug
+  'floating_rainbows',
+  'bubbles',
+  'stars',
+  'galaxy',
+  'confetti',
+  'music_notes'
 ].forEach(effect => {
   test(`background - ${effect}`, async t => {
     await testBackground(t, effect);
