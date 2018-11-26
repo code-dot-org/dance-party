@@ -180,14 +180,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = lerpColorFromPalette(Math.random());
+          this.colors[i] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = lerpColorFromPalette(Math.random());
+          this.colors[loc] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       draw: function ({isPeak}) {
