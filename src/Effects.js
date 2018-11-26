@@ -156,15 +156,15 @@ module.exports = class Effects {
     };
 
     this.color_cycle = {
-      color: colorFromHue(0),
+      color: 0,
       update: function () {
-        this.color = colorFromHue(this.color._getHue() + 10);
+        this.color += 0.03;
       },
       draw: function ({isPeak}) {
         if (isPeak) {
           this.update();
         }
-        p5.background(this.color);
+        p5.background(lerpColorFromPalette(this.color));
       }
     };
 
@@ -227,7 +227,7 @@ module.exports = class Effects {
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
@@ -250,7 +250,7 @@ module.exports = class Effects {
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.ellipse(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
@@ -516,7 +516,7 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       init: function () {
-        this.color=randomNumber(0,359);
+        this.color = 0;
       },
       update: function () {
         this.color += 0.13;
