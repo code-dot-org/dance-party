@@ -12,8 +12,9 @@ module.exports = class Effects {
       cool: ['#2b5ef6', '#408ae1', '#69d5fb', '#6ee4d4', '#7afaae'],
       warm: ['#ba2744', '#d85422', '#ed7c49', '#f1a54b', '#f6c54f'],
       iceCream: ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'],
-      tropical: ['#7efaaa', '#eb6493', '#72d7fb', '#fffe5c', '#ee8633'],
+      tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
       neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
+      rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
     };
 
     function randomNumber(min, max) {
