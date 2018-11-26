@@ -31,6 +31,18 @@ module.exports = class Effects {
       return palette[n % (palette.length)];
     };
 
+    const lerpColorFromPalette = (amount) => {
+      const palette = this.palettes[this.currentPalette];
+      const which = amount * palette.length;
+      const n = Math.floor(which);
+      const remainder = which - n;
+
+      const prev = palette[n % (palette.length)];
+      const next = palette[(n + 1) % (palette.length)];
+
+      return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
+    };
+
     const randomColorFromPalette = () => {
       const palette = this.palettes[this.currentPalette];
       return palette[randomNumber(0, palette.length - 1)];
@@ -96,14 +108,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = randomColorFromPalette();
+          this.colors[i] = lerpColorFromPalette(Math.random());
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = randomColorFromPalette();
+          this.colors[loc] = lerpColorFromPalette(Math.random());
         }
       },
       draw: function ({isPeak}) {
@@ -413,14 +425,14 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       update: function () {
-        this.color=randomNumber(0,359);
+        this.color = randomColorFromPalette();
       },
       draw: function ({isPeak,bpm}) {
         if (isPeak || !this.color) {
           this.update();
         }
         p5.push();
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(this.color);
         p5.translate(200,200);
         let rotation=(bpm/90)*50;
         this.angle-=rotation;
@@ -439,7 +451,10 @@ module.exports = class Effects {
         this.color=randomNumber(0,359);
       },
       update: function () {
-        this.color=(this.color+randomNumber(0,20)) % 359;
+        this.color += 0.13;
+        if (this.color > 1) {
+          this.color -= 1;
+        }
       },
       draw: function ({isPeak,bpm}) {
         if (this.color === null) {
@@ -448,7 +463,7 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(lerpColorFromPalette(this.color));
         p5.push();
         p5.translate(200,200);
         let rotation=(bpm/90)*200;
