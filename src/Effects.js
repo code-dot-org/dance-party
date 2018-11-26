@@ -1272,10 +1272,6 @@ module.exports = class Effects {
   }
 };
 
-
-
-
-
 function drawSwirl(ctx) {
   ctx.save();
   ctx.fillStyle = "#333";
