@@ -1059,7 +1059,7 @@ module.exports = class DanceParty {
 
       // Background rectangle.
       this.p5_.noStroke();
-      this.p5_.fill("rgba(255,255,255,.8)");
+      this.p5_.fill("rgba(0,0,0,.38)");
       if (this.rtl) {
         this.p5_.rect(399 - 13 - textWidth, 4, textWidth + 10, 28);
       } else {
@@ -1067,7 +1067,7 @@ module.exports = class DanceParty {
       }
 
       // The text.
-      this.p5_.fill("#333");
+      this.p5_.fill("white");
       if (this.rtl) {
         this.p5_.text(text, 399 - 9, 25);
       } else {
