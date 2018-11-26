@@ -300,6 +300,7 @@ module.exports = class Effects {
           x: randomNumber(25, 375),
           y: randomNumber(25, 375),
           text: text,
+          font: 'Arial',
           color: colorFromHue(hue),
           size: size
         });
@@ -322,6 +323,7 @@ module.exports = class Effects {
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
+          p5.textFont(t.font);
           p5.fill(t.color);
           p5.text(t.text, t.x, t.y);
         });
