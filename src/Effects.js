@@ -903,6 +903,146 @@ module.exports = class Effects {
       }
     };
 
+    this.fireworks = {
+      particles:[],
+      minExplosion:20,
+      maxExplosion:50,
+      minPotential:200,
+      maxPotential:300,
+      enableTracers:true,
+      buffer:null,
+
+      makeParticle: function (type, pos, vel, color, potential) {
+        return  {
+          type:type,
+          pos:pos,
+          vel:vel,
+          gravity: p5.createVector(0.0, 0.1),
+          potential:potential,
+          acc:p5.createVector(0, 0),
+          color:color,
+          update: function () {
+            this.acc.add(this.gravity);
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0, 0);
+          },
+        };
+      },
+
+      draw: function () {
+        if (this.buffer === null) {
+          this.buffer = p5;
+          // We get the tracer effect by writing frames to a
+          // offscreen buffer that has a transparent background
+          if (this.enableTracers) {
+            this.buffer = p5.createGraphics(p5.width, p5.height);
+            this.buffer.pixelDensity(1);
+          }
+        }
+
+        p5.background(0);
+
+        // if we are using the offscreen buffer, use a transparent background
+        if (this.buffer !== p5) {
+          this.buffer.background(0, 25);
+        }
+
+        p5.push();
+        this.drawParticles();
+
+        // if we are drawing to offscreen buffer, copy it to the canvas
+        if (this.buffer !== p5) {
+          p5.image(this.buffer);
+        }
+
+        p5.pop();
+
+        this.particles = this.nextParticles();
+      },
+
+      drawParticles: function () {
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+          p.update();
+
+          this.buffer.push();
+          if (p.type === "rocket") {
+            this.buffer.strokeWeight(3);
+            this.buffer.stroke(p.color);
+            this.buffer.point(p.pos.x, p.pos.y);
+          } else if (p.type === "particle") {
+            this.buffer.translate(p.pos.x, p.pos.y);
+            drawSparkle(this.buffer._renderer.drawingContext, p.color);
+          }
+          this.buffer.pop();
+        }
+      },
+
+      nextParticles: function () {
+        let ret = [];
+
+        // total potential is the number of particles active, or the number represented
+        // in unexploded rockets. This is how we manage total number of objects
+        var totalPotential = 0;
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+
+          if (p.type === "rocket") {
+            // explode a rocket when it reaches it peak height
+            if (p.vel.y <= 0) {
+              ret.push(p);
+            } else {
+              ret = ret.concat(this.explode(p));
+            }
+
+            // the rocket exploded to its potential or its still waiting
+            totalPotential += p.potential;
+          } else if (p.type === "particle") {
+
+            // remove things when they leave the window, except allow particles
+            // to fall back down into the view from above
+            if (p.pos.x > 0 && p.pos.x < p5.width && p.pos.y < p5.height) {
+              ret.push(p);
+              totalPotential += p.potential;
+            }
+          }
+        }
+
+        // make sure the total potential for particles is between the min and max potential
+        if (totalPotential < this.minPotential) {
+
+          // fire rockets until we fill the potential
+          while (totalPotential < this.maxPotential) {
+            let p = this.makeParticle(
+              "rocket",
+              p5.createVector(randomNumber(0, p5.height), p5.width),
+              p5.createVector(0, p5.random(-9, -7)),
+              randomColor(),
+              p5.random(this.minExplosion, this.maxExplosion),
+            );
+            totalPotential += p.potential;
+            ret.push(p);
+          }
+        }
+        return ret;
+      },
+
+      explode: function (p) {
+        let ret = [];
+        for (var i = 0; i < p.potential; i++) {
+          ret.push(this.makeParticle(
+            "particle",
+            p5.createVector(p.pos.x, p.pos.y),
+            p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
+            p.color,
+            1,
+          ));
+        }
+        return ret;
+      }
+    };
+
     this.bubbles = {
       bubble: [],
       draw: function () {

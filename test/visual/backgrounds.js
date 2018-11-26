@@ -48,6 +48,7 @@ async function testBackground(t, effect) {
   'disco',
   'disco_ball',
   'diamonds',
+  'fireworks',
   'lasers',
   //'strobe',
   'rain',
