@@ -55,7 +55,7 @@ module.exports = class DanceParty {
     this.i18n = i18n;
     this.resourceLoader_ = resourceLoader;
 
-    this.rtl = getComputedStyle(document.getElementById(container)).direction === "rtl";
+    this.rtl = window.getComputedStyle(document.getElementById(container)).direction === "rtl";
 
     this.world = {
       height: 400,
