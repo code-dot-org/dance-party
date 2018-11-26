@@ -309,8 +309,13 @@ module.exports = class DanceParty {
     this.world.background_color = color;
   }
 
-  setBackgroundEffect(effect) {
+  setBackgroundEffect(effect, palette = 'default') {
     this.world.bg_effect = effect;
+
+    this.bgEffects_.currentPalette = palette;
+    if (this.bgEffects_[effect].init) {
+      this.bgEffects_[effect].init();
+    }
   }
 
   setForegroundEffect(effect) {
@@ -410,10 +415,15 @@ module.exports = class DanceParty {
         sprite.x = position.x;
         sprite.y = position.y;
       }
+      this.adjustSpriteDepth_(sprite);
     };
     sprite.setScale = function (scale) {
       sprite.scale = scale;
+      this.adjustSpriteDepth_(sprite);
     };
+
+    this.adjustSpriteDepth_(sprite);
+
     return sprite;
   }
 
@@ -503,6 +513,12 @@ module.exports = class DanceParty {
       }
     } else {
       move = this.getNewChangedMove(move, sprite.current_move, true);
+    }
+    // Short burst moves start in the middle of the animation so sometimes
+    // they don't appear to line up with the requested direction.
+    // We've custom-authored which ones should be flipped in this case.
+    if (this.world.MOVE_NAMES[move].burstReversed) {
+      dir = -dir;
     }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
@@ -740,7 +756,9 @@ module.exports = class DanceParty {
     // that are higher.
     // We also add a fractional component based on x to avoid z-fighting (except
     // in cases where we have identical x and y).
-    group.forEach(sprite => sprite.depth = sprite.y + sprite.x / 400);
+    group.forEach(sprite => {
+      this.adjustSpriteDepth_(sprite);
+    });
   }
 
   // Properties
@@ -758,10 +776,12 @@ module.exports = class DanceParty {
 
     if (property === "scale") {
       sprite.scale = val / 100;
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "width" || property === "height") {
       sprite[property] = SIZE * (val / 100);
     } else if (property === "y") {
       sprite.y = this.world.height - val;
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "costume") {
       sprite.setAnimation(val);
     } else if (property === "tint" && typeof (val) === "number") {
@@ -780,6 +800,7 @@ module.exports = class DanceParty {
       sprite[property] = SIZE * (randomInt(0,100)/100);
     } else if (property === "y" || property === "x"){
       sprite[property] = randomInt(50, 350);
+      this.adjustSpriteDepth_(sprite);
     } else if (property === "rotation"){
       sprite[property] = randomInt(0, 359);
     } else if (property === "tint") {
@@ -828,6 +849,7 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) return;
     sprite.x = location.x;
     sprite.y = location.y;
+    this.adjustSpriteDepth_(sprite);
   }
 
   setDanceSpeed(sprite, speed) {
@@ -869,6 +891,20 @@ module.exports = class DanceParty {
     }
   }
 
+  adjustSpriteDepth_(sprite) {
+    if (!this.spriteExists_(sprite)) {
+      return;
+    }
+
+    // Bias scale heavily (especially since it largely hovers around 1.0) but use
+    // Y coordinate as the first tie-breaker and X coordinate as the second.
+    // (Both X and Y range from 0-399 pixels.)
+    sprite.depth =
+      10000 * sprite.scale +
+      100 * sprite.y / 400 +
+      1 * sprite.x / 400;
+  }
+
   // Behaviors
 
   /**
@@ -908,26 +944,30 @@ module.exports = class DanceParty {
    * @param {string} range
    */
   startMapping(sprite, property, range) {
+    if (!sprite) {
+      return;
+    }
+
     // id's should be the same as long as the property/range are the same. they
     // need not be unique across sprites
     const id = [property, range].join('-');
+
+    // Grab the initial value so that changes can be relative
+    const initialValue = sprite[property];
     const behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 150);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
+      let energy = this.getEnergy(range);
+      if (property === "x" || property === "y") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 150, initialValue + 150));
+      } else if (property === "scale" || property === "width" || property === "height") {
+        energy = this.p5_.map(energy, 0, 255, initialValue * 0.5, initialValue * 1.5);
+      } else if (property === "rotation") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 90, initialValue + 90));
       } else if (property === "tint") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
         energy = "hsb(" + energy + ",100%,100%)";
       }
       sprite[property] = energy;
+      this.adjustSpriteDepth_(sprite);
     }, id, [property, range]);
     this.addBehavior_(sprite, behavior);
   }

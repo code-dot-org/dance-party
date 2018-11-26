@@ -23,3 +23,19 @@ To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
 Open [chrome://inspect](chrome://inspect) in Chrome browser (requires Chrome 55+)
 Tap on `inspect` link under "Remote Target"
+
+### Effects Testing
+`npm run test:visual` uses [pixelmatch](https://github.com/mapbox/pixelmatch#readme) to test for consistency in screenshots between your local branch and an accepted 
+baseline. Accepted baselines are saved in `test/visual/fixtures`.
+To debug a test failure, run `node ./test/visual/helpers/generateScreenshot.js <effectName> <pathToDirectory>`
+to output the local screenshot to the given directory. If a baseline does not exist for a given effect, the screenshot 
+from your local branch is saved as the baseline. Effects are drawn with no characters on the screen so effects appear 
+the same when drawn as backgrounds or foregrounds.
+
+#### To Add Test Coverage For a New Effects
+Add the name of the effect to the list of effects in `backgrounds.js`. Run `npm run test:visual`. 
+After a new baseline is generated, manually inspect it to ensure it matches expectations.
+
+#### To Update A Baseline
+Delete the accepted baseline. Run `npm run test:visual`. After a new baseline is generated, manually inspect 
+it to ensure it matches expectations.

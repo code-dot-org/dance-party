@@ -1,6 +1,21 @@
+const drawPineapple = require('./drawPineapple');
+
 module.exports = class Effects {
-  constructor(p5, alpha, blend) {
+  constructor(p5, alpha, blend, currentPalette = 'default') {
     this.blend = blend || p5.BLEND;
+    this.currentPalette = currentPalette;
+
+    this.palettes = {
+      default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
+      electronic: ['#fc71ee', '#3f0f6e', '#030a24', '#222152', '#00f7eb'],
+      vintage: ['#594c51', '#97bcb2', '#f1ebc4', '#e9b76f', '#de6965'],
+      cool: ['#2b5ef6', '#408ae1', '#69d5fb', '#6ee4d4', '#7afaae'],
+      warm: ['#ba2744', '#d85422', '#ed7c49', '#f1a54b', '#f6c54f'],
+      iceCream: ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'],
+      tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
+      neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
+      rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
+    };
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -14,10 +29,101 @@ module.exports = class Effects {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 
+    const colorFromPalette = (n) => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[n % (palette.length)];
+    };
+
+    const lerpColorFromPalette = (amount) => {
+      const palette = this.palettes[this.currentPalette];
+      const which = amount * palette.length;
+      const n = Math.floor(which);
+      const remainder = which - n;
+
+      const prev = palette[n % (palette.length)];
+      const next = palette[(n + 1) % (palette.length)];
+
+      return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
+    };
+
+    const randomColorFromPalette = () => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[randomNumber(0, palette.length - 1)];
+    };
+
     this.none = {
       draw: function ({backgroundColor}) {
         p5.background(backgroundColor || "white");
       }
+    };
+
+    this.disco_ball = {
+      stars: [],
+      globe: function (u, v) {
+        u = p5.constrain(u, -90, 90);
+        return {
+          x: (1 + p5.sin(u) * p5.sin(v)) * 40 + 160,
+          y: (1 + p5.cos(v)) * 40 + 10,
+        };
+      },
+      quad: function (i, j, faceSize, rotation = 0) {
+        const k = (i + rotation) % 360 - 180;
+        if (k < -90 - faceSize || k > 90) {
+          return;
+        }
+        const a = this.globe(k, j);
+        const b = this.globe(k + faceSize, j);
+        const c = this.globe(k + faceSize, j + faceSize);
+        const d = this.globe(k, j + faceSize);
+        p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
+      },
+      init: function () {
+        for (let i = 0; i < 75; i++) {
+          this.stars.push({
+            x: p5.random(0, 400),
+            y: p5.random(0,100),
+            color: "#C0C0C0",
+          });
+        }
+      },
+      draw: function () {
+        if (this.stars.length === 0) {
+          this.init();
+        }
+        p5.background("#9370DB");
+        p5.noStroke();
+
+        this.stars.forEach(star => {
+          const distanceFromCenter = 200 - star.x;
+          const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 4);
+          p5.push();
+          p5.translate(star.x, star.y);
+          p5.drawingContext.globalAlpha = opacity;
+          drawSparkle(p5._renderer.drawingContext, star.color);
+          p5.pop();
+
+          // Move the star to the left.
+          star.x -= 4 - opacity;
+
+          // If we've gone off-screen, loop around to the right.
+          if (star.x < 0) {
+            star.x = 400;
+          }
+        });
+
+        p5.noiseDetail(50, .5);
+        const step = 20;
+        for (let i = 0; i <= 360; i += step) {
+          p5.fill("#C0C0C0");
+          p5.rect(199.5, 0, 2, 10.25);
+          for (let j = 0; j < 180; j += step) {
+            p5.push();
+            p5.fill(p5.noise(i, j, p5.frameCount / 50) * 255 + 100);
+            this.quad(i, j, step, p5.frameCount * 3);
+            p5.pop();
+          }
+        }
+      },
     };
 
     this.rainbow = {
@@ -51,15 +157,15 @@ module.exports = class Effects {
     };
 
     this.color_cycle = {
-      color: colorFromHue(0),
+      color: 0,
       update: function () {
-        this.color = colorFromHue(this.color._getHue() + 10);
+        this.color += 0.03;
       },
       draw: function ({isPeak}) {
         if (isPeak) {
           this.update();
         }
-        p5.background(this.color);
+        p5.background(lerpColorFromPalette(this.color));
       }
     };
 
@@ -74,14 +180,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = randomColor();
+          this.colors[i] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = randomColor();
+          this.colors[loc] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       draw: function ({isPeak}) {
@@ -122,8 +228,31 @@ module.exports = class Effects {
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
+        }
+        p5.pop();
+      }
+    };
+
+    this.circles = {
+      hue: 0,
+      update: function () {
+        this.hue += 25;
+      },
+      draw: function ({isPeak, centroid}) {
+        if (isPeak) {
+          this.update();
+        }
+        p5.push();
+        p5.ellipseMode(p5.CENTER);
+        p5.translate(200, 200);
+        p5.rotate(45);
+        p5.noFill();
+        p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
+        for (let i = 5; i > -1; i--) {
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
+          p5.ellipse(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
       }
@@ -167,7 +296,10 @@ module.exports = class Effects {
       sparkles: [],
       maxSparkles: 80,
       makeRandomSparkle: function () {
-        return {x: randomNumber(40, 400),y:randomNumber(0, 380),color: randomColor()};
+        return {
+          x: randomNumber(-100, 600),y:randomNumber(0, 400),
+          color: randomColorFromPalette(),
+        };
       },
       init: function () {
         for (let i=0;i<this.maxSparkles;i++) {
@@ -185,7 +317,7 @@ module.exports = class Effects {
         let velocity = Math.floor(bpm/90*3);
         for (let i = 0;i<this.maxSparkles;i++){
           p5.push();
-          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>390)) {
+          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>410)) {
             this.sparkles[i]=this.makeRandomSparkle();
           }
 
@@ -206,6 +338,7 @@ module.exports = class Effects {
           x: randomNumber(25, 375),
           y: randomNumber(25, 375),
           text: text,
+          font: 'Arial',
           color: colorFromHue(hue),
           size: size
         });
@@ -228,6 +361,7 @@ module.exports = class Effects {
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
+          p5.textFont(t.font);
           p5.fill(t.color);
           p5.text(t.text, t.x, t.y);
         });
@@ -237,34 +371,38 @@ module.exports = class Effects {
 
     this.raining_tacos = {
       tacos: [],
-      size: 50,
       init: function () {
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
           this.tacos.push({
             x: randomNumber(20, 380),
-            y: randomNumber(20, 380),
+            y: randomNumber(-400, 0),
             rot: randomNumber(0, 359),
-            speed: randomNumber(2, 5),
+            speed: 3,
+            size: 5,
           });
         }
+        this.image = p5.createGraphics(70, 50);
+        this.image.pixelDensity(1);
+        this.image.scale(4,4);
+        drawTaco(this.image.drawingContext);
       },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
-      draw: function () {
+      draw: function (context) {
+        const centroid = context.centroid;
         if (this.tacos.length < 1) {
           this.init();
         }
         for (let i = 0; i < this.tacos.length; i++) {
           p5.push();
           const taco = this.tacos[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, taco.size);
+          scale = p5.constrain(scale, 0, 5);
           p5.translate(taco.x, taco.y);
           p5.rotate(taco.rot);
-          p5.scale(2, 2);
-          drawTaco(p5._renderer.drawingContext);
+          p5.scale(scale / 4);
+          p5.image(this.image);
           taco.y += taco.speed;
           taco.rot++;
-          if (taco.y > 450) {
+          if (taco.y > 420) {
             taco.x = randomNumber(20, 380);
             taco.y = -50;
           }
@@ -274,75 +412,33 @@ module.exports = class Effects {
     };
 
     this.pineapples = {
-      pineapple: [],
-      size: 50,
+      pineappleList: [],
       init: function () {
-        for (let i = 0; i < 20; i++) {
-          this.pineapple.push({
-            x: randomNumber(20, 380),
-            y: randomNumber(20, 380),
+        for (let i = 0; i < 8; i++) {
+          this.pineappleList.push({
+            x: randomNumber(10, 390),
+            y: randomNumber(10, 390),
             rot: randomNumber(0, 359),
-            speed: randomNumber(2, 5),
+            life: 5,
           });
         }
       },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
       draw: function () {
-        if (this.pineapple.length < 1) {
+        if (this.pineappleList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.pineapple.length; i++) {
+        for (let i = 0; i < this.pineappleList.length; i++) {
           p5.push();
-          const pineapple = this.pineapple[i];
+          const pineapple = this.pineappleList[i];
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(2, 2);
+          p5.scale(pineapple.life / 20);
           drawPineapple(p5._renderer.drawingContext);
-          pineapple.y += pineapple.speed;
-          pineapple.rot++;
-          if (pineapple.y > 450) {
-            pineapple.x = randomNumber(20, 380);
-            pineapple.y = -50;
-          }
-          p5.pop();
-        }
-      }
-    };
-
-    this.pizzas = {
-      pizza: [],
-      size: 50,
-      init: function () {
-        for (let i = 0; i < 20; i++) {
-          this.pizza.push({
-            x: randomNumber(20, 380),
-            y: randomNumber(20, 380),
-            rot: randomNumber(0, 359),
-            speed: randomNumber(2, 5),
-          });
-        }
-      },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
-      draw: function () {
-        if (this.pizza.length < 1) {
-          this.init();
-        }
-        for (let i = 0; i < this.pizza.length; i++) {
-          p5.push();
-          const pizza = this.pizza[i];
-          p5.translate(pizza.x, pizza.y);
-          p5.rotate(pizza.rot);
-          p5.scale(2, 2);
-          drawPizza(p5._renderer.drawingContext);
-          pizza.y += pizza.speed;
-          pizza.rot++;
-          if (pizza.y > 450) {
-            pizza.x = randomNumber(20, 380);
-            pizza.y = -50;
+          pineapple.life--;
+          if (pineapple.life < 0) {
+            pineapple.x = randomNumber(10, 390);
+            pineapple.y = randomNumber(10, 390);
+            pineapple.life = randomNumber(10, 120);
           }
           p5.pop();
         }
@@ -356,7 +452,7 @@ module.exports = class Effects {
         let r = randomNumber(30,60);
         return {x: randomNumber(0,400),
             y: randomNumber(0,400),
-            color: randomColor(),
+            color: randomColorFromPalette(),
             width: r,
             height: r,
         };
@@ -375,10 +471,17 @@ module.exports = class Effects {
           this.init();
         }
         p5.strokeWeight(0);
-        for (var i=0;i<this.splats.length;i++) {
+        // first make a pass and remove items, traversing in reverse so that removals
+        // dont affect traversal
+        for (var i=this.splats.length-1;i>=0;i--) {
           if (randomNumber(0,50) === 0) {
-            this.splats[i]=this.randomSplat();
+            // remove existing
+            this.splats.splice(i, 1);
+            // add new item to end of array, so that it gets rendered above older ones
+            this.splats.push(this.randomSplat());
           }
+        }
+        for (i=0;i<this.splats.length;i++) {
           p5.fill(this.splats[i].color);
           this.splats[i].width+=randomNumber(0,4);
           this.splats[i].height+=randomNumber(0,4);
@@ -391,14 +494,14 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       update: function () {
-        this.color=randomNumber(0,359);
+        this.color = randomColorFromPalette();
       },
       draw: function ({isPeak,bpm}) {
         if (isPeak || !this.color) {
           this.update();
         }
         p5.push();
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(this.color);
         p5.translate(200,200);
         let rotation=(bpm/90)*50;
         this.angle-=rotation;
@@ -414,10 +517,13 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       init: function () {
-        this.color=randomNumber(0,359);
+        this.color = 0;
       },
       update: function () {
-        this.color=(this.color+randomNumber(0,20)) % 359;
+        this.color += 0.13;
+        if (this.color > 1) {
+          this.color -= 1;
+        }
       },
       draw: function ({isPeak,bpm}) {
         if (this.color === null) {
@@ -426,7 +532,7 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(lerpColorFromPalette(this.color));
         p5.push();
         p5.translate(200,200);
         let rotation=(bpm/90)*200;
@@ -438,6 +544,7 @@ module.exports = class Effects {
 
       }
     };
+
     this.spotlight = {
       x: 200,
       y: 200,
@@ -476,6 +583,35 @@ module.exports = class Effects {
         this.y+=this.dy+randomNumber(-1,1);
         p5.ellipse(this.x,this.y,800,800);
         p5.pop();
+      }
+    };
+
+    this.lasers = {
+      laser: [],
+      draw: function () {
+        p5.background('black');
+        if (this.laser.length < 100) {
+          let laser = {
+            w: 200,
+            x: 200,
+            y: 1700,
+            z: 400,
+            color: randomColor(255,255,255),
+          };
+          this.laser.push(laser);
+        }
+        p5.stroke('white');
+        p5.line(0,200,400,200);
+        this.laser.forEach(laser => {
+          p5.push();
+          p5.stroke(laser.color);
+          p5.line(laser.w, laser.x, laser.y, laser.z);
+          laser.y = laser.y -100;
+          p5.pop();
+          if (laser.y <= -1400) {
+            laser.y = 1700;
+          }
+        });
       }
     };
 
@@ -525,34 +661,37 @@ module.exports = class Effects {
         this.h = Math.sqrt(3) / 2 * 100;
 
         this.shapes = p5.createGraphics(100, Math.ceil(this.h));
-        this.shapes.pixelDensity(1);
-        this.shapes.fill('white');
         this.shapes.noStroke();
         this.shapes.angleMode(p5.DEGREES);
 
         this.hex = p5.createGraphics(200, 200);
-        this.hex.pixelDensity(1);
         this.hex.angleMode(p5.DEGREES);
       },
       blitHex: function () {
         this.hex.push();
         this.hex.clear();
         this.hex.translate(100, 100);
+        this.hex.push();
+        this.hex.scale(1 / p5.pixelDensity());
         this.hex.rotate(30);
         for (let i = 0; i < 3; i++) {
-          this.hex.image(this.shapes, -50, 0);
+          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
           this.hex.scale(-1, 1);
           this.hex.rotate(60);
-          this.hex.image(this.shapes, -50, 0);
+          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
           this.hex.rotate(60);
           this.hex.scale(-1, 1);
         }
+        this.hex.pop();
         this.hex.pop();
       },
       row: function (n) {
         p5.push();
         for (let i = 0; i < n; i++) {
-          p5.image(this.hex, 0, 0);
+          p5.push();
+          p5.scale(1 / p5.pixelDensity());
+          p5.drawingContext.drawImage(this.hex.elt, -100 * p5.pixelDensity(), -100 * p5.pixelDensity());
+          p5.pop();
           p5.translate(this.h * 2, 0);
         }
         p5.pop();
@@ -562,9 +701,9 @@ module.exports = class Effects {
           this.init();
         }
 
-        p5.background('#333');
+        p5.background(colorFromPalette(2));
 
-        const ctx = this.shapes._renderer.drawingContext;
+        const ctx = this.shapes.drawingContext;
         ctx.save();
         ctx.beginPath();
         ctx.moveTo(50, 0);
@@ -573,34 +712,34 @@ module.exports = class Effects {
         ctx.clip();
         this.shapes.clear();
         this.shapes.rotate(p5.frameCount);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.rect(20, 20, 50, 50);
-        this.shapes.fill('#082036');
+        this.shapes.fill(colorFromPalette(2));
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(100, 50, 80);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.ellipse(-50, -50, 50);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(-40, -46, 20);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(-60, 0, -30, -40, -30, 0);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(-45, 0, 40, 300);
         this.shapes.rotate(17);
-        this.shapes.fill('#717171');
+        this.shapes.fill(colorFromPalette(4));
         this.shapes.rect(30, 40, 10, 40);
         this.shapes.rotate(37);
-        this.shapes.fill('#5b2c6e');
+        this.shapes.fill(colorFromPalette(6));
         this.shapes.rect(30, 40, 20, 40);
         this.shapes.rotate(180);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(10, 20, 80, 90, 0, 100);
         this.shapes.translate(20, 0);
         this.shapes.rotate(20);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(0, 0, 20, 200);
         ctx.restore();
 
@@ -627,60 +766,53 @@ module.exports = class Effects {
       }
     };
 
-    this.falling_poop = {
-      poop: [],
-      size: 50,
+    this.smiling_poop = {
+      poopList: [],
       init: function () {
-        for (let i = 0; i < 20; i++) {
-          this.poop.push({
+        for (let i = 0; i < 6; i++) {
+          this.poopList.push({
             x: randomNumber(10, 390),
-            y: -50,
+            y: randomNumber(10, 390),
             rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
+            life: 5,
           });
         }
       },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
       draw: function () {
-        if (this.poop.length < 1) {
+        if (this.poopList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.poop.length; i++) {
+        for (let i = 0; i < this.poopList.length; i++) {
           p5.push();
-          const poop = this.poop[i];
+          const poop = this.poopList[i];
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
-          p5.scale(2, 2);
-          drawFallingPoop(p5._renderer.drawingContext);
-          p5.pop();
-          poop.y += poop.speed;
-          poop.rot++;
-          if (poop.y > 410) {
+          p5.scale(poop.life / 20);
+          p5.drawingContext.globalAlpha - 0.5;
+          drawPoop(p5._renderer.drawingContext);
+          poop.life--;
+          if (poop.life < 0) {
             poop.x = randomNumber(10, 390);
-            poop.y = -50;
+            poop.y = randomNumber(10, 390);
+            poop.life = randomNumber(10, 120);
           }
           p5.pop();
         }
       }
     };
 
-    this.hearts = {
+    this.hearts_red = {
       heartList: [],
-      size: 50,
       init: function () {
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
           this.heartList.push({
             x: randomNumber(10, 390),
-            y: -50,
+            y: randomNumber(10, 390),
             rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
+            life: randomNumber(10, 120),
+            color: p5.rgb(255, 0, 0, 0.5),
           });
         }
-      },
-      update: function () {
-        this.size += randomNumber(-5, 5);
       },
       draw: function () {
         if (this.heartList.length < 1) {
@@ -691,51 +823,90 @@ module.exports = class Effects {
           const heart = this.heartList[i];
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
-          p5.scale(2, 2);
-          drawHeart(p5._renderer.drawingContext);
-          heart.y += heart.speed;
-          heart.rot++;
-          if (heart.y > 410) {
+          p5.scale(heart.life / 20);
+          p5.drawingContext.globalAlpha - 0.5;
+          drawHeart(p5._renderer.drawingContext, heart.color);
+          heart.life--;
+          if (heart.life < 0) {
             heart.x = randomNumber(10, 390);
-            heart.y = -50;
+            heart.y = randomNumber(10, 390);
+            heart.life = randomNumber(10, 120);
           }
           p5.pop();
         }
       }
     };
 
-    this.falling_rainbows = {
-      rainbow: [],
-      size: 50,
+    this.hearts_colorful = {
+      heartList: [],
       init: function () {
-        for (let i = 0; i < 20; i++) {
-          this.rainbow.push({
+        for (let i = 0; i < 10; i++) {
+          this.heartList.push({
             x: randomNumber(10, 390),
-            y: -50,
+            y: randomNumber(10, 390),
             rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
+            life: randomNumber(10, 120),
+            color: randomColor(100, 50, 0.25),
           });
         }
       },
-      update: function () {
-        this.size += randomNumber(-5, 5);
-      },
       draw: function () {
-        if (this.rainbow.length < 1) {
+        if (this.heartList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.rainbow.length; i++) {
+        for (let i = 0; i < this.heartList.length; i++) {
           p5.push();
-          const rainbow = this.rainbow[i];
-          p5.translate(rainbow.x, rainbow.y);
-          p5.rotate(rainbow.rot);
-          p5.scale(2, 2);
-          drawRainbow(p5._renderer.drawingContext);
-          rainbow.y += rainbow.speed;
-          rainbow.rot++;
-          if (rainbow.y > 410) {
-            rainbow.x = randomNumber(10, 390);
-            rainbow.y = -50;
+          const heart = this.heartList[i];
+          p5.translate(heart.x, heart.y);
+          p5.rotate(heart.rot);
+          p5.scale(heart.life / 20);
+          p5.drawingContext.globalAlpha - 0.5;
+          drawHeart(p5._renderer.drawingContext, heart.color);
+          heart.life--;
+          if (heart.life < 0) {
+            heart.x = randomNumber(10, 390);
+            heart.y = randomNumber(10, 390);
+            heart.life = randomNumber(10, 120);
+          }
+          p5.pop();
+        }
+      }
+    };
+
+    this.floating_rainbows = {
+      rainbows: [],
+      init: function () {
+        for (let i = 0; i < 15; i++) {
+          this.rainbows.push({
+            x: randomNumber(10, 390),
+            y: randomNumber(400, 800),
+            rot: randomNumber(0, 359),
+            speed: 2,
+            size: randomNumber(1.5, 3),
+          });
+        }
+        this.image = p5.createGraphics(100, 100);
+        this.image.pixelDensity(1);
+        this.image.scale(4,4);
+        drawRainbow(this.image.drawingContext);
+      },
+      draw: function (context) {
+        const centroid = context.centroid;
+        if (this.rainbows.length < 1) {
+          this.init();
+        }
+        for (let i = 0; i < this.rainbows.length; i++) {
+          p5.push();
+          const rainbows = this.rainbows[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, rainbows.size);
+          scale = p5.constrain(scale, 0, 3);
+          p5.translate(rainbows.x, rainbows.y);
+          p5.scale(scale / 2);
+          p5.image(this.image);
+          rainbows.y -= rainbows.speed;
+          if (rainbows.y < -25) {
+            rainbows.x = randomNumber(10, 390);
+            rainbows.y = 450;
           }
           p5.pop();
         }
@@ -773,6 +944,146 @@ module.exports = class Effects {
       }
     };
 
+    this.fireworks = {
+      particles:[],
+      minExplosion:20,
+      maxExplosion:50,
+      minPotential:200,
+      maxPotential:300,
+      enableTracers:true,
+      buffer:null,
+
+      makeParticle: function (type, pos, vel, color, potential) {
+        return  {
+          type:type,
+          pos:pos,
+          vel:vel,
+          gravity: p5.createVector(0.0, 0.1),
+          potential:potential,
+          acc:p5.createVector(0, 0),
+          color:color,
+          update: function () {
+            this.acc.add(this.gravity);
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0, 0);
+          },
+        };
+      },
+
+      draw: function () {
+        if (this.buffer === null) {
+          this.buffer = p5;
+          // We get the tracer effect by writing frames to a
+          // offscreen buffer that has a transparent background
+          if (this.enableTracers) {
+            this.buffer = p5.createGraphics(p5.width, p5.height);
+            this.buffer.pixelDensity(1);
+          }
+        }
+
+        p5.background(0);
+
+        // if we are using the offscreen buffer, use a transparent background
+        if (this.buffer !== p5) {
+          this.buffer.background(0, 25);
+        }
+
+        p5.push();
+        this.drawParticles();
+
+        // if we are drawing to offscreen buffer, copy it to the canvas
+        if (this.buffer !== p5) {
+          p5.image(this.buffer);
+        }
+
+        p5.pop();
+
+        this.particles = this.nextParticles();
+      },
+
+      drawParticles: function () {
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+          p.update();
+
+          this.buffer.push();
+          if (p.type === "rocket") {
+            this.buffer.strokeWeight(3);
+            this.buffer.stroke(p.color);
+            this.buffer.point(p.pos.x, p.pos.y);
+          } else if (p.type === "particle") {
+            this.buffer.translate(p.pos.x, p.pos.y);
+            drawSparkle(this.buffer._renderer.drawingContext, p.color);
+          }
+          this.buffer.pop();
+        }
+      },
+
+      nextParticles: function () {
+        let ret = [];
+
+        // total potential is the number of particles active, or the number represented
+        // in unexploded rockets. This is how we manage total number of objects
+        var totalPotential = 0;
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+
+          if (p.type === "rocket") {
+            // explode a rocket when it reaches it peak height
+            if (p.vel.y <= 0) {
+              ret.push(p);
+            } else {
+              ret = ret.concat(this.explode(p));
+            }
+
+            // the rocket exploded to its potential or its still waiting
+            totalPotential += p.potential;
+          } else if (p.type === "particle") {
+
+            // remove things when they leave the window, except allow particles
+            // to fall back down into the view from above
+            if (p.pos.x > 0 && p.pos.x < p5.width && p.pos.y < p5.height) {
+              ret.push(p);
+              totalPotential += p.potential;
+            }
+          }
+        }
+
+        // make sure the total potential for particles is between the min and max potential
+        if (totalPotential < this.minPotential) {
+
+          // fire rockets until we fill the potential
+          while (totalPotential < this.maxPotential) {
+            let p = this.makeParticle(
+              "rocket",
+              p5.createVector(randomNumber(0, p5.height), p5.width),
+              p5.createVector(0, p5.random(-9, -7)),
+              randomColor(),
+              p5.random(this.minExplosion, this.maxExplosion),
+            );
+            totalPotential += p.potential;
+            ret.push(p);
+          }
+        }
+        return ret;
+      },
+
+      explode: function (p) {
+        let ret = [];
+        for (var i = 0; i < p.potential; i++) {
+          ret.push(this.makeParticle(
+            "particle",
+            p5.createVector(p.pos.x, p.pos.y),
+            p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
+            p.color,
+            1,
+          ));
+        }
+        return ret;
+      }
+    };
+
     this.bubbles = {
       bubble: [],
       draw: function () {
@@ -789,9 +1100,7 @@ module.exports = class Effects {
           p5.push();
           p5.fill(bubble.color);
           p5.translate(bubble.x, bubble.y);
-          for (let i = 0; i < 1; i++) {
-            p5.ellipse(0, 0, bubble.size, bubble.size);
-          }
+          p5.ellipse(0, 0, bubble.size, bubble.size);
           let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
           bubble.y -= fallSpeed;
           bubble.x += bubble.velocityX;
@@ -806,7 +1115,7 @@ module.exports = class Effects {
     this.stars = {
       star: [],
       draw: function () {
-        p5.background('black');
+        p5.background("#303030");
         let star = {
           x: p5.random(0, 400),
           y: p5.random(0, 400),
@@ -814,7 +1123,7 @@ module.exports = class Effects {
         };
         this.star.push(star);
         p5.noStroke();
-        p5.fill(255, 255, 0);
+        p5.fill("#FFFACD");
         this.star.forEach(function (star){
           p5.push();
           p5.translate(star.x, star.y);
@@ -833,7 +1142,7 @@ module.exports = class Effects {
       }
     };
 
-    this.starspace = {
+    this.galaxy = {
       space: [],
       draw: function () {
         p5.background('black');
@@ -867,30 +1176,64 @@ module.exports = class Effects {
       }
     };
 
-    this.strobe_lights = {
-      strobe: [],
+    this.pizzas = {
+      pizza: [],
       draw: function () {
         p5.background('black');
-        p5.strokeWeight(5);
-        p5.stroke(255);
-        let strobe = {
-          lineH: 25,
-          lineW: 1,
-          lineX: 0,
-          lightH: 50,
-          lightD: 40,
+        let pizza = {
+          x: 200,
+          y: 200,
+          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+          size: 0.1,
         };
-        this.strobe.push(strobe);
-        this.strobe.forEach(function (strobe) {
+        this.pizza.push(pizza);
+        p5.noStroke();
+        this.pizza.forEach(function (pizza){
           p5.push();
-          for (var x = 50; x <= 400; x += 100) {
-            p5.fill(p5.random(255), p5.random(255), p5.random(255));
-            p5.ellipse(x, strobe.lightH, strobe.lightD, strobe.lightD);
-          }
-          for (var y = 50; y <= 400; y += 100) {
-            p5.rect(y, strobe.lineX, strobe.lineW, strobe.lineH);
-          }
+          p5.translate(pizza.x, pizza.y);
+          drawPizza(p5._renderer.drawingContext);
+          let speedMultiplier = p5.pow(pizza.size, 2) / 8;
+          pizza.x += pizza.velocity.x * speedMultiplier;
+          pizza.y += pizza.velocity.y * speedMultiplier;
+          pizza.size += 0.1;
           p5.pop();
+        });
+        this.pizza = this.pizza.filter(function (pizza) {
+          if (pizza.x < -5 || pizza.x > 405 || pizza.y < -5 || pizza.y > 405) {
+            return false;
+          }
+          return true;
+        });
+      }
+    };
+
+    this.smile_face = {
+      smile: [],
+      draw: function () {
+        p5.background("#D3D3D3");
+        let smile = {
+          x: 200,
+          y: 200,
+          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+          size: 0.1,
+        };
+        this.smile.push(smile);
+        p5.noStroke();
+        this.smile.forEach(function (smile){
+          p5.push();
+          p5.translate(smile.x, smile.y);
+          drawSmiley(p5._renderer.drawingContext);
+          let speedMultiplier = p5.pow(smile.size, 2) / 8;
+          smile.x += smile.velocity.x * speedMultiplier;
+          smile.y += smile.velocity.y * speedMultiplier;
+          smile.size += 0.1;
+          p5.pop();
+        });
+        this.smile = this.smile.filter(function (smile) {
+          if (smile.x < -5 || smile.x > 405 || smile.y < -5 || smile.y > 405) {
+            return false;
+          }
+          return true;
         });
       }
     };
@@ -903,7 +1246,9 @@ module.exports = class Effects {
           y: -10,
           velocityX: p5.random(-2, 2),
           size: p5.random(6, 12, 18),
-          spin: 0,
+          // https://github.com/Automattic/node-canvas/issues/702
+          // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
+          spin: 1,
           color: randomColor(255, 255, 100),
         };
         this.confetti.push(confetti);
@@ -929,34 +1274,35 @@ module.exports = class Effects {
 
     this.music_notes = {
       notes: [],
-      size: 50,
       init: function () {
         for (let i = 0; i < 20; i++) {
           this.notes.push({
             x: randomNumber(10, 390),
-            y: -50,
+            y: randomNumber(-400, 0),
             rot: randomNumber(0, 359),
-            speed: p5.random(1,5),
+            speed: 2,
+            size: randomNumber(1.5, 3),
           });
         }
-      },
-      update: function () {
-        this.size += randomNumber(-5, 5);
+        this.image = p5.createGraphics(70, 50);
+        this.image.pixelDensity(1);
+        this.image.scale(4,4);
+        drawMusicNote(this.image.drawingContext);
       },
       draw: function (context) {
         const centroid = context.centroid;
         if (this.notes.length < 1) {
           this.init();
         }
-        let scale = p5.map(centroid, 5000, 8000, 0, 1.5);
-        scale = p5.constrain(scale, 0, 3);
         for (let i = 0; i < this.notes.length; i++) {
           p5.push();
           const notes = this.notes[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
+          scale = p5.constrain(scale, 0, 3);
           p5.translate(notes.x, notes.y);
           p5.rotate(notes.rot);
-          p5.scale(scale);
-          drawMusicNote(p5._renderer.drawingContext);
+          p5.scale(scale / 4);
+          p5.image(this.image);
           notes.y += notes.speed;
           notes.rot++;
           if (notes.y > 410) {
@@ -967,8 +1313,6 @@ module.exports = class Effects {
         }
       }
     };
-
-
   }
 };
 
@@ -1125,7 +1469,7 @@ function drawSparkle(ctx, color) {
   ctx.restore();
 }
 
-function drawFallingPoop(ctx) {
+function drawPoop(ctx) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
   ctx.beginPath();
@@ -1141,6 +1485,7 @@ function drawFallingPoop(ctx) {
   ctx.miterLimit = 4;
   ctx.save();
   ctx.fillStyle = "#995243";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(5.449,0);
   ctx.bezierCurveTo(5.449,0,6.842,2.603,9.21,2.183);
@@ -1369,263 +1714,6 @@ function drawMusicNote(ctx) {
   ctx.restore();
 }
 
-function drawPineapple(ctx) {
-  ctx.save();
-  ctx.fillStyle = "rgba(0, 0, 0, 0)";
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(10,0);
-  ctx.lineTo(10,18);
-  ctx.lineTo(0,18);
-  ctx.closePath();
-  ctx.clip();
-  ctx.strokeStyle = 'rgba(0,0,0,0)';
-  ctx.lineCap = 'butt';
-  ctx.lineJoin = 'miter';
-  ctx.miterLimit = 4;
-  ctx.save();
-  ctx.fillStyle = "#30b1ad";
-  ctx.beginPath();
-  ctx.moveTo(6.118,2.025);
-  ctx.lineTo(6.205,2.025);
-  ctx.bezierCurveTo(7.043,1.6269999999999998,7.965,1.6749999999999998,7.965,1.6749999999999998);
-  ctx.bezierCurveTo(7.965,1.6749999999999998,8.015,2.705,7.545,3.58);
-  ctx.bezierCurveTo(8.532,3.535,9.36,3.8040000000000003,9.36,3.8040000000000003);
-  ctx.bezierCurveTo(9.36,3.8040000000000003,8.921999999999999,5.834,7.438999999999999,6.692);
-  ctx.bezierCurveTo(6.664999999999999,7.139,5.7589999999999995,7.179,5.0699999999999985,7.115);
-  ctx.bezierCurveTo(4.379999999999999,7.179,3.4749999999999988,7.139,2.6999999999999984,6.692);
-  ctx.bezierCurveTo(1.219,5.834,0.78,3.804,0.78,3.804);
-  ctx.bezierCurveTo(0.78,3.804,1.476,3.577,2.3529999999999998,3.574);
-  ctx.bezierCurveTo(1.8859999999999997,2.6999999999999997,1.9359999999999997,1.674,1.9359999999999997,1.674);
-  ctx.bezierCurveTo(1.9359999999999997,1.674,2.8579999999999997,1.627,3.6959999999999997,2.025);
-  ctx.lineTo(3.8289999999999997,2.025);
-  ctx.bezierCurveTo(4.009,0.878,4.97,0,4.97,0);
-  ctx.bezierCurveTo(4.97,0,5.935,0.878,6.117,2.025);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  ctx.save();
-  ctx.fillStyle = "#febe40";
-  ctx.beginPath();
-  ctx.moveTo(5.0009999999999994,5.112);
-  ctx.lineTo(5,5.112);
-  ctx.quadraticCurveTo(9.991,5.112,9.991,10.103);
-  ctx.lineTo(9.991,13.008000000000003);
-  ctx.quadraticCurveTo(9.991,17.999000000000002,5,17.999000000000002);
-  ctx.lineTo(5.0009999999999994,17.999000000000002);
-  ctx.quadraticCurveTo(0.01,17.999000000000002,0.01,13.008000000000003);
-  ctx.lineTo(0.01,10.103);
-  ctx.quadraticCurveTo(0.01,5.112,5.0009999999999994,5.112);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  ctx.save();
-  ctx.fillStyle = "#ea676c";
-  ctx.globalAlpha = 0.5;
-  ctx.beginPath();
-  ctx.moveTo(5.15,5.114);
-  ctx.lineTo(5,5.264);
-  ctx.lineTo(4.85,5.114);
-  ctx.translate(5.002690755648705,10.131677304604136);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.02,-1.6012175039698011,-1.7465383666653929,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(-5.002690755648705,-10.131677304604136);
-  ctx.lineTo(4.601,5.667);
-  ctx.lineTo(3.502,6.774);
-  ctx.lineTo(2.5109999999999997,5.775);
-  ctx.bezierCurveTo(2.3429999999999995,5.872000000000001,2.1809999999999996,5.978000000000001,2.0269999999999997,6.0920000000000005);
-  ctx.lineTo(3.1029999999999998,7.176);
-  ctx.lineTo(2.0029999999999997,8.283);
-  ctx.lineTo(0.9329999999999996,7.204);
-  ctx.translate(5.005381201350355,10.113593846379288);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.005,-2.5212212082045737,-2.6374742136776317,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(-5.005381201350355,-10.113593846379288);
-  ctx.lineTo(1.6039999999999996,8.686);
-  ctx.lineTo(0.505,9.791);
-  ctx.lineTo(0.06,9.344);
-  ctx.translate(5.036942890530307,10.112983396699716);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.036,-2.9882956875133275,-3.136830245456489,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(-5.036942890530307,-10.112983396699716);
-  ctx.lineTo(0.106,10.194999999999999);
-  ctx.lineTo(0,10.3);
-  ctx.lineTo(0,11.105);
-  ctx.lineTo(0.504,10.597000000000001);
-  ctx.lineTo(1.603,11.704);
-  ctx.lineTo(0.5029999999999999,12.811);
-  ctx.lineTo(-1.1102230246251565e-16,12.303);
-  ctx.lineTo(-1.1102230246251565e-16,13);
-  ctx.lineTo(0.000999999999999889,13.11);
-  ctx.lineTo(0.10499999999999989,13.014999999999999);
-  ctx.lineTo(0.2009999999999999,NaN);
-  ctx.lineTo(5.201,NaN);
-  ctx.lineTo(5.201,NaN);
-  ctx.lineTo(5.201,NaN);
-  ctx.lineTo(5.911,NaN);
-  ctx.lineTo(6.311,NaN);
-  ctx.lineTo(7.411,NaN);
-  ctx.lineTo(6.537,NaN);
-  ctx.bezierCurveTo(6.637,NaN,6.86,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.translate(NaN,NaN);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.034,NaN,NaN,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.lineTo(NaN,NaN);
-  ctx.translate(NaN,NaN);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.003,NaN,NaN,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(NaN,NaN);
-  ctx.lineTo(7.997,8.284);
-  ctx.lineTo(6.897,7.176);
-  ctx.lineTo(7.973000000000001,6.0920000000000005);
-  ctx.translate(4.991692715388204,10.115912384076054);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.008,-0.9331462104022887,-1.0487400123729822,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(-4.991692715388204,-10.115912384076054);
-  ctx.lineTo(6.497000000000001,6.774);
-  ctx.lineTo(5.4,5.667);
-  ctx.lineTo(5.875,5.188);
-  ctx.translate(5.004208587093346,10.130882085909802);
-  ctx.rotate(0);
-  ctx.scale(1,1);
-  ctx.arc(0,0,5.019,-1.3964148923220492,-1.5417443396750217,1);
-  ctx.scale(1,1);
-  ctx.rotate(0);
-  ctx.translate(-5.004208587093346,-10.130882085909802);
-  ctx.closePath();
-  ctx.moveTo(3.902,7.176);
-  ctx.lineTo(5,6.07);
-  ctx.lineTo(6.1,7.176);
-  ctx.lineTo(5,8.283);
-  ctx.lineTo(3.902,7.176);
-  ctx.closePath();
-  ctx.moveTo(5.4,8.685);
-  ctx.lineTo(6.498,7.579000000000001);
-  ctx.lineTo(7.598000000000001,8.686);
-  ctx.lineTo(6.5,9.793);
-  ctx.lineTo(5.4,8.685);
-  ctx.closePath();
-  ctx.moveTo(6.9,10.195);
-  ctx.lineTo(7.997,9.09);
-  ctx.lineTo(9.095,10.196);
-  ctx.lineTo(7.997000000000001,11.302999999999999);
-  ctx.lineTo(6.898000000000001,10.196);
-  ctx.closePath();
-  ctx.moveTo(2.0010000000000003,11.302);
-  ctx.lineTo(0.905,10.195);
-  ctx.lineTo(2.004,9.088000000000001);
-  ctx.lineTo(3.1020000000000003,10.194);
-  ctx.lineTo(2.003,11.301);
-  ctx.closePath();
-  ctx.moveTo(3.5020000000000002,9.791);
-  ctx.lineTo(2.403,8.686);
-  ctx.lineTo(3.503,7.58);
-  ctx.lineTo(4.6,8.685);
-  ctx.lineTo(3.5,9.792);
-  ctx.closePath();
-  ctx.moveTo(3.9,10.195);
-  ctx.lineTo(5,9.087);
-  ctx.lineTo(6.1,10.195);
-  ctx.lineTo(5.0009999999999994,11.302);
-  ctx.lineTo(3.9009999999999994,10.193999999999999);
-  ctx.closePath();
-  ctx.moveTo(5.3999999999999995,11.703999999999999);
-  ctx.lineTo(6.5,10.599);
-  ctx.lineTo(7.598,11.705);
-  ctx.lineTo(6.499,12.812);
-  ctx.lineTo(5.401,11.706);
-  ctx.closePath();
-  ctx.moveTo(6.899,13.216);
-  ctx.lineTo(7.998,12.109);
-  ctx.lineTo(9.097,13.216);
-  ctx.lineTo(7.997,14.322);
-  ctx.lineTo(6.9,13.213);
-  ctx.closePath();
-  ctx.moveTo(6.5,13.614999999999998);
-  ctx.lineTo(7.599,14.721999999999998);
-  ctx.lineTo(6.5,15.828999999999997);
-  ctx.lineTo(5.4,14.723);
-  ctx.lineTo(6.5,13.616000000000001);
-  ctx.closePath();
-  ctx.moveTo(5.002,15.126000000000001);
-  ctx.lineTo(6.1,16.231);
-  ctx.lineTo(5,17.34);
-  ctx.lineTo(3.902,16.233);
-  ctx.lineTo(5,15.125);
-  ctx.closePath();
-  ctx.moveTo(4.6,14.722);
-  ctx.lineTo(3.502,15.83);
-  ctx.lineTo(2.404,14.723);
-  ctx.lineTo(3.503,13.616000000000001);
-  ctx.lineTo(4.6,14.723);
-  ctx.closePath();
-  ctx.moveTo(3.1019999999999994,13.214);
-  ctx.lineTo(2.0029999999999992,14.321);
-  ctx.lineTo(0.9029999999999991,13.213);
-  ctx.lineTo(2.0029999999999992,12.106);
-  ctx.lineTo(3.1029999999999993,13.214);
-  ctx.closePath();
-  ctx.moveTo(3.5029999999999992,12.812000000000001);
-  ctx.lineTo(2.402999999999999,11.704);
-  ctx.lineTo(3.501999999999999,10.597000000000001);
-  ctx.lineTo(4.6019999999999985,11.705000000000002);
-  ctx.lineTo(3.5019999999999984,12.812000000000001);
-  ctx.closePath();
-  ctx.moveTo(3.9019999999999984,13.214);
-  ctx.lineTo(5,12.107);
-  ctx.lineTo(6.1,13.214);
-  ctx.lineTo(5,14.32);
-  ctx.lineTo(3.902,13.214);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  ctx.restore();
-}
-
 function drawPizza(ctx) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
@@ -1838,7 +1926,59 @@ function drawPizza(ctx) {
   ctx.restore();
 }
 
-function drawHeart(ctx) {
+function drawSmiley(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(17,0);
+  ctx.lineTo(17,16);
+  ctx.lineTo(0,16);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = "#ffdf40";
+  ctx.beginPath();
+  ctx.arc(8.5,8,8,0,6.283185307179586,true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#311a12";
+  ctx.globalAlpha = 0.9;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(6.9,6.4);
+  ctx.bezierCurveTo(6.9,7.283,6.422000000000001,8,5.833,8);
+  ctx.bezierCurveTo(5.244,8,4.767,7.283,4.767,6.4);
+  ctx.bezierCurveTo(4.767,5.516,5.244000000000001,4.800000000000001,5.833,4.800000000000001);
+  ctx.bezierCurveTo(6.423,4.800000000000001,6.9,5.516000000000001,6.9,6.4);
+  ctx.closePath();
+  ctx.moveTo(4.894,10.666);
+  ctx.bezierCurveTo(5.322,11.803,6.774,12.639000000000001,8.5,12.639000000000001);
+  ctx.bezierCurveTo(10.225,12.639000000000001,11.678,11.803,12.106,10.666);
+  ctx.bezierCurveTo(11.227,11.222000000000001,9.936,11.573,8.5,11.573);
+  ctx.bezierCurveTo(7.063,11.573,5.773,11.222000000000001,4.894,10.666);
+  ctx.closePath();
+  ctx.moveTo(11.167,8);
+  ctx.bezierCurveTo(11.756,8,12.233,7.283,12.233,6.4);
+  ctx.bezierCurveTo(12.233,5.516,11.756,4.800000000000001,11.167,4.800000000000001);
+  ctx.bezierCurveTo(10.577,4.800000000000001,10.1,5.516000000000001,10.1,6.4);
+  ctx.bezierCurveTo(10.1,7.283,10.578,8,11.167,8);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawHeart(ctx, color) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
   ctx.beginPath();
@@ -1853,7 +1993,7 @@ function drawHeart(ctx) {
   ctx.lineJoin = 'miter';
   ctx.miterLimit = 4;
   ctx.save();
-  ctx.fillStyle = "#dc1c4b";
+  ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(0,5.016);
   ctx.bezierCurveTo(0,6.718,0.84,7.959,2.014,9.128);
