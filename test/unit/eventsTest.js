@@ -14,6 +14,16 @@ async function runUserCode(userCode) {
   };
 }
 
+function goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, n, expectedColor) {
+  interpretedAPI.runUserEvents({
+    any: true,
+    'cue-measures': {
+      [n]: true,
+    }
+  });
+  t.deepEqual(nativeAPI.world.background_color, expectedColor);
+}
+
 test('atTimestamp adds a cue to the cue list', async t => {
   const {nativeAPI, interpretedAPI} = await runUserCode(`
     atTimestamp(2, "seconds", function () {});
@@ -138,6 +148,69 @@ test('non-conflicting atTimestamp cues, both take effect', async t => {
   });
   t.deepEqual(nativeAPI.world.background_color, 'orange');
   t.deepEqual(nativeAPI.world.fg_effect, 'color_lights');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures cues, rarer definition wins - rarer first', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(2, "measures", () => setBackground("purple"));
+    everySeconds(1, "measures", () => setBackground("orange"));
+  `);
+
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures cues, rarer definition wins - rarer last', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(1, "measures", () => setBackground("orange"));
+    everySeconds(2, "measures", () => setBackground("purple"));
+  `);
+
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures and atTimestamp cues, rarer definition wins - rarer first', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(2, "measures", () => setBackground("purple"));
+    atTimestamp(1, "measures", () => setBackground("orange"));
+  `);
+
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('conflicting everyMeasures cues and atTimestamp cues, rarer definition wins - rarer last', async t => {
+  const {nativeAPI, interpretedAPI} = await runUserCode(`
+    everySeconds(1, "measures", () => setBackground("orange"));
+    atTimestamp(3, "measures", () => setBackground("purple"));
+  `);
+
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'orange');
 
   t.end();
   nativeAPI.reset();

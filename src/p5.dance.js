@@ -47,7 +47,7 @@ module.exports = class DanceParty {
     },
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
-    resourceLoader = new ResourceLoader(),
+    resourceLoader = new ResourceLoader()
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -465,6 +465,12 @@ module.exports = class DanceParty {
     } else {
       move = this.getNewChangedMove(move, sprite.current_move, true);
     }
+    // Short burst moves start in the middle of the animation so sometimes
+    // they don't appear to line up with the requested direction.
+    // We've custom-authored which ones should be flipped in this case.
+    if (this.world.MOVE_NAMES[move].burstReversed) {
+      dir = -dir;
+    }
     sprite.mirrorX(dir);
     sprite.changeAnimation("anim" + move);
     sprite.animation.looping = false;
@@ -634,18 +640,22 @@ module.exports = class DanceParty {
       if (count > 0) {
         group[0].x = minX;
         group[0].y = minY;
+        group[0].rotation = 0;
       }
       if (count > 1) {
         group[1].x = maxX;
         group[1].y = minY;
+        group[1].rotation = 0;
       }
       if (count > 2) {
         group[2].x = maxX;
         group[2].y = maxY;
+        group[2].rotation = 0;
       }
       if (count > 3) {
         group[3].x = minX;
         group[3].y = maxY;
+        group[3].rotation = 0;
       }
       if (count > 4) {
         const topCount = Math.ceil((count - 4 - 0) / 4);
@@ -792,6 +802,10 @@ module.exports = class DanceParty {
     sprite.dance_speed = speed;
   }
 
+  setDanceSpeedEach(group, val) {
+    this.setPropEach(group, "dance_speed", val);
+  }
+
   // Music Helpers
 
   getEnergy(range) {
@@ -861,21 +875,24 @@ module.exports = class DanceParty {
    * @param {string} range
    */
   startMapping(sprite, property, range) {
+    if (!sprite) {
+      return;
+    }
+
     // id's should be the same as long as the property/range are the same. they
     // need not be unique across sprites
     const id = [property, range].join('-');
+
+    // Grab the initial value so that changes can be relative
+    const initialValue = sprite[property];
     const behavior = new Behavior(sprite => {
-      var energy = this.getEnergy(range);
-      if (property === "x") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 50, 350));
-      } else if (property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, 350, 50));
-      } else if (property === "scale") {
-        energy = this.p5_.map(energy, 0, 255, 0.5, 1.5);
-      } else if (property === "width" || property === "height") {
-        energy = this.p5_.map(energy, 0, 255, 50, 150);
-      } else if (property === "rotation" || property === "direction") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, -180, 180));
+      let energy = this.getEnergy(range);
+      if (property === "x" || property === "y") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 150, initialValue + 150));
+      } else if (property === "scale" || property === "width" || property === "height") {
+        energy = this.p5_.map(energy, 0, 255, initialValue * 0.5, initialValue * 1.5);
+      } else if (property === "rotation") {
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 90, initialValue + 90));
       } else if (property === "tint") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
         energy = "hsb(" + energy + ",100%,100%)";

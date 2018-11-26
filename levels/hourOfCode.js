@@ -33,7 +33,7 @@ module.exports = {
       });
     `,
     validationCode: `
-      if ((nativeAPI.getTime("measures") < 3) && (nativeAPI.getTime("measures")>0)) {
+      if ((nativeAPI.getTime("measures") > 1) && (nativeAPI.getTime("measures") < 3)) {
         if (sprites.length > 0) {
           World.startingMove = sprites[0].current_move;
         } else {
@@ -152,6 +152,41 @@ module.exports = {
           nativeAPI.pass();
         } else {
           nativeAPI.fail('Try adding the \`right_pineapple begins size following bass\` block to your program.');
+        }
+      }
+    `,
+  },
+  hoc10: {
+    solution: `
+      var left_dancer;
+      var right_dancer;
+
+      whenSetup(function () {
+        setBackgroundEffect("splatter");
+        left_dancer = makeNewDanceSprite("CAT", left_dancer, {x: 100, y: 200});
+        right_dancer = makeNewDanceSprite("ROBOT", right_dancer, {x: 300, y: 200});
+      });
+
+      everySeconds(2, "measures", function () {
+        changeMoveLR(left_dancer, "next", -1);
+      });
+
+      whenKey("up", function () {
+        doMoveLR(right_dancer, MOVES.XArmsUp, -1);
+      });
+    `,
+    validationCode: `
+      if (World.validationStatus == undefined) {
+        World.validationStatus = 3;
+      } else if (events['this.p5_.keyWentDown']) {
+        World.validationStatus = 0;
+      }
+       
+      if (nativeAPI.getTime("measures") > 8) { 
+        if (World.validationStatus > 0) {
+          nativeAPI.fail("Make sure you add a \`when key\` event and press the key to test it.");
+        } else {
+          nativeAPI.pass();
         }
       }
     `,
