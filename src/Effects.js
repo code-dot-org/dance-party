@@ -555,7 +555,6 @@ module.exports = class Effects {
         p5.line(0,200,400,200);
         this.laser.forEach(laser => {
           p5.push();
-          p5.translate(this.laser.w, this.laser.x, this.laser.y, this.laser.z);
           p5.stroke(laser.color);
           p5.line(laser.w, laser.x, laser.y, laser.z);
           laser.y = laser.y -100;
