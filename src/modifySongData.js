@@ -1,8 +1,14 @@
-// This is derived from DanceParty.getCurrentMeasure, but don't want to explicitly
-// depend on DanceParty so that this could be easily moved to a preRender step in
-// the future.
+/**
+ * This is derived from DanceParty.getCurrentMeasure, but don't want to explicitly
+ * depend on DanceParty so that this could be easily moved to a preRender step in
+ * the future.
+ * @param {Object} songMetadata
+ * @param {Number} time - Time provided in seconds
+ */
 function getMeasureForTime(songMetadata, time) {
-  return songMetadata.bpm * ((time - songMetadata.delay) / 240) + 1;
+  const measuresPerSecond = songMetadata.bpm / 240;
+  const secondsElapsed = time - songMetadata.delay;
+  return secondsElapsed * measuresPerSecond + 1;
 }
 
 function clamp(min, max, val) {
@@ -47,6 +53,7 @@ function getFrequencyEnergy(energy, options = {}) {
   const representativeIndexRange = valueOrDefault(options.representativeIndexRange ||
     [0, energy.length]);
 
+  // Energy values are all 0+
   const nonZero = energy.slice(...representativeIndexRange).filter(e => e > 0);
   const mean = calculateMean(nonZero);
 
