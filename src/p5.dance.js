@@ -270,8 +270,13 @@ module.exports = class DanceParty {
     this.world.background_color = color;
   }
 
-  setBackgroundEffect(effect) {
+  setBackgroundEffect(effect, palette = 'default') {
     this.world.bg_effect = effect;
+
+    this.bgEffects_.currentPalette = palette;
+    if (this.bgEffects_[effect].init) {
+      this.bgEffects_[effect].init();
+    }
   }
 
   setForegroundEffect(effect) {

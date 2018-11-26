@@ -1,8 +1,21 @@
 const drawPineapple = require('./drawPineapple');
 
 module.exports = class Effects {
-  constructor(p5, alpha, blend) {
+  constructor(p5, alpha, blend, currentPalette = 'default') {
     this.blend = blend || p5.BLEND;
+    this.currentPalette = currentPalette;
+
+    this.palettes = {
+      default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
+      electronic: ['#fc71ee', '#3f0f6e', '#030a24', '#222152', '#00f7eb'],
+      vintage: ['#594c51', '#97bcb2', '#f1ebc4', '#e9b76f', '#de6965'],
+      cool: ['#2b5ef6', '#408ae1', '#69d5fb', '#6ee4d4', '#7afaae'],
+      warm: ['#ba2744', '#d85422', '#ed7c49', '#f1a54b', '#f6c54f'],
+      iceCream: ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'],
+      tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
+      neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
+      rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
+    };
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -15,6 +28,28 @@ module.exports = class Effects {
     function randomColor(s=100, l=80, a=alpha) {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
+
+    const colorFromPalette = (n) => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[n % (palette.length)];
+    };
+
+    const lerpColorFromPalette = (amount) => {
+      const palette = this.palettes[this.currentPalette];
+      const which = amount * palette.length;
+      const n = Math.floor(which);
+      const remainder = which - n;
+
+      const prev = palette[n % (palette.length)];
+      const next = palette[(n + 1) % (palette.length)];
+
+      return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
+    };
+
+    const randomColorFromPalette = () => {
+      const palette = this.palettes[this.currentPalette];
+      return palette[randomNumber(0, palette.length - 1)];
+    };
 
     this.none = {
       draw: function ({backgroundColor}) {
@@ -122,15 +157,15 @@ module.exports = class Effects {
     };
 
     this.color_cycle = {
-      color: colorFromHue(0),
+      color: 0,
       update: function () {
-        this.color = colorFromHue(this.color._getHue() + 10);
+        this.color += 0.03;
       },
       draw: function ({isPeak}) {
         if (isPeak) {
           this.update();
         }
-        p5.background(this.color);
+        p5.background(lerpColorFromPalette(this.color));
       }
     };
 
@@ -145,14 +180,14 @@ module.exports = class Effects {
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
-          this.colors[i] = randomColor();
+          this.colors[i] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       update: function () {
         const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
-          this.colors[loc] = randomColor();
+          this.colors[loc] = lerpColorFromPalette(p5.random(0, 1));
         }
       },
       draw: function ({isPeak}) {
@@ -193,7 +228,7 @@ module.exports = class Effects {
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
@@ -216,7 +251,7 @@ module.exports = class Effects {
         p5.noFill();
         p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(colorFromHue((this.hue + i * 10) % 360));
+          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.ellipse(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
@@ -261,7 +296,10 @@ module.exports = class Effects {
       sparkles: [],
       maxSparkles: 80,
       makeRandomSparkle: function () {
-        return {x: randomNumber(-100, 600),y:randomNumber(0, 400),color: randomColor()};
+        return {
+          x: randomNumber(-100, 600),y:randomNumber(0, 400),
+          color: randomColorFromPalette(),
+        };
       },
       init: function () {
         for (let i=0;i<this.maxSparkles;i++) {
@@ -414,7 +452,7 @@ module.exports = class Effects {
         let r = randomNumber(30,60);
         return {x: randomNumber(0,400),
             y: randomNumber(0,400),
-            color: randomColor(),
+            color: randomColorFromPalette(),
             width: r,
             height: r,
         };
@@ -456,14 +494,14 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       update: function () {
-        this.color=randomNumber(0,359);
+        this.color = randomColorFromPalette();
       },
       draw: function ({isPeak,bpm}) {
         if (isPeak || !this.color) {
           this.update();
         }
         p5.push();
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(this.color);
         p5.translate(200,200);
         let rotation=(bpm/90)*50;
         this.angle-=rotation;
@@ -479,10 +517,13 @@ module.exports = class Effects {
       angle: 0,
       color: null,
       init: function () {
-        this.color=randomNumber(0,359);
+        this.color = 0;
       },
       update: function () {
-        this.color=(this.color+randomNumber(0,20)) % 359;
+        this.color += 0.13;
+        if (this.color > 1) {
+          this.color -= 1;
+        }
       },
       draw: function ({isPeak,bpm}) {
         if (this.color === null) {
@@ -491,7 +532,7 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
-        p5.background(colorFromHue(this.color, 100, 60));
+        p5.background(lerpColorFromPalette(this.color));
         p5.push();
         p5.translate(200,200);
         let rotation=(bpm/90)*200;
@@ -660,9 +701,9 @@ module.exports = class Effects {
           this.init();
         }
 
-        p5.background('#333');
+        p5.background(colorFromPalette(2));
 
-        const ctx = this.shapes._renderer.drawingContext;
+        const ctx = this.shapes.drawingContext;
         ctx.save();
         ctx.beginPath();
         ctx.moveTo(50, 0);
@@ -671,34 +712,34 @@ module.exports = class Effects {
         ctx.clip();
         this.shapes.clear();
         this.shapes.rotate(p5.frameCount);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.rect(20, 20, 50, 50);
-        this.shapes.fill('#082036');
+        this.shapes.fill(colorFromPalette(2));
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(100, 50, 80);
-        this.shapes.fill('#3C565C');
+        this.shapes.fill(colorFromPalette(1));
         this.shapes.ellipse(-50, -50, 50);
-        this.shapes.fill('#CB5612');
+        this.shapes.fill(colorFromPalette(5));
         this.shapes.ellipse(-40, -46, 20);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(-60, 0, -30, -40, -30, 0);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(-45, 0, 40, 300);
         this.shapes.rotate(17);
-        this.shapes.fill('#717171');
+        this.shapes.fill(colorFromPalette(4));
         this.shapes.rect(30, 40, 10, 40);
         this.shapes.rotate(37);
-        this.shapes.fill('#5b2c6e');
+        this.shapes.fill(colorFromPalette(6));
         this.shapes.rect(30, 40, 20, 40);
         this.shapes.rotate(180);
-        this.shapes.fill('#146030');
+        this.shapes.fill(colorFromPalette(0));
         this.shapes.triangle(10, 20, 80, 90, 0, 100);
         this.shapes.translate(20, 0);
         this.shapes.rotate(20);
-        this.shapes.fill('#F0DFA2');
+        this.shapes.fill(colorFromPalette(3));
         this.shapes.rect(0, 0, 20, 200);
         ctx.restore();
 
