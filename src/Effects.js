@@ -1,5 +1,3 @@
-const drawPineapple = require('./drawPineapple');
-
 module.exports = class Effects {
   constructor(p5, alpha, blend) {
     this.blend = blend || p5.BLEND;
@@ -300,6 +298,7 @@ module.exports = class Effects {
           x: randomNumber(25, 375),
           y: randomNumber(25, 375),
           text: text,
+          font: 'Arial',
           color: colorFromHue(hue),
           size: size
         });
@@ -322,6 +321,7 @@ module.exports = class Effects {
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
+          p5.textFont(t.font);
           p5.fill(t.color);
           p5.text(t.text, t.x, t.y);
         });
@@ -431,13 +431,9 @@ module.exports = class Effects {
           this.init();
         }
         p5.strokeWeight(0);
-        // first make a pass and remove items, traversing in reverse so that removals
-        // dont affect traversal
         for (var i=this.splats.length-1;i>=0;i--) {
           if (randomNumber(0,50) === 0) {
-            // remove existing
             this.splats.splice(i, 1);
-            // add new item to end of array, so that it gets rendered above older ones
             this.splats.push(this.randomSplat());
           }
         }
@@ -547,22 +543,25 @@ module.exports = class Effects {
       laser: [],
       draw: function () {
         p5.background('black');
-        if (this.laser.length < 100) {
+        if (this.laser.length < 200) {
           let laser = {
             w: 200,
             x: 200,
             y: 1700,
             z: 400,
             color: randomColor(255,255,255),
-          };
-          this.laser.push(laser);
-        }
+          }
+        };
+        this.laser.push(laser);
         p5.stroke('white');
         p5.line(0,200,400,200);
         this.laser.forEach(laser => {
           p5.push();
-          p5.stroke(laser.color);
-          p5.line(laser.w, laser.x, laser.y, laser.z);
+          p5.translate(this.laser.w, this.laser.x, this.laser.y, this.laser.z);
+          for (let i = 0; i < 1; i++) {
+            p5.stroke(laser.color);
+            p5.line(laser.w, laser.x, laser.y, laser.z);
+          }
           laser.y = laser.y -100;
           p5.pop();
           if (laser.y <= -1400) {
@@ -778,7 +777,6 @@ module.exports = class Effects {
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
           p5.scale(heart.life / 20);
-          p5.drawingContext.globalAlpha - 0.5;
           drawHeart(p5._renderer.drawingContext, heart.color);
           heart.life--;
           if (heart.life < 0) {
@@ -914,7 +912,9 @@ module.exports = class Effects {
           p5.push();
           p5.fill(bubble.color);
           p5.translate(bubble.x, bubble.y);
-          p5.ellipse(0, 0, bubble.size, bubble.size);
+          for (let i = 0; i < 1; i++) {
+            p5.ellipse(0, 0, bubble.size, bubble.size);
+          }
           let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
           bubble.y -= fallSpeed;
           bubble.x += bubble.velocityX;
@@ -994,13 +994,15 @@ module.exports = class Effects {
       pizza: [],
       draw: function () {
         p5.background('black');
-        let pizza = {
-          x: 200,
-          y: 200,
-          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-          size: 0.1,
-        };
-        this.pizza.push(pizza);
+        for (let i = 0; i < 1; i ++) {
+          let pizza = {
+            x: 200,
+            y: 200,
+            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+            size: 0.1,
+          };
+          this.pizza.push(pizza);
+        }
         p5.noStroke();
         this.pizza.forEach(function (pizza){
           p5.push();
@@ -1025,13 +1027,15 @@ module.exports = class Effects {
       smile: [],
       draw: function () {
         p5.background("#D3D3D3");
-        let smile = {
-          x: 200,
-          y: 200,
-          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-          size: 0.1,
-        };
-        this.smile.push(smile);
+        for (let i = 0; i < 1; i ++) {
+          let smile = {
+            x: 200,
+            y: 200,
+            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+            size: 0.1,
+          };
+          this.smile.push(smile);
+        }
         p5.noStroke();
         this.smile.forEach(function (smile){
           p5.push();
@@ -1060,9 +1064,7 @@ module.exports = class Effects {
           y: -10,
           velocityX: p5.random(-2, 2),
           size: p5.random(6, 12, 18),
-          // https://github.com/Automattic/node-canvas/issues/702
-          // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
-          spin: 1,
+          spin: 0,
           color: randomColor(255, 255, 100),
         };
         this.confetti.push(confetti);
@@ -1125,6 +1127,146 @@ module.exports = class Effects {
           }
           p5.pop();
         }
+      }
+    };
+
+    this.fireworks = {
+      particles:[],
+      minExplosion:20,
+      maxExplosion:50,
+      minPotential:200,
+      maxPotential:300,
+      enableTracers:true,
+      buffer:null,
+
+      makeParticle: function (type, pos, vel, color, potential) {
+        return  {
+          type:type,
+          pos:pos,
+          vel:vel,
+          gravity: p5.createVector(0.0, 0.1),
+          potential:potential,
+          acc:p5.createVector(0, 0),
+          color:color,
+          update: function () {
+            this.acc.add(this.gravity);
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0, 0);
+          },
+        };
+      },
+
+      draw: function () {
+        if (this.buffer === null) {
+          this.buffer = p5;
+          // We get the tracer effect by writing frames to a
+          // offscreen buffer that has a transparent background
+          if (this.enableTracers) {
+            this.buffer = p5.createGraphics(p5.width, p5.height);
+            this.buffer.pixelDensity(1);
+          }
+        }
+
+        p5.background(0);
+
+        // if we are using the offscreen buffer, use a transparent background
+        if (this.buffer !== p5) {
+          this.buffer.background(0, 25);
+        }
+
+        p5.push();
+        this.drawParticles();
+
+        // if we are drawing to offscreen buffer, copy it to the canvas
+        if (this.buffer !== p5) {
+          p5.image(this.buffer);
+        }
+
+        p5.pop();
+
+        this.particles = this.nextParticles();
+      },
+
+      drawParticles: function () {
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+          p.update();
+
+          this.buffer.push();
+          if (p.type === "rocket") {
+            this.buffer.strokeWeight(3);
+            this.buffer.stroke(p.color);
+            this.buffer.point(p.pos.x, p.pos.y);
+          } else if (p.type === "particle") {
+            this.buffer.translate(p.pos.x, p.pos.y);
+            drawSparkle(this.buffer._renderer.drawingContext, p.color);
+          }
+          this.buffer.pop();
+        }
+      },
+
+      nextParticles: function () {
+        let ret = [];
+
+        // total potential is the number of particles active, or the number represented
+        // in unexploded rockets. This is how we manage total number of objects
+        var totalPotential = 0;
+        for (var i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+
+          if (p.type === "rocket") {
+            // explode a rocket when it reaches it peak height
+            if (p.vel.y <= 0) {
+              ret.push(p);
+            } else {
+              ret = ret.concat(this.explode(p));
+            }
+
+            // the rocket exploded to its potential or its still waiting
+            totalPotential += p.potential;
+          } else if (p.type === "particle") {
+
+            // remove things when they leave the window, except allow particles
+            // to fall back down into the view from above
+            if (p.pos.x > 0 && p.pos.x < p5.width && p.pos.y < p5.height) {
+              ret.push(p);
+              totalPotential += p.potential;
+            }
+          }
+        }
+
+        // make sure the total potential for particles is between the min and max potential
+        if (totalPotential < this.minPotential) {
+
+          // fire rockets until we fill the potential
+          while (totalPotential < this.maxPotential) {
+            let p = this.makeParticle(
+              "rocket",
+              p5.createVector(randomNumber(0, p5.height), p5.width),
+              p5.createVector(0, p5.random(-9, -7)),
+              randomColor(),
+              p5.random(this.minExplosion, this.maxExplosion),
+            );
+            totalPotential += p.potential;
+            ret.push(p);
+          }
+        }
+        return ret;
+      },
+
+      explode: function (p) {
+        let ret = [];
+        for (var i = 0; i < p.potential; i++) {
+          ret.push(this.makeParticle(
+            "particle",
+            p5.createVector(p.pos.x, p.pos.y),
+            p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
+            p.color,
+            1,
+          ));
+        }
+        return ret;
       }
     };
   }
@@ -1521,6 +1663,265 @@ function drawMusicNote(ctx) {
   ctx.quadraticCurveTo(5.5,0.75,5.5,0.5);
   ctx.lineTo(5.5,0.5);
   ctx.quadraticCurveTo(5.5,0.25,5.75,0.25);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawPineapple(ctx) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 0, 0, 0)";
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(10,0);
+  ctx.lineTo(10,18);
+  ctx.lineTo(0,18);
+  ctx.closePath();
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(0,0,0,0)';
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
+  ctx.miterLimit = 4;
+  ctx.save();
+  ctx.fillStyle = "#30b1ad";
+  ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(6.118,2.025);
+  ctx.lineTo(6.205,2.025);
+  ctx.bezierCurveTo(7.043,1.6269999999999998,7.965,1.6749999999999998,7.965,1.6749999999999998);
+  ctx.bezierCurveTo(7.965,1.6749999999999998,8.015,2.705,7.545,3.58);
+  ctx.bezierCurveTo(8.532,3.535,9.36,3.8040000000000003,9.36,3.8040000000000003);
+  ctx.bezierCurveTo(9.36,3.8040000000000003,8.921999999999999,5.834,7.438999999999999,6.692);
+  ctx.bezierCurveTo(6.664999999999999,7.139,5.7589999999999995,7.179,5.0699999999999985,7.115);
+  ctx.bezierCurveTo(4.379999999999999,7.179,3.4749999999999988,7.139,2.6999999999999984,6.692);
+  ctx.bezierCurveTo(1.219,5.834,0.78,3.804,0.78,3.804);
+  ctx.bezierCurveTo(0.78,3.804,1.476,3.577,2.3529999999999998,3.574);
+  ctx.bezierCurveTo(1.8859999999999997,2.6999999999999997,1.9359999999999997,1.674,1.9359999999999997,1.674);
+  ctx.bezierCurveTo(1.9359999999999997,1.674,2.8579999999999997,1.627,3.6959999999999997,2.025);
+  ctx.lineTo(3.8289999999999997,2.025);
+  ctx.bezierCurveTo(4.009,0.878,4.97,0,4.97,0);
+  ctx.bezierCurveTo(4.97,0,5.935,0.878,6.117,2.025);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#febe40";
+  ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(5.0009999999999994,5.112);
+  ctx.lineTo(5,5.112);
+  ctx.quadraticCurveTo(9.991,5.112,9.991,10.103);
+  ctx.lineTo(9.991,13.008000000000003);
+  ctx.quadraticCurveTo(9.991,17.999000000000002,5,17.999000000000002);
+  ctx.lineTo(5.0009999999999994,17.999000000000002);
+  ctx.quadraticCurveTo(0.01,17.999000000000002,0.01,13.008000000000003);
+  ctx.lineTo(0.01,10.103);
+  ctx.quadraticCurveTo(0.01,5.112,5.0009999999999994,5.112);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.fillStyle = "#ea676c";
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(5.15,5.114);
+  ctx.lineTo(5,5.264);
+  ctx.lineTo(4.85,5.114);
+  ctx.translate(5.002690755648705,10.131677304604136);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.02,-1.6012175039698011,-1.7465383666653929,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-5.002690755648705,-10.131677304604136);
+  ctx.lineTo(4.601,5.667);
+  ctx.lineTo(3.502,6.774);
+  ctx.lineTo(2.5109999999999997,5.775);
+  ctx.bezierCurveTo(2.3429999999999995,5.872000000000001,2.1809999999999996,5.978000000000001,2.0269999999999997,6.0920000000000005);
+  ctx.lineTo(3.1029999999999998,7.176);
+  ctx.lineTo(2.0029999999999997,8.283);
+  ctx.lineTo(0.9329999999999996,7.204);
+  ctx.translate(5.005381201350355,10.113593846379288);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.005,-2.5212212082045737,-2.6374742136776317,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-5.005381201350355,-10.113593846379288);
+  ctx.lineTo(1.6039999999999996,8.686);
+  ctx.lineTo(0.505,9.791);
+  ctx.lineTo(0.06,9.344);
+  ctx.translate(5.036942890530307,10.112983396699716);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.036,-2.9882956875133275,-3.136830245456489,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-5.036942890530307,-10.112983396699716);
+  ctx.lineTo(0.106,10.194999999999999);
+  ctx.lineTo(0,10.3);
+  ctx.lineTo(0,11.105);
+  ctx.lineTo(0.504,10.597000000000001);
+  ctx.lineTo(1.603,11.704);
+  ctx.lineTo(0.5029999999999999,12.811);
+  ctx.lineTo(-1.1102230246251565e-16,12.303);
+  ctx.lineTo(-1.1102230246251565e-16,13);
+  ctx.lineTo(0.000999999999999889,13.11);
+  ctx.lineTo(0.10499999999999989,13.014999999999999);
+  ctx.lineTo(0.2009999999999999,NaN);
+  ctx.lineTo(5.201,NaN);
+  ctx.lineTo(5.201,NaN);
+  ctx.lineTo(5.201,NaN);
+  ctx.lineTo(5.911,NaN);
+  ctx.lineTo(6.311,NaN);
+  ctx.lineTo(7.411,NaN);
+  ctx.lineTo(6.537,NaN);
+  ctx.bezierCurveTo(6.637,NaN,6.86,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.bezierCurveTo(NaN,NaN,NaN,NaN,NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.translate(NaN,NaN);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.034,NaN,NaN,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.lineTo(NaN,NaN);
+  ctx.translate(NaN,NaN);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.003,NaN,NaN,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(NaN,NaN);
+  ctx.lineTo(7.997,8.284);
+  ctx.lineTo(6.897,7.176);
+  ctx.lineTo(7.973000000000001,6.0920000000000005);
+  ctx.translate(4.991692715388204,10.115912384076054);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.008,-0.9331462104022887,-1.0487400123729822,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-4.991692715388204,-10.115912384076054);
+  ctx.lineTo(6.497000000000001,6.774);
+  ctx.lineTo(5.4,5.667);
+  ctx.lineTo(5.875,5.188);
+  ctx.translate(5.004208587093346,10.130882085909802);
+  ctx.rotate(0);
+  ctx.scale(1,1);
+  ctx.arc(0,0,5.019,-1.3964148923220492,-1.5417443396750217,1);
+  ctx.scale(1,1);
+  ctx.rotate(0);
+  ctx.translate(-5.004208587093346,-10.130882085909802);
+  ctx.closePath();
+  ctx.moveTo(3.902,7.176);
+  ctx.lineTo(5,6.07);
+  ctx.lineTo(6.1,7.176);
+  ctx.lineTo(5,8.283);
+  ctx.lineTo(3.902,7.176);
+  ctx.closePath();
+  ctx.moveTo(5.4,8.685);
+  ctx.lineTo(6.498,7.579000000000001);
+  ctx.lineTo(7.598000000000001,8.686);
+  ctx.lineTo(6.5,9.793);
+  ctx.lineTo(5.4,8.685);
+  ctx.closePath();
+  ctx.moveTo(6.9,10.195);
+  ctx.lineTo(7.997,9.09);
+  ctx.lineTo(9.095,10.196);
+  ctx.lineTo(7.997000000000001,11.302999999999999);
+  ctx.lineTo(6.898000000000001,10.196);
+  ctx.closePath();
+  ctx.moveTo(2.0010000000000003,11.302);
+  ctx.lineTo(0.905,10.195);
+  ctx.lineTo(2.004,9.088000000000001);
+  ctx.lineTo(3.1020000000000003,10.194);
+  ctx.lineTo(2.003,11.301);
+  ctx.closePath();
+  ctx.moveTo(3.5020000000000002,9.791);
+  ctx.lineTo(2.403,8.686);
+  ctx.lineTo(3.503,7.58);
+  ctx.lineTo(4.6,8.685);
+  ctx.lineTo(3.5,9.792);
+  ctx.closePath();
+  ctx.moveTo(3.9,10.195);
+  ctx.lineTo(5,9.087);
+  ctx.lineTo(6.1,10.195);
+  ctx.lineTo(5.0009999999999994,11.302);
+  ctx.lineTo(3.9009999999999994,10.193999999999999);
+  ctx.closePath();
+  ctx.moveTo(5.3999999999999995,11.703999999999999);
+  ctx.lineTo(6.5,10.599);
+  ctx.lineTo(7.598,11.705);
+  ctx.lineTo(6.499,12.812);
+  ctx.lineTo(5.401,11.706);
+  ctx.closePath();
+  ctx.moveTo(6.899,13.216);
+  ctx.lineTo(7.998,12.109);
+  ctx.lineTo(9.097,13.216);
+  ctx.lineTo(7.997,14.322);
+  ctx.lineTo(6.9,13.213);
+  ctx.closePath();
+  ctx.moveTo(6.5,13.614999999999998);
+  ctx.lineTo(7.599,14.721999999999998);
+  ctx.lineTo(6.5,15.828999999999997);
+  ctx.lineTo(5.4,14.723);
+  ctx.lineTo(6.5,13.616000000000001);
+  ctx.closePath();
+  ctx.moveTo(5.002,15.126000000000001);
+  ctx.lineTo(6.1,16.231);
+  ctx.lineTo(5,17.34);
+  ctx.lineTo(3.902,16.233);
+  ctx.lineTo(5,15.125);
+  ctx.closePath();
+  ctx.moveTo(4.6,14.722);
+  ctx.lineTo(3.502,15.83);
+  ctx.lineTo(2.404,14.723);
+  ctx.lineTo(3.503,13.616000000000001);
+  ctx.lineTo(4.6,14.723);
+  ctx.closePath();
+  ctx.moveTo(3.1019999999999994,13.214);
+  ctx.lineTo(2.0029999999999992,14.321);
+  ctx.lineTo(0.9029999999999991,13.213);
+  ctx.lineTo(2.0029999999999992,12.106);
+  ctx.lineTo(3.1029999999999993,13.214);
+  ctx.closePath();
+  ctx.moveTo(3.5029999999999992,12.812000000000001);
+  ctx.lineTo(2.402999999999999,11.704);
+  ctx.lineTo(3.501999999999999,10.597000000000001);
+  ctx.lineTo(4.6019999999999985,11.705000000000002);
+  ctx.lineTo(3.5019999999999984,12.812000000000001);
+  ctx.closePath();
+  ctx.moveTo(3.9019999999999984,13.214);
+  ctx.lineTo(5,12.107);
+  ctx.lineTo(6.1,13.214);
+  ctx.lineTo(5,14.32);
+  ctx.lineTo(3.902,13.214);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
