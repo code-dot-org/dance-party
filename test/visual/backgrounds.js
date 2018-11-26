@@ -61,13 +61,12 @@ async function testBackground(t, effect) {
   //'pineapples', temporarily removed
   //'pizzas', temporarily removed
   //'kaleidoscope', temporarily removed
-  'falling_poop',
-  'hearts',
-  'falling_rainbows',
+  'smiling_poop',
+  'hearts_red',
+  'floating_rainbows',
   'bubbles',
   'stars',
-  'starspace',
-  'strobe_lights',
+  'galaxy',
   'confetti',
   'music_notes'
 ].forEach(effect => {
