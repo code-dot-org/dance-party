@@ -798,7 +798,6 @@ module.exports = class Effects {
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
           p5.scale(poop.life / 20);
-          p5.drawingContext.globalAlpha - 0.5;
           drawPoop(p5._renderer.drawingContext);
           poop.life--;
           if (poop.life < 0) {
@@ -834,7 +833,6 @@ module.exports = class Effects {
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
           p5.scale(heart.life / 20);
-          p5.drawingContext.globalAlpha - 0.5;
           drawHeart(p5._renderer.drawingContext, heart.color);
           heart.life--;
           if (heart.life < 0) {
@@ -870,7 +868,6 @@ module.exports = class Effects {
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
           p5.scale(heart.life / 20);
-          p5.drawingContext.globalAlpha - 0.5;
           drawHeart(p5._renderer.drawingContext, heart.color);
           heart.life--;
           if (heart.life < 0) {
