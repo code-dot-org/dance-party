@@ -289,7 +289,6 @@ module.exports = class Effects {
         }
         p5.strokeWeight(3);
         p5.stroke(this.color);
-        p5.push();
         for (let i = 0; i < this.drops.length; i++) {
           p5.push();
           p5.translate(this.drops[i].x - 20, this.drops[i].y - 20);
@@ -298,7 +297,6 @@ module.exports = class Effects {
           this.drops[i].y = (this.drops[i].y + this.drops[i].length) % 420;
           this.drops[i].x = (this.drops[i].x + (this.drops[i].length / 2)) % 420;
         }
-        p5.pop();
       }
     };
 
