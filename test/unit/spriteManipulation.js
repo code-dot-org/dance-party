@@ -6,7 +6,7 @@ const UnitTestResourceLoader = require('../helpers/UnitTestResourceLoader');
 
 test('Sprite dance decrements and loops for prev dance', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -38,7 +38,7 @@ test('Sprite dance decrements and loops for prev dance', async t => {
 
 test('Sprite dance increments by one and loops for next dance', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -75,7 +75,7 @@ test('Sprite dance increments by one and loops for next dance', async t => {
 
 test('Sprite dance changes to a new dance for random', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
 
@@ -106,7 +106,7 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
 
   const subTest = async testCode => {
     const nativeAPI = await helpers.createDanceAPI();
-    await nativeAPI.play({
+    nativeAPI.play({
       bpm: 120,
     });
 
@@ -184,7 +184,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     const nativeAPI = await helpers.createDanceAPI({
       spriteConfig: world => world.MOVE_NAMES = []
     });
-    await nativeAPI.play({
+    nativeAPI.play({
       bpm: 120,
     });
 
@@ -394,7 +394,7 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
 
   const subTest = async ({ moveCount = 3, shortMoveCount = 1, testCode }) => {
     const nativeAPI = await helpers.createDanceAPI();
-    await nativeAPI.play({
+    nativeAPI.play({
       bpm: 120,
     });
 
@@ -461,7 +461,7 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
 
 test('getCurrentDance returns current move value for initialized sprite and undefined for uninitialized sprite', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -488,7 +488,7 @@ test('getCurrentDance returns current move value for initialized sprite and unde
 
 test('setProp and getProp changes and retrieves sprite scale properties based on given values', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -509,7 +509,7 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
 
 test('setPropRandom set sprite y properties between 50 and 350', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -536,7 +536,7 @@ test('p5 fixedSpriteAnimationSizes is true', async t => {
 
 test('changing width and height accounted for during p5 draw', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
@@ -566,7 +566,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     const nativeAPI = await helpers.createDanceAPI({
       spriteConfig: world => world.MOVE_NAMES = []
     });
-    await nativeAPI.play({
+    nativeAPI.play({
       bpm: 120,
     });
 
@@ -629,7 +629,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
 
 test('startMapping/stopMapping adds and removes behaviors', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  await nativeAPI.play({
+  nativeAPI.play({
     bpm: 120,
   });
   nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
