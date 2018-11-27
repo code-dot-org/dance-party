@@ -1,5 +1,5 @@
 const helpers = require('../helpers/createDanceAPI');
-const test = require('tape-async');
+const test = require('tape');
 
 test('changing dance moves for all updates all dancers', async t => {
   const nativeAPI = await helpers.createDanceAPI();

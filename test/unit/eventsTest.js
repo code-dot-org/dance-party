@@ -3,7 +3,7 @@ const path = require('path');
 const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
 const injectInterpreted = require('../helpers/injectInterpreted');
 
-const test = require('tape-async');
+const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
 async function runUserCode(userCode) {

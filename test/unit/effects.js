@@ -1,4 +1,4 @@
-const test = require('tape-async');
+const test = require('tape');
 const sinon = require('sinon');
 const helpers = require('../helpers/createDanceAPI');
 

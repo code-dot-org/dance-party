@@ -1,4 +1,4 @@
-const test = require('tape-async');
+const test = require('tape');
 const modifySongData = require('../../src/modifySongData');
 const songData = require('../../metadata/jazzy_beats.json');
 

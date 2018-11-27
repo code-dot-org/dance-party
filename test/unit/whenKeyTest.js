@@ -1,4 +1,4 @@
-const test = require('tape-async');
+const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
 test('make sure we are checking all relevant keys', async t => {

@@ -1,4 +1,4 @@
-const test = require('tape-async');
+const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
 test('addCues sorts measures and seconds cues', async t => {

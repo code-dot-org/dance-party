@@ -1,5 +1,5 @@
 const helpers = require('../helpers/createDanceAPI');
-const test = require('tape-async');
+const test = require('tape');
 
 const minX = 20;
 const maxX = 400 - minX;

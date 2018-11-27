@@ -1,4 +1,4 @@
-const test = require('tape-async');
+const test = require('tape');
 const helpers = require('../helpers/createDanceAPI');
 
 test('setBackground clears the bgEffect and sets background_color', async t => {
