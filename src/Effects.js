@@ -972,7 +972,6 @@ module.exports = class Effects {
           // offscreen buffer that has a transparent background
           if (this.enableTracers) {
             this.buffer = p5.createGraphics(p5.width, p5.height);
-            this.buffer.pixelDensity(1);
           }
         }
 
@@ -988,7 +987,8 @@ module.exports = class Effects {
 
         // if we are drawing to offscreen buffer, copy it to the canvas
         if (this.buffer !== p5) {
-          p5.image(this.buffer);
+          p5.scale(1 / p5.pixelDensity());
+          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
         }
 
         p5.pop();
