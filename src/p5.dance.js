@@ -138,45 +138,51 @@ module.exports = class DanceParty {
     this.p5_.remove();
   }
 
-  loadSprites(animationData, spriteNames) {
-    const promises = [];
-    spriteNames.forEach(costume => {
-      if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
-        // Already loaded, nothing to do:
-        return;
-      }
-      // We have found a new sprite to load, reset allSpritesLoaded to false
-      this.allSpritesLoaded = false;
+  /**
+   * Make sure the requested costume-move animations are loaded and ready to use.
+   *
+   * This should always be called before play().
+   *
+   * @param {Array.<string>} costumeNames to load - if omitted, all costumes
+   *   will be loaded.
+   * @returns {Promise} resolved when the requested costumes are loaded and
+   *   ready to use.
+   */
+  async ensureSpritesAreLoaded(costumeNames = this.world.SPRITE_NAMES) {
+    this.allSpritesLoaded = false;
+    const animationData = await this.resourceLoader_.getAnimationData();
+    await Promise.all(costumeNames.map((costume) => {
       const costumeData = animationData[costume.toLowerCase()];
-      this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
-        const moveData = costumeData[moveName.toLowerCase()];
-
-        const loadSpriteSheetAndSetAnimation = async () => {
-          const spriteSheet = await this.resourceLoader_.loadSpriteSheet(
-            moveData.spritesheet,
-            moveData.frames,
-          );
-          const animation = this.p5_.loadAnimation(spriteSheet);
-          this.setAnimationSpriteSheet(
-            costume,
-            moveIndex,
-            spriteSheet,
-            mirror,
-            animation
-          );
-        };
-        promises.push(loadSpriteSheetAndSetAnimation());
-      });
-    });
-    return Promise.all(promises).then(() => {
-      this.allSpritesLoaded = true;
-    });
+      return this.loadCostumeAnimations(costume, costumeData);
+    }));
+    this.allSpritesLoaded = true;
   }
 
-  async ensureSpritesAreLoaded(spriteNames) {
-    spriteNames = spriteNames || this.world.SPRITE_NAMES;
-    const animationData = await this.resourceLoader_.getAnimationData();
-    await this.loadSprites(animationData, spriteNames);
+  async loadCostumeAnimations(costume, costumeData) {
+    if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
+      // Already loaded, nothing to do:
+      return;
+    }
+
+    await Promise.all(this.world.MOVE_NAMES.map(({name: moveName, mirror}, moveIndex) => {
+      const moveData = costumeData[moveName.toLowerCase()];
+      return this.loadMoveAnimation(
+        costume,
+        Object.assign({moveName, moveIndex, mirror}, moveData)
+      );
+    }));
+  }
+
+  async loadMoveAnimation(costume, {moveName, moveIndex, spritesheet, frames, mirror}) {
+    const spriteSheet = await this.resourceLoader_.loadSpriteSheet(spritesheet, frames);
+    const animation = this.p5_.loadAnimation(spriteSheet);
+    this.setAnimationSpriteSheet(
+      costume,
+      moveIndex,
+      spriteSheet,
+      mirror,
+      animation
+    );
   }
 
   onKeyDown(keyCode) {
