@@ -98,9 +98,6 @@ test('color_lights foreground effect updates with specified effect', async t => 
   t.equal(nativeAPI.world.fg_effect, null);
 
   nativeAPI.setForegroundEffect('color_lights');
-
-  t.deepEqual(nativeAPI.getForegroundEffect().lights, []);
-  nativeAPI.getForegroundEffect().init();
   t.equal(nativeAPI.getForegroundEffect().lights.length, 4);
 
   t.end();
