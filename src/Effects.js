@@ -103,7 +103,7 @@ module.exports = class Effects {
         p5.background("#9370DB");
         p5.noStroke();
 
-        this.stars.forEach(star => {
+        for (const star of this.stars) {
           const distanceFromCenter = 200 - star.x;
           const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 4);
           p5.push();
@@ -119,7 +119,7 @@ module.exports = class Effects {
           if (star.x < 0) {
             star.x = 400;
           }
-        });
+        }
 
         p5.noiseDetail(50, .5);
         const step = 20;
@@ -612,16 +612,14 @@ module.exports = class Effects {
         }
         p5.stroke('white');
         p5.line(0,200,400,200);
-        this.laser.forEach(laser => {
-          p5.push();
+        for (const laser of this.laser) {
           p5.stroke(laser.color);
           p5.line(laser.w, laser.x, laser.y, laser.z);
           laser.y = laser.y -100;
-          p5.pop();
           if (laser.y <= -1400) {
             laser.y = 1700;
           }
-        });
+        }
       }
     };
 
