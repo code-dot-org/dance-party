@@ -586,6 +586,7 @@ module.exports = class Effects {
         }
         p5.push();
         p5.noFill();
+        p5.stroke('#000');
         p5.strokeWeight(600);
         this.x+=this.dx+randomNumber(-1,1);
         this.y+=this.dy+randomNumber(-1,1);
