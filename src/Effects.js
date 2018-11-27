@@ -1,4 +1,4 @@
-const drawPineapple = require('./drawPineapple');
+const drawPineapple = require('./shapes/pineapple');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
