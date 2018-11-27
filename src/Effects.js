@@ -788,9 +788,8 @@ module.exports = class Effects {
         if (this.poopList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.poopList.length; i++) {
+        for (const poop of this.poopList) {
           p5.push();
-          const poop = this.poopList[i];
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
           p5.scale(poop.life / 20);
