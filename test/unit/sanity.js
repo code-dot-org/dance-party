@@ -15,12 +15,11 @@ test('sanity', async t => {
 });
 
 test('i18n', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading({
+  const nativeAPI = await helpers.createDanceAPI({
     i18n: {
       measure: () => 'hello'
     },
   });
-  await nativeAPI.ensureSpritesAreLoaded();
 
   const clock = sinon.useFakeTimers(Date.now());
   nativeAPI.play({

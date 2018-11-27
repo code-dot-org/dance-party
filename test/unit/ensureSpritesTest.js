@@ -1,9 +1,20 @@
 const test = require('tape');
-const helpers = require('../helpers/createDanceAPI');
+const UnitTestResourceLoader = require('../helpers/UnitTestResourceLoader');
+const DanceParty = require('../../src/p5.dance');
 const constants = require('../../src/constants');
 
+function createDanceAPIWithoutLoading() {
+  return new Promise(resolve => {
+    new DanceParty({
+      playSound: (url, callback) => callback(),
+      onInit: nativeAPI => resolve(nativeAPI),
+      resourceLoader: new UnitTestResourceLoader(),
+    });
+  });
+}
+
 test('ensureSpritesAreLoaded sanity test', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded();
@@ -24,7 +35,7 @@ test('ensureSpritesAreLoaded sanity test', async t => {
 });
 
 test('Calling play without awaiting ensureSpritesAreLoaded should throw test', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
 
   nativeAPI.ensureSpritesAreLoaded();
   // This should fail since we didn't wait for the promise!
@@ -44,7 +55,7 @@ test('Calling play without awaiting ensureSpritesAreLoaded should throw test', a
 
 
 test('Calling play without calling ensureSpritesAreLoaded should throw test', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
 
   // This should fail since we didn't call ensureSpritesAreLoaded() before play()
   let error = null;
@@ -62,7 +73,7 @@ test('Calling play without calling ensureSpritesAreLoaded should throw test', as
 });
 
 test('ensureSpritesAreLoaded with filtered sprite list', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded(["CAT"]);
@@ -83,7 +94,7 @@ test('ensureSpritesAreLoaded with filtered sprite list', async t => {
 });
 
 test('ensureSpritesAreLoaded can be called multiple times and they are additive', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   nativeAPI.ensureSpritesAreLoaded(["CAT"]);
@@ -108,7 +119,7 @@ test('ensureSpritesAreLoaded can be called multiple times and they are additive'
 
 
 test('ensureSpritesAreLoaded can be called multiple times after play/reset', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await createDanceAPIWithoutLoading();
   const testInterface = nativeAPI.getTestInterface();
 
   await nativeAPI.ensureSpritesAreLoaded(["CAT"]);

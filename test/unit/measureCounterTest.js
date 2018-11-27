@@ -3,9 +3,8 @@ const helpers = require('../helpers/createDanceAPI');
 const sinon = require('sinon');
 
 test('Shows 0 for current measure when current measure is negative', async t => {
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading();
+  const nativeAPI = await helpers.createDanceAPI();
   sinon.stub(nativeAPI.p5_, 'text');
-  await nativeAPI.ensureSpritesAreLoaded();
 
   const clock = sinon.useFakeTimers(Date.now());
 
@@ -22,7 +21,7 @@ test('Shows 0 for current measure when current measure is negative', async t => 
   t.equal(nativeAPI.p5_.text.callCount, 0);
   t.equal(nativeAPI.getCurrentMeasure(), -1);
 
-  // // Advance one measure
+  // Advance one measure
   clock.tick(2000);
 
   // text() draw call still doesn't display measure text

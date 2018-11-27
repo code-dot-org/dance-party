@@ -369,12 +369,10 @@ test('Sprite doMove rand will choose short burst', async t => {
     },
   ];
 
-  const nativeAPI = await helpers.createDanceAPIWithoutLoading({
+  const nativeAPI = await helpers.createDanceAPI({
     spriteConfig: world => { world.MOVE_NAMES = moveNamesOneFullLengthOneShortBurst; },
     resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNamesOneFullLengthOneShortBurst),
   });
-
-  await nativeAPI.ensureSpritesAreLoaded();
 
   nativeAPI.p5_.noLoop();
 
