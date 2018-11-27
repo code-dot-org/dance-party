@@ -24,13 +24,7 @@ module.exports = class UnitTestResourceLoader {
     callback(data);
   }
 
-  loadSpriteSheet(baseName, frameData) {
-    return new Promise(resolve => {
-      const image = new Image();
-      const sheet = this.p5_.loadSpriteSheet(image, frameData);
-      setTimeout(() => {
-        resolve(sheet);
-      }, 0);
-    });
+  async loadSpriteSheet(baseName, frameData) {
+    return this.p5_.loadSpriteSheet(new Image(), frameData);
   }
 };
