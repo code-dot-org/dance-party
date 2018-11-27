@@ -17,18 +17,16 @@ module.exports = class ResourceLoader {
     this.p5_ = p5;
   }
 
-  getAnimationData(callback) {
+  async getAnimationData() {
     // This function caches the animation data so multiple calls will not
     // result in multiple network requests. The animation data is presumed
     // to be fixed for the lifetime of the application.
-    if (this.animationData_) {
-      callback(this.animationData_);
-      return;
+    if (!this.animationData_) {
+      this.animationData_ = await new Promise((resolve, reject) => {
+        this.p5_.loadJSON(`${this.assetBase_}characters.json`, resolve, reject);
+      });
     }
-    this.p5_.loadJSON(`${this.assetBase_}characters.json`, (json) => {
-      this.animationData_ = json;
-      callback(this.animationData_);
-    });
+    return this.animationData_;
   }
 
   /**

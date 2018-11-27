@@ -183,10 +183,9 @@ module.exports = class DanceParty {
     }
 
     this.lastEnsureSpritesPromise_ = new Promise(async (resolveAllSpritesLoaded) => {
-      this.resourceLoader_.getAnimationData(async (animationData) => {
-        await this.loadSprites(animationData, spriteNames);
-        resolveAllSpritesLoaded();
-      });
+      const animationData = await this.resourceLoader_.getAnimationData();
+      await this.loadSprites(animationData, spriteNames);
+      resolveAllSpritesLoaded();
     });
 
     return this.lastEnsureSpritesPromise_;
