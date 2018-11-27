@@ -284,6 +284,10 @@ module.exports = class DanceParty {
 
   setForegroundEffect(effect) {
     this.world.fg_effect = effect;
+
+    if (this.fgEffects_[effect].init) {
+      this.fgEffects_[effect].init();
+    }
   }
 
   //
