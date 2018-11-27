@@ -711,8 +711,8 @@ test('startMapping results in sprite properties being updated', async t => {
 
   setTimeout(() => {
     // x and y position is relative to initial position
-    t.equal(sprite.x, initials.x - 150);
-    t.equal(sprite.y, initials.y + 150);
+    t.equal(sprite.x, initials.x - 100);
+    t.equal(sprite.y, initials.y + 100);
 
     t.equal(sprite2.scale, initials.scale * 0.5);
     // sprite2.width should be effectively 1, but not necessarily exactly due to
@@ -720,7 +720,7 @@ test('startMapping results in sprite properties being updated', async t => {
     t.ok(Math.abs(sprite2.width - initials.width) < 1/255);
     t.equal(sprite2.height, initials.height * 1.5);
 
-    t.equal(sprite3.rotation, initials.rotation - 90);
+    t.equal(sprite3.rotation, initials.rotation - 60);
 
     // tint is still absolute (not relative)
     t.equal(sprite3.tint, 'hsb(360,100%,100%)');
