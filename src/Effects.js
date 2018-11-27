@@ -822,9 +822,8 @@ module.exports = class Effects {
         if (this.heartList.length < 1) {
           this.init();
         }
-        for (let i = 0; i < this.heartList.length; i++) {
+        for (const heart of this.heartList) {
           p5.push();
-          const heart = this.heartList[i];
           p5.translate(heart.x, heart.y);
           p5.rotate(heart.rot);
           p5.scale(heart.life / 20);
