@@ -175,20 +175,8 @@ module.exports = class DanceParty {
 
   async ensureSpritesAreLoaded(spriteNames) {
     spriteNames = spriteNames || this.world.SPRITE_NAMES;
-
-    if (this.lastEnsureSpritesPromise_) {
-      // If we are still waiting for a previous call to ensureSpritesAreLoaded()
-      // to complete, wait for that here and then continue:
-      await this.lastEnsureSpritesPromise_;
-    }
-
-    this.lastEnsureSpritesPromise_ = new Promise(async (resolveAllSpritesLoaded) => {
-      const animationData = await this.resourceLoader_.getAnimationData();
-      await this.loadSprites(animationData, spriteNames);
-      resolveAllSpritesLoaded();
-    });
-
-    return this.lastEnsureSpritesPromise_;
+    const animationData = await this.resourceLoader_.getAnimationData();
+    await this.loadSprites(animationData, spriteNames);
   }
 
   onKeyDown(keyCode) {
