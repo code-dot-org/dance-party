@@ -918,11 +918,11 @@ module.exports = class DanceParty {
     const behavior = new Behavior(sprite => {
       let energy = this.getEnergy(range);
       if (property === "x" || property === "y") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 150, initialValue + 150));
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 100, initialValue + 100));
       } else if (property === "scale" || property === "width" || property === "height") {
         energy = this.p5_.map(energy, 0, 255, initialValue * 0.5, initialValue * 1.5);
       } else if (property === "rotation") {
-        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 90, initialValue + 90));
+        energy = Math.round(this.p5_.map(energy, 0, 255, initialValue - 60, initialValue + 60));
       } else if (property === "tint") {
         energy = Math.round(this.p5_.map(energy, 0, 255, 0, 360));
         energy = "hsb(" + energy + ",100%,100%)";
