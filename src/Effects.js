@@ -88,6 +88,9 @@ module.exports = class Effects {
         p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
       },
       init: function () {
+        if (this.stars.length) {
+          return;
+        }
         for (let i = 0; i < 75; i++) {
           this.stars.push({
             x: p5.random(0, 400),
@@ -97,9 +100,6 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        if (this.stars.length === 0) {
-          this.init();
-        }
         p5.background("#9370DB");
         p5.noStroke();
 
@@ -186,6 +186,9 @@ module.exports = class Effects {
       minColorChangesPerUpdate: 5,
       maxColorChangesPerUpdate: 9,
       init: function () {
+        if (this.colors.length) {
+          return;
+        }
         // Alpha is ignored for this effect to avoid memory leaks with too many
         // layers of alpha blending.
         this.colors.length = this.squaresPerSide * this.squaresPerSide;
@@ -201,9 +204,6 @@ module.exports = class Effects {
         }
       },
       draw: function ({isPeak}) {
-        if (this.colors.length === 0) {
-          this.init();
-        }
         if (isPeak) {
           this.update();
         }
@@ -271,6 +271,9 @@ module.exports = class Effects {
     this.rain = {
       drops: [],
       init: function () {
+        if (this.drops.length) {
+          return;
+        }
         for (let i = 0; i < 20; i++) {
           this.drops.push({
             x: randomNumber(0, 380),
@@ -284,9 +287,6 @@ module.exports = class Effects {
         this.color = p5.rgb(92, 101, randomNumber(140, 220), 0.5);
       },
       draw: function () {
-        if (this.drops.length < 1) {
-          this.init();
-        }
         p5.strokeWeight(3);
         p5.stroke(this.color);
         for (let i = 0; i < this.drops.length; i++) {
@@ -310,6 +310,9 @@ module.exports = class Effects {
         };
       },
       init: function () {
+        if (this.sparkles.length) {
+          return;
+        }
         for (let i=0;i<this.maxSparkles;i++) {
           this.sparkles.push(this.makeRandomSparkle());
         }
@@ -318,9 +321,6 @@ module.exports = class Effects {
 
       },
       draw: function ({bpm}) {
-        if (this.sparkles.length<1) {
-          this.init();
-        }
         p5.background("#2b1e45");
         let velocity = Math.floor(bpm/90*3);
         for (let i = 0;i<this.maxSparkles;i++){
@@ -380,6 +380,9 @@ module.exports = class Effects {
     this.raining_tacos = {
       tacos: [],
       init: function () {
+        if (this.tacos.length) {
+          return;
+        }
         for (let i = 0; i < 10; i++) {
           this.tacos.push({
             x: randomNumber(20, 380),
@@ -396,9 +399,6 @@ module.exports = class Effects {
       },
       draw: function (context) {
         const centroid = context.centroid;
-        if (this.tacos.length < 1) {
-          this.init();
-        }
         for (let i = 0; i < this.tacos.length; i++) {
           p5.push();
           const taco = this.tacos[i];
@@ -422,6 +422,9 @@ module.exports = class Effects {
     this.pineapples = {
       pineappleList: [],
       init: function () {
+        if (this.pineappleList.length) {
+          return;
+        }
         for (let i = 0; i < 8; i++) {
           this.pineappleList.push({
             x: randomNumber(10, 390),
@@ -432,9 +435,6 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        if (this.pineappleList.length < 1) {
-          this.init();
-        }
         for (let i = 0; i < this.pineappleList.length; i++) {
           p5.push();
           const pineapple = this.pineappleList[i];
@@ -466,6 +466,9 @@ module.exports = class Effects {
         };
       },
       init: function () {
+        if (this.splats.length) {
+          return;
+        }
         for (var i=0;i<this.numSplats;i++) {
           this.splats.push(this.randomSplat());
         }
@@ -475,9 +478,6 @@ module.exports = class Effects {
         //TODO: add some music-driven change? Right now it just grows continuously.
       },
       draw: function () {
-        if (this.splats.length<1) {
-          this.init();
-        }
         p5.strokeWeight(0);
         // first make a pass and remove items, traversing in reverse so that removals
         // dont affect traversal
@@ -523,7 +523,7 @@ module.exports = class Effects {
 
     this.spiral = {
       angle: 0,
-      color: null,
+      color: 0,
       init: function () {
         this.color = 0;
       },
@@ -534,9 +534,6 @@ module.exports = class Effects {
         }
       },
       draw: function ({isPeak,bpm}) {
-        if (this.color === null) {
-          this.init();
-        }
         if (isPeak) {
           this.update();
         }
@@ -580,9 +577,6 @@ module.exports = class Effects {
         if ((isPeak) ||
           (Math.abs(this.targetX - this.x)<4 && Math.abs(this.targetY - this.y)<4)) {
           this.update();
-        }
-        if (this.targetX === 0) {
-          this.init();
         }
         p5.push();
         p5.noFill();
@@ -634,6 +628,9 @@ module.exports = class Effects {
         };
       },
       init: function () {
+        if (this.lights.length) {
+          return;
+        }
         this.lights.push(this.newLight(75, 25, -10));
         this.lights.push(this.newLight(100, 15, -15));
         this.lights.push(this.newLight(300, 15, 15));
@@ -645,9 +642,6 @@ module.exports = class Effects {
         });
       },
       draw: function ({isPeak, centroid}) {
-        if (this.lights.length<1) {
-          this.init();
-        }
         if (isPeak) {
           this.update();
         }
@@ -665,6 +659,10 @@ module.exports = class Effects {
 
     this.kaleidoscope = {
       init: function () {
+        if (this.shapes) {
+          return;
+        }
+
         this.h = Math.sqrt(3) / 2 * 100;
 
         this.shapes = p5.createGraphics(100, Math.ceil(this.h));
@@ -704,10 +702,6 @@ module.exports = class Effects {
         p5.pop();
       },
       draw: function () {
-        if (!this.shapes) {
-          this.init();
-        }
-
         p5.background(colorFromPalette(2));
 
         const ctx = this.shapes.drawingContext;
@@ -776,6 +770,9 @@ module.exports = class Effects {
     this.smiling_poop = {
       poopList: [],
       init: function () {
+        if (this.poopList.length) {
+          return;
+        }
         for (let i = 0; i < 6; i++) {
           this.poopList.push({
             x: randomNumber(10, 390),
@@ -786,9 +783,6 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        if (this.poopList.length < 1) {
-          this.init();
-        }
         for (const poop of this.poopList) {
           p5.push();
           p5.translate(poop.x, poop.y);
@@ -809,6 +803,9 @@ module.exports = class Effects {
     this.hearts_red = {
       heartList: [],
       init: function () {
+        if (this.heartList.length) {
+          return;
+        }
         for (let i = 0; i < 10; i++) {
           this.heartList.push({
             x: randomNumber(10, 390),
@@ -820,9 +817,6 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        if (this.heartList.length < 1) {
-          this.init();
-        }
         for (const heart of this.heartList) {
           p5.push();
           p5.translate(heart.x, heart.y);
@@ -843,6 +837,9 @@ module.exports = class Effects {
     this.hearts_colorful = {
       heartList: [],
       init: function () {
+        if (this.heartList.length) {
+          return;
+        }
         for (let i = 0; i < 10; i++) {
           this.heartList.push({
             x: randomNumber(10, 390),
@@ -854,9 +851,6 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        if (this.heartList.length < 1) {
-          this.init();
-        }
         for (let i = 0; i < this.heartList.length; i++) {
           p5.push();
           const heart = this.heartList[i];
@@ -878,6 +872,9 @@ module.exports = class Effects {
     this.floating_rainbows = {
       rainbows: [],
       init: function () {
+        if (this.rainbows.length) {
+          return;
+        }
         for (let i = 0; i < 15; i++) {
           this.rainbows.push({
             x: randomNumber(10, 390),
@@ -894,9 +891,6 @@ module.exports = class Effects {
       },
       draw: function (context) {
         const centroid = context.centroid;
-        if (this.rainbows.length < 1) {
-          this.init();
-        }
         for (let i = 0; i < this.rainbows.length; i++) {
           p5.push();
           const rainbows = this.rainbows[i];
@@ -1277,6 +1271,9 @@ module.exports = class Effects {
     this.music_notes = {
       notes: [],
       init: function () {
+        if (this.notes.length) {
+          return;
+        }
         for (let i = 0; i < 20; i++) {
           this.notes.push({
             x: randomNumber(10, 390),
@@ -1293,9 +1290,6 @@ module.exports = class Effects {
       },
       draw: function (context) {
         const centroid = context.centroid;
-        if (this.notes.length < 1) {
-          this.init();
-        }
         for (let i = 0; i < this.notes.length; i++) {
           p5.push();
           const notes = this.notes[i];
