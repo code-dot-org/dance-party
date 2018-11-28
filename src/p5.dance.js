@@ -1083,6 +1083,7 @@ module.exports = class DanceParty {
         context,
         fg: this.world.fg_effect,
         p5: this.p5_,
+        palette: this.bgEffects_.currentPalette,
       });
     }
 

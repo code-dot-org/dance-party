@@ -8,12 +8,12 @@ if (DEBUG) {
 }
 
 module.exports = {
-  logFrame: ({bg, context, fg, p5}) => {
+  logFrame: ({bg, context, fg, p5, palette}) => {
     if (log.length >= FRAME_LIMIT) {
       return;
     }
 
-    const frame = {bg, fg, context};
+    const frame = {bg, fg, context, palette};
 
     const spritesToLog = p5.allSprites.slice(0, SPRITE_LIMIT);
     frame.sprites = spritesToLog.map((sprite) => ({
