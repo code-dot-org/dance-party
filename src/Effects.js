@@ -605,14 +605,18 @@ module.exports = class Effects {
           };
           this.laser.push(laser);
         }
+        p5.push();
+        p5.translate(200, 200);
         for (const laser of this.laser) {
+          const angle = p5.atan2(laser.y, 200 * p5.cos(p5.frameCount)); //200 + 200 * p5.sin(p5.frameCount));
           p5.stroke(laser.color);
-          p5.line(200, 200, laser.y, 400);
+          p5.line(0, 0, p5.sin(angle) * 300, p5.cos(angle) * 300);
           laser.y = laser.y -100;
           if (laser.y <= -1400) {
             laser.y = 1750;
           }
         }
+        p5.pop();
       }
     };
 
