@@ -95,7 +95,7 @@ module.exports = class Effects {
         for (let i = 0; i < 75; i++) {
           this.stars.push({
             x: p5.random(0, 400),
-            y: p5.random(0,100),
+            y: p5.random(0,200),
             color: randomColorFromPalette(),
           });
         }
@@ -114,9 +114,10 @@ module.exports = class Effects {
         for (const star of this.stars) {
           const distanceFromCenter = 200 - star.x;
           const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 4);
+          const heightFade = p5.constrain(175 - star.y, 0, 500);
           p5.push();
           p5.translate(star.x, star.y);
-          p5.drawingContext.globalAlpha = opacity;
+          p5.drawingContext.globalAlpha = opacity * (heightFade/ 100);
           drawSparkle(p5._renderer.drawingContext, star.color);
           p5.pop();
 
