@@ -14,6 +14,7 @@ module.exports = function drawPizza(ctx) {
   ctx.miterLimit = 4;
   ctx.save();
   ctx.fillStyle = "#ffdf40";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(2.053,5.795);
   ctx.translate(9.018345825070071,16.62199559144544);
@@ -32,6 +33,7 @@ module.exports = function drawPizza(ctx) {
   ctx.restore();
   ctx.save();
   ctx.fillStyle = "#ffdf40";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(2.053,5.795);
   ctx.translate(9.018345825070071,16.62199559144544);
@@ -50,6 +52,7 @@ module.exports = function drawPizza(ctx) {
   ctx.restore();
   ctx.save();
   ctx.fillStyle = "#ffa31a";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(15.941,5.754);
   ctx.lineTo(17.4,3.168);
@@ -75,6 +78,7 @@ module.exports = function drawPizza(ctx) {
   ctx.restore();
   ctx.save();
   ctx.fillStyle = "#dc1c4b";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(1.858,5.36);
   ctx.translate(9.018425420187592,16.064996441005075);
@@ -101,6 +105,7 @@ module.exports = function drawPizza(ctx) {
   ctx.restore();
   ctx.save();
   ctx.fillStyle = "#febe40";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(3.133,7.711);
   ctx.lineTo(2.675,6.898000000000001);
@@ -167,6 +172,7 @@ module.exports = function drawPizza(ctx) {
   ctx.restore();
   ctx.save();
   ctx.fillStyle = "#e3482c";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.moveTo(8.082,16.49);
   ctx.lineTo(6.452000000000001,13.597999999999999);

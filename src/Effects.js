@@ -1172,32 +1172,42 @@ module.exports = class Effects {
 
     this.pizzas = {
       pizza: [],
-      draw: function () {
-        p5.background('black');
-        let pizza = {
-          x: 200,
-          y: 200,
-          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-          size: 0.1,
-        };
-        this.pizza.push(pizza);
-        p5.noStroke();
-        this.pizza.forEach(function (pizza){
+      init: function () {
+        if (this.pizza.length) {
+          return;
+        }
+        for (let i = 0; i < 10; i++) {
+          this.pizza.push({
+            x: randomNumber(25, 375),
+            y: randomNumber(25, 375),
+            size: randomNumber(2, 6),
+            rot: randomNumber(0, 359),
+            life: 200,
+          });
+        }
+        this.image = p5.createGraphics(100, 100);
+        this.image.scale(3);
+        drawPizza(this.image.drawingContext);
+      },
+      draw: function (context) {
+        const centroid = context.centroid;
+        for (let i = 0; i < this.pizza.length; i++) {
           p5.push();
+          const pizza = this.pizza[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, pizza.size);
+          scale = p5.constrain(scale, 0, 5);
           p5.translate(pizza.x, pizza.y);
-          drawPizza(p5._renderer.drawingContext);
-          let speedMultiplier = p5.pow(pizza.size, 2) / 8;
-          pizza.x += pizza.velocity.x * speedMultiplier;
-          pizza.y += pizza.velocity.y * speedMultiplier;
-          pizza.size += 0.1;
-          p5.pop();
-        });
-        this.pizza = this.pizza.filter(function (pizza) {
-          if (pizza.x < -5 || pizza.x > 405 || pizza.y < -5 || pizza.y > 405) {
-            return false;
+          p5.rotate(pizza.rot);
+          p5.scale(scale / (4 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, 0, 0);
+          pizza.life --;
+          if (pizza.life < 0) {
+            pizza.x = randomNumber(25, 375),
+            pizza.y - randomNumber(25, 375),
+            pizza.life = 200;
           }
-          return true;
-        });
+          p5.pop();
+        }
       }
     };
 
