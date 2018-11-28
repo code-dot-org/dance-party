@@ -6,12 +6,20 @@ module.exports = class DanceAPI {
       setBackground: color => {
         nativeAPI.setBackground(color.toString());
       },
+      // DEPRECATED
+      // An old block may refer to this version of the command,
+      // so we're keeping it around for backwards-compat.
+      // @see https://github.com/code-dot-org/dance-party/issues/469
       setBackgroundEffect: (effect, palette) => {
         nativeAPI.setBackgroundEffect(effect.toString(), palette);
       },
       setBackgroundEffectWithPalette: (effect, palette) => {
         nativeAPI.setBackgroundEffect(effect.toString(), palette);
       },
+      // DEPRECATED
+      // An old block may refer to this version of the command,
+      // so we're keeping it around for backwards-compat.
+      // @see https://github.com/code-dot-org/dance-party/issues/469
       setForegroundEffect: effect => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
