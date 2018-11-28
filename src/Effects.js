@@ -393,8 +393,7 @@ module.exports = class Effects {
           });
         }
         this.image = p5.createGraphics(70, 50);
-        this.image.pixelDensity(1);
-        this.image.scale(4,4);
+        this.image.scale(4);
         drawTaco(this.image.drawingContext);
       },
       draw: function (context) {
@@ -406,7 +405,7 @@ module.exports = class Effects {
           scale = p5.constrain(scale, 0, 5);
           p5.translate(taco.x, taco.y);
           p5.rotate(taco.rot);
-          p5.scale(scale / 4);
+          p5.scale(scale / (4 * p5.pixelDensity()));
           p5.image(this.image);
           taco.y += taco.speed;
           taco.rot++;
@@ -885,8 +884,7 @@ module.exports = class Effects {
           });
         }
         this.image = p5.createGraphics(100, 100);
-        this.image.pixelDensity(1);
-        this.image.scale(4,4);
+        this.image.scale(4);
         drawRainbow(this.image.drawingContext);
       },
       draw: function (context) {
@@ -897,7 +895,7 @@ module.exports = class Effects {
           let scale = p5.map(centroid, 5000, 8000, 0, rainbows.size);
           scale = p5.constrain(scale, 0, 3);
           p5.translate(rainbows.x, rainbows.y);
-          p5.scale(scale / 2);
+          p5.scale(scale / (2 * p5.pixelDensity()));
           p5.image(this.image);
           rainbows.y -= rainbows.speed;
           if (rainbows.y < -25) {
@@ -974,7 +972,6 @@ module.exports = class Effects {
           // offscreen buffer that has a transparent background
           if (this.enableTracers) {
             this.buffer = p5.createGraphics(p5.width, p5.height);
-            this.buffer.pixelDensity(1);
           }
         }
 
@@ -990,7 +987,8 @@ module.exports = class Effects {
 
         // if we are drawing to offscreen buffer, copy it to the canvas
         if (this.buffer !== p5) {
-          p5.image(this.buffer);
+          p5.scale(1 / p5.pixelDensity());
+          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
         }
 
         p5.pop();
@@ -1284,8 +1282,7 @@ module.exports = class Effects {
           });
         }
         this.image = p5.createGraphics(70, 50);
-        this.image.pixelDensity(1);
-        this.image.scale(4,4);
+        this.image.scale(4);
         drawMusicNote(this.image.drawingContext);
       },
       draw: function (context) {
@@ -1297,8 +1294,8 @@ module.exports = class Effects {
           scale = p5.constrain(scale, 0, 3);
           p5.translate(notes.x, notes.y);
           p5.rotate(notes.rot);
-          p5.scale(scale / 4);
-          p5.image(this.image);
+          p5.scale(scale / (4 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, 0, 0);
           notes.y += notes.speed;
           notes.rot++;
           if (notes.y > 410) {
