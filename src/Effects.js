@@ -944,7 +944,6 @@ module.exports = class Effects {
       maxExplosion:50,
       minPotential:200,
       maxPotential:300,
-      enableTracers:true,
       buffer:null,
 
       makeParticle: function (type, pos, vel, color, potential) {
@@ -956,6 +955,7 @@ module.exports = class Effects {
           potential:potential,
           acc:p5.createVector(0, 0),
           color:color,
+          alpha: 1,
           update: function () {
             this.acc.add(this.gravity);
             this.vel.add(this.acc);
@@ -1002,7 +1002,9 @@ module.exports = class Effects {
             this.buffer.point(p.pos.x, p.pos.y);
           } else if (p.type === "particle") {
             this.buffer.translate(p.pos.x, p.pos.y);
-            drawSparkle(this.buffer._renderer.drawingContext, p.color);
+            this.buffer.drawingContext.globalAlpha = p.alpha;
+            p.alpha = p5.constrain(p.alpha - 0.02, 0, 1);
+            drawSparkle(this.buffer.drawingContext, p.color);
           }
           this.buffer.pop();
         }
