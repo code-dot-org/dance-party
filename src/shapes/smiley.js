@@ -14,6 +14,7 @@ module.exports = function drawSmiley(ctx) {
   ctx.miterLimit = 4;
   ctx.save();
   ctx.fillStyle = "#ffdf40";
+  ctx.globalAlpha = 0.8;
   ctx.beginPath();
   ctx.arc(8.5,8,8,0,6.283185307179586,true);
   ctx.closePath();
