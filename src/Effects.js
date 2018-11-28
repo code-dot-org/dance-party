@@ -93,24 +93,33 @@ module.exports = class Effects {
         if (this.stars.length) {
           return;
         }
+
         for (let i = 0; i < 75; i++) {
           this.stars.push({
             x: p5.random(0, 400),
-            y: p5.random(0,100),
-            color: "#C0C0C0",
+            y: p5.random(0,200),
+            color: randomColorFromPalette(),
           });
         }
       },
       draw: function () {
-        p5.background("#9370DB");
+        p5.noFill();
+        // Draw a horizontal gradient of the palette colors to the background
+        for (let i = 0; i <= 425; i++) {
+          let c = lerpColorFromPalette(i / 425);
+          p5.stroke(c);
+          p5.line(0, i, 425, i);
+        }
+
         p5.noStroke();
 
         for (const star of this.stars) {
           const distanceFromCenter = 200 - star.x;
           const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 4);
+          const heightFade = p5.constrain(175 - star.y, 0, 500);
           p5.push();
           p5.translate(star.x, star.y);
-          p5.drawingContext.globalAlpha = opacity;
+          p5.drawingContext.globalAlpha = opacity * (heightFade/ 100);
           drawSparkle(p5._renderer.drawingContext, star.color);
           p5.pop();
 
