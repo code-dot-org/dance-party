@@ -1146,13 +1146,14 @@ module.exports = class Effects {
             y: 200,
             velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
             size: 0.01,
+            color: randomColorFromPalette()
           };
           this.space.push(space);
         }
         p5.noStroke();
-        p5.fill('white');
         this.space.forEach(function (space){
           p5.push();
+          p5.fill(space.color);
           p5.translate(space.x, space.y);
           p5.ellipse(0, 0, space.size, space.size);
           let speedMultiplier = p5.pow(space.size, 2) /2;
