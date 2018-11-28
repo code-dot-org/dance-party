@@ -349,8 +349,8 @@ module.exports = class Effects {
           y: randomNumber(25, 375),
           text: text,
           font: 'Arial',
-          color: colorFromHue(hue),
-          size: size
+          color: lerpColorFromPalette(hue / 360),
+          size: size,
         });
         if (this.texts.length > this.maxTexts) {
           this.texts.shift();
@@ -367,7 +367,7 @@ module.exports = class Effects {
           this.update(text, centroid, randomNumber(14, 48));
         }
         p5.push();
-        p5.background(colorFromHue(0, 0, 23));
+        p5.background(colorFromHue(0, 0, 40));
         p5.textAlign(p5.CENTER, p5.CENTER);
         this.texts.forEach(function (t) {
           p5.textSize(t.size);
