@@ -590,26 +590,27 @@ module.exports = class Effects {
 
     this.lasers = {
       laser: [],
+      init: function () {
+        this.laser.length = 0;
+      },
       draw: function () {
         p5.background('black');
-        if (this.laser.length < 100) {
+        if (this.laser.length < 32) {
           let laser = {
             w: 200,
             x: 200,
-            y: 1700,
+            y: 1750,
             z: 400,
-            color: randomColor(255,255,255),
+            color: lerpColorFromPalette(p5.frameCount / 16),
           };
           this.laser.push(laser);
         }
-        p5.stroke('white');
-        p5.line(0,200,400,200);
         for (const laser of this.laser) {
           p5.stroke(laser.color);
-          p5.line(laser.w, laser.x, laser.y, laser.z);
+          p5.line(200, 200, laser.y, 400);
           laser.y = laser.y -100;
           if (laser.y <= -1400) {
-            laser.y = 1700;
+            laser.y = 1750;
           }
         }
       }
