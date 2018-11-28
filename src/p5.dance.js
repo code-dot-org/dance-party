@@ -191,6 +191,7 @@ module.exports = class DanceParty {
     }
     this.p5_.noLoop();
 
+    this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
   }
