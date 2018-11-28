@@ -59,7 +59,7 @@ module.exports = {
 
       whenSetup(function () {
         fancy_dancer = makeNewDanceSprite("ROBOT", fancy_dancer, {x: 200, y: 200});
-        setBackgroundEffect("disco");
+        setBackgroundEffectWithPalette("disco");
       });
 
       atTimestamp(4, "measures", function () {
@@ -84,7 +84,7 @@ module.exports = {
       var lead_dancer;
 
       whenSetup(function () {
-        setBackgroundEffect("diamonds");
+        setBackgroundEffectWithPalette("diamonds");
         backup_dancer1 = makeNewDanceSprite("CAT", backup_dancer1, {x: 300, y: 200});
         setProp(backup_dancer1, "scale", 50);
         backup_dancer2 = makeNewDanceSprite("ROBOT", backup_dancer2, {x: 100, y: 200});
@@ -125,7 +125,7 @@ module.exports = {
       var right_pineapple;
 
       whenSetup(function () {
-        setBackgroundEffect("rainbow");
+        setBackgroundEffectWithPalette("rainbow");
         left_shark = makeNewDanceSprite("MOOSE", left_shark, {x: 100, y: 200});
         right_pineapple = makeNewDanceSprite("ROBOT", right_pineapple, {x: 300, y: 200});
         startMapping(left_shark, "height", "bass");
@@ -162,7 +162,7 @@ module.exports = {
       var right_dancer;
 
       whenSetup(function () {
-        setBackgroundEffect("splatter");
+        setBackgroundEffectWithPalette("splatter");
         left_dancer = makeNewDanceSprite("CAT", left_dancer, {x: 100, y: 200});
         right_dancer = makeNewDanceSprite("ROBOT", right_dancer, {x: 300, y: 200});
       });

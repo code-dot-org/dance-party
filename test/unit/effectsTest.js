@@ -70,6 +70,18 @@ test('other background effects', async t => {
   nativeAPI.reset();
 });
 
+test('random background effect', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.p5_.randomSeed(0);
+
+  nativeAPI.setBackgroundEffect('rand');
+  t.equal(nativeAPI.world.bg_effect, 'fireworks');
+  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+
+  t.end();
+  nativeAPI.reset();
+});
+
 test('rainbow foreground effect updates with specified effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
@@ -109,6 +121,18 @@ test('setting fg effect to none clears the fg effect', async t => {
   nativeAPI.setForegroundEffect('color_lights');
   nativeAPI.setForegroundEffect('none');
   t.equal(nativeAPI.getForegroundEffect(), undefined);
+
+  t.end();
+  nativeAPI.reset();
+});
+
+test('random foreground effect', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.p5_.randomSeed(0);
+
+  nativeAPI.setForegroundEffect('rand');
+  t.equal(nativeAPI.world.fg_effect, 'music_notes');
+  nativeAPI.getForegroundEffect().draw({bpm: 120});
 
   t.end();
   nativeAPI.reset();

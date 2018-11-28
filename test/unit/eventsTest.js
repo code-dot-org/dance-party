@@ -137,7 +137,7 @@ test('conflicting atTimestamp cues, last definition wins', async t => {
 test('non-conflicting atTimestamp cues, both take effect', async t => {
   const {nativeAPI, interpretedAPI} = await runUserCode(`
     atTimestamp(1, "seconds", () => setBackground("orange"));
-    atTimestamp(1, "seconds", () => setForegroundEffect("color_lights"));
+    atTimestamp(1, "seconds", () => setForegroundEffectExtended("color_lights"));
   `);
 
   interpretedAPI.runUserEvents({

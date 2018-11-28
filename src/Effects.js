@@ -1,3 +1,4 @@
+const constants = require('./constants');
 const drawHeart = require('./shapes/heart');
 const drawMusicNote = require('./shapes/musicNote');
 const drawPineapple = require('./shapes/pineapple');
@@ -12,6 +13,7 @@ const drawTaco = require('./shapes/taco');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
+    this.p5_ = p5;
     this.blend = blend || p5.BLEND;
     this.currentPalette = currentPalette;
 
@@ -1315,5 +1317,25 @@ module.exports = class Effects {
         }
       }
     };
+  }
+
+  randomForegroundEffect() {
+    const effects = constants.FOREGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
+    return this.sample_(effects);
+  }
+
+  randomBackgroundEffect() {
+    const effects = constants.BACKGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
+    return this.sample_(effects);
+  }
+
+  /**
+   * Randomly pick one element out of an array.
+   * @param {Array.<T>} collection
+   * @returns {T}
+   * @private
+   */
+  sample_(collection) {
+    return collection[Math.floor(this.p5_.random(0, collection.length))];
   }
 };
