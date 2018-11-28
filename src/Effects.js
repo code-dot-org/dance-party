@@ -965,31 +965,25 @@ module.exports = class Effects {
         };
       },
 
+      init: function () {
+        if (this.buffer) {
+          return;
+        }
+        // We get the tracer effect by writing frames to a
+        // off-screen buffer that has a transparent background.
+        this.buffer = p5.createGraphics(p5.width, p5.height);
+      },
+
       draw: function () {
-        if (this.buffer === null) {
-          this.buffer = p5;
-          // We get the tracer effect by writing frames to a
-          // offscreen buffer that has a transparent background
-          if (this.enableTracers) {
-            this.buffer = p5.createGraphics(p5.width, p5.height);
-          }
-        }
-
         p5.background(0);
-
-        // if we are using the offscreen buffer, use a transparent background
-        if (this.buffer !== p5) {
-          this.buffer.background(0, 25);
-        }
+        this.buffer.background(0, 25);
 
         p5.push();
         this.drawParticles();
 
-        // if we are drawing to offscreen buffer, copy it to the canvas
-        if (this.buffer !== p5) {
-          p5.scale(1 / p5.pixelDensity());
-          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
-        }
+        // Copy the off-screen buffer to the canvas.
+        p5.scale(1 / p5.pixelDensity());
+        p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
 
         p5.pop();
 
@@ -1053,7 +1047,7 @@ module.exports = class Effects {
               "rocket",
               p5.createVector(randomNumber(0, p5.height), p5.width),
               p5.createVector(0, p5.random(-9, -7)),
-              randomColor(),
+              randomColorFromPalette(),
               p5.random(this.minExplosion, this.maxExplosion),
             );
             totalPotential += p.potential;
