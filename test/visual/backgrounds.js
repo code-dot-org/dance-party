@@ -15,66 +15,76 @@ function readPNG(pngPath){
   });
 }
 
-async function createScreenshot(effectName) {
-  await createBackgroundScreenshot(effectName, tempDir);
+async function createScreenshot([effectName, palette]) {
+  await createBackgroundScreenshot(effectName, tempDir, palette);
 
   // If there is no accepted image for this background (ex: it's a new background),
   // use this screenshot as accepted image
   if (!fs.existsSync(`${fixturePath}${effectName}.png`)) {
-    await createBackgroundScreenshot(effectName, fixturePath);
+    await createBackgroundScreenshot(effectName, fixturePath, palette);
   }
 }
 
-async function testBackground(t, effect) {
+async function testBackground(t, name, effect) {
   await createScreenshot(effect);
 
   const [actual, expected] = await Promise.all([
-    readPNG(`${tempDir}/${effect}.png`),
-    readPNG(`${fixturePath}${effect}.png`)
+    readPNG(`${tempDir}/${name}.png`),
+    readPNG(`${fixturePath}${name}.png`)
   ]);
 
   let diff = new PNG({width: actual.width, height: actual.height});
 
   let pixelDiff = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, {threshold: 0.1});
-  t.equal(pixelDiff, 0, effect);
+  t.equal(pixelDiff, 0, name);
 }
 
 [
-  'none',
-  'swirl',
-  'rainbow',
-  'color_cycle',
-  'circles',
-  'disco',
-  'disco_ball',
-  'diamonds',
-  'fireworks',
-  'lasers',
+  ['none'],
+  ['swirl'],
+  ['rainbow', 'default'],
+  ['rainbow', 'electronic'],
+  ['rainbow', 'vintage'],
+  ['rainbow', 'cool'],
+  ['rainbow', 'warm'],
+  ['rainbow', 'iceCream'],
+  ['rainbow', 'tropical'],
+  ['rainbow', 'neon'],
+  ['rainbow', 'rave'],
+  ['color_cycle'],
+  ['circles'],
+  ['disco'],
+  ['disco_ball'],
+  ['diamonds'],
+  ['fireworks'],
+  ['lasers'],
   //'strobe',
-  'rain',
+  ['rain'],
   // 'text', Font rendering differences across devices cause problems
-  'raining_tacos',
-  'splatter',
-  'spiral',
-  'spotlight',
-  'color_lights',
-  'snowflakes',
-  'sparkles',
+  ['raining_tacos'],
+  ['splatter'],
+  ['spiral'],
+  ['spotlight'],
+  ['color_lights'],
+  ['snowflakes'],
+  ['sparkles'],
   // 'pineapples', need to debug
   // 'pizzas', need to debug
   //'kaleidoscope', temporarily removed
-  'smile_face',
+  ['smile_face'],
   // 'smiling_poop', need to debug
   // 'hearts_red', need to debug
-  'floating_rainbows',
-  'bubbles',
-  'stars',
-  'galaxy',
-  'confetti',
-  'music_notes'
+  ['floating_rainbows'],
+  ['bubbles'],
+  ['stars'],
+  ['galaxy'],
+  ['confetti'],
+  ['music_notes']
 ].forEach(effect => {
-  test(`background - ${effect}`, async t => {
-    await testBackground(t, effect);
+  let name = effect[0] + (effect[1] ? ("_" + effect[1]) : "");
+  test(`background - ${name}`, async t => {
+
+    await testBackground(t, name, effect);
     t.end();
   });
 });
