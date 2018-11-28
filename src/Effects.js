@@ -272,7 +272,7 @@ module.exports = class Effects {
       update: function () {
         this.hue += 25;
       },
-      draw: function ({isPeak, centroid}) {
+      draw: function ({isPeak}) {
         if (isPeak) {
           this.update();
         }
