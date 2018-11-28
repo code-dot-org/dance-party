@@ -277,14 +277,15 @@ module.exports = class Effects {
           this.update();
         }
         p5.push();
+        p5.noStroke();
         p5.ellipseMode(p5.CENTER);
         p5.translate(200, 200);
-        p5.rotate(45);
-        p5.noFill();
-        p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
+        //p5.background('green');
+        //p5.strokeWeight(p5.map(centroid, 0, 0, 0, 50));
         for (let i = 5; i > -1; i--) {
-          p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
-          p5.ellipse(0, 0, i * 100 + 50, i * 100 + 50);
+          p5.fill(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
+          p5.ellipse(0, 0, i * 100 + 125, i * 100 + 125);
+          //p5.ellipse(100,100,100,100);
         }
         p5.pop();
       }
