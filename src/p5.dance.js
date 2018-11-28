@@ -275,15 +275,21 @@ module.exports = class DanceParty {
   }
 
   setBackgroundEffect(effect, palette = 'default') {
+    if (constants.RANDOM_EFFECT_KEY === effect) {
+      effect = this.bgEffects_.randomBackgroundEffect();
+    }
     this.world.bg_effect = effect;
-
     this.bgEffects_.currentPalette = palette;
+
     if (this.bgEffects_[effect].init) {
       this.bgEffects_[effect].init();
     }
   }
 
   setForegroundEffect(effect) {
+    if (constants.RANDOM_EFFECT_KEY === effect) {
+      effect = this.fgEffects_.randomForegroundEffect();
+    }
     this.world.fg_effect = effect;
 
     if (this.fgEffects_[effect].init) {
