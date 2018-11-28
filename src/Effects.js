@@ -1241,33 +1241,43 @@ module.exports = class Effects {
     };
 
     this.smile_face = {
-      smile: [],
-      draw: function () {
-        p5.background("#D3D3D3");
-        let smile = {
-          x: 200,
-          y: 200,
-          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-          size: 0.1,
-        };
-        this.smile.push(smile);
-        p5.noStroke();
-        this.smile.forEach(function (smile){
+      smiles: [],
+      init: function () {
+        if (this.smiles.length) {
+          return;
+        }
+        for (let i = 0; i < 10; i++) {
+          this.smiles.push({
+            x: randomNumber(25, 375),
+            y: randomNumber(25, 375),
+            size: randomNumber(2, 6),
+            rot: randomNumber(0, 359),
+            life: 200,
+          });
+        }
+        this.image = p5.createGraphics(100, 100);
+        this.image.scale(3);
+        drawSmiley(this.image.drawingContext);
+      },
+      draw: function (context) {
+        const centroid = context.centroid;
+        for (let i = 0; i < this.smiles.length; i++) {
           p5.push();
-          p5.translate(smile.x, smile.y);
-          drawSmiley(p5._renderer.drawingContext);
-          let speedMultiplier = p5.pow(smile.size, 2) / 8;
-          smile.x += smile.velocity.x * speedMultiplier;
-          smile.y += smile.velocity.y * speedMultiplier;
-          smile.size += 0.1;
-          p5.pop();
-        });
-        this.smile = this.smile.filter(function (smile) {
-          if (smile.x < -5 || smile.x > 405 || smile.y < -5 || smile.y > 405) {
-            return false;
+          const smiles = this.smiles[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, smiles.size);
+          scale = p5.constrain(scale, 0, 5);
+          p5.translate(smiles.x, smiles.y);
+          p5.rotate(smiles.rot);
+          p5.scale(scale / (4 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, 0, 0);
+          smiles.life --;
+          if (smiles.life < 0) {
+            smiles.x = randomNumber(25, 375),
+            smiles.y - randomNumber(25, 375),
+            smiles.life = 200;
           }
-          return true;
-        });
+          p5.pop();
+        }
       }
     };
 
