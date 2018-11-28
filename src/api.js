@@ -6,10 +6,16 @@ module.exports = class DanceAPI {
       setBackground: color => {
         nativeAPI.setBackground(color.toString());
       },
-      setBackgroundEffect: effect => {
-        nativeAPI.setBackgroundEffect(effect.toString());
+      setBackgroundEffect: (effect, palette) => {
+        nativeAPI.setBackgroundEffect(effect.toString(), palette);
+      },
+      setBackgroundEffectWithPalette: (effect, palette) => {
+        nativeAPI.setBackgroundEffect(effect.toString(), palette);
       },
       setForegroundEffect: effect => {
+        nativeAPI.setForegroundEffect(effect.toString());
+      },
+      setForegroundEffectExtended: (effect) => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
       makeNewDanceSprite: (costume, name, location) => {

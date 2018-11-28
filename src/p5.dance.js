@@ -274,6 +274,9 @@ module.exports = class DanceParty {
   }
 
   setBackgroundEffect(effect, palette = 'default') {
+    if (constants.RANDOM_EFFECT_KEY === effect) {
+      effect = this.sample_(constants.BACKGROUND_EFFECTS);
+    }
     this.world.bg_effect = effect;
 
     this.bgEffects_.currentPalette = palette;
@@ -283,6 +286,9 @@ module.exports = class DanceParty {
   }
 
   setForegroundEffect(effect) {
+    if (constants.RANDOM_EFFECT_KEY === effect) {
+      effect = this.sample_(constants.FOREGROUND_EFFECTS);
+    }
     this.world.fg_effect = effect;
 
     if (this.fgEffects_[effect].init) {
@@ -1028,6 +1034,16 @@ module.exports = class DanceParty {
     this.performanceData_.frameRateMax = -Infinity;
     this.performanceData_.frameRateMin = Infinity;
     this.performanceData_.frameRateMean = 0;
+  }
+
+  /**
+   * Randomly pick one element out of an array.
+   * @param {Array.<T>} collection
+   * @returns {T}
+   * @private
+   */
+  sample_(collection) {
+    return collection[Math.floor(this.p5_.random(0, collection.length))];
   }
 
   sampleFrameRate_() {

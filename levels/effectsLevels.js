@@ -5,11 +5,11 @@ module.exports = {
       var lead_dancer;
 
       whenSetup(function () {
-        setBackgroundEffect("color_cycle");
+        setBackgroundEffectWithPalette("color_cycle");
       });
 
       atTimestamp(4, "measures", function () {
-        setBackgroundEffect("text");
+        setBackgroundEffectWithPalette("text");
       });
     `,
     validationCode: `
