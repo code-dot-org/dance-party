@@ -278,6 +278,9 @@ module.exports = class DanceParty {
     if (constants.RANDOM_EFFECT_KEY === effect) {
       effect = this.bgEffects_.randomBackgroundEffect();
     }
+    if (constants.RANDOM_EFFECT_KEY === palette) {
+      palette = this.bgEffects_.randomBackgroundPalette();
+    }
     this.world.bg_effect = effect;
     this.bgEffects_.currentPalette = palette;
 
