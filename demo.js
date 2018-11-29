@@ -34,10 +34,11 @@ function runCode() {
   nativeAPI.play(jazzy_beats);
 }
 
-textareaCode.value = textareaCode.value || `makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+textareaCode.value = textareaCode.value || `var cat = makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+setBackgroundEffectWithPalette("disco_ball", "rand");
 
 atTimestamp(2, "measures", function () {
-  setBackgroundEffectWithPalette("disco");
+  changeMoveLR(cat, MOVES.ClapHigh, 1);
 });
 `;
 
