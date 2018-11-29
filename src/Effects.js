@@ -489,13 +489,12 @@ module.exports = class Effects {
     this.splatter = {
       buffer: null,
       splats: [],
-      numSplats: 10,
+      numSplats: 5,
       randomSplat: function () {
-        const r = p5.random(1, 3);
         return {
           x: p5.random(0, 400),
           y: p5.random(0, 400),
-          r: 10,
+          r: p5.random(5, 15),
           color: randomColorFromPalette(),
         };
       },
@@ -517,16 +516,16 @@ module.exports = class Effects {
         // first make a pass and remove items, traversing in reverse so that removals
         // dont affect traversal
         for (let splat of this.splats) {
-          if (randomNumber(0, 30) === 0) {
+          if (splat.r > 30) {
             splat.x = p5.random(0, 400);
             splat.y = p5.random(0, 400);
-            splat.r = 10;
+            splat.r = p5.random(5, 15);
             splat.color = randomColorFromPalette();
           }
 
           splat.r += p5.random(1);
           this.buffer.fill(splat.color);
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 20; i++) {
             this.buffer.ellipse(p5.randomGaussian(splat.x, splat.r), p5.randomGaussian(splat.y, splat.r), p5.random(2, 8));
           }
         }
