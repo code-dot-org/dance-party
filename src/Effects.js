@@ -74,8 +74,8 @@ module.exports = class Effects {
       globe: function (u, v) {
         u = p5.constrain(u, -90, 90);
         return {
-          x: (1 + p5.sin(u) * p5.sin(v)) * 40 + 160,
-          y: (1 + p5.cos(v)) * 40 + 10,
+          x: (1 + p5.sin(u) * p5.sin(v)) * 45 + 155,
+          y: (1 + p5.cos(v)) * 45 + 10,
         };
       },
       quad: function (i, j, faceSize, rotation = 0) {
@@ -1371,6 +1371,10 @@ module.exports = class Effects {
   randomBackgroundEffect() {
     const effects = constants.BACKGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
     return this.sample_(effects);
+  }
+
+  randomBackgroundPalette() {
+    return this.sample_(Object.keys(this.palettes));
   }
 
   /**
