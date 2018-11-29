@@ -83,9 +83,10 @@ module.exports = class Effects {
         if (k < -90 - faceSize || k > 90) {
           return;
         }
-        const color = p5.noise(i, j, p5.frameCount / 50) * 200 + 100;
+        const color = lerpColorFromPalette(p5.noise(i, j, p5.frameCount / 70));
         const highlight = 50 * p5.pow(p5.cos(k), 2);
-        p5.fill(color + highlight);
+        const brightness = p5.noise(i, j, p5.frameCount / 50) * 150 + 100 + highlight;
+        p5.fill(p5.lerpColor(color, p5.color(brightness), brightness / 255));
         const a = this.globe(k, j);
         const b = this.globe(k + faceSize, j);
         const c = this.globe(k + faceSize, j + faceSize);
@@ -93,15 +94,13 @@ module.exports = class Effects {
         p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
       },
       init: function () {
-        if (this.stars.length) {
-          return;
-        }
+        this.stars.length = 0;
 
         for (let i = 0; i < 75; i++) {
           this.stars.push({
             x: p5.random(0, 400),
             y: p5.random(0, 250),
-            color: '#fff',
+            color: p5.lerpColor(lerpColorFromPalette(p5.random()), p5.color('#fff'), 0.75),
           });
         }
       },
@@ -123,7 +122,7 @@ module.exports = class Effects {
           p5.push();
           p5.translate(star.x, star.y);
           const sparkle = p5.constrain(p5.noise(star.x / 50, star.y / 50, p5.frameCount / 50) + 0.4, 0, 1);
-          p5.drawingContext.globalAlpha = opacity * (heightFade / 100);
+          p5.drawingContext.globalAlpha = opacity * (heightFade / 100) * 0.85;
           p5.scale(1 / sparkle);
           drawSparkle(p5._renderer.drawingContext, star.color);
           p5.pop();
@@ -138,7 +137,7 @@ module.exports = class Effects {
         }
 
         p5.noiseDetail(50, .5);
-        p5.stroke("#C0C0C0");
+        p5.stroke("#999");
         p5.strokeWeight(2);
         p5.line(200, 0, 200, 15);
         p5.strokeWeight(0.25);
