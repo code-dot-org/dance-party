@@ -74,8 +74,8 @@ module.exports = class Effects {
       globe: function (u, v) {
         u = p5.constrain(u, -90, 90);
         return {
-          x: (1 + p5.sin(u) * p5.sin(v)) * 40 + 160,
-          y: (1 + p5.cos(v)) * 40 + 10,
+          x: (1 + p5.sin(u) * p5.sin(v)) * 45 + 155,
+          y: (1 + p5.cos(v)) * 45 + 10,
         };
       },
       quad: function (i, j, faceSize, rotation = 0) {
@@ -83,6 +83,10 @@ module.exports = class Effects {
         if (k < -90 - faceSize || k > 90) {
           return;
         }
+        const color = lerpColorFromPalette(p5.noise(i, j, p5.frameCount / 70));
+        const highlight = 50 * p5.pow(p5.cos(k), 2);
+        const brightness = p5.noise(i, j, p5.frameCount / 50) * 150 + 100 + highlight;
+        p5.fill(p5.lerpColor(color, p5.color(brightness), brightness / 255));
         const a = this.globe(k, j);
         const b = this.globe(k + faceSize, j);
         const c = this.globe(k + faceSize, j + faceSize);
@@ -90,36 +94,44 @@ module.exports = class Effects {
         p5.quad(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
       },
       init: function () {
-        if (this.stars.length) {
-          return;
-        }
+        this.stars.length = 0;
 
         for (let i = 0; i < 75; i++) {
           this.stars.push({
             x: p5.random(0, 400),
-            y: p5.random(0,200),
-            color: randomColorFromPalette(),
+            y: p5.random(0, 250),
+            color: p5.lerpColor(lerpColorFromPalette(p5.random()), p5.color('#fff'), 0.75),
           });
         }
       },
       draw: function () {
         p5.noFill();
         // Draw a horizontal gradient of the palette colors to the background
-        for (let i = 0; i <= 425; i++) {
-          let c = lerpColorFromPalette(i / 425);
-          p5.stroke(c);
-          p5.line(0, i, 425, i);
+        let ctx = p5._renderer.drawingContext;
+        ctx.save();
+        let gradient = ctx.createLinearGradient(425, 425, 425, 0);
+        // Initialize first color stop so colors loop
+        let color = colorFromPalette(0);
+        gradient.addColorStop(0, color);
+        for (let i = 0; i < 5; i++) {
+          let color = colorFromPalette(i);
+          gradient.addColorStop((5 - i)/5, color.toString());
         }
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 425, 425);
+        ctx.restore();
 
         p5.noStroke();
 
         for (const star of this.stars) {
           const distanceFromCenter = 200 - star.x;
           const opacity = p5.constrain(p5.cos(distanceFromCenter / 2), 0, 4);
-          const heightFade = p5.constrain(175 - star.y, 0, 500);
+          const heightFade = p5.constrain(250 - star.y, 0, 500);
           p5.push();
           p5.translate(star.x, star.y);
-          p5.drawingContext.globalAlpha = opacity * (heightFade/ 100);
+          const sparkle = p5.constrain(p5.noise(star.x / 50, star.y / 50, p5.frameCount / 50) + 0.4, 0, 1);
+          p5.drawingContext.globalAlpha = opacity * (heightFade / 100) * 0.85;
+          p5.scale(1 / sparkle);
           drawSparkle(p5._renderer.drawingContext, star.color);
           p5.pop();
 
@@ -133,14 +145,16 @@ module.exports = class Effects {
         }
 
         p5.noiseDetail(50, .5);
+        p5.stroke("#999");
+        p5.strokeWeight(2);
+        p5.line(200, 0, 200, 15);
+        p5.strokeWeight(0.25);
+
         const step = 20;
         for (let i = 0; i <= 360; i += step) {
-          p5.fill("#C0C0C0");
-          p5.rect(199.5, 0, 2, 10.25);
           for (let j = 0; j < 180; j += step) {
             p5.push();
-            p5.fill(p5.noise(i, j, p5.frameCount / 50) * 255 + 100);
-            this.quad(i, j, step, p5.frameCount * 3);
+            this.quad(i, j, step, p5.frameCount * 2);
             p5.pop();
           }
         }
@@ -412,8 +426,8 @@ module.exports = class Effects {
             size: 5,
           });
         }
-        this.image = p5.createGraphics(70, 50);
-        this.image.scale(4);
+        this.image = p5.createGraphics(125, 50);
+        this.image.scale(3);
         drawTaco(this.image.drawingContext);
       },
       draw: function (context) {
@@ -912,8 +926,8 @@ module.exports = class Effects {
             size: randomNumber(1.5, 3),
           });
         }
-        this.image = p5.createGraphics(100, 100);
-        this.image.scale(4);
+        this.image = p5.createGraphics(175, 100);
+        this.image.scale(3);
         drawRainbow(this.image.drawingContext);
       },
       draw: function (context) {
@@ -1239,33 +1253,43 @@ module.exports = class Effects {
     };
 
     this.smile_face = {
-      smile: [],
-      draw: function () {
-        p5.background("#D3D3D3");
-        let smile = {
-          x: 200,
-          y: 200,
-          velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
-          size: 0.1,
-        };
-        this.smile.push(smile);
-        p5.noStroke();
-        this.smile.forEach(function (smile){
+      smiles: [],
+      init: function () {
+        if (this.smiles.length) {
+          return;
+        }
+        for (let i = 0; i < 10; i++) {
+          this.smiles.push({
+            x: randomNumber(25, 375),
+            y: randomNumber(25, 375),
+            size: randomNumber(2, 6),
+            rot: randomNumber(0, 359),
+            life: 200,
+          });
+        }
+        this.image = p5.createGraphics(100, 100);
+        this.image.scale(3);
+        drawSmiley(this.image.drawingContext);
+      },
+      draw: function (context) {
+        const centroid = context.centroid;
+        for (let i = 0; i < this.smiles.length; i++) {
           p5.push();
-          p5.translate(smile.x, smile.y);
-          drawSmiley(p5._renderer.drawingContext);
-          let speedMultiplier = p5.pow(smile.size, 2) / 8;
-          smile.x += smile.velocity.x * speedMultiplier;
-          smile.y += smile.velocity.y * speedMultiplier;
-          smile.size += 0.1;
-          p5.pop();
-        });
-        this.smile = this.smile.filter(function (smile) {
-          if (smile.x < -5 || smile.x > 405 || smile.y < -5 || smile.y > 405) {
-            return false;
+          const smiles = this.smiles[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, smiles.size);
+          scale = p5.constrain(scale, 0, 5);
+          p5.translate(smiles.x, smiles.y);
+          p5.rotate(smiles.rot);
+          p5.scale(scale / (4 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, 0, 0);
+          smiles.life --;
+          if (smiles.life < 0) {
+            smiles.x = randomNumber(25, 375),
+            smiles.y - randomNumber(25, 375),
+            smiles.life = 200;
           }
-          return true;
-        });
+          p5.pop();
+        }
       }
     };
 
@@ -1353,6 +1377,10 @@ module.exports = class Effects {
   randomBackgroundEffect() {
     const effects = constants.BACKGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
     return this.sample_(effects);
+  }
+
+  randomBackgroundPalette() {
+    return this.sample_(Object.keys(this.palettes));
   }
 
   /**

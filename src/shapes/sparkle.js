@@ -1,6 +1,7 @@
 module.exports = function drawSparkle(ctx, color) {
   ctx.save();
   ctx.scale(0.25,0.25);
+  ctx.translate(-27.2, -27.2);
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(54.3,27.2);
