@@ -107,11 +107,19 @@ module.exports = class Effects {
       draw: function () {
         p5.noFill();
         // Draw a horizontal gradient of the palette colors to the background
-        for (let i = 0; i <= 425; i++) {
-          let c = lerpColorFromPalette(i / 425);
-          p5.stroke(c);
-          p5.line(0, i, 425, i);
+        let ctx = p5._renderer.drawingContext;
+        ctx.save();
+        let gradient = ctx.createLinearGradient(425, 425, 425, 0);
+        // Initialize first color stop so colors loop
+        let color = colorFromPalette(0);
+        gradient.addColorStop(0, color);
+        for (let i = 0; i < 5; i++) {
+          let color = colorFromPalette(i);
+          gradient.addColorStop((5 - i)/5, color.toString());
         }
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 425, 425);
+        ctx.restore();
 
         p5.noStroke();
 
