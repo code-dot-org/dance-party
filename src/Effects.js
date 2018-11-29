@@ -428,8 +428,8 @@ module.exports = class Effects {
             size: 5,
           });
         }
-        this.image = p5.createGraphics(70, 50);
-        this.image.scale(4);
+        this.image = p5.createGraphics(125, 50);
+        this.image.scale(3);
         drawTaco(this.image.drawingContext);
       },
       draw: function (context) {
@@ -928,8 +928,8 @@ module.exports = class Effects {
             size: randomNumber(1.5, 3),
           });
         }
-        this.image = p5.createGraphics(100, 100);
-        this.image.scale(4);
+        this.image = p5.createGraphics(175, 100);
+        this.image.scale(3);
         drawRainbow(this.image.drawingContext);
       },
       draw: function (context) {
