@@ -108,8 +108,12 @@ module.exports = class Effects {
         let ctx = p5._renderer.drawingContext;
         ctx.save();
         let gradient = ctx.createLinearGradient(425, 425, 425, 0);
+        // Initialize first color stop so colors loop
+        let color = colorFromPalette(0);
+        gradient.addColorStop(0, color);
         for (let i = 0; i < 5; i++) {
-          gradient.addColorStop(i/5, lerpColorFromPalette(i/5));
+          let color = colorFromPalette(i);
+          gradient.addColorStop((5 - i)/5, color.toString());
         }
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 425, 425);
