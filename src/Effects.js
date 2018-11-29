@@ -953,7 +953,7 @@ module.exports = class Effects {
     this.snowflakes = {
       flake: [],
       draw: function () {
-        p5.background('lightblue');
+        p5.background(lerpColorFromPalette(0.5));
         let flake = {
           x: p5.random(-100, 400),
           y: -10,
