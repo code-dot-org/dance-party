@@ -136,7 +136,7 @@ module.exports = class Effects {
           p5.pop();
 
           // Move the star to the left.
-          star.x -= 4 - opacity;
+          star.x -= 4.5 - opacity * 1.5;
 
           // If we've gone off-screen, loop around to the right.
           if (star.x < 0) {
