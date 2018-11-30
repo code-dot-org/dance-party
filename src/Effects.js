@@ -771,7 +771,7 @@ module.exports = class Effects {
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
         this.shapes.fill(colorFromPalette(1));
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill(colorFromPalette(5));
+        this.shapes.fill(colorFromPalette(4));
         this.shapes.ellipse(100, 50, 80);
         this.shapes.fill(colorFromPalette(1));
         this.shapes.ellipse(-50, -50, 50);
