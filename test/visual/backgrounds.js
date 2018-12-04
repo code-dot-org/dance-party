@@ -68,9 +68,11 @@ async function testBackground(t, name, effect) {
   ['color_lights'],
   ['snowflakes'],
   ['sparkles'],
-  // 'pineapples', need to debug
-  // 'pizzas', need to debug
-  //'kaleidoscope', temporarily removed
+  ['pineapples'],
+  ['pizzas'],
+  ['kaleidoscope'],
+  ['kaleidoscope', 'vintage'],
+  ['kaleidoscope', 'electronic'],
   ['smile_face'],
   // 'smiling_poop', need to debug
   // 'hearts_red', need to debug
