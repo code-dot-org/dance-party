@@ -683,7 +683,7 @@ module.exports = class Effects {
 
         for (let i = 0; i < 2; i++) {
           const shape = [];
-          shape.color = randomNumber(0, 4);
+          shape.color = i;
           for (let j = 0; j < 4; j++) {
             const vertex = p5.createSprite();
             vertex.draw = () => {};
@@ -696,7 +696,9 @@ module.exports = class Effects {
         this.edges = p5.createEdgeSprites();
       },
       draw: function () {
-        this.buffer.background(0, 25);
+        this.buffer.drawingContext.globalAlpha = 0.25;
+        this.buffer.background(colorFromPalette(2));
+        this.buffer.drawingContext.globalAlpha = 1;
 
         for (const shape of this.shapes) {
           this.buffer.stroke(colorFromPalette(shape.color));
