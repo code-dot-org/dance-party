@@ -70,6 +70,8 @@ async function testBackground(t, name, effect) {
   ['sparkles'],
   ['pineapples'],
   ['pizzas'],
+  ['quads', 'vintage'],
+  ['quads', 'electronic'],
   ['kaleidoscope'],
   ['kaleidoscope', 'vintage'],
   ['kaleidoscope', 'electronic'],
