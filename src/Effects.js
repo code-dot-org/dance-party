@@ -465,6 +465,9 @@ module.exports = class Effects {
             life: 5,
           });
         }
+        this.image = p5.createGraphics(75, 130);
+        this.image.scale(7);
+        drawPineapple(this.image.drawingContext);
       },
       draw: function () {
         for (let i = 0; i < this.pineappleList.length; i++) {
@@ -472,8 +475,8 @@ module.exports = class Effects {
           const pineapple = this.pineappleList[i];
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(pineapple.life / 20);
-          drawPineapple(p5._renderer.drawingContext);
+          p5.scale(pineapple.life / 20 / (7 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, -35, -65);
           pineapple.life--;
           if (pineapple.life < 0) {
             pineapple.x = randomNumber(10, 390);
@@ -486,47 +489,54 @@ module.exports = class Effects {
     };
 
     this.splatter = {
-      splats:[],
-      numSplats:100,
+      buffer: null,
+      splats: [],
+      numSplats: 5,
       randomSplat: function () {
-        let r = randomNumber(30,60);
-        return {x: randomNumber(0,400),
-            y: randomNumber(0,400),
-            color: randomColorFromPalette(),
-            width: r,
-            height: r,
+        return {
+          x: p5.random(0, 400),
+          y: p5.random(0, 400),
+          r: p5.random(5, 15),
+          color: randomColorFromPalette(),
         };
       },
       init: function () {
-        if (this.splats.length) {
-          return;
-        }
-        for (var i=0;i<this.numSplats;i++) {
+        this.splats.length = 0;
+        for (let i = 0; i < this.numSplats; i++) {
           this.splats.push(this.randomSplat());
         }
-        p5.strokeWeight(0);
-      },
-      update: function () {
-        //TODO: add some music-driven change? Right now it just grows continuously.
+
+        if (this.buffer) {
+          this.buffer.clear();
+          return;
+        }
+        this.buffer = p5.createGraphics(p5.width, p5.height);
+        this.buffer.noStroke();
+        this.buffer.drawingContext.globalAlpha = 0.8;
       },
       draw: function () {
-        p5.strokeWeight(0);
         // first make a pass and remove items, traversing in reverse so that removals
         // dont affect traversal
-        for (var i=this.splats.length-1;i>=0;i--) {
-          if (randomNumber(0,50) === 0) {
-            // remove existing
-            this.splats.splice(i, 1);
-            // add new item to end of array, so that it gets rendered above older ones
-            this.splats.push(this.randomSplat());
+        for (let splat of this.splats) {
+          if (splat.r > 30) {
+            splat.x = p5.random(0, 400);
+            splat.y = p5.random(0, 400);
+            splat.r = p5.random(5, 15);
+            splat.color = randomColorFromPalette();
+          }
+
+          splat.r += p5.random(1);
+          this.buffer.fill(splat.color);
+          for (let i = 0; i < 20; i++) {
+            this.buffer.ellipse(p5.randomGaussian(splat.x, splat.r), p5.randomGaussian(splat.y, splat.r), p5.random(2, 8));
           }
         }
-        for (i=0;i<this.splats.length;i++) {
-          p5.fill(this.splats[i].color);
-          this.splats[i].width+=randomNumber(0,4);
-          this.splats[i].height+=randomNumber(0,4);
-          p5.ellipse(this.splats[i].x,this.splats[i].y,this.splats[i].width,this.splats[i].height);
-        }
+
+        // Copy the off-screen buffer to the canvas.
+        p5.push();
+        p5.scale(1 / p5.pixelDensity());
+        p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
+        p5.pop();
       }
     };
 
@@ -760,7 +770,7 @@ module.exports = class Effects {
         this.shapes.triangle(0, 10, 80, 90, 0, 100);
         this.shapes.fill(colorFromPalette(1));
         this.shapes.triangle(20, 0, 50, 30, 30, 60);
-        this.shapes.fill(colorFromPalette(5));
+        this.shapes.fill(colorFromPalette(4));
         this.shapes.ellipse(100, 50, 80);
         this.shapes.fill(colorFromPalette(1));
         this.shapes.ellipse(-50, -50, 50);
@@ -952,7 +962,7 @@ module.exports = class Effects {
     this.snowflakes = {
       flake: [],
       draw: function () {
-        p5.background('lightblue');
+        p5.background(lerpColorFromPalette(0.5));
         let flake = {
           x: p5.random(-100, 400),
           y: -10,
