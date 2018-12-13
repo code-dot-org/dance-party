@@ -11,7 +11,7 @@ module.exports = class UnitTestResourceLoader {
     this.p5_ = p5;
   }
 
-  getAnimationData(callback) {
+  async getAnimationData() {
     const data = {};
     for (let costume of this.spriteNames_) {
       costume = costume.toLowerCase();
@@ -21,10 +21,10 @@ module.exports = class UnitTestResourceLoader {
         data[costume][move] = {};
       }
     }
-    callback(data);
+    return data;
   }
 
-  loadSpriteSheet(baseName, frameData) {
-    return this.p5_.loadSpriteSheet(new Image(), frameData, true);
+  async loadSpriteSheet(baseName, frameData) {
+    return this.p5_.loadSpriteSheet(new Image(), frameData);
   }
 };

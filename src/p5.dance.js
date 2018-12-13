@@ -25,7 +25,6 @@ const WATCHED_RANGES = [0, 1, 2];
 
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
-const ANIMATIONS = {};
 
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
@@ -104,6 +103,12 @@ module.exports = class DanceParty {
       spriteConfig(this.world);
     }
 
+    // Initialize animations object with empty arrays for each character
+    this.animations = {};
+    this.world.SPRITE_NAMES.forEach(costume=> {
+      this.animations[costume] = [];
+    });
+
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
 
@@ -125,7 +130,6 @@ module.exports = class DanceParty {
       this.p5_ = p5Inst;
       this.resourceLoader_.initWithP5(p5Inst);
       this.sprites_ = p5Inst.createGroup();
-      p5Inst.preload = () => this.preload();
       p5Inst.setup = () => this.setup();
       p5Inst.draw = () => this.draw();
       //Allows the sprite width and height to be set independently
@@ -135,6 +139,53 @@ module.exports = class DanceParty {
 
   teardown() {
     this.p5_.remove();
+  }
+
+  /**
+   * Make sure the requested costume-move animations are loaded and ready to use.
+   *
+   * This should always be called before play().
+   *
+   * @param {Array.<string>} costumeNames to load - if omitted, all costumes
+   *   will be loaded.
+   * @returns {Promise} resolved when the requested costumes are loaded and
+   *   ready to use.
+   */
+  async ensureSpritesAreLoaded(costumeNames = this.world.SPRITE_NAMES) {
+    this.allSpritesLoaded = false;
+    const animationData = await this.resourceLoader_.getAnimationData();
+    await Promise.all(costumeNames.map((costume) => {
+      const costumeData = animationData[costume.toLowerCase()];
+      return this.loadCostumeAnimations(costume, costumeData);
+    }));
+    this.allSpritesLoaded = true;
+  }
+
+  async loadCostumeAnimations(costume, costumeData) {
+    if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
+      // Already loaded, nothing to do:
+      return;
+    }
+
+    await Promise.all(this.world.MOVE_NAMES.map(({name: moveName, mirror}, moveIndex) => {
+      const moveData = costumeData[moveName.toLowerCase()];
+      return this.loadMoveAnimation(
+        costume,
+        Object.assign({moveName, moveIndex, mirror}, moveData)
+      );
+    }));
+  }
+
+  async loadMoveAnimation(costume, {moveName, moveIndex, spritesheet, frames, mirror}) {
+    const spriteSheet = await this.resourceLoader_.loadSpriteSheet(spritesheet, frames);
+    const animation = this.p5_.loadAnimation(spriteSheet);
+    this.setAnimationSpriteSheet(
+      costume,
+      moveIndex,
+      spriteSheet,
+      mirror,
+      animation
+    );
   }
 
   onKeyDown(keyCode) {
@@ -158,6 +209,11 @@ module.exports = class DanceParty {
       getSprites: () => this.p5_ && this.p5_.allSprites,
       getSongUrl: () => this.songMetadata_ && this.songMetadata_.file,
       getSongStartedTime: () => this.songStartTime_,
+      getAvailableSpriteNames: () => (
+        Object.entries(this.animations)
+          .filter(keyval => keyval[1].length > 0)
+          .map(keyval => keyval[0])
+      ),
       getPerformanceData: () => Object.assign({}, this.performanceData_),
     };
   }
@@ -184,6 +240,7 @@ module.exports = class DanceParty {
   }
 
   reset() {
+    this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
     while (this.p5_.allSprites.length > 0) {
@@ -196,46 +253,17 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
   }
 
-  preload() {
-    this.resourceLoader_.getAnimationData(animationData => {
-      this.world.SPRITE_NAMES.forEach(costume => {
-        const costumeData = animationData[costume.toLowerCase()];
-        ANIMATIONS[costume] = [];
-        this.world.MOVE_NAMES.forEach(({ name: moveName, mirror }, moveIndex) => {
-          const moveData = costumeData[moveName.toLowerCase()];
-          this.setAnimationSpriteSheet(
-            costume,
-            moveIndex,
-            this.resourceLoader_.loadSpriteSheet(moveData.spritesheet, moveData.frames),
-            mirror
-          );
-        });
-      });
-    });
-  }
-
-  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror){
-    if (!ANIMATIONS[sprite]) {
-      ANIMATIONS[sprite] = [];
-    }
-    ANIMATIONS[sprite][moveIndex] = {
+  setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
+    this.animations[sprite][moveIndex] = {
       spritesheet: spritesheet,
       mirror,
-      animation: 'missing',
+      animation: animation || 'missing',
     };
   }
 
   setup() {
     this.bgEffects_ = new Effects(this.p5_, 1);
     this.fgEffects_ = new Effects(this.p5_, 0.8);
-
-    // Create animations from spritesheets
-    for (let i = 0; i < this.world.SPRITE_NAMES.length; i++) {
-      let this_sprite = this.world.SPRITE_NAMES[i];
-      for (let j = 0; j < ANIMATIONS[this_sprite].length; j++) {
-        ANIMATIONS[this_sprite][j].animation = this.p5_.loadAnimation(ANIMATIONS[this_sprite][j].spritesheet);
-      }
-    }
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
@@ -252,6 +280,10 @@ module.exports = class DanceParty {
   }
 
   play(songData, callback) {
+    if (!this.allSpritesLoaded) {
+      throw new Error('play() called before ensureSpritesAreLoaded() has completed!');
+    }
+
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
@@ -330,8 +362,8 @@ module.exports = class DanceParty {
     sprite.current_move = 0;
     sprite.previous_move = 0; // I don't think this is used?
 
-    for (var i = 0; i < ANIMATIONS[costume].length; i++) {
-      sprite.addAnimation("anim" + i, ANIMATIONS[costume][i].animation);
+    for (var i = 0; i < this.animations[costume].length; i++) {
+      sprite.addAnimation("anim" + i, this.animations[costume][i].animation);
     }
     sprite.animation.stop();
     this.sprites_.add(sprite);
@@ -357,7 +389,7 @@ module.exports = class DanceParty {
         }
 
         if (sprite.looping_frame % FRAMES === 0) {
-          if (ANIMATIONS[sprite.style][sprite.current_move].mirror) {
+          if (this.animations[sprite.style][sprite.current_move].mirror) {
             sprite.mirroring *= -1;
           }
           if (sprite.animation.looping) {
@@ -1060,9 +1092,6 @@ module.exports = class DanceParty {
   }
 
   draw() {
-    const events = this.updateEvents_();
-    this.sampleFrameRate_();
-
     const { bpm, artist, title } = this.songMetadata_ || {};
 
     const context = {
@@ -1076,6 +1105,13 @@ module.exports = class DanceParty {
 
     this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);
+
+    if (!this.allSpritesLoaded) {
+      return;
+    }
+
+    const events = this.updateEvents_();
+    this.sampleFrameRate_();
 
     if (this.p5_.frameCount > 2) {
       // Perform sprite behaviors

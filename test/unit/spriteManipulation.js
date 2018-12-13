@@ -374,10 +374,6 @@ test('Sprite doMove rand will choose short burst', async t => {
     resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNamesOneFullLengthOneShortBurst),
   });
 
-  nativeAPI.world.moveNames = moveNamesOneFullLengthOneShortBurst;
-  nativeAPI.world.fullLengthMoveCount = 1;
-  nativeAPI.world.restMoveCount = 1;
-
   nativeAPI.p5_.noLoop();
 
   const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});

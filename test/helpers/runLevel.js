@@ -12,7 +12,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200, keyPre
       nativeAPI.reset();
       nativeAPI.teardown();
     },
-    onInit: api => {
+    onInit: async (api) => {
       nativeAPI = api;
 
       const validationCallback = new Function('World', 'nativeAPI', 'sprites', 'events', validationCode);
@@ -26,6 +26,7 @@ module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200, keyPre
 
       api.addCues(getCueList());
       api.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
+      await api.ensureSpritesAreLoaded();
       runUserSetup();
       api.play({bpm: bpm, delay: 0});
 

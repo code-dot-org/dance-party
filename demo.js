@@ -19,7 +19,14 @@ const nativeAPI = window.nativeAPI = new DanceParty({
   container: 'dance',
 });
 
-function runCode() {
+// Note: We don't just declare
+//   async function runCode() {
+// here because of a bug in Babel that tries to hoist the async function definition above
+// the prerequisite polyfill import, above.  This is fixed in Babel 7.
+// See https://github.com/babel/babel/issues/5085 and https://github.com/babel/babel/issues/6956
+const runCode = async function () {
+  await nativeAPI.ensureSpritesAreLoaded();
+
   const {
     runUserSetup,
     runUserEvents,
@@ -29,6 +36,7 @@ function runCode() {
   // Setup event tracking.
   nativeAPI.addCues(getCueList());
   nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
+
   runUserSetup();
 
   nativeAPI.play(jazzy_beats);

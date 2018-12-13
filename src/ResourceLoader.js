@@ -17,19 +17,39 @@ module.exports = class ResourceLoader {
     this.p5_ = p5;
   }
 
-  getAnimationData(callback) {
-    this.p5_.loadJSON(`${this.assetBase_}characters.json`, callback);
+  async getAnimationData() {
+    // This function caches the animation data so multiple calls will not
+    // result in multiple network requests. The animation data is presumed
+    // to be fixed for the lifetime of the application.
+    if (!this.animationData_) {
+      this.animationData_ = await new Promise((resolve, reject) => {
+        this.p5_.loadJSON(`${this.assetBase_}characters.json`, resolve, reject);
+      });
+    }
+    return this.animationData_;
   }
 
-  loadSpriteSheet(baseName, frameData) {
-    // Passing true as the 3rd arg to loadSpriteSheet() indicates that we want
-    // it to load the image as a Image (instead of a p5.Image), which avoids
-    // a canvas creation. This makes it possible to run on mobile Safari in
-    // iOS 12 with canvas memory limits.
+  /**
+   * @param {string} baseName
+   * @param {object} frameData
+   * @returns {Promise<SpriteSheet>}
+   */
+  async loadSpriteSheet(baseName, frameData) {
     const spriteSheetUrl = `${this.assetBase_}${baseName}`;
     if (!this.imageCache_[spriteSheetUrl]) {
-      this.imageCache_[spriteSheetUrl] = this.p5_.loadImageElement(spriteSheetUrl);
+      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(spriteSheetUrl);
     }
     return this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData);
+  }
+
+  /**
+   * Wrap p5.loadImageElement so we return a Promise
+   * @param {string} url
+   * @returns {Promise<Image>}
+   */
+  loadImageElement(url) {
+    return new Promise((resolve, reject) => {
+      this.p5_.loadImageElement(url, resolve, reject);
+    });
   }
 };

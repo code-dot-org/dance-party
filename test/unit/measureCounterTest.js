@@ -3,9 +3,10 @@ const helpers = require('../helpers/createDanceAPI');
 const sinon = require('sinon');
 
 test('Shows 0 for current measure when current measure is negative', async t => {
-  const clock = sinon.useFakeTimers(Date.now());
   const nativeAPI = await helpers.createDanceAPI();
   sinon.stub(nativeAPI.p5_, 'text');
+
+  const clock = sinon.useFakeTimers(Date.now());
 
   // Pickup measure count determined by BPM and Delay
   const fakeSongData = {
@@ -13,7 +14,6 @@ test('Shows 0 for current measure when current measure is negative', async t => 
     "delay": 4.0,
   };
   nativeAPI.play(fakeSongData);
-
 
   // text() draw call doesn't display measure text yet
   // getCurrentMeasure() still gives negative value for other work

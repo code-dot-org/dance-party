@@ -6,7 +6,10 @@ module.exports = {
     return new Promise(resolve => {
       new DanceParty({
         playSound: (url, callback) => callback(),
-        onInit: nativeAPI => resolve(nativeAPI),
+        onInit: async (nativeAPI) => {
+          await nativeAPI.ensureSpritesAreLoaded();
+          resolve(nativeAPI);
+        },
         resourceLoader: new UnitTestResourceLoader(),
         ...props
       });
