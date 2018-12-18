@@ -60,7 +60,7 @@ module.exports = class Effects {
 
     /* Given a p5.Color object, creates a new color object with the given alpha value*/
     const setAlphaForColor = (color, alpha) => {
-      return p5.color(color._getRed(), color._getGreen(), color._getBlue(), alpha);
+      return p5.color(p5.red(color), p5.green(color), p5.blue(color), alpha);
     };
 
     const randomColorFromPalette = () => {
