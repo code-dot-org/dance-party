@@ -41,6 +41,7 @@ async function testBackground(t, name, effect) {
 
 [
   ['none'],
+  ['flowers'],
   ['swirl'],
   ['rainbow', 'default'],
   ['rainbow', 'electronic'],
