@@ -203,8 +203,8 @@ module.exports = class Effects {
 
     this.flowers = {
       hue: 0,
-      
-      drawFlower: function(num_petals, color) {
+
+      drawFlower: function (num_petals, color) {
         p5.fill(color);
         for (let i = 0; i < num_petals; i++) {
           p5.rotate(360 / num_petals);
@@ -212,7 +212,7 @@ module.exports = class Effects {
         }
       },
 
-      draw: function({isPeak}) {
+      draw: function ({isPeak}) {
         if (isPeak) {
           this.hue += 25;
         }
@@ -227,7 +227,7 @@ module.exports = class Effects {
           p5.pop();
         }
         p5.pop();
-      }    
+      }
     };
 
     this.color_cycle = {
