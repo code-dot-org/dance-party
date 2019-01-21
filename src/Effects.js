@@ -58,11 +58,6 @@ module.exports = class Effects {
       return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
     };
 
-    /* Given a p5.Color object, creates a new color object with the given alpha value*/
-    const setAlphaForColor = (color, alpha) => {
-      return p5.color(p5.red(color), p5.green(color), p5.blue(color), alpha);
-    };
-
     const randomColorFromPalette = () => {
       const palette = this.palettes[this.currentPalette];
       return palette[randomNumber(0, palette.length - 1)];
@@ -178,21 +173,27 @@ module.exports = class Effects {
           this.update();
         }
         p5.push();
-        let backgroundColor = setAlphaForColor(lerpColorFromPalette(0.5), 0.5 * 255);
+        let backgroundColor = lerpColorFromPalette(0.5);
+        // Hack to set alpha for p5
+        backgroundColor._array[3] = 0.25;
         p5.background(backgroundColor);
         p5.noFill();
         p5.strokeWeight(50);
         let d, i;
         for (i = 0; i < 7; i++) {
-          let paletteColor = setAlphaForColor(lerpColorFromPalette(i * 0.14), 0.5 * 255);
+          let paletteColor = lerpColorFromPalette(i * 0.14);
+          paletteColor._array[3] = 0.5;
           p5.stroke(paletteColor);
           d = 150 + i * 100;
           p5.arc(0, 400, d, d, -90, 0);
           if (this.lengths[i] > 0) {
             // Hack to set RGB and Alpha values of p5 color objects
             let [red, green, blue] = paletteColor.levels;
-            let strokeColor = p5.color(red - 20, green - 20, blue - 20, (1 - this.lengths[i] / 90) * 255);
-            p5.stroke(strokeColor);
+            paletteColor.levels[0] = red - 20;
+            paletteColor.levels[1] = green - 20;
+            paletteColor.levels[2] = blue - 20;
+            paletteColor._array[3] = 1 - this.lengths[i] / 90;
+            p5.stroke(paletteColor);
             p5.arc(0, 400, d, d, -90, -90 + this.lengths[i]);
             this.lengths[i] = (this.lengths[i] + bpm / 50) % 90;
           }
