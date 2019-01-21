@@ -58,6 +58,7 @@ async function testBackground(t, name, effect) {
   ['disco_ball', 'neon'],
   ['diamonds'],
   ['fireworks'],
+  ['flowers'],
   ['lasers'],
   //'strobe',
   ['rain'],
