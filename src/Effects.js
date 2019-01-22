@@ -17,18 +17,6 @@ module.exports = class Effects {
     this.blend = blend || p5.BLEND;
     this.currentPalette = currentPalette;
 
-    this.palettes = {
-      default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
-      electronic: ['#fc71ee', '#3f0f6e', '#030a24', '#222152', '#00f7eb'],
-      vintage: ['#594c51', '#97bcb2', '#f1ebc4', '#e9b76f', '#de6965'],
-      cool: ['#2b5ef6', '#408ae1', '#69d5fb', '#6ee4d4', '#7afaae'],
-      warm: ['#ba2744', '#d85422', '#ed7c49', '#f1a54b', '#f6c54f'],
-      iceCream: ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'],
-      tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
-      neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
-      rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
-    };
-
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
     }
@@ -42,12 +30,12 @@ module.exports = class Effects {
     }
 
     const colorFromPalette = (n) => {
-      const palette = this.palettes[this.currentPalette];
+      const palette = constants.PALETTES[this.currentPalette];
       return palette[n % (palette.length)];
     };
 
     const lerpColorFromPalette = (amount) => {
-      const palette = this.palettes[this.currentPalette];
+      const palette = constants.PALETTES[this.currentPalette];
       const which = amount * palette.length;
       const n = Math.floor(which);
       const remainder = which - n;
@@ -59,7 +47,7 @@ module.exports = class Effects {
     };
 
     const randomColorFromPalette = () => {
-      const palette = this.palettes[this.currentPalette];
+      const palette = constants.PALETTES[this.currentPalette];
       return palette[randomNumber(0, palette.length - 1)];
     };
 
@@ -278,10 +266,12 @@ module.exports = class Effects {
         const squareHeight = p5.height / this.squaresPerSide;
         for (let i = 0; i < this.colors.length; i++) {
           p5.fill(this.colors[i]);
-          p5.rect((i % this.squaresPerSide) * squareWidth,
-              Math.floor(i / this.squaresPerSide) * squareHeight,
-              squareWidth,
-              squareHeight);
+          p5.rect(
+            (i % this.squaresPerSide) * squareWidth,
+            Math.floor(i / this.squaresPerSide) * squareHeight,
+            squareWidth,
+            squareHeight,
+          );
         }
         p5.pop();
       }
@@ -1468,7 +1458,7 @@ module.exports = class Effects {
   }
 
   randomBackgroundPalette() {
-    return this.sample_(Object.keys(this.palettes));
+    return this.sample_(Object.keys(constants.PALETTES));
   }
 
   /**
