@@ -1445,6 +1445,30 @@ module.exports = class Effects {
         }
       }
     };
+
+    this.music_wave = {
+      init: function () {},
+
+      draw: function (context) {
+        const centroid = context.centroid;
+        let scale = p5.map(centroid, 5000, 8000, 0, 1);
+        p5.background('black');
+        let a = 0
+        let inc = 360/15
+        let heightFactor = 1
+        for (let i = 1; i <= 400; i+=5) {
+            p5.stroke(lerpColorFromPalette(i/400))
+            let yInitial = 300 - Math.abs(300 * scale * (heightFactor/200) * p5.cos(a))
+            let yFinal = 300 + Math.abs(300 * scale * (heightFactor/200) * p5.cos(a))
+            p5.line(i, yInitial, i, yFinal)
+            if ( i > 200)
+              heightFactor--;
+            else
+              heightFactor++;
+            a += inc
+        }
+      }
+    };
   }
 
   randomForegroundEffect() {
