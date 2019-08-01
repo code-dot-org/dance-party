@@ -43,7 +43,7 @@ const runCode = async function () {
 }
 
 textareaCode.value = textareaCode.value || `var cat = makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-setBackgroundEffectWithPalette("disco_ball", "rand");
+setBackgroundEffectWithPalette("paint_drip", "tropical");
 
 atTimestamp(2, "measures", function () {
   changeMoveLR(cat, MOVES.ClapHigh, 1);

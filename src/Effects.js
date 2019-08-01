@@ -1445,6 +1445,47 @@ module.exports = class Effects {
         }
       }
     };
+    this.paint_drip = {
+      numberth_crayon: 1,
+      tallest_crayon: 0,
+      init: function () {
+        this.numberth_crayon = 1;
+        this.tallest_crayon = 0;
+      },
+      draw: function () {
+        p5.background('black');
+        let x = 7;
+        let y = 0;
+        let width_rect = 15;
+        let height_rect = 30;
+        let rand_arr = [121, 135, 235, 104, 319, 272, 173, 379, 362, 81, 317, 264, 196, 95, 60, 370, 200, 256, 205, 246, 86, 390, 158, 109, 362, 53, 134, 220, 357, 227];
+        for (let i = 1; i <= 30; i++) {
+          let c = lerpColorFromPalette(i/15);
+          p5.fill(c);
+          p5.noStroke();
+          if (this.numberth_crayon < i) {
+            p5.rect(x, y, width_rect, height_rect);
+            p5.ellipse(x, y, 40, 40);
+          } else {
+            if (this.tallest_crayon + height_rect <= rand_arr[i]) {
+              this.tallest_crayon = (p5.frameCount * 7) - 100 * (i-1);
+              p5.rect(x, y, width_rect, this.tallest_crayon + height_rect);
+              p5.ellipse(x + 7.5, this.tallest_crayon + height_rect, 20, 20);
+            } else {
+              this.tallest_crayon = (p5.frameCount * 7) - 100 * (i-1);
+              p5.rect(x,y, width_rect, rand_arr[i]);
+              p5.ellipse(x+7.5, rand_arr[i], 20, 20);
+            }
+          }
+          x += 20;
+        }
+
+        if (this.tallest_crayon >= 100) {
+          this.numberth_crayon += 1;
+          this.tallest_crayon = 30;
+        }
+      }
+    };
   }
 
   randomForegroundEffect() {
