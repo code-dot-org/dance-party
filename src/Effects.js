@@ -1445,6 +1445,48 @@ module.exports = class Effects {
         }
       }
     };
+    
+    this.starz = {
+      init: function () {},
+      draw: function () {
+       let starSizes = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+       let iceCream = ['#f6ccec', '#e2fee0', '#6784a6', '#dfb48d', '#feffed'];
+       let ordered = [];
+       for (let size of starSizes) {
+         ordered.push((size + p5.frameCount / 80) % starSizes.length);
+        }
+       ordered.sort((a, b) => b - a);
+       for (let size of ordered) {
+          let color = iceCream[Math.ceil(size) % 4]
+          p5.push();
+          p5.translate(200,200);
+          p5.scale(size);
+          p5.fill(color);
+          starshape(0, 0, 30, 70, 5);
+          p5.pop();
+         }
+      function starshape(x, y, radius1, radius2, npoints) {
+        let angle = p5.TWO_PI / npoints;
+        let halfAngle = angle / 2.0;
+        p5.beginShape();
+        for (let a = 0; a < p5.TWO_PI; a += angle) {
+          let sx = x + Math.cos(a) * radius2;
+          let sy = y + Math.sin(a) * radius2;
+          p5.vertex(sx, sy);
+          //p5.vertex(40,40);
+          sx = x + Math.cos(a + halfAngle) * radius1;
+          sy = y + Math.sin(a + halfAngle) * radius1;
+          p5.vertex(sx, sy);
+        }
+        p5.endShape(p5.CLOSE);
+      }
+
+      function setup() {
+        p5.createCanvas(400, 400);
+        p5.frameRate(30);
+      }
+       }
+    };
   }
 
   randomForegroundEffect() {
