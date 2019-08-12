@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
-/* global p5, Dance, validationProps */
+/* eslint-disable no-unused-vars, curly, eqeqeq */
+
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
@@ -727,7 +727,7 @@ module.exports = class DanceParty {
           // We want to include the corners in our total count so that the first
           // inner sprite is > 0 and the last inner sprite is < 1 when we lerp.
           sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (topCount + 1));
-          sprite.y = minY
+          sprite.y = minY;
           sprite.rotation = 0;
         }
 
@@ -1030,7 +1030,7 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {}
+        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
         events['this.p5_.keyWentDown'][key] = true;
       }
     }
@@ -1042,7 +1042,7 @@ module.exports = class DanceParty {
       this.energy_ = energy;
       for (let range of WATCHED_RANGES) {
         if (beats[range]) {
-          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {}
+          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {};
           events['Dance.fft.isPeak'][range] = true;
           this.peakThisFrame_ = true;
         }
@@ -1051,7 +1051,7 @@ module.exports = class DanceParty {
     }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
-      events['cue-seconds'] = events['cue-seconds'] || {}
+      events['cue-seconds'] = events['cue-seconds'] || {};
       events['cue-seconds'][this.world.cues.seconds.splice(0, 1)] = true;
     }
 
@@ -1173,21 +1173,9 @@ module.exports = class DanceParty {
   }
 };
 
-function queryParam(key) {
-  const pair = window.location.search
-    .slice(1)
-    .split('&')
-    .map(pair => pair.split('='))
-    .find(pair => decodeURIComponent(pair[0]) === key);
-  if (pair) {
-    return decodeURIComponent(pair[1]);
-  }
-  return undefined;
-}
-
 function timeSinceLoad() {
   if (typeof performance !== 'undefined') {
-    return performance.now()
+    return performance.now();
   } else if (typeof process !== 'undefined') {
     return process.hrtime();
   }
