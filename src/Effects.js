@@ -1445,6 +1445,59 @@ module.exports = class Effects {
         }
       }
     };
+
+    this.emoji = {
+      emojis : [],
+      emojiTypes : [],
+      background : randomColorFromPalette(),
+
+      init : function() {
+        this.image = p5.createGraphics(100, 100);
+        this.image.scale(3);
+        drawSmiley(this.image.drawingContext);
+        //replace with appropriate emojis
+        //crazy = loadImage('crazy.png');
+        //XD = loadImage('XD.png');
+        //starstruck = loadImage('starstruck.png');
+        //heartEyes = loadImage('heartEyes.png');
+        //laughing = loadImage('laughing.png');
+        this.emojiTypes.push(this.image);//crazy, XD, starstruck, heartEyes, laughing];
+      },
+
+      draw : function(context) {
+        if (p5.frameCount%15 == 0) {
+            this.background = randomColorFromPalette();
+        }
+        p5.background(this.background);
+        if (p5.frameCount%3 == 0) {
+          this.emojis.push(new this.emoji(this.emojiTypes, this.emojis));
+        }
+        for (let aEmoji of this.emojis) {
+          aEmoji.update();
+          aEmoji.display();
+        }
+      },
+
+      emoji : function(emojiTypes, emojis) {
+        this.x = p5.random(0, 350);
+        this.y = -50;
+        this.size = p5.random(25, 50);
+        let emojiImage = emojiTypes[0];//[Math.floor(Math.random()*5)];
+
+        this.update = function() {
+          this.y += p5.pow(this.size, 0.25);
+
+          if (this.y > p5.height) {
+            let index = emojis.indexOf(this);
+            emojis.splice(index, 1);
+          }
+        };
+        
+        this.display = function() {
+          p5.image(emojiImage, this.x, this.y, this.size, this.size);
+        };
+      }
+    };
   }
 
   randomForegroundEffect() {
