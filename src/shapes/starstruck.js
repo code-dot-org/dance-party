@@ -8,23 +8,16 @@ module.exports = function drawStarstruck(ctx) {
   ctx.lineTo(0,16);
   ctx.closePath();
   ctx.clip();
-  ctx.translate(0,0);
-  ctx.translate(0,0);
-  ctx.scale(1,1);
-  ctx.translate(0,0);
   ctx.strokeStyle = 'rgba(0,0,0,0)';
   ctx.lineCap = 'butt';
   ctx.lineJoin = 'miter';
   ctx.miterLimit = 4;
-  ctx.save();
   ctx.fillStyle = "#ffdf40";
   ctx.beginPath();
   ctx.arc(9.4707,8,8,0,6.283185307179586,true);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#66342d";
   ctx.strokeStyle = "#66342d";
   ctx.lineWidth = 0.3806400001049042;
@@ -44,8 +37,6 @@ module.exports = function drawStarstruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#f5f6e8";
   ctx.globalAlpha = 1;
   ctx.beginPath();
@@ -61,8 +52,6 @@ module.exports = function drawStarstruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#fff79c";
   ctx.beginPath();
   ctx.moveTo(4.29438,1.32027);
@@ -89,8 +78,6 @@ module.exports = function drawStarstruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#fff79c";
   ctx.beginPath();
   ctx.moveTo(14.4908,1.27766);
@@ -117,6 +104,5 @@ module.exports = function drawStarstruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
   ctx.restore();
 };
