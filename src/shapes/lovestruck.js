@@ -1,13 +1,5 @@
 module.exports = function drawLovestruck(ctx) {
   ctx.save();
-  ctx.fillStyle = "rgba(0, 0, 0, 0)";
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(17,0);
-  ctx.lineTo(17,16);
-  ctx.lineTo(0,16);
-  ctx.closePath();
-  ctx.clip();
   ctx.strokeStyle = 'rgba(0,0,0,0)';
   ctx.lineCap = 'butt';
   ctx.lineJoin = 'miter';

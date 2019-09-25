@@ -1,13 +1,5 @@
 module.exports = function drawWink(ctx) {
   ctx.save();
-  ctx.fillStyle = "rgba(0, 0, 0, 0)";
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(16,0);
-  ctx.lineTo(16,17);
-  ctx.lineTo(0,17);
-  ctx.closePath();
-  ctx.clip();
   ctx.strokeStyle = 'rgba(0,0,0,0)';
   ctx.lineCap = 'butt';
   ctx.lineJoin = 'miter';
