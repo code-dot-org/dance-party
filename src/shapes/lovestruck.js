@@ -8,23 +8,16 @@ module.exports = function drawLovestruck(ctx) {
   ctx.lineTo(0,16);
   ctx.closePath();
   ctx.clip();
-  ctx.translate(0,0);
-  ctx.translate(0,0);
-  ctx.scale(1,1);
-  ctx.translate(0,0);
   ctx.strokeStyle = 'rgba(0,0,0,0)';
   ctx.lineCap = 'butt';
   ctx.lineJoin = 'miter';
   ctx.miterLimit = 4;
-  ctx.save();
   ctx.fillStyle = "#ffdf40";
   ctx.beginPath();
   ctx.arc(8.29785,8,8,0,6.283185307179586,true);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#e3482c";
   ctx.beginPath();
   ctx.moveTo(9.46074,6.64147);
@@ -39,8 +32,6 @@ module.exports = function drawLovestruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#e3482c";
   ctx.beginPath();
   ctx.moveTo(2.58766,7.83629);
@@ -55,8 +46,6 @@ module.exports = function drawLovestruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
-  ctx.save();
   ctx.fillStyle = "#66342d";
   ctx.beginPath();
   ctx.moveTo(8.19727,14.6037);
@@ -67,6 +56,5 @@ module.exports = function drawLovestruck(ctx) {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  ctx.restore();
   ctx.restore();
 };
