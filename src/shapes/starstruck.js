@@ -1,4 +1,4 @@
-module.exports = function drawStarstruck(ctx, color) {
+module.exports = function drawStarstruck(ctx) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
   ctx.beginPath();

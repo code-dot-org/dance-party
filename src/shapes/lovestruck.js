@@ -1,4 +1,4 @@
-module.exports = function drawLovestruck(ctx, color) {
+module.exports = function drawLovestruck(ctx) {
   ctx.save();
   ctx.fillStyle = "rgba(0, 0, 0, 0)";
   ctx.beginPath();
