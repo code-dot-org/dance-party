@@ -1447,25 +1447,35 @@ module.exports = class Effects {
     };
 
     this.music_wave = {
-      init: function () {},
+      wave: [],
+      init: function () {
+        let wave = {
+          inc: 360/15,
+          heightFactor: 1,
+          yHalf: 300,
+          colorUnit: 400,
+          colorHalf: 200,
+        };
+        this.wave.push(wave);
+      },
 
       draw: function (context) {
         const centroid = context.centroid;
         let scale = p5.map(centroid, 5000, 8000, 0, 1);
+        let a = 0;
         p5.background('black');
-        let a = 0
-        let inc = 360/15
-        let heightFactor = 1
-        for (let i = 1; i <= 400; i+=5) {
-            p5.stroke(lerpColorFromPalette(i/400))
-            let yInitial = 300 - Math.abs(300 * scale * (heightFactor/200) * p5.cos(a))
-            let yFinal = 300 + Math.abs(300 * scale * (heightFactor/200) * p5.cos(a))
-            p5.line(i, yInitial, i, yFinal)
-            if ( i > 200)
-              heightFactor--;
-            else
-              heightFactor++;
-            a += inc
+        const wave = this.wave[0];
+        for (let i = 1; i <= wave.colorUnit; i+=5) {
+          p5.stroke(lerpColorFromPalette(i/wave.colorUnit));
+          let yInitial = wave.yHalf - Math.abs(wave.yHalf * scale * (wave.heightFactor/wave.colorHalf) * p5.cos(a));
+          let yFinal = wave.yHalf + Math.abs(wave.yHalf * scale * (wave.heightFactor/wave.colorHalf) * p5.cos(a));
+          p5.line(i, yInitial, i, yFinal);
+          if ( i > wave.colorHalf) {
+            wave.heightFactor--;
+          } else {
+            wave.heightFactor++;
+          }
+          a += wave.inc;
         }
       }
     };
