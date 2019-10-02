@@ -1254,12 +1254,12 @@ module.exports = class Effects {
         });
       }
     };
-    
+
     this.exploding_stars = {
       stars: [],
-      initStars: function() {
+      initStars: function () {
         for (let i = 0; i < 100; i++) {
-          let theta = p5.random(0, p5.TWO_PI)
+          let theta = p5.random(0, p5.TWO_PI);
           let velocity = p5.random(4,12);
           this.stars.push({
             color: randomColor(255, 255, 100),
@@ -1267,11 +1267,11 @@ module.exports = class Effects {
             y: 200,
             dx: velocity * p5.cos(theta),
             dy: velocity * p5.sin(theta)
-          })
+          });
         }
       },
-      draw: function() {
-        p5.angleMode(p5.RADIANS)
+      draw: function () {
+        p5.angleMode(p5.RADIANS);
         p5.noStroke();
         if (this.stars.length === 0) {
           this.initStars();
@@ -1282,7 +1282,7 @@ module.exports = class Effects {
           star.x += star.dx;
           star.y += star.dy;
         });
-        this.stars = this.stars.filter(star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410)
+        this.stars = this.stars.filter(star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410);
       }
     };
 

@@ -12,4 +12,4 @@ module.exports = function drawStar(p5, x, y, radius1, radius2, numPoints) {
     p5.vertex(sx, sy);
   }
   p5.endShape(p5.CLOSE);
-}
+};
