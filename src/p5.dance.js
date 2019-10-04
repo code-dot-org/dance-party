@@ -336,7 +336,7 @@ module.exports = class DanceParty {
   // Block Functions
   //
 
-  makeNewDanceSprite(costume, _, location) {
+  makeNewDanceSprite(costume, name, location) {
 
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
@@ -352,6 +352,10 @@ module.exports = class DanceParty {
     }
 
     var sprite = this.p5_.createSprite(location.x, location.y);
+    
+    if (name) {
+      sprite.name = name;
+    }
 
     sprite.style = costume;
     this.getGroupByName_(costume).add(sprite);

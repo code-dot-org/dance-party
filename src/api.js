@@ -1,6 +1,17 @@
 module.exports = class DanceAPI {
   constructor(nativeAPI) {
     const sprites = [];
+    
+    const lookupSprite = spriteName =>
+      sprites.find(sprite => sprite.name === spriteName);
+
+    const enforceUniqueName = name => {
+      sprites.forEach(sprite => {
+        if (sprite.name === name) {
+          sprite.name = undefined;
+        }
+      });
+    };
 
     return {
       setBackground: color => {
@@ -30,21 +41,20 @@ module.exports = class DanceAPI {
         sprites.push(nativeAPI.makeNewDanceSprite(costume, null, location));
       },
       makeNewDanceSprite: (costume, name, location) => {
-        return Number(
-          sprites.push(nativeAPI.makeNewDanceSprite(costume, name, location)) - 1
-        );
+        enforceUniqueName(name);
+        sprites.push(nativeAPI.makeNewDanceSprite(costume, name, location));
       },
       makeNewDanceSpriteGroup: (n, costume, layout) => {
         nativeAPI.makeNewDanceSpriteGroup(n, costume, layout);
       },
-      getCurrentDance: spriteIndex => {
-        return nativeAPI.getCurrentDance(sprites[spriteIndex]);
+      getCurrentDance: spriteName => {
+        return nativeAPI.getCurrentDance(lookupSprite(spriteName));
       },
-      changeMoveLR: (spriteIndex, move, dir) => {
-        nativeAPI.changeMoveLR(sprites[spriteIndex], move, dir);
+      changeMoveLR: (spriteName, move, dir) => {
+        nativeAPI.changeMoveLR(lookupSprite(spriteName), move, dir);
       },
-      doMoveLR: (spriteIndex, move, dir) => {
-        nativeAPI.doMoveLR(sprites[spriteIndex], move, dir);
+      doMoveLR: (spriteName, move, dir) => {
+        nativeAPI.doMoveLR(lookupSprite(spriteName), move, dir);
       },
       changeMoveEachLR: (group, move, dir) => {
         nativeAPI.changeMoveEachLR(group, move, dir);
@@ -55,11 +65,11 @@ module.exports = class DanceAPI {
       layoutSprites: (group, format) => {
         nativeAPI.layoutSprites(group, format);
       },
-      setTint: (spriteIndex, val) => {
-        nativeAPI.setTint(sprites[spriteIndex], val);
+      setTint: (spriteName, val) => {
+        nativeAPI.setTint(lookupSprite(spriteName), val);
       },
-      setTintInline: (spriteIndex, val) => {
-        nativeAPI.setTint(sprites[spriteIndex], val);
+      setTintInline: (spriteName, val) => {
+        nativeAPI.setTint(lookupSprite(spriteName), val);
       },
       setTintEach: (group, val) => {
         nativeAPI.setTintEach(group, val);
@@ -67,32 +77,32 @@ module.exports = class DanceAPI {
       setTintEachInline: (group, val) => {
         nativeAPI.setTintEach(group, val);
       },
-      setVisible: (spriteIndex, val) => {
-        nativeAPI.setVisible(sprites[spriteIndex], val);
+      setVisible: (spriteName, val) => {
+        nativeAPI.setVisible(lookupSprite(spriteName), val);
       },
       setVisibleEach: (group, val) => {
         nativeAPI.setVisibleEach(group, val);
       },
-      setProp: (spriteIndex, property, val) => {
-        nativeAPI.setProp(sprites[spriteIndex], property, val);
+      setProp: (spriteName, property, val) => {
+        nativeAPI.setProp(lookupSprite(spriteName), property, val);
       },
       setPropEach: (group, property, val) => {
         nativeAPI.setPropEach(group, property, val);
       },
-      setPropRandom: (spriteIndex, property) => {
-        nativeAPI.setPropRandom(sprites[spriteIndex], property);
+      setPropRandom: (spriteName, property) => {
+        nativeAPI.setPropRandom(lookupSprite(spriteName), property);
       },
-      getProp: (spriteIndex, property, val) => {
-        return nativeAPI.setProp(sprites[spriteIndex], property, val);
+      getProp: (spriteName, property, val) => {
+        return nativeAPI.setProp(lookupSprite(spriteName), property, val);
       },
-      changePropBy: (spriteIndex, property, val) => {
-        nativeAPI.changePropBy(sprites[spriteIndex], property, val);
+      changePropBy: (spriteName, property, val) => {
+        nativeAPI.changePropBy(lookupSprite(spriteName), property, val);
       },
-      jumpTo: (spriteIndex, location) => {
-        nativeAPI.jumpTo(sprites[spriteIndex], location);
+      jumpTo: (spriteName, location) => {
+        nativeAPI.jumpTo(lookupSprite(spriteName), location);
       },
-      setDanceSpeed: (spriteIndex, speed) => {
-        nativeAPI.setDanceSpeed(sprites[spriteIndex], speed);
+      setDanceSpeed: (spriteName, speed) => {
+        nativeAPI.setDanceSpeed(lookupSprite(spriteName), speed);
       },
       setDanceSpeedEach: (group, speed) => {
         nativeAPI.setDanceSpeedEach(group, speed);
@@ -103,11 +113,11 @@ module.exports = class DanceAPI {
       getTime: unit => {
         return Number(nativeAPI.getTime(unit));
       },
-      startMapping: (spriteIndex, property, val) => {
-        return nativeAPI.startMapping(sprites[spriteIndex], property, val);
+      startMapping: (spriteName, property, val) => {
+        return nativeAPI.startMapping(lookupSprite(spriteName), property, val);
       },
-      stopMapping: (spriteIndex, property, val) => {
-        return nativeAPI.stopMapping(sprites[spriteIndex], property, val);
+      stopMapping: (spriteName, property, val) => {
+        return nativeAPI.stopMapping(lookupSprite(spriteName), property, val);
       },
       changeColorBy: (input, method, amount) => {
         return nativeAPI.changeColorBy(input, method, amount);
