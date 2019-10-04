@@ -10,11 +10,11 @@ module.exports = class DanceAPI {
       // An old block may refer to this version of the command,
       // so we're keeping it around for backwards-compat.
       // @see https://github.com/code-dot-org/dance-party/issues/469
-      setBackgroundEffect: (effect, palette) => {
-        nativeAPI.setBackgroundEffect(effect.toString(), palette);
+      setBackgroundEffect: (effect, palette = 'default') => {
+        nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
       },
-      setBackgroundEffectWithPalette: (effect, palette) => {
-        nativeAPI.setBackgroundEffect(effect.toString(), palette);
+      setBackgroundEffectWithPalette: (effect, palette = 'default') => {
+        nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
       },
       // DEPRECATED
       // An old block may refer to this version of the command,
@@ -23,17 +23,21 @@ module.exports = class DanceAPI {
       setForegroundEffect: effect => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
-      setForegroundEffectExtended: (effect) => {
+      setForegroundEffectExtended: effect => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
+      makeAnonymousDanceSprite: (costume, location) => {
+        sprites.push(nativeAPI.makeNewDanceSprite(costume, null, location));
+      },
       makeNewDanceSprite: (costume, name, location) => {
-        return Number(sprites.push(
-          nativeAPI.makeNewDanceSprite(costume, name, location)) - 1);
+        return Number(
+          sprites.push(nativeAPI.makeNewDanceSprite(costume, name, location)) - 1
+        );
       },
       makeNewDanceSpriteGroup: (n, costume, layout) => {
         nativeAPI.makeNewDanceSpriteGroup(n, costume, layout);
       },
-      getCurrentDance: (spriteIndex) => {
+      getCurrentDance: spriteIndex => {
         return nativeAPI.getCurrentDance(sprites[spriteIndex]);
       },
       changeMoveLR: (spriteIndex, move, dir) => {
@@ -53,6 +57,21 @@ module.exports = class DanceAPI {
       },
       setTint: (spriteIndex, val) => {
         nativeAPI.setTint(sprites[spriteIndex], val);
+      },
+      setTintInline: (spriteIndex, val) => {
+        nativeAPI.setTint(sprites[spriteIndex], val);
+      },
+      setTintEach: (group, val) => {
+        nativeAPI.setTintEach(group, val);
+      },
+      setTintEachInline: (group, val) => {
+        nativeAPI.setTintEach(group, val);
+      },
+      setVisible: (spriteIndex, val) => {
+        nativeAPI.setVisible(sprites[spriteIndex], val);
+      },
+      setVisibleEach: (group, val) => {
+        nativeAPI.setVisibleEach(group, val);
       },
       setProp: (spriteIndex, property, val) => {
         nativeAPI.setProp(sprites[spriteIndex], property, val);
@@ -74,6 +93,9 @@ module.exports = class DanceAPI {
       },
       setDanceSpeed: (spriteIndex, speed) => {
         nativeAPI.setDanceSpeed(sprites[spriteIndex], speed);
+      },
+      setDanceSpeedEach: (group, speed) => {
+        nativeAPI.setDanceSpeedEach(group, speed);
       },
       getEnergy: range => {
         return Number(nativeAPI.getEnergy(range));
@@ -98,7 +120,7 @@ module.exports = class DanceAPI {
       },
       getCurrentTime: () => {
         return nativeAPI.getCurrentTime();
-      },
+      }
     };
   }
 };
