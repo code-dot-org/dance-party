@@ -352,7 +352,7 @@ module.exports = class DanceParty {
     }
 
     var sprite = this.p5_.createSprite(location.x, location.y);
-    
+
     if (name) {
       sprite.name = name;
     }

@@ -1,7 +1,7 @@
 module.exports = class DanceAPI {
   constructor(nativeAPI) {
     const sprites = [];
-    
+
     const lookupSprite = spriteName =>
       sprites.find(sprite => sprite.name === spriteName);
 

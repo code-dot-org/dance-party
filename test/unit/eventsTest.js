@@ -84,11 +84,11 @@ test('non-conflicting everySeconds cues', async t => {
   nativeAPI.world.fullLengthMoveCount = 4;
   nativeAPI.world.restMoveCount = 1;
   const userCode = `
-    const moose = makeNewDanceSprite("MOOSE");
-    const robot = makeNewDanceSprite("ROBOT");
+    makeNewDanceSprite("MOOSE", "moose");
+    makeNewDanceSprite("ROBOT", "robot");
 
-    everySeconds(1, "seconds", () => changeMoveLR(moose, "next"));
-    everySeconds(2, "seconds", () => changeMoveLR(robot, "next"));
+    everySeconds(1, "seconds", () => changeMoveLR("moose", "next"));
+    everySeconds(2, "seconds", () => changeMoveLR("robot", "next"));
   `;
   const interpretedAPI = injectInterpreted(nativeAPI, interpreted, userCode);
 
