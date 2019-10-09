@@ -1,5 +1,6 @@
 const constants = require('./constants');
 const drawHeart = require('./shapes/heart');
+const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
 const drawPineapple = require('./shapes/pineapple');
 const drawPizza = require('./shapes/pizza');
@@ -8,8 +9,11 @@ const drawRainbow = require('./shapes/rainbow');
 const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
+const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
+const drawTickled = require('./shapes/tickled');
+const drawWink = require('./shapes/wink');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
@@ -1446,54 +1450,62 @@ module.exports = class Effects {
       }
     };
 
-    this.emoji = {
-      emojis : [],
+    this.emojis = {
+      emojiList : [],
       emojiTypes : [],
-      background : randomColorFromPalette(),
 
-      init : function() {
-        this.image = p5.createGraphics(100, 100);
-        this.image.scale(3);
-        drawSmiley(this.image.drawingContext);
-        //replace with appropriate emojis
-        //crazy = loadImage('crazy.png');
-        //XD = loadImage('XD.png');
-        //starstruck = loadImage('starstruck.png');
-        //heartEyes = loadImage('heartEyes.png');
-        //laughing = loadImage('laughing.png');
-        this.emojiTypes.push(this.image);//crazy, XD, starstruck, heartEyes, laughing];
+      init : function () {
+        this.imageLovestruck = p5.createGraphics(100, 100);
+        this.imageLovestruck.scale(3);
+        drawLovestruck(this.imageLovestruck.drawingContext);
+        this.emojiTypes.push(this.imageLovestruck);
+
+        this.imageSmiley = p5.createGraphics(100, 100);
+        this.imageSmiley.scale(3);
+        drawSmiley(this.imageSmiley.drawingContext);
+        this.emojiTypes.push(this.imageSmiley);
+
+        this.imageStarstruck = p5.createGraphics(100, 100);
+        this.imageStarstruck.scale(3);
+        drawStarstruck(this.imageStarstruck.drawingContext);
+        this.emojiTypes.push(this.imageStarstruck);
+
+        this.imageTickled = p5.createGraphics(100, 100);
+        this.imageTickled.scale(3);
+        drawTickled(this.imageTickled.drawingContext);
+        this.emojiTypes.push(this.imageTickled);
+
+        this.imageWink = p5.createGraphics(100, 100);
+        this.imageWink.scale(3);
+        drawWink(this.imageWink.drawingContext);
+        this.emojiTypes.push(this.imageWink);
       },
 
-      draw : function(context) {
-        if (p5.frameCount%15 == 0) {
-            this.background = randomColorFromPalette();
+      draw : function () {
+        if (p5.frameCount % 10 === 0) {
+          this.emojiList.push(new this.emoji(this.emojiTypes, this.emojiList));
         }
-        p5.background(this.background);
-        if (p5.frameCount%3 == 0) {
-          this.emojis.push(new this.emoji(this.emojiTypes, this.emojis));
-        }
-        for (let aEmoji of this.emojis) {
+        for (let aEmoji of this.emojiList) {
           aEmoji.update();
           aEmoji.display();
         }
       },
 
-      emoji : function(emojiTypes, emojis) {
-        this.x = p5.random(0, 350);
+      emoji : function (emojiTypes, emojiList) {
+        this.x = randomNumber(0, 350);
         this.y = -50;
-        this.size = p5.random(25, 50);
-        let emojiImage = emojiTypes[0];//[Math.floor(Math.random()*5)];
+        this.size = randomNumber(25, 50);
+        let emojiImage = emojiTypes[randomNumber(0, 4)];
 
-        this.update = function() {
+        this.update = function () {
           this.y += p5.pow(this.size, 0.25);
-
-          if (this.y > p5.height) {
-            let index = emojis.indexOf(this);
-            emojis.splice(index, 1);
+          if (this.y > p5.height * 1.2) {
+            let index = emojiList.indexOf(this);
+            emojiList.splice(index, 1);
           }
         };
-        
-        this.display = function() {
+
+        this.display = function () {
           p5.image(emojiImage, this.x, this.y, this.size, this.size);
         };
       }
