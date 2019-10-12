@@ -6,7 +6,13 @@ const fs = require('fs');
   Set the background to given effect and save a screenshot to pathname
  */
 async function createBackgroundScreenshot(effectName, pathname, palette){
-  let nativeAPI = await helpers.createDanceAPI();
+  let nativeAPI;
+  try {
+    nativeAPI = await helpers.createDanceAPI();
+  } catch (e) {
+    console.error(e);
+    return;
+  }
   nativeAPI.p5_.randomSeed(0);
   nativeAPI.p5_.noiseSeed(0);
   nativeAPI.setBackgroundEffect(effectName, palette);
