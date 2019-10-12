@@ -1447,35 +1447,35 @@ module.exports = class Effects {
     };
 
     this.music_wave = {
-      wave: [],
+      wave: {},
       init: function () {
-        let wave = {
+        this.wave = {
           inc: 360/15,
           heightFactor: 1,
-          yHalf: 300,
-          colorUnit: 400,
-          colorHalf: 200,
+          heightDivider: 200,
+          yLoc: 300,
+          xTotal: 400,
         };
-        this.wave.push(wave);
       },
 
       draw: function (context) {
         const centroid = context.centroid;
-        let scale = p5.map(centroid, 5000, 8000, 0, 1);
-        let a = 0;
+        let scale = p5.map(centroid, 5000, 8000, 0, 250);
+        let angle = 0;
         p5.background('black');
-        const wave = this.wave[0];
-        for (let i = 1; i <= wave.colorUnit; i+=5) {
-          p5.stroke(lerpColorFromPalette(i/wave.colorUnit));
-          let yInitial = wave.yHalf - Math.abs(wave.yHalf * scale * (wave.heightFactor/wave.colorHalf) * p5.cos(a));
-          let yFinal = wave.yHalf + Math.abs(wave.yHalf * scale * (wave.heightFactor/wave.colorHalf) * p5.cos(a));
+        const wave = this.wave;
+        for (let i = 1; i <= wave.xTotal; i+=5) {
+          p5.stroke(lerpColorFromPalette(i/wave.xTotal));
+          let amplitude = Math.abs(scale * (wave.heightFactor/wave.heightDivider) * p5.cos(angle));
+          let yInitial = wave.yLoc - amplitude;
+          let yFinal = wave.yLoc + amplitude;
           p5.line(i, yInitial, i, yFinal);
-          if ( i > wave.colorHalf) {
-            wave.heightFactor--;
-          } else {
+          if ( i < wave.xTotal/2) {
             wave.heightFactor++;
+          } else {
+            wave.heightFactor--;
           }
-          a += wave.inc;
+          angle += wave.inc;
         }
       }
     };
