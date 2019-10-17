@@ -1452,7 +1452,6 @@ module.exports = class Effects {
       heightDivider: 200,
       yLoc: 300,
       lineWidth: p5.width/80,
-      angle: 0,
       draw: function (context) {
         const centroid = context.centroid;
         let scale = p5.map(centroid, 5000, 8000, 0, 250);
