@@ -1451,7 +1451,6 @@ module.exports = class Effects {
       heightFactor: 1,
       heightDivider: 200,
       yLoc: 300,
-      xTotal: p5.width,
       lineWidth: p5.width/80,
       angle: 0,
       draw: function (context) {
@@ -1459,13 +1458,13 @@ module.exports = class Effects {
         let scale = p5.map(centroid, 5000, 8000, 0, 250);
         let angle = 0;
         p5.background('black');
-        for (let i = 0; i < this.xTotal; i+=this.lineWidth) {
-          p5.stroke(lerpColorFromPalette(i/this.xTotal));
+        for (let i = 0; i < p5.width; i+=this.lineWidth) {
+          p5.stroke(lerpColorFromPalette(i/p5.width));
           let amplitude = Math.abs(scale * (this.heightFactor/this.heightDivider) * p5.cos(angle));
           let yInitial = this.yLoc - amplitude;
           let yFinal = this.yLoc + amplitude;
           p5.line(i, yInitial, i, yFinal);
-          if ( i < this.xTotal/2) {
+          if ( i < p5.width/2) {
             this.heightFactor++;
           } else {
             this.heightFactor--;
