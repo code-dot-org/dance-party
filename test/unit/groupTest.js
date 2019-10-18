@@ -292,3 +292,33 @@ test('LayoutSprites resets rotation', async t => {
 
   nativeAPI.reset();
 });
+
+test('randomizing property of a group sets to individually random properties', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(5, 'CAT', 'circle');
+
+  nativeAPI.layoutSprites('CAT', 'grid');
+  let cats = nativeAPI.getGroupByName_('CAT');
+  for (let i = 0; i < cats.length; i++) {
+    nativeAPI.setProp(cats[i].name, 'scale', 20);
+  }
+
+  nativeAPI.setPropRandomEach(cats, 'scale');
+
+  let catScales = [];
+
+  //Create a list of cat property values and fail if not unique
+  cats.forEach(cat => {
+    let catScale = nativeAPI.getProp(cat, 'scale');
+    t.equal(catScales.indexOf(catScale), -1);
+    catScales.push(catScale);
+  });
+
+  t.end();
+
+  nativeAPI.reset();
+});
