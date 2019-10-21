@@ -334,7 +334,8 @@ test('randomizing property of a group sets to individually random properties', a
 
   // Create a list of cat scales and fail if at least one is not unique
   // This test will fail when all five scales are randomly changed to
-  // the same value and should be re-run in those flakey cases.
+  // the same value and should be re-run in those flakey cases - should
+  // be very rare.
   let catScales = new Set();
   for (let i = 0; i < cats.length; i++) {
     catScales.add(nativeAPI.getProp(cats[i], 'scale'));
