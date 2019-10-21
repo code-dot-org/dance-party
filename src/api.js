@@ -133,6 +133,9 @@ module.exports = class DanceAPI {
       },
       getCurrentTime: () => {
         return nativeAPI.getCurrentTime();
+      },
+      changePropEachBy: (group, property, val) => {
+        return nativeAPI.changePropEachBy(group, property, val);
       }
     };
   }

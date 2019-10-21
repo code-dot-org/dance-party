@@ -882,6 +882,13 @@ module.exports = class DanceParty {
     this.setPropEach(group, "dance_speed", val);
   }
 
+  changePropEachBy(group, property, val) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.changePropBy(sprite, property, val);
+    }, this);
+  }
+
   // Music Helpers
 
   getEnergy(range) {
