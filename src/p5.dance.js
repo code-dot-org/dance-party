@@ -73,7 +73,7 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
-    
+
     this.world.keysPressed = new Set();
 
     this.peakThisFrame_ = false;
