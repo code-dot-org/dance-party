@@ -316,3 +316,34 @@ test('changing property value by delta updates property by delta for all sprites
 
   nativeAPI.reset();
 });
+
+test('randomizing property of a group sets to individually random properties', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(5, 'CAT', 'circle');
+
+  let cats = nativeAPI.getGroupByName_('CAT');
+  for (let i = 0; i < cats.length; i++) {
+    nativeAPI.setProp(cats[i].name, 'scale', 20);
+  }
+
+  nativeAPI.setPropRandomEach(cats, 'scale');
+
+  // Create a list of cat scales and fail if at least one is not unique
+  // This test will fail when all five scales are randomly changed to
+  // the same value and should be re-run in those flakey cases - should
+  // be very rare.
+  let catScales = new Set();
+  for (let i = 0; i < cats.length; i++) {
+    catScales.add(nativeAPI.getProp(cats[i], 'scale'));
+  }
+
+  t.true(catScales.size > 0);
+
+  t.end();
+
+  nativeAPI.reset();
+});

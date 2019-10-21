@@ -92,6 +92,9 @@ module.exports = class DanceAPI {
       setPropRandom: (spriteName, property) => {
         nativeAPI.setPropRandom(lookupSprite(spriteName), property);
       },
+      setPropRandomEach: (group, property) => {
+        nativeAPI.setPropRandomEach(group, property);
+      },
       getProp: (spriteName, property, val) => {
         return nativeAPI.setProp(lookupSprite(spriteName), property, val);
       },

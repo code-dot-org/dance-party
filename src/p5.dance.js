@@ -822,6 +822,13 @@ module.exports = class DanceParty {
     }
   }
 
+  setPropRandomEach(group, property) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.setPropRandom(sprite, property);
+    }, this);
+  }
+
   getProp(sprite, property) {
     if (!this.spriteExists_(sprite)) return;
 
