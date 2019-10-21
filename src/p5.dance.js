@@ -254,6 +254,7 @@ module.exports = class DanceParty {
     this.world.fg_effect = null;
     this.world.bg_effect = null;
     this.world.validationState = {};
+    this.world.keysPressed = new Set();
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
