@@ -74,6 +74,8 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.fg_effect = null;
 
+    this.world.keysPressed = new Set();
+
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
@@ -252,6 +254,7 @@ module.exports = class DanceParty {
     this.world.fg_effect = null;
     this.world.bg_effect = null;
     this.world.validationState = {};
+    this.world.keysPressed = new Set();
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
@@ -1051,6 +1054,7 @@ module.exports = class DanceParty {
       if (this.p5_.keyWentDown(key)) {
         events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
         events['this.p5_.keyWentDown'][key] = true;
+        this.world.keysPressed.add(key);
       }
     }
 
