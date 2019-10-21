@@ -292,3 +292,27 @@ test('LayoutSprites resets rotation', async t => {
 
   nativeAPI.reset();
 });
+
+test('changing property value by delta updates property by delta for all sprites', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+
+  const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
+
+  nativeAPI.setProp(catSprite, 'scale', 20);
+  nativeAPI.setProp(bearSprite, 'scale', 35);
+
+  nativeAPI.changePropEachBy('all', 'scale', 14);
+
+  t.equal(nativeAPI.getProp(catSprite, 'scale'), 34);
+  t.equal(nativeAPI.getProp(bearSprite, 'scale'), 49);
+
+  t.end();
+
+  nativeAPI.reset();
+});
