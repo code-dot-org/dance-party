@@ -281,6 +281,90 @@ module.exports = class Effects {
       }
     };
 
+    // Creates a "ripple" effect where the ripple positions can be random.
+    let createRipplesEffect = function (isRandomRipple) {
+      return {
+        // Determines whether or not the start positions of the ripples are random or centered.
+        isRandomRipple: isRandomRipple,
+        // The max width a ripple can be before it disappears.
+        maxRippleWidth: 1000,
+        // The ripples which are growing.
+        ripples: [],
+        // The count of ripples which have been created since the dance started.
+        rippleCount: 0,
+        // The timestamp of when the last "draw" happened.
+        lastDrawTime: new Date(),
+
+        init: function () {
+          this.lastDrawTime = new Date();
+          // put some initial rings.
+          for (let i=0; i<6; i++) {
+            this.ripples.push(this.createRandomRipple(this.maxRippleWidth * (.85 - (.15*i))));
+          }
+        },
+
+        draw: function ({isPeak, bpm}) {
+          let currentTime = new Date();
+          let maxRippleWidth = this.maxRippleWidth;
+          p5.background(colorFromPalette(0));
+          // On each "peak", create a new ripple.
+          if (isPeak) {
+            this.ripples.push(this.createRandomRipple(1));
+          }
+          p5.push();
+          p5.noStroke();
+          p5.ellipseMode(p5.CENTER);
+          // calculate how much the ripples have grown and draw them.
+          let rippleWidthGrowth = this.getRippleGrowth(currentTime, bpm);
+          for (let i=0; i < this.ripples.length; i++) {
+            let ripple = this.ripples[i];
+            ripple.width += rippleWidthGrowth;
+            p5.fill(ripple.color);
+            p5.ellipse(ripple.x, ripple.y, ripple.width);
+          }
+          // remove ripples which are too big
+          this.ripples = this.ripples.filter(function (ripple){
+            return ripple.width < maxRippleWidth;
+          });
+          p5.pop();
+          // keep track of the draw times so we can calculate how much time has passed.
+          this.lastDrawTime = currentTime;
+        },
+
+        // creates a object representing the size and position of a ripple given an initial width
+        createRandomRipple: function (width) {
+          let x = 200;
+          let y = 200;
+          if (this.isRandomRipple) {
+            x = randomNumber(20, 380);
+            y = randomNumber(20, 380);
+          }
+          return {
+            x: x,
+            y: y,
+            color: colorFromPalette(++this.rippleCount),
+            width: width,
+          };
+        },
+
+        // calculates the increase in width a ripple will experience depending on the
+        // amount of time which has passed since the last drawm and the current BPM.
+        getRippleGrowth: function (currentTime, bpm) {
+          if (bpm === 0) {
+            return 0;
+          }
+          // Velocity of the ripple width expansion.
+          let velocity = this.maxRippleWidth/(bpm/60)/1.5;
+          // Calculate how much time has passed so we know how wide the ripple should be.
+          let deltaTime = (currentTime - this.lastDrawTime) / 1000;
+          return Math.floor(velocity * deltaTime);
+        }
+      };
+    };
+
+    this.ripples = createRipplesEffect(false);
+    this.ripples_random = createRipplesEffect(true);
+
     this.diamonds = {
       hue: 0,
       update: function () {
