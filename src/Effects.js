@@ -1482,33 +1482,25 @@ module.exports = class Effects {
       },
 
       draw : function () {
-        if (p5.frameCount % 10 === 0) {
-          this.emojiList.push(new this.emoji(this.emojiTypes, this.emojiList));
+        if (p5.frameCount % 10 === 0) { // generate new emoji every 10 frames
+          this.emojiList.push({
+            x: randomNumber(0, 350),
+            y: -50,
+            size: randomNumber(25, 50),
+            image: this.emojiTypes[randomNumber(0, 4)],
+          });
         }
-        for (let aEmoji of this.emojiList) {
-          aEmoji.update();
-          aEmoji.display();
+        for (let i = 0; i < this.emojiList.length; ++i) {
+          const emoji = this.emojiList[i];
+          emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+          if (emoji.y > p5.height * 1.2) { // if the emoji has fallen past 120% of the screen
+            this.emojiList.splice(i, 1);
+          }
+          p5.push();
+          p5.image(emoji.image, emoji.x, emoji.y, emoji.size, emoji.size);
+          p5.pop();
         }
       },
-
-      emoji : function (emojiTypes, emojiList) {
-        this.x = randomNumber(0, 350);
-        this.y = -50;
-        this.size = randomNumber(25, 50);
-        let emojiImage = emojiTypes[randomNumber(0, 4)];
-
-        this.update = function () {
-          this.y += p5.pow(this.size, 0.25);
-          if (this.y > p5.height * 1.2) {
-            let index = emojiList.indexOf(this);
-            emojiList.splice(index, 1);
-          }
-        };
-
-        this.display = function () {
-          p5.image(emojiImage, this.x, this.y, this.size, this.size);
-        };
-      }
     };
   }
 
