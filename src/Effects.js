@@ -287,29 +287,38 @@ module.exports = class Effects {
         // Determines whether or not the start positions of the ripples are random or centered.
         isRandomRipple: isRandomRipple,
         // The max width a ripple can be before it disappears.
-        maxRippleWidth: 1000,
+        maxRippleWidth: 575,
         // The ripples which are growing.
         ripples: [],
         // The count of ripples which have been created since the dance started.
         rippleCount: 0,
         // The timestamp of when the last "draw" happened.
         lastDrawTime: new Date(),
+        // Tracks the last biggest ripple's color so we can set that as the background after it disappears
+        backgroundColor: colorFromPalette(0),
 
         init: function () {
           this.lastDrawTime = new Date();
-          // put some initial rings.
-          for (let i=0; i<6; i++) {
-            this.ripples.push(this.createRandomRipple(this.maxRippleWidth * (.85 - (.15*i))));
+          this.backgroundColor = colorFromPalette(0);
+          this.ripples = [];
+          // If the starting location is random, then the circles might need to be 2x as wide to fill the screen.
+          if (isRandomRipple) {
+            this.maxRippleWidth = 1150;
           }
+          // put some initial ripples.
+          for (let i=0; i<6; i++) {
+            this.ripples.push(this.createRipple(this.maxRippleWidth * (.85 - (.15*i)), this.isRandomRipple));
+          }
+
         },
 
         draw: function ({isPeak, bpm}) {
           let currentTime = new Date();
           let maxRippleWidth = this.maxRippleWidth;
-          p5.background(colorFromPalette(0));
+          p5.background(this.backgroundColor);
           // On each "peak", create a new ripple.
           if (isPeak) {
-            this.ripples.push(this.createRandomRipple(1));
+            this.ripples.push(this.createRipple(1, this.isRandomRipple));
           }
           p5.push();
           p5.noStroke();
@@ -322,20 +331,27 @@ module.exports = class Effects {
             p5.fill(ripple.color);
             p5.ellipse(ripple.x, ripple.y, ripple.width);
           }
-          // remove ripples which are too big
+          // remove ripples which are too big, and updated the backgroundColor to match the highest one.
+          let backgroundColor = this.backgroundColor;
           this.ripples = this.ripples.filter(function (ripple){
-            return ripple.width < maxRippleWidth;
+            if (ripple.width < maxRippleWidth) {
+              return true;
+            } else {
+              backgroundColor = ripple.color;
+              return false;
+            }
           });
+          this.backgroundColor = backgroundColor;
           p5.pop();
           // keep track of the draw times so we can calculate how much time has passed.
           this.lastDrawTime = currentTime;
         },
 
         // creates a object representing the size and position of a ripple given an initial width
-        createRandomRipple: function (width) {
+        createRipple: function (width, isRandom) {
           let x = 200;
           let y = 200;
-          if (this.isRandomRipple) {
+          if (isRandom) {
             x = randomNumber(20, 380);
             y = randomNumber(20, 380);
           }
