@@ -41,8 +41,6 @@ module.exports = {
     'lasers',
     'splatter',
     'rainbow',
-    'ripples',
-    'ripples_random',
     'snowflakes',
     'text',
     'galaxy',
