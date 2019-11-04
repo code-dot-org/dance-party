@@ -877,6 +877,18 @@ module.exports = class DanceParty {
     this.adjustSpriteDepth_(sprite);
   }
 
+  jumpToEach(group, location) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite) {
+      let newLocation = {
+        x: location.x + this.p5_.randomGaussian(0,5),
+        y: location.y + this.p5_.randomGaussian(0,5)
+      };
+
+      this.jumpTo(sprite, newLocation);
+    }, this);
+  }
+
   setDanceSpeed(sprite, speed) {
     if (!this.spriteExists_(sprite)) return;
     sprite.dance_speed = speed;

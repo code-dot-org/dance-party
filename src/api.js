@@ -104,6 +104,9 @@ module.exports = class DanceAPI {
       jumpTo: (spriteName, location) => {
         nativeAPI.jumpTo(lookupSprite(spriteName), location);
       },
+      jumpToEach: (group, location) => {
+        nativeAPI.jumpToEach(group, location);
+      },
       setDanceSpeed: (spriteName, speed) => {
         nativeAPI.setDanceSpeed(lookupSprite(spriteName), speed);
       },

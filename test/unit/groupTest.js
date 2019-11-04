@@ -347,3 +347,38 @@ test('randomizing property of a group sets to individually random properties', a
 
   nativeAPI.reset();
 });
+
+test('jumpTo for a group sets each sprite location with slight variance', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(6, 'CAT', 'row');
+
+  let cats = nativeAPI.getGroupByName_('CAT');
+
+  nativeAPI.jumpToEach(cats, {x: 200, y: 100});
+
+  let catXPositions = new Set();
+  let catYPositions = new Set();
+  for (let i = 0; i < cats.length; i++) {
+    let newX = cats[i].x;
+    let newY = cats[i].y;
+
+    // Fail if two sprites move to the exact same position- failure should be incredibly rare
+    t.false(catXPositions.has(newX) && catYPositions.has(newY));
+
+    // Fail if a cat is outside 3 standard deviations- failure should be incredibly rare.
+    t.true(newX > 185);
+    t.true(newX < 215);
+    t.true(newY > 85);
+    t.true(newY < 115);
+    catXPositions.add(newX);
+    catYPositions.add(newY);
+  }
+
+  t.end();
+
+  nativeAPI.reset();
+});
