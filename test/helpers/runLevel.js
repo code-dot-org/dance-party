@@ -6,7 +6,7 @@ const injectInterpreted = require('./injectInterpreted');
 module.exports = (userCode, validationCode, onPuzzleComplete, bpm = 1200, keyPresses = {}) => {
   let nativeAPI;
   createDanceAPI({
-    resourceLoader: new ResourceLoader('/base/assets/sprite_sheets/'),
+    resourceLoader: new ResourceLoader(),
     onPuzzleComplete: (result, message) => {
       onPuzzleComplete(result, message);
       nativeAPI.reset();
