@@ -1,4 +1,4 @@
-const ASSET_BASE = "https://curriculum.code.org/images/sprites/dance_20181120/";
+const ASSET_BASE = "https://curriculum.code.org/images/sprites/dance_20181127/";
 
 /**
  * The resource loader class abstracts network-dependent operations, allowing
