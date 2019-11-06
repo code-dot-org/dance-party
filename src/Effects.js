@@ -10,6 +10,7 @@ const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
+const drawStar = require('./shapes/star');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
@@ -56,6 +57,34 @@ module.exports = class Effects {
         p5.background(backgroundColor || "white");
       }
     };
+
+    this.starz = {
+      starSizes: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+
+      draw: function() {
+        translate(200, 200);
+        let ordered = [];
+        for (let size of starSizes) {
+          ordered.push((size + frameCount / 80) % starSizes.length);
+        }
+        
+        ordered.sort((a, b) => b - a);
+        
+        for (let size of ordered) {
+          let color = lerpColorFromPalette(ceil(size) % 4);
+          push();
+          scale(size);
+          fill(color);
+          drawStar(0, 0, 30, 70, 5);
+          pop();
+        }
+      },
+
+      setup: function() {
+        createCanvas(400, 400);
+        frameRate(30);
+      }
+    }
 
     this.disco_ball = {
       stars: [],
