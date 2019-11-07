@@ -85,7 +85,8 @@ async function testBackground(t, name, effect) {
   ['stars'],
   ['galaxy'],
   ['confetti'],
-  ['music_notes']
+  ['music_notes'],
+  ['music_wave']
 ].forEach(effect => {
   let name = effect[0] + (effect[1] ? ("_" + effect[1]) : "");
   test(`background - ${name}`, async t => {
