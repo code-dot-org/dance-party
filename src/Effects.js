@@ -1483,7 +1483,7 @@ module.exports = class Effects {
         }
         this.image = p5.createGraphics(100, 100);
         this.image.scale(3);
-        drawSmiley(this.image.drawingContext);
+        drawSmiley(this.image.drawingContext, 0.8);
       },
       draw: function (context) {
         const centroid = context.centroid;
@@ -1655,7 +1655,7 @@ module.exports = class Effects {
 
         this.imageSmiley = p5.createGraphics(100, 100);
         this.imageSmiley.scale(3);
-        drawSmiley(this.imageSmiley.drawingContext);
+        drawSmiley(this.imageSmiley.drawingContext, 1.0);
         this.emojiTypes.push(this.imageSmiley);
 
         this.imageStarstruck = p5.createGraphics(100, 100);
@@ -1679,7 +1679,7 @@ module.exports = class Effects {
           this.emojiList.push({
             x: randomNumber(0, 350),
             y: -50,
-            size: randomNumber(25, 50),
+            size: randomNumber(50, 90),
             image: this.emojiTypes[randomNumber(0, 4)],
           });
         }
@@ -1690,7 +1690,7 @@ module.exports = class Effects {
             this.emojiList.splice(i, 1);
           }
           p5.push();
-          p5.image(emoji.image, emoji.x, emoji.y, emoji.size, emoji.size);
+          p5.drawingContext.drawImage(emoji.image.elt, emoji.x, emoji.y, emoji.size, emoji.size);
           p5.pop();
         }
       },
