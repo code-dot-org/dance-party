@@ -74,6 +74,8 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.fg_effect = null;
 
+    this.world.keysPressed = new Set();
+
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
@@ -251,6 +253,8 @@ module.exports = class DanceParty {
     this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
+    this.world.validationState = {};
+    this.world.keysPressed = new Set();
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
@@ -336,7 +340,7 @@ module.exports = class DanceParty {
   // Block Functions
   //
 
-  makeNewDanceSprite(costume, _, location) {
+  makeNewDanceSprite(costume, name, location) {
 
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
@@ -352,6 +356,10 @@ module.exports = class DanceParty {
     }
 
     var sprite = this.p5_.createSprite(location.x, location.y);
+
+    if (name) {
+      sprite.name = name;
+    }
 
     sprite.style = costume;
     this.getGroupByName_(costume).add(sprite);
@@ -818,6 +826,13 @@ module.exports = class DanceParty {
     }
   }
 
+  setPropRandomEach(group, property) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.setPropRandom(sprite, property);
+    }, this);
+  }
+
   getProp(sprite, property) {
     if (!this.spriteExists_(sprite)) return;
 
@@ -862,6 +877,18 @@ module.exports = class DanceParty {
     this.adjustSpriteDepth_(sprite);
   }
 
+  jumpToEach(group, location) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite) {
+      let newLocation = {
+        x: location.x + this.p5_.randomGaussian(0,5),
+        y: location.y + this.p5_.randomGaussian(0,5)
+      };
+
+      this.jumpTo(sprite, newLocation);
+    }, this);
+  }
+
   setDanceSpeed(sprite, speed) {
     if (!this.spriteExists_(sprite)) return;
     sprite.dance_speed = speed;
@@ -869,6 +896,13 @@ module.exports = class DanceParty {
 
   setDanceSpeedEach(group, val) {
     this.setPropEach(group, "dance_speed", val);
+  }
+
+  changePropEachBy(group, property, val) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.changePropBy(sprite, property, val);
+    }, this);
   }
 
   // Music Helpers
@@ -1032,6 +1066,7 @@ module.exports = class DanceParty {
       if (this.p5_.keyWentDown(key)) {
         events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
         events['this.p5_.keyWentDown'][key] = true;
+        this.world.keysPressed.add(key);
       }
     }
 

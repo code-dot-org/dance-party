@@ -4,26 +4,26 @@ module.exports = {
       `	
       var lead_dancer;	
        whenSetup(function () {	
-        lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});	
+        makeNewDanceSprite("CAT", "lead_dancer", {x: 200, y: 200});	
       });	
        everySeconds(2, "measures", function () {	
-        changeMoveLR(lead_dancer, 3, -1);	
+        changeMoveLR("lead_dancer", 3, -1);	
       });	
        everySeconds(4, "measures", function () {	
-        changeMoveLR(lead_dancer, 1, -1);	
-        setProp(lead_dancer, "scale", 50);	
+        changeMoveLR("lead_dancer", 1, -1);	
+        setProp("lead_dancer", "scale", 50);	
       });	
     `,
       `	
       var lead_dancer;	
        whenSetup(function () {	
-        lead_dancer = makeNewDanceSprite("CAT", lead_dancer, {x: 200, y: 200});	
+        makeNewDanceSprite("CAT", "lead_dancer", {x: 200, y: 200});	
       });	
        everySeconds(4, "measures", function () {	
-        changeMoveLR(lead_dancer, 1, -1);	
+        changeMoveLR("lead_dancer", 1, -1);	
       });	
        everySeconds(2, "measures", function () {	
-        changeMoveLR(lead_dancer, 3, -1);	
+        changeMoveLR("lead_dancer", 3, -1);	
       });	
     `,
     ],

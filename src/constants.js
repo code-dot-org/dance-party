@@ -1,7 +1,7 @@
 module.exports = {
   SIZE: 300,
   FRAMES: 24,
-  SPRITE_NAMES: ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "UNICORN"],
+  SPRITE_NAMES: ["ALIEN", "BEAR", "CAT", "DOG", "DUCK", "FROG", "MOOSE", "PINEAPPLE", "ROBOT", "SHARK", "SLOTH", "UNICORN"],
   MOVE_NAMES: [
     {name: "Rest", mirror: true, rest: true},
     {name: "ClapHigh", mirror: true},

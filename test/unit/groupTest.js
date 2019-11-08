@@ -292,3 +292,93 @@ test('LayoutSprites resets rotation', async t => {
 
   nativeAPI.reset();
 });
+
+test('changing property value by delta updates property by delta for all sprites', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet("BEAR", 0, {}, () => {});
+
+  const catSprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const bearSprite = nativeAPI.makeNewDanceSprite("BEAR", null, {x: 200, y: 200});
+
+  nativeAPI.setProp(catSprite, 'scale', 20);
+  nativeAPI.setProp(bearSprite, 'scale', 35);
+
+  nativeAPI.changePropEachBy('all', 'scale', 14);
+
+  t.equal(nativeAPI.getProp(catSprite, 'scale'), 34);
+  t.equal(nativeAPI.getProp(bearSprite, 'scale'), 49);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('randomizing property of a group sets to individually random properties', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(5, 'CAT', 'circle');
+
+  let cats = nativeAPI.getGroupByName_('CAT');
+  for (let i = 0; i < cats.length; i++) {
+    nativeAPI.setProp(cats[i].name, 'scale', 20);
+  }
+
+  nativeAPI.setPropRandomEach(cats, 'scale');
+
+  // Create a list of cat scales and fail if at least one is not unique
+  // This test will fail when all five scales are randomly changed to
+  // the same value and should be re-run in those flakey cases - should
+  // be very rare.
+  let catScales = new Set();
+  for (let i = 0; i < cats.length; i++) {
+    catScales.add(nativeAPI.getProp(cats[i], 'scale'));
+  }
+
+  t.true(catScales.size > 0);
+
+  t.end();
+
+  nativeAPI.reset();
+});
+
+test('jumpTo for a group sets each sprite location with slight variance', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.makeNewDanceSpriteGroup(6, 'CAT', 'row');
+
+  let cats = nativeAPI.getGroupByName_('CAT');
+
+  nativeAPI.jumpToEach(cats, {x: 200, y: 100});
+
+  let catXPositions = new Set();
+  let catYPositions = new Set();
+  for (let i = 0; i < cats.length; i++) {
+    let newX = cats[i].x;
+    let newY = cats[i].y;
+
+    // Fail if two sprites move to the exact same position- failure should be incredibly rare
+    t.false(catXPositions.has(newX) && catYPositions.has(newY));
+
+    // Fail if a cat is outside 3 standard deviations- failure should be incredibly rare.
+    t.true(newX > 185);
+    t.true(newX < 215);
+    t.true(newY > 85);
+    t.true(newY < 115);
+    catXPositions.add(newX);
+    catYPositions.add(newY);
+  }
+
+  t.end();
+
+  nativeAPI.reset();
+});
