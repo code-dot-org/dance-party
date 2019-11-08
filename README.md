@@ -24,6 +24,9 @@ To debug unit tests in the Chrome debugger:
 Open [chrome://inspect](chrome://inspect) in Chrome browser (requires Chrome 55+)
 Tap on `inspect` link under "Remote Target"
 
+### Adding New Characters
+To add a new character to Dance Party, follow the instructions here: https://github.com/code-dot-org/dance-spritesheets to create the spritesheet for the character.
+
 ### Effects Testing
 `npm run test:visual` uses [pixelmatch](https://github.com/mapbox/pixelmatch#readme) to test for consistency in screenshots between your local branch and an accepted 
 baseline. Accepted baselines are saved in `test/visual/fixtures`.

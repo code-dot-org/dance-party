@@ -4,7 +4,7 @@ module.exports = {
       var my_first_dancer;
 
       whenSetup(function () {
-        my_first_dancer = makeNewDanceSprite("CAT", my_first_dancer, {x: 200, y: 200});
+        makeNewDanceSprite("CAT", "my_first_dancer", {x: 200, y: 200});
       });
     `,
     validationCode: `
@@ -25,11 +25,11 @@ module.exports = {
       var new_dancer;
 
       whenSetup(function () {
-        new_dancer = makeNewDanceSprite("MOOSE", new_dancer, {x: 200, y: 200});
+        makeNewDanceSprite("MOOSE", "new_dancer", {x: 200, y: 200});
       });
 
       atTimestamp(4, "measures", function () {
-        changeMoveLR(new_dancer, MOVES.Floss, -1);
+        changeMoveLR("new_dancer", MOVES.Floss, -1);
       });
     `,
     validationCode: `
@@ -58,12 +58,12 @@ module.exports = {
       var fancy_dancer;
 
       whenSetup(function () {
-        fancy_dancer = makeNewDanceSprite("ROBOT", fancy_dancer, {x: 200, y: 200});
+        makeNewDanceSprite("ROBOT", "fancy_dancer", {x: 200, y: 200});
         setBackgroundEffectWithPalette("disco");
       });
 
       atTimestamp(4, "measures", function () {
-        changeMoveLR(fancy_dancer, MOVES.Dab, -1);
+        changeMoveLR("fancy_dancer", MOVES.Dab, -1);
       });
     `,
     validationCode: `
@@ -85,20 +85,20 @@ module.exports = {
 
       whenSetup(function () {
         setBackgroundEffectWithPalette("diamonds");
-        backup_dancer1 = makeNewDanceSprite("CAT", backup_dancer1, {x: 300, y: 200});
-        setProp(backup_dancer1, "scale", 50);
-        backup_dancer2 = makeNewDanceSprite("ROBOT", backup_dancer2, {x: 100, y: 200});
-        setProp(backup_dancer2, "scale", 50);
-        lead_dancer = makeNewDanceSprite("MOOSE", lead_dancer, {x: 200, y: 200});
+        makeNewDanceSprite("CAT", "backup_dancer1", {x: 300, y: 200});
+        setProp("backup_dancer1", "scale", 50);
+        makeNewDanceSprite("ROBOT", "backup_dancer2", {x: 100, y: 200});
+        setProp("backup_dancer2", "scale", 50);
+        makeNewDanceSprite("MOOSE", "lead_dancer", {x: 200, y: 200});
       });
 
       everySeconds(2, "measures", function () {
-        changeMoveLR(lead_dancer, "next", -1);
+        changeMoveLR("lead_dancer", "next", -1);
       });
 
       atTimestamp(4, "measures", function () {
-        changeMoveLR(backup_dancer1, MOVES.Fresh, -1);
-        changeMoveLR(backup_dancer2, MOVES.Fresh, 1);
+        changeMoveLR("backup_dancer1", MOVES.Fresh, -1);
+        changeMoveLR("backup_dancer2", MOVES.Fresh, 1);
       });
     `,
     validationCode: `
@@ -126,15 +126,15 @@ module.exports = {
 
       whenSetup(function () {
         setBackgroundEffectWithPalette("rainbow");
-        left_shark = makeNewDanceSprite("MOOSE", left_shark, {x: 100, y: 200});
-        right_pineapple = makeNewDanceSprite("ROBOT", right_pineapple, {x: 300, y: 200});
-        startMapping(left_shark, "height", "bass");
-        startMapping(right_pineapple, "scale", "bass");
+        makeNewDanceSprite("MOOSE", "left_shark", {x: 100, y: 200});
+        makeNewDanceSprite("ROBOT", "right_pineapple", {x: 300, y: 200});
+        startMapping("left_shark", "height", "bass");
+        startMapping("right_pineapple", "scale", "bass");
       });
 
       everySeconds(2, "measures", function () {
-        changeMoveLR(left_shark, "next", -1);
-        changeMoveLR(right_pineapple, "next", 1);
+        changeMoveLR("left_shark", "next", -1);
+        changeMoveLR("right_pineapple", "next", 1);
       });
     `,
     validationCode: `
@@ -163,16 +163,16 @@ module.exports = {
 
       whenSetup(function () {
         setBackgroundEffectWithPalette("splatter");
-        left_dancer = makeNewDanceSprite("CAT", left_dancer, {x: 100, y: 200});
-        right_dancer = makeNewDanceSprite("ROBOT", right_dancer, {x: 300, y: 200});
+        makeNewDanceSprite("CAT", "left_dancer", {x: 100, y: 200});
+        makeNewDanceSprite("ROBOT", "right_dancer", {x: 300, y: 200});
       });
 
       everySeconds(2, "measures", function () {
-        changeMoveLR(left_dancer, "next", -1);
+        changeMoveLR("left_dancer", "next", -1);
       });
 
       whenKey("up", function () {
-        doMoveLR(right_dancer, MOVES.XArmsUp, -1);
+        doMoveLR("right_dancer", MOVES.XArmsUp, -1);
       });
     `,
     validationCode: `
