@@ -9,6 +9,7 @@ const drawRainbow = require('./shapes/rainbow');
 const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
+const drawStar = require('./shapes/star');
 const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
@@ -1355,6 +1356,37 @@ module.exports = class Effects {
         this.star = this.star.filter(function (star) {
           return star.size > 0.1;
         });
+      }
+    };
+
+    this.exploding_stars = {
+      stars: [],
+      resetStars: function () {
+        for (let i = 0; i < 100; i++) {
+          let theta = p5.random(0, p5.TWO_PI);
+          let velocity = p5.random(4,12);
+          this.stars.push({
+            color: randomColor(255, 255, 100),
+            x: 200,
+            y: 200,
+            dx: velocity * p5.cos(theta),
+            dy: velocity * p5.sin(theta)
+          });
+        }
+      },
+      draw: function () {
+        p5.angleMode(p5.RADIANS);
+        p5.noStroke();
+        if (this.stars.length === 0) {
+          this.resetStars();
+        }
+        this.stars.forEach(star => {
+          p5.fill(star.color);
+          drawStar(p5, star.x, star.y, 3, 9, 5);
+          star.x += star.dx;
+          star.y += star.dy;
+        });
+        this.stars = this.stars.filter(star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410);
       }
     };
 
