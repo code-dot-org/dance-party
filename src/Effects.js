@@ -1549,7 +1549,7 @@ module.exports = class Effects {
         }
       }
     };
-    
+
     this.squiggles = {
       points: [],
       dotSpacing: 3,
