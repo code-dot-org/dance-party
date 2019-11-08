@@ -1,5 +1,6 @@
 const constants = require('./constants');
 const drawHeart = require('./shapes/heart');
+const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
 const drawPineapple = require('./shapes/pineapple');
 const drawPizza = require('./shapes/pizza');
@@ -8,8 +9,11 @@ const drawRainbow = require('./shapes/rainbow');
 const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
+const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
+const drawTickled = require('./shapes/tickled');
+const drawWink = require('./shapes/wink');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
@@ -276,6 +280,106 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+
+    // Creates a "ripple" effect where the ripple positions can be random.
+    let createRipplesEffect = function (isRandomRipple) {
+      return {
+        // Determines whether or not the start positions of the ripples are random or centered.
+        isRandomRipple: isRandomRipple,
+        // The max width a ripple can be before it disappears.
+        maxRippleWidth: 575,
+        // The ripples which are growing.
+        ripples: [],
+        // The count of ripples which have been created since the dance started.
+        rippleCount: 0,
+        // The timestamp of when the last "draw" happened.
+        lastDrawTime: new Date(),
+        // Tracks the last biggest ripple's color so we can set that as the background after it disappears
+        backgroundColor: colorFromPalette(0),
+
+        init: function () {
+          this.lastDrawTime = new Date();
+          this.backgroundColor = colorFromPalette(0);
+          this.ripples = [];
+          // If the starting location is random, then the circles might need to be 2x as wide to fill the screen.
+          if (isRandomRipple) {
+            this.maxRippleWidth = 1150;
+          }
+          // put some initial ripples.
+          for (let i=0; i<6; i++) {
+            this.ripples.push(this.createRipple(this.maxRippleWidth * (.85 - (.15*i)), this.isRandomRipple));
+          }
+
+        },
+
+        draw: function ({isPeak, bpm}) {
+          let currentTime = new Date();
+          let maxRippleWidth = this.maxRippleWidth;
+          p5.background(this.backgroundColor);
+          // On each "peak", create a new ripple.
+          if (isPeak) {
+            this.ripples.push(this.createRipple(1, this.isRandomRipple));
+          }
+          p5.push();
+          p5.noStroke();
+          p5.ellipseMode(p5.CENTER);
+          // calculate how much the ripples have grown and draw them.
+          let rippleWidthGrowth = this.getRippleGrowth(currentTime, bpm);
+          for (let i=0; i < this.ripples.length; i++) {
+            let ripple = this.ripples[i];
+            ripple.width += rippleWidthGrowth;
+            p5.fill(ripple.color);
+            p5.ellipse(ripple.x, ripple.y, ripple.width);
+          }
+          // remove ripples which are too big, and updated the backgroundColor to match the highest one.
+          let backgroundColor = this.backgroundColor;
+          this.ripples = this.ripples.filter(function (ripple){
+            if (ripple.width < maxRippleWidth) {
+              return true;
+            } else {
+              backgroundColor = ripple.color;
+              return false;
+            }
+          });
+          this.backgroundColor = backgroundColor;
+          p5.pop();
+          // keep track of the draw times so we can calculate how much time has passed.
+          this.lastDrawTime = currentTime;
+        },
+
+        // creates a object representing the size and position of a ripple given an initial width
+        createRipple: function (width, isRandom) {
+          let x = 200;
+          let y = 200;
+          if (isRandom) {
+            x = randomNumber(20, 380);
+            y = randomNumber(20, 380);
+          }
+          return {
+            x: x,
+            y: y,
+            color: colorFromPalette(++this.rippleCount),
+            width: width,
+          };
+        },
+
+        // calculates the increase in width a ripple will experience depending on the
+        // amount of time which has passed since the last drawm and the current BPM.
+        getRippleGrowth: function (currentTime, bpm) {
+          if (bpm === 0) {
+            return 0;
+          }
+          // Velocity of the ripple width expansion.
+          let velocity = this.maxRippleWidth/(bpm/60)/1.5;
+          // Calculate how much time has passed so we know how wide the ripple should be.
+          let deltaTime = (currentTime - this.lastDrawTime) / 1000;
+          return Math.floor(velocity * deltaTime);
+        }
+      };
+    };
+
+    this.ripples = createRipplesEffect(false);
+    this.ripples_random = createRipplesEffect(true);
 
     this.diamonds = {
       hue: 0,
@@ -1445,7 +1549,7 @@ module.exports = class Effects {
         }
       }
     };
-
+    
     this.squiggles = {
       points: [],
       dotSpacing: 3,
@@ -1478,6 +1582,86 @@ module.exports = class Effects {
           });
         }
       }
+    };
+
+    this.music_wave = {
+      inc: 360/15,
+      heightFactor: 1,
+      heightDivider: 200,
+      yLoc: 300,
+      lineWidth: p5.width/80,
+      draw: function (context) {
+        const centroid = context.centroid;
+        let scale = p5.map(centroid, 5000, 8000, 0, 250);
+        let angle = 0;
+        p5.background('black');
+        for (let i = 0; i < p5.width; i+=this.lineWidth) {
+          p5.stroke(lerpColorFromPalette(i/p5.width));
+          let amplitude = Math.abs(scale * (this.heightFactor/this.heightDivider) * p5.cos(angle));
+          let yInitial = this.yLoc - amplitude;
+          let yFinal = this.yLoc + amplitude;
+          p5.line(i, yInitial, i, yFinal);
+          if ( i < p5.width/2) {
+            this.heightFactor++;
+          } else {
+            this.heightFactor--;
+          }
+          angle += this.inc;
+        }
+      }
+    };
+
+    this.emojis = {
+      emojiList : [],
+      emojiTypes : [],
+
+      init : function () {
+        this.imageLovestruck = p5.createGraphics(100, 100);
+        this.imageLovestruck.scale(3);
+        drawLovestruck(this.imageLovestruck.drawingContext);
+        this.emojiTypes.push(this.imageLovestruck);
+
+        this.imageSmiley = p5.createGraphics(100, 100);
+        this.imageSmiley.scale(3);
+        drawSmiley(this.imageSmiley.drawingContext);
+        this.emojiTypes.push(this.imageSmiley);
+
+        this.imageStarstruck = p5.createGraphics(100, 100);
+        this.imageStarstruck.scale(3);
+        drawStarstruck(this.imageStarstruck.drawingContext);
+        this.emojiTypes.push(this.imageStarstruck);
+
+        this.imageTickled = p5.createGraphics(100, 100);
+        this.imageTickled.scale(3);
+        drawTickled(this.imageTickled.drawingContext);
+        this.emojiTypes.push(this.imageTickled);
+
+        this.imageWink = p5.createGraphics(100, 100);
+        this.imageWink.scale(3);
+        drawWink(this.imageWink.drawingContext);
+        this.emojiTypes.push(this.imageWink);
+      },
+
+      draw : function () {
+        if (p5.frameCount % 10 === 0) { // generate new emoji every 10 frames
+          this.emojiList.push({
+            x: randomNumber(0, 350),
+            y: -50,
+            size: randomNumber(25, 50),
+            image: this.emojiTypes[randomNumber(0, 4)],
+          });
+        }
+        for (let i = 0; i < this.emojiList.length; ++i) {
+          const emoji = this.emojiList[i];
+          emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+          if (emoji.y > p5.height * 1.2) { // if the emoji has fallen past 120% of the screen
+            this.emojiList.splice(i, 1);
+          }
+          p5.push();
+          p5.image(emoji.image, emoji.x, emoji.y, emoji.size, emoji.size);
+          p5.pop();
+        }
+      },
     };
   }
 
