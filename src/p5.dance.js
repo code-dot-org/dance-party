@@ -568,6 +568,15 @@ module.exports = class DanceParty {
     return this.sprites_by_type_[group];
   }
 
+  toggleBetween(group, n, move1, move2) {
+    let currentMeasure = Math.floor(this.getCurrentMeasure());
+    if (Math.ceil(currentMeasure / n) % 2 == 0) {
+      this.changeMoveEachLR(group, move2, -1)
+    } else {
+      this.changeMoveEachLR(group, move1, 1)
+    }
+  }
+
   changeMoveEachLR(group, move, dir) {
     group = this.getGroupByName_(group);
     if ((move === "rand") && (group.length>0)) {
