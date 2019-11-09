@@ -571,9 +571,9 @@ module.exports = class DanceParty {
   toggleBetween(group, n, move1, move2) {
     let currentMeasure = Math.floor(this.getCurrentMeasure());
     if (Math.ceil(currentMeasure / n) % 2 == 0) {
-      this.changeMoveEachLR(group, move2, -1)
+      this.changeMoveEachLR(group, move2, -1);
     } else {
-      this.changeMoveEachLR(group, move1, 1)
+      this.changeMoveEachLR(group, move1, 1);
     }
   }
 
