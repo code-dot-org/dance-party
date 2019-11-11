@@ -173,13 +173,6 @@ function whenPeak(range, func) {
   });
 }
 
-function alternateMoves(group, n, move1, move2) {
-  changeMoveEachLR(group, move1, -1);
-  everySeconds(n, "measures", function () {
-    toggleBetween(group, n, move1, move2);
-  });
-}
-
 /**
  * @param {number} timestamp
  * @param {string} unit - Should be "measures" or "seconds"

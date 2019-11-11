@@ -455,6 +455,24 @@ module.exports = class DanceParty {
 
   // Dance Moves
 
+  alternateMoves(group, n, move1, move2) {
+    group = this.getGroupByName_(group);
+    let currentMeasure = Math.floor(this.getCurrentMeasure());
+    if (currentMeasure === 0) {
+      currentMeasure = 1;
+    }
+    group.forEach(sprite => {
+      this.changeMoveLR(sprite, move1, -1);
+      sprite.alternatingMoveInfo = {
+        start: currentMeasure,
+        cadence: n,
+        move1: move1,
+        move2: move2,
+        current: 1
+      };
+    });
+  }
+
   /**
    * Returns a next/prev/rand move
    * @param {string} requestedChange - 'prev'/'next'/'rand' move request
@@ -519,6 +537,7 @@ module.exports = class DanceParty {
     }
     sprite.animation.looping = true;
     sprite.current_move = move;
+    sprite.alternatingMoveInfo = undefined;
   }
 
   doMoveLR(sprite, move, dir) {
@@ -566,15 +585,6 @@ module.exports = class DanceParty {
       this.sprites_by_type_[group] = this.p5_.createGroup();
     }
     return this.sprites_by_type_[group];
-  }
-
-  toggleBetween(group, n, move1, move2) {
-    let currentMeasure = Math.floor(this.getCurrentMeasure());
-    if (Math.ceil(currentMeasure / n) % 2 == 0) {
-      this.changeMoveEachLR(group, move2, -1);
-    } else {
-      this.changeMoveEachLR(group, move1, 1);
-    }
   }
 
   changeMoveEachLR(group, move, dir) {
@@ -1146,6 +1156,32 @@ module.exports = class DanceParty {
       artist,
       title,
     };
+
+    let currentMeasure = Math.floor(this.getCurrentMeasure());
+    this.sprites_.forEach(sprite => {
+      if (sprite.alternatingMoveInfo) {
+        let alternatingMoveInfo = sprite.alternatingMoveInfo;
+        let val = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
+        if (val % 2 == 0) {
+          if (sprite.alternatingMoveInfo.current != 1) {
+            // set move1
+            console.log(`${currentMeasure}: set 1`);
+
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move1, -1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 1;
+          }
+        } else {
+          if (sprite.alternatingMoveInfo.current != 2) {
+            // set move2
+            console.log(`${currentMeasure}: set 2`);
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move2, 1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 2;
+          }
+        }
+      }
+    });
 
     this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);

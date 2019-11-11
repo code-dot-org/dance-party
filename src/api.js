@@ -62,8 +62,8 @@ module.exports = class DanceAPI {
       doMoveEachLR: (group, move, dir) => {
         nativeAPI.doMoveEachLR(group, move, dir);
       },
-      toggleBetween: (group, n, move1, move2) => {
-        nativeAPI.toggleBetween(group, n, move1, move2);
+      alternateMoves: (group, n, move1, move2) => {
+        nativeAPI.alternateMoves(group, n, move1, move2);
       },
       layoutSprites: (group, format) => {
         nativeAPI.layoutSprites(group, format);
