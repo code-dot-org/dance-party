@@ -1,9 +1,9 @@
 // Star helper function from https://p5js.org/examples/form-star.html
 module.exports = function drawStar(p5, x, y, radius1, radius2, numPoints) {
-  let angle = p5.TWO_PI / numPoints;
+  let angle = 360 / numPoints;
   let halfAngle = angle / 2.0;
   p5.beginShape();
-  for (let a = 0; a < p5.TWO_PI; a += angle) {
+  for (let a = 0; a < 360; a += angle) {
     let sx = x + p5.cos(a) * radius2;
     let sy = y + p5.sin(a) * radius2;
     p5.vertex(sx, sy);
