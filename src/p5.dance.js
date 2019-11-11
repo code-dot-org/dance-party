@@ -1164,17 +1164,12 @@ module.exports = class DanceParty {
         let val = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
         if (val % 2 == 0) {
           if (sprite.alternatingMoveInfo.current != 1) {
-            // set move1
-            console.log(`${currentMeasure}: set 1`);
-
             this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move1, -1);
             sprite.alternatingMoveInfo = alternatingMoveInfo;
             sprite.alternatingMoveInfo.current = 1;
           }
         } else {
           if (sprite.alternatingMoveInfo.current != 2) {
-            // set move2
-            console.log(`${currentMeasure}: set 2`);
             this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move2, 1);
             sprite.alternatingMoveInfo = alternatingMoveInfo;
             sprite.alternatingMoveInfo.current = 2;
