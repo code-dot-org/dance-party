@@ -456,8 +456,13 @@ module.exports = class DanceParty {
   // Dance Moves
 
   alternateMoves(group, n, move1, move2) {
+    // Maximum of 10 events per second
+    // Our fastest song is 169bpm
+    // This allows events on eighth-notes in that song.
+    n = Math.max(0.1, n);
+
     group = this.getGroupByName_(group);
-    let currentMeasure = Math.floor(this.getCurrentMeasure());
+    let currentMeasure = this.getCurrentMeasure();
     if (currentMeasure === 0) {
       currentMeasure = 1;
     }
@@ -1157,12 +1162,12 @@ module.exports = class DanceParty {
       title,
     };
 
-    let currentMeasure = Math.floor(this.getCurrentMeasure());
+    let currentMeasure = this.getCurrentMeasure();
     this.sprites_.forEach(sprite => {
       if (sprite.alternatingMoveInfo) {
         let alternatingMoveInfo = sprite.alternatingMoveInfo;
-        let val = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
-        if (val % 2 == 0) {
+        let quotient = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
+        if (quotient % 2 == 0) {
           if (sprite.alternatingMoveInfo.current != 1) {
             this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move1, -1);
             sprite.alternatingMoveInfo = alternatingMoveInfo;
