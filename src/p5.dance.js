@@ -455,6 +455,29 @@ module.exports = class DanceParty {
 
   // Dance Moves
 
+  alternateMoves(group, n, move1, move2) {
+    // Maximum of 10 events per second
+    // Our fastest song is 169bpm
+    // This allows events on eighth-notes in that song.
+    n = Math.max(0.1, n);
+
+    group = this.getGroupByName_(group);
+    let currentMeasure = this.getCurrentMeasure();
+    if (currentMeasure === 0) {
+      currentMeasure = 1;
+    }
+    group.forEach(sprite => {
+      this.changeMoveLR(sprite, move1, -1);
+      sprite.alternatingMoveInfo = {
+        start: currentMeasure,
+        cadence: n,
+        move1: move1,
+        move2: move2,
+        current: 1
+      };
+    });
+  }
+
   /**
    * Returns a next/prev/rand move
    * @param {string} requestedChange - 'prev'/'next'/'rand' move request
@@ -519,6 +542,7 @@ module.exports = class DanceParty {
     }
     sprite.animation.looping = true;
     sprite.current_move = move;
+    sprite.alternatingMoveInfo = undefined;
   }
 
   doMoveLR(sprite, move, dir) {
@@ -1137,6 +1161,27 @@ module.exports = class DanceParty {
       artist,
       title,
     };
+
+    let currentMeasure = this.getCurrentMeasure();
+    this.sprites_.forEach(sprite => {
+      if (sprite.alternatingMoveInfo) {
+        let alternatingMoveInfo = sprite.alternatingMoveInfo;
+        let quotient = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
+        if (quotient % 2 == 0) {
+          if (sprite.alternatingMoveInfo.current != 1) {
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move1, -1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 1;
+          }
+        } else {
+          if (sprite.alternatingMoveInfo.current != 2) {
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move2, 1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 2;
+          }
+        }
+      }
+    });
 
     this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);
