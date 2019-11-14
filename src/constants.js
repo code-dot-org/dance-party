@@ -48,6 +48,13 @@ module.exports = {
     'spiral',
     'disco',
     'stars',
+    'music_wave',
+    'ripples',
+    'ripples_random',
+    'quads',
+    'flowers',
+    'squiggles',
+    'growing_stars'
   ],
   FOREGROUND_EFFECTS: [
     'bubbles',
@@ -63,6 +70,9 @@ module.exports = {
     'spotlight',
     'color_lights',
     'raining_tacos',
+    'emojis',
+    'hearts_colorful',
+    'exploding_stars'
   ],
   PALETTES: {
     default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
