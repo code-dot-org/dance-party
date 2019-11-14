@@ -1618,7 +1618,7 @@ module.exports = class Effects {
 
     this.squiggles = {
       points: [],
-      dotSpacing: 5,
+      dotSpacing: 4,
       amplitude: 40,
       period: 400,
       dotRadius: 14,
