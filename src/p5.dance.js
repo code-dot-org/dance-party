@@ -250,6 +250,11 @@ module.exports = class DanceParty {
     }
     this.p5_.noLoop();
 
+    let backgroundEffect = this.getBackgroundEffect();
+    if (backgroundEffect.reset) {
+      backgroundEffect.reset();
+    }
+
     this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
@@ -583,7 +588,7 @@ module.exports = class DanceParty {
       return group;
     }
     if (group === "all") {
-      return this.p5_.allSprites;
+      return this.p5_.allSprites.filter(sprite => !sprite.ignoreSprite);
     }
 
     if (!this.sprites_by_type_.hasOwnProperty(group)) {

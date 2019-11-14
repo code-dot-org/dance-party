@@ -795,21 +795,21 @@ module.exports = class Effects {
     this.quads = {
       shapes: [],
       init: function () {
-        if (this.buffer) {
-          return;
+        if (!this.buffer) {
+          this.buffer = p5.createGraphics(400, 400);
+          this.buffer.noFill();
+          this.buffer.stroke('#0f0');
+          this.buffer.strokeWeight(2);
+          this.buffer.strokeJoin(p5.BEVEL);
+          this.buffer.background(0);
         }
-        this.buffer = p5.createGraphics(400, 400);
-        this.buffer.noFill();
-        this.buffer.stroke('#0f0');
-        this.buffer.strokeWeight(2);
-        this.buffer.strokeJoin(p5.BEVEL);
-        this.buffer.background(0);
 
         for (let i = 0; i < 2; i++) {
           const shape = [];
           shape.color = i;
           for (let j = 0; j < 4; j++) {
             const vertex = p5.createSprite();
+            vertex.ignoreSprite = true;
             vertex.draw = () => {};
             vertex.position = p5.createVector(p5.random(0, 400), p5.random(0, 400));
             vertex.velocity = p5.createVector(0, 2).rotate(p5.random(0,360));
@@ -818,6 +818,12 @@ module.exports = class Effects {
           this.shapes.push(shape);
         }
         this.edges = p5.createEdgeSprites();
+        this.edges.forEach(edge => edge.ignoreSprite = true);
+      },
+      reset: function() {
+        this.shapes = [];
+        p5.edges = null;
+        this.buffer.clear();
       },
       draw: function () {
         this.buffer.drawingContext.globalAlpha = 0.25;
