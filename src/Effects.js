@@ -1363,7 +1363,7 @@ module.exports = class Effects {
       stars: [],
       resetStars: function () {
         for (let i = 0; i < 100; i++) {
-          let theta = p5.random(0, p5.TWO_PI);
+          let theta = p5.random(0, 360);
           let velocity = p5.random(4,12);
           this.stars.push({
             color: randomColor(255, 255, 100),
@@ -1375,7 +1375,7 @@ module.exports = class Effects {
         }
       },
       draw: function () {
-        p5.angleMode(p5.RADIANS);
+        p5.angleMode(p5.DEGREES);
         p5.noStroke();
         if (this.stars.length === 0) {
           this.resetStars();
@@ -1548,7 +1548,7 @@ module.exports = class Effects {
       numStars: 9,
 
       init: function () {
-        p5.angleMode(p5.RADIANS);
+        p5.angleMode(p5.DEGREES);
         this.colorIndex = 0;
         this.stars = [];
         for (var i = 0; i < this.numStars; i++) {
