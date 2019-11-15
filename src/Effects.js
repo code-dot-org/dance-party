@@ -1622,11 +1622,11 @@ module.exports = class Effects {
 
     this.squiggles = {
       points: [],
-      dotSpacing: 3,
+      dotSpacing: 4,
       amplitude: 40,
       period: 400,
-      dotRadius: 7,
-      numSquiggles: 8,
+      dotRadius: 14,
+      numSquiggles: 5,
       init: function () {
         this.points = [];
         p5.noStroke();
