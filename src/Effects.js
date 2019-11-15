@@ -809,7 +809,6 @@ module.exports = class Effects {
           shape.color = i;
           for (let j = 0; j < 4; j++) {
             const vertex = p5.createSprite();
-            vertex.ignoreSprite = true;
             vertex.draw = () => {};
             vertex.position = p5.createVector(p5.random(0, 400), p5.random(0, 400));
             vertex.velocity = p5.createVector(0, 2).rotate(p5.random(0,360));
@@ -818,9 +817,8 @@ module.exports = class Effects {
           this.shapes.push(shape);
         }
         this.edges = p5.createEdgeSprites();
-        this.edges.forEach(edge => edge.ignoreSprite = true);
       },
-      reset: function() {
+      reset: function () {
         this.shapes = [];
         p5.edges = null;
         this.buffer.clear();

@@ -361,6 +361,7 @@ module.exports = class DanceParty {
     }
 
     var sprite = this.p5_.createSprite(location.x, location.y);
+    sprite.isDancer = true;
 
     if (name) {
       sprite.name = name;
@@ -588,7 +589,7 @@ module.exports = class DanceParty {
       return group;
     }
     if (group === "all") {
-      return this.p5_.allSprites.filter(sprite => !sprite.ignoreSprite);
+      return this.p5_.allSprites.filter(sprite => sprite.isDancer);
     }
 
     if (!this.sprites_by_type_.hasOwnProperty(group)) {
