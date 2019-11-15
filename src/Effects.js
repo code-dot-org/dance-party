@@ -795,15 +795,14 @@ module.exports = class Effects {
     this.quads = {
       shapes: [],
       init: function () {
-        if (this.buffer) {
-          return;
+        if (!this.buffer) {
+          this.buffer = p5.createGraphics(400, 400);
+          this.buffer.noFill();
+          this.buffer.stroke('#0f0');
+          this.buffer.strokeWeight(2);
+          this.buffer.strokeJoin(p5.BEVEL);
+          this.buffer.background(0);
         }
-        this.buffer = p5.createGraphics(400, 400);
-        this.buffer.noFill();
-        this.buffer.stroke('#0f0');
-        this.buffer.strokeWeight(2);
-        this.buffer.strokeJoin(p5.BEVEL);
-        this.buffer.background(0);
 
         for (let i = 0; i < 2; i++) {
           const shape = [];
@@ -818,6 +817,11 @@ module.exports = class Effects {
           this.shapes.push(shape);
         }
         this.edges = p5.createEdgeSprites();
+      },
+      reset: function () {
+        this.shapes = [];
+        p5.edges = null;
+        this.buffer.clear();
       },
       draw: function () {
         this.buffer.drawingContext.globalAlpha = 0.25;
@@ -1618,11 +1622,11 @@ module.exports = class Effects {
 
     this.squiggles = {
       points: [],
-      dotSpacing: 3,
+      dotSpacing: 4,
       amplitude: 40,
       period: 400,
-      dotRadius: 7,
-      numSquiggles: 8,
+      dotRadius: 14,
+      numSquiggles: 5,
       init: function () {
         this.points = [];
         p5.noStroke();
