@@ -40,13 +40,17 @@ module.exports = class Effects {
     };
 
     const lerpColorFromPalette = (amount) => {
-      const palette = constants.PALETTES[this.currentPalette];
-      const which = amount * palette.length;
+      return lerpColorFromSpecificPalette(this.currentPalette, amount);
+    };
+
+    const lerpColorFromSpecificPalette = (palette, amount) => {
+      const color_palette = constants.PALETTES[palette];
+      const which = amount * color_palette.length;
       const n = Math.floor(which);
       const remainder = which - n;
 
-      const prev = palette[n % (palette.length)];
-      const next = palette[(n + 1) % (palette.length)];
+      const prev = color_palette[n % (color_palette.length)];
+      const next = color_palette[(n + 1) % (color_palette.length)];
 
       return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
     };
@@ -1644,7 +1648,7 @@ module.exports = class Effects {
 
       draw: function () {
         for (let i = 0; i < this.crayons.length; i++) {
-          let c = lerpColorFromPalette(i/this.crayons.length);
+          let c = lerpColorFromSpecificPalette('neon',i/this.crayons.length);
           p5.fill(c);
           p5.noStroke();
           let rectHeight = this.start_height;
