@@ -1623,7 +1623,7 @@ module.exports = class Effects {
         }
       }
     };
-    
+
     this.paint_drip = {
       current_drip: 0,
       current_drip_height: 0,
@@ -1684,7 +1684,7 @@ module.exports = class Effects {
             // The leftmost drip is 'done' dripping up, switch to dripping down.
             this.dripping_up = false;
             this.current_drip_height = 0;
-          } else if(this.dripping_up){
+          } else if(this.dripping_up) {
             // A non-edge drip is 'done' dripping up, move the next left drip.
             this.current_drip-=1;
             this.current_drip_height = this.crayons[this.current_drip].maxHeight;
