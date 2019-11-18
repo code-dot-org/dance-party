@@ -43,14 +43,14 @@ module.exports = class Effects {
       return lerpColorFromSpecificPalette(this.currentPalette, amount);
     };
 
-    const lerpColorFromSpecificPalette = (palette, amount) => {
-      const color_palette = constants.PALETTES[palette];
-      const which = amount * color_palette.length;
+    const lerpColorFromSpecificPalette = (paletteName, amount) => {
+      const palette = constants.PALETTES[paletteName];
+      const which = amount * palette.length;
       const n = Math.floor(which);
       const remainder = which - n;
 
-      const prev = color_palette[n % (color_palette.length)];
-      const next = color_palette[(n + 1) % (color_palette.length)];
+      const prev = palette[n % (palette.length)];
+      const next = palette[(n + 1) % (palette.length)];
 
       return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
     };
