@@ -72,7 +72,8 @@ module.exports = {
     'raining_tacos',
     'emojis',
     'hearts_colorful',
-    'exploding_stars'
+    'exploding_stars',
+    'paint_drip'
   ],
   PALETTES: {
     default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
