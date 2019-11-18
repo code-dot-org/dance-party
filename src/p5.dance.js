@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars, curly, eqeqeq, babel/semi, semi, no-undef */
-/* global p5, Dance, validationProps */
+/* eslint-disable no-unused-vars, curly, eqeqeq */
+
 const P5 = require('./loadP5');
 const Effects = require('./Effects');
 const replayLog = require('./replay');
@@ -73,6 +73,8 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
+
+    this.world.keysPressed = new Set();
 
     this.peakThisFrame_ = false;
     this.energy_ = 0;
@@ -248,9 +250,16 @@ module.exports = class DanceParty {
     }
     this.p5_.noLoop();
 
+    let backgroundEffect = this.getBackgroundEffect();
+    if (backgroundEffect.reset) {
+      backgroundEffect.reset();
+    }
+
     this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
+    this.world.validationState = {};
+    this.world.keysPressed = new Set();
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation){
@@ -336,7 +345,7 @@ module.exports = class DanceParty {
   // Block Functions
   //
 
-  makeNewDanceSprite(costume, _, location) {
+  makeNewDanceSprite(costume, name, location) {
 
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
@@ -352,6 +361,11 @@ module.exports = class DanceParty {
     }
 
     var sprite = this.p5_.createSprite(location.x, location.y);
+    sprite.isDancer = true;
+
+    if (name) {
+      sprite.name = name;
+    }
 
     sprite.style = costume;
     this.getGroupByName_(costume).add(sprite);
@@ -447,6 +461,29 @@ module.exports = class DanceParty {
 
   // Dance Moves
 
+  alternateMoves(group, n, move1, move2) {
+    // Maximum of 10 events per second
+    // Our fastest song is 169bpm
+    // This allows events on eighth-notes in that song.
+    n = Math.max(0.1, n);
+
+    group = this.getGroupByName_(group);
+    let currentMeasure = this.getCurrentMeasure();
+    if (currentMeasure === 0) {
+      currentMeasure = 1;
+    }
+    group.forEach(sprite => {
+      this.changeMoveLR(sprite, move1, -1);
+      sprite.alternatingMoveInfo = {
+        start: currentMeasure,
+        cadence: n,
+        move1: move1,
+        move2: move2,
+        current: 1
+      };
+    });
+  }
+
   /**
    * Returns a next/prev/rand move
    * @param {string} requestedChange - 'prev'/'next'/'rand' move request
@@ -511,6 +548,7 @@ module.exports = class DanceParty {
     }
     sprite.animation.looping = true;
     sprite.current_move = move;
+    sprite.alternatingMoveInfo = undefined;
   }
 
   doMoveLR(sprite, move, dir) {
@@ -551,7 +589,7 @@ module.exports = class DanceParty {
       return group;
     }
     if (group === "all") {
-      return this.p5_.allSprites;
+      return this.p5_.allSprites.filter(sprite => sprite.isDancer);
     }
 
     if (!this.sprites_by_type_.hasOwnProperty(group)) {
@@ -727,7 +765,7 @@ module.exports = class DanceParty {
           // We want to include the corners in our total count so that the first
           // inner sprite is > 0 and the last inner sprite is < 1 when we lerp.
           sprite.x = this.p5_.lerp(minX, maxX, (i + 1) / (topCount + 1));
-          sprite.y = minY
+          sprite.y = minY;
           sprite.rotation = 0;
         }
 
@@ -818,6 +856,13 @@ module.exports = class DanceParty {
     }
   }
 
+  setPropRandomEach(group, property) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.setPropRandom(sprite, property);
+    }, this);
+  }
+
   getProp(sprite, property) {
     if (!this.spriteExists_(sprite)) return;
 
@@ -862,6 +907,18 @@ module.exports = class DanceParty {
     this.adjustSpriteDepth_(sprite);
   }
 
+  jumpToEach(group, location) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite) {
+      let newLocation = {
+        x: location.x + this.p5_.randomGaussian(0,5),
+        y: location.y + this.p5_.randomGaussian(0,5)
+      };
+
+      this.jumpTo(sprite, newLocation);
+    }, this);
+  }
+
   setDanceSpeed(sprite, speed) {
     if (!this.spriteExists_(sprite)) return;
     sprite.dance_speed = speed;
@@ -869,6 +926,13 @@ module.exports = class DanceParty {
 
   setDanceSpeedEach(group, val) {
     this.setPropEach(group, "dance_speed", val);
+  }
+
+  changePropEachBy(group, property, val) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite){
+      this.changePropBy(sprite, property, val);
+    }, this);
   }
 
   // Music Helpers
@@ -1030,8 +1094,9 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {}
+        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
         events['this.p5_.keyWentDown'][key] = true;
+        this.world.keysPressed.add(key);
       }
     }
 
@@ -1042,7 +1107,7 @@ module.exports = class DanceParty {
       this.energy_ = energy;
       for (let range of WATCHED_RANGES) {
         if (beats[range]) {
-          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {}
+          events['Dance.fft.isPeak'] = events['Dance.fft.isPeak'] || {};
           events['Dance.fft.isPeak'][range] = true;
           this.peakThisFrame_ = true;
         }
@@ -1051,7 +1116,7 @@ module.exports = class DanceParty {
     }
 
     while (this.world.cues.seconds.length > 0 && this.world.cues.seconds[0] < this.getCurrentTime()) {
-      events['cue-seconds'] = events['cue-seconds'] || {}
+      events['cue-seconds'] = events['cue-seconds'] || {};
       events['cue-seconds'][this.world.cues.seconds.splice(0, 1)] = true;
     }
 
@@ -1102,6 +1167,27 @@ module.exports = class DanceParty {
       artist,
       title,
     };
+
+    let currentMeasure = this.getCurrentMeasure();
+    this.sprites_.forEach(sprite => {
+      if (sprite.alternatingMoveInfo) {
+        let alternatingMoveInfo = sprite.alternatingMoveInfo;
+        let quotient = Math.floor((currentMeasure - sprite.alternatingMoveInfo.start) / sprite.alternatingMoveInfo.cadence);
+        if (quotient % 2 == 0) {
+          if (sprite.alternatingMoveInfo.current != 1) {
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move1, -1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 1;
+          }
+        } else {
+          if (sprite.alternatingMoveInfo.current != 2) {
+            this.changeMoveLR(sprite, sprite.alternatingMoveInfo.move2, 1);
+            sprite.alternatingMoveInfo = alternatingMoveInfo;
+            sprite.alternatingMoveInfo.current = 2;
+          }
+        }
+      }
+    });
 
     this.p5_.background('#fff'); // Clear the canvas.
     this.getBackgroundEffect().draw(context);
@@ -1173,21 +1259,9 @@ module.exports = class DanceParty {
   }
 };
 
-function queryParam(key) {
-  const pair = window.location.search
-    .slice(1)
-    .split('&')
-    .map(pair => pair.split('='))
-    .find(pair => decodeURIComponent(pair[0]) === key);
-  if (pair) {
-    return decodeURIComponent(pair[1]);
-  }
-  return undefined;
-}
-
 function timeSinceLoad() {
   if (typeof performance !== 'undefined') {
-    return performance.now()
+    return performance.now();
   } else if (typeof process !== 'undefined') {
     return process.hrtime();
   }

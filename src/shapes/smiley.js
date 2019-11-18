@@ -1,20 +1,12 @@
-module.exports = function drawSmiley(ctx) {
+module.exports = function drawSmiley(ctx, alpha) {
   ctx.save();
-  ctx.fillStyle = "rgba(0, 0, 0, 0)";
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(17,0);
-  ctx.lineTo(17,16);
-  ctx.lineTo(0,16);
-  ctx.closePath();
-  ctx.clip();
   ctx.strokeStyle = 'rgba(0,0,0,0)';
   ctx.lineCap = 'butt';
   ctx.lineJoin = 'miter';
   ctx.miterLimit = 4;
   ctx.save();
   ctx.fillStyle = "#ffdf40";
-  ctx.globalAlpha = 0.8;
+  ctx.globalAlpha = alpha;
   ctx.beginPath();
   ctx.arc(8.5,8,8,0,6.283185307179586,true);
   ctx.closePath();

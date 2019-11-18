@@ -1,5 +1,6 @@
 const constants = require('./constants');
 const drawHeart = require('./shapes/heart');
+const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
 const drawPineapple = require('./shapes/pineapple');
 const drawPizza = require('./shapes/pizza');
@@ -8,8 +9,12 @@ const drawRainbow = require('./shapes/rainbow');
 const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
+const drawStar = require('./shapes/star');
+const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
+const drawTickled = require('./shapes/tickled');
+const drawWink = require('./shapes/wink');
 
 module.exports = class Effects {
   constructor(p5, alpha, blend, currentPalette = 'default') {
@@ -276,6 +281,106 @@ module.exports = class Effects {
         p5.pop();
       }
     };
+
+    // Creates a "ripple" effect where the ripple positions can be random.
+    let createRipplesEffect = function (isRandomRipple) {
+      return {
+        // Determines whether or not the start positions of the ripples are random or centered.
+        isRandomRipple: isRandomRipple,
+        // The max width a ripple can be before it disappears.
+        maxRippleWidth: 575,
+        // The ripples which are growing.
+        ripples: [],
+        // The count of ripples which have been created since the dance started.
+        rippleCount: 0,
+        // The timestamp of when the last "draw" happened.
+        lastDrawTime: new Date(),
+        // Tracks the last biggest ripple's color so we can set that as the background after it disappears
+        backgroundColor: colorFromPalette(0),
+
+        init: function () {
+          this.lastDrawTime = new Date();
+          this.backgroundColor = colorFromPalette(0);
+          this.ripples = [];
+          // If the starting location is random, then the circles might need to be 2x as wide to fill the screen.
+          if (isRandomRipple) {
+            this.maxRippleWidth = 1150;
+          }
+          // put some initial ripples.
+          for (let i=0; i<6; i++) {
+            this.ripples.push(this.createRipple(this.maxRippleWidth * (.85 - (.15*i)), this.isRandomRipple));
+          }
+
+        },
+
+        draw: function ({isPeak, bpm}) {
+          let currentTime = new Date();
+          let maxRippleWidth = this.maxRippleWidth;
+          p5.background(this.backgroundColor);
+          // On each "peak", create a new ripple.
+          if (isPeak) {
+            this.ripples.push(this.createRipple(1, this.isRandomRipple));
+          }
+          p5.push();
+          p5.noStroke();
+          p5.ellipseMode(p5.CENTER);
+          // calculate how much the ripples have grown and draw them.
+          let rippleWidthGrowth = this.getRippleGrowth(currentTime, bpm);
+          for (let i=0; i < this.ripples.length; i++) {
+            let ripple = this.ripples[i];
+            ripple.width += rippleWidthGrowth;
+            p5.fill(ripple.color);
+            p5.ellipse(ripple.x, ripple.y, ripple.width);
+          }
+          // remove ripples which are too big, and updated the backgroundColor to match the highest one.
+          let backgroundColor = this.backgroundColor;
+          this.ripples = this.ripples.filter(function (ripple){
+            if (ripple.width < maxRippleWidth) {
+              return true;
+            } else {
+              backgroundColor = ripple.color;
+              return false;
+            }
+          });
+          this.backgroundColor = backgroundColor;
+          p5.pop();
+          // keep track of the draw times so we can calculate how much time has passed.
+          this.lastDrawTime = currentTime;
+        },
+
+        // creates a object representing the size and position of a ripple given an initial width
+        createRipple: function (width, isRandom) {
+          let x = 200;
+          let y = 200;
+          if (isRandom) {
+            x = randomNumber(20, 380);
+            y = randomNumber(20, 380);
+          }
+          return {
+            x: x,
+            y: y,
+            color: colorFromPalette(++this.rippleCount),
+            width: width,
+          };
+        },
+
+        // calculates the increase in width a ripple will experience depending on the
+        // amount of time which has passed since the last drawm and the current BPM.
+        getRippleGrowth: function (currentTime, bpm) {
+          if (bpm === 0) {
+            return 0;
+          }
+          // Velocity of the ripple width expansion.
+          let velocity = this.maxRippleWidth/(bpm/60)/1.5;
+          // Calculate how much time has passed so we know how wide the ripple should be.
+          let deltaTime = (currentTime - this.lastDrawTime) / 1000;
+          return Math.floor(velocity * deltaTime);
+        }
+      };
+    };
+
+    this.ripples = createRipplesEffect(false);
+    this.ripples_random = createRipplesEffect(true);
 
     this.diamonds = {
       hue: 0,
@@ -690,15 +795,14 @@ module.exports = class Effects {
     this.quads = {
       shapes: [],
       init: function () {
-        if (this.buffer) {
-          return;
+        if (!this.buffer) {
+          this.buffer = p5.createGraphics(400, 400);
+          this.buffer.noFill();
+          this.buffer.stroke('#0f0');
+          this.buffer.strokeWeight(2);
+          this.buffer.strokeJoin(p5.BEVEL);
+          this.buffer.background(0);
         }
-        this.buffer = p5.createGraphics(400, 400);
-        this.buffer.noFill();
-        this.buffer.stroke('#0f0');
-        this.buffer.strokeWeight(2);
-        this.buffer.strokeJoin(p5.BEVEL);
-        this.buffer.background(0);
 
         for (let i = 0; i < 2; i++) {
           const shape = [];
@@ -713,6 +817,11 @@ module.exports = class Effects {
           this.shapes.push(shape);
         }
         this.edges = p5.createEdgeSprites();
+      },
+      reset: function () {
+        this.shapes = [];
+        p5.edges = null;
+        this.buffer.clear();
       },
       draw: function () {
         this.buffer.drawingContext.globalAlpha = 0.25;
@@ -1254,6 +1363,37 @@ module.exports = class Effects {
       }
     };
 
+    this.exploding_stars = {
+      stars: [],
+      resetStars: function () {
+        for (let i = 0; i < 100; i++) {
+          let theta = p5.random(0, 360);
+          let velocity = p5.random(4,12);
+          this.stars.push({
+            color: randomColor(255, 255, 100),
+            x: 200,
+            y: 200,
+            dx: velocity * p5.cos(theta),
+            dy: velocity * p5.sin(theta)
+          });
+        }
+      },
+      draw: function () {
+        p5.angleMode(p5.DEGREES);
+        p5.noStroke();
+        if (this.stars.length === 0) {
+          this.resetStars();
+        }
+        this.stars.forEach(star => {
+          p5.fill(star.color);
+          drawStar(p5, star.x, star.y, 3, 9, 5);
+          star.x += star.dx;
+          star.y += star.dy;
+        });
+        this.stars = this.stars.filter(star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410);
+      }
+    };
+
     this.galaxy = {
       space: [],
       draw: function () {
@@ -1347,7 +1487,7 @@ module.exports = class Effects {
         }
         this.image = p5.createGraphics(100, 100);
         this.image.scale(3);
-        drawSmiley(this.image.drawingContext);
+        drawSmiley(this.image.drawingContext, 0.8);
       },
       draw: function (context) {
         const centroid = context.centroid;
@@ -1402,6 +1542,40 @@ module.exports = class Effects {
         this.confetti = this.confetti.filter(function (confetti) {
           return confetti.y < 425;
         });
+      }
+    };
+
+    this.growing_stars = {
+      stars: [],
+      colorIndex: 0,
+      starSpacing: 30,
+      numStars: 9,
+
+      init: function () {
+        p5.angleMode(p5.DEGREES);
+        this.colorIndex = 0;
+        this.stars = [];
+        for (var i = 0; i < this.numStars; i++) {
+          this.stars.push({
+            size: this.starSpacing * (this.numStars - i),
+            colorIndex: this.colorIndex
+          });
+          this.colorIndex++;
+        }
+
+      },
+
+      draw: function () {
+        for (let star of this.stars) {
+          p5.fill(colorFromPalette(star.colorIndex));
+          drawStar(p5, 200, 200, star.size, star.size * 2.5, 5);
+          star.size += 1;
+        }
+        if (this.stars[0].size > (this.starSpacing * this.numStars)) {
+          this.stars.shift();
+          this.stars.push({size: 0, colorIndex: this.colorIndex});
+          this.colorIndex++;
+        }
       }
     };
 
@@ -1521,6 +1695,120 @@ module.exports = class Effects {
           this.crayons[this.current_drip].startFrame = p5.frameCount;
         }
       }
+    };
+
+    this.squiggles = {
+      points: [],
+      dotSpacing: 4,
+      amplitude: 40,
+      period: 400,
+      dotRadius: 14,
+      numSquiggles: 5,
+      init: function () {
+        this.points = [];
+        p5.noStroke();
+        p5.angleMode(p5.DEGREES);
+        let numPoints = p5.height / this.dotSpacing;
+        for (var i = 0; i < numPoints; i++) {
+          this.points.push({
+            x: 0,
+            y: i * this.dotSpacing,
+            theta: 360 / this.period * i * this.dotSpacing,
+            color: lerpColorFromPalette(i / numPoints)
+          });
+        }
+      },
+      draw: function ( {bpm} ) {
+        p5.background('black');
+        for (var i = 0; i < this.numSquiggles; i++) {
+          this.points.forEach(point => {
+            p5.fill(point.color);
+            p5.ellipse(point.x, point.y, this.dotRadius, this.dotRadius);
+            point.x = (p5.width / (this.numSquiggles - 1) * i) + p5.sin(point.theta) * this.amplitude;
+            point.theta = (point.theta + bpm / 360) % 360;
+          });
+        }
+      }
+    };
+
+    this.music_wave = {
+      inc: 360/15,
+      heightFactor: 1,
+      heightDivider: 200,
+      yLoc: 300,
+      lineWidth: p5.width/80,
+      draw: function (context) {
+        const centroid = context.centroid;
+        let scale = p5.map(centroid, 5000, 8000, 0, 250);
+        let angle = 0;
+        p5.background('black');
+        for (let i = 0; i < p5.width; i+=this.lineWidth) {
+          p5.stroke(lerpColorFromPalette(i/p5.width));
+          let amplitude = Math.abs(scale * (this.heightFactor/this.heightDivider) * p5.cos(angle));
+          let yInitial = this.yLoc - amplitude;
+          let yFinal = this.yLoc + amplitude;
+          p5.line(i, yInitial, i, yFinal);
+          if ( i < p5.width/2) {
+            this.heightFactor++;
+          } else {
+            this.heightFactor--;
+          }
+          angle += this.inc;
+        }
+      }
+    };
+
+    this.emojis = {
+      emojiList : [],
+      emojiTypes : [],
+
+      init : function () {
+        this.imageLovestruck = p5.createGraphics(100, 100);
+        this.imageLovestruck.scale(3);
+        drawLovestruck(this.imageLovestruck.drawingContext);
+        this.emojiTypes.push(this.imageLovestruck);
+
+        this.imageSmiley = p5.createGraphics(100, 100);
+        this.imageSmiley.scale(3);
+        drawSmiley(this.imageSmiley.drawingContext, 1.0);
+        this.emojiTypes.push(this.imageSmiley);
+
+        this.imageStarstruck = p5.createGraphics(100, 100);
+        this.imageStarstruck.scale(3);
+        drawStarstruck(this.imageStarstruck.drawingContext);
+        this.emojiTypes.push(this.imageStarstruck);
+
+        this.imageTickled = p5.createGraphics(100, 100);
+        this.imageTickled.scale(3);
+        drawTickled(this.imageTickled.drawingContext);
+        this.emojiTypes.push(this.imageTickled);
+
+        this.imageWink = p5.createGraphics(100, 100);
+        this.imageWink.scale(3);
+        drawWink(this.imageWink.drawingContext);
+        this.emojiTypes.push(this.imageWink);
+      },
+
+      draw : function () {
+        if (p5.frameCount % 10 === 0) { // generate new emoji every 10 frames
+          this.emojiList.push({
+            x: randomNumber(0, 350),
+            y: -50,
+            size: randomNumber(50, 90),
+            image: this.emojiTypes[randomNumber(0, 4)],
+          });
+        }
+        for (let i = 0; i < this.emojiList.length; ++i) {
+          const emoji = this.emojiList[i];
+          emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+          if (emoji.y > p5.height * 1.2) { // if the emoji has fallen past 120% of the screen
+            this.emojiList.splice(i, 1);
+          }
+          p5.push();
+          p5.drawingContext.drawImage(emoji.image.elt, emoji.x, emoji.y, emoji.size, emoji.size);
+          p5.pop();
+        }
+      },
     };
   }
 
