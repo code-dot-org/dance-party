@@ -131,7 +131,7 @@ test('random foreground effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setForegroundEffect('rand');
-  t.equal(nativeAPI.world.fg_effect, 'music_notes');
+  t.equal(nativeAPI.world.fg_effect, 'pineapples');
   nativeAPI.getForegroundEffect().draw({bpm: 120});
 
   t.end();
