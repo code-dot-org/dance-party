@@ -1445,44 +1445,80 @@ module.exports = class Effects {
         }
       }
     };
+    
     this.paint_drip = {
-      numberth_crayon: 1,
-      tallest_crayon: 0,
+      current_drip: 0,
+      current_drip_height: 0,
+      crayons: [],
+      start_width: 15,
+      start_height: 30,
+      dripping_up: false,
+      drip_diameter: 20,
+      drip_speed: 7,
+
       init: function () {
-        this.numberth_crayon = 1;
-        this.tallest_crayon = 0;
+        // Reset values
+        this.current_drip = 0;
+        this.current_drip_height = 0;
+        this.crayons = [];
+
+        this.crayons.push({maxHeight: p5.random(30, 200), startFrame: 0});
+        for (let i = 0; i < 17; i++) {
+          this.crayons.push({maxHeight: 0, startFrame: 0});
+        }
       },
+
       draw: function () {
-        p5.background('black');
-        let x = 7;
-        let y = 0;
-        let width_rect = 15;
-        let height_rect = 30;
-        let rand_arr = [121, 135, 235, 104, 319, 272, 173, 379, 362, 81, 317, 264, 196, 95, 60, 370, 200, 256, 205, 246, 86, 390, 158, 109, 362, 53, 134, 220, 357, 227];
-        for (let i = 1; i <= 30; i++) {
-          let c = lerpColorFromPalette(i/15);
+        for (let i = 0; i < this.crayons.length; i++) {
+          let c = lerpColorFromPalette(i/this.crayons.length);
           p5.fill(c);
           p5.noStroke();
-          if (this.numberth_crayon < i) {
-            p5.rect(x, y, width_rect, height_rect);
-            p5.ellipse(x, y, 40, 40);
-          } else {
-            if (this.tallest_crayon + height_rect <= rand_arr[i]) {
-              this.tallest_crayon = (p5.frameCount * 7) - 100 * (i-1);
-              p5.rect(x, y, width_rect, this.tallest_crayon + height_rect);
-              p5.ellipse(x + 7.5, this.tallest_crayon + height_rect, 20, 20);
+          let rectHeight = this.start_height;
+
+          // Drip is to the left of moving drip and should be stationary at full height
+          if (i < this.current_drip) {
+            rectHeight = this.crayons[i].maxHeight;
+            // Drip is currently moving
+          } else if (i === this.current_drip){
+            //Calculate height with regard to direction of movement
+            if(this.dripping_up){
+              rectHeight = this.crayons[i].maxHeight - (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed;
             } else {
-              this.tallest_crayon = (p5.frameCount * 7) - 100 * (i-1);
-              p5.rect(x,y, width_rect, rand_arr[i]);
-              p5.ellipse(x+7.5, rand_arr[i], 20, 20);
+              rectHeight = (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed + this.start_height;
             }
+            this.current_drip_height = rectHeight;
           }
-          x += 20;
+          //Draw each drip with a rectangle and ellipse
+          p5.rect((22 * i) + 7, 0, this.start_width, rectHeight);
+          p5.ellipse((22 * i) + this.start_width, rectHeight, this.drip_diameter, this.drip_diameter);
         }
 
-        if (this.tallest_crayon >= 100) {
-          this.numberth_crayon += 1;
-          this.tallest_crayon = 30;
+        // Check if the current drip is 'done'
+        if (
+          !this.dripping_up && this.current_drip_height >= this.crayons[this.current_drip].maxHeight
+          || this.dripping_up && this.current_drip_height <= 30
+        ) {
+          if (!this.dripping_up && this.current_drip === this.crayons.length - 1) {
+            // The rightmost drip is 'done' dripping down, switch to dripping up.
+            this.dripping_up = true;
+            this.current_drip_height = this.crayons[this.current_drip].maxHeight;
+          } else if (this.dripping_up && this.current_drip === 0) {
+            // The leftmost drip is 'done' dripping up, switch to dripping down.
+            this.dripping_up = false;
+            this.current_drip_height = 0;
+          } else if(this.dripping_up){
+            // A non-edge drip is 'done' dripping up, move the next left drip.
+            this.current_drip-=1;
+            this.current_drip_height = this.crayons[this.current_drip].maxHeight;
+          } else {
+            // A non-edge drip is 'done' dripping down, move the next drip right.
+            this.current_drip+=1;
+            this.current_drip_height = 0;
+            //Each new drip down is assigned a random maximum height.
+            this.crayons[this.current_drip].maxHeight = p5.random(30, 200);
+          }
+          //Note when this drip started to calculate the height in mid-drip
+          this.crayons[this.current_drip].startFrame = p5.frameCount;
         }
       }
     };
