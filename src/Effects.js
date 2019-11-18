@@ -1659,7 +1659,7 @@ module.exports = class Effects {
             // Drip is currently moving
           } else if (i === this.current_drip){
             //Calculate height with regard to direction of movement
-            if(this.dripping_up){
+            if (this.dripping_up) {
               rectHeight = this.crayons[i].maxHeight - (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed;
             } else {
               rectHeight = (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed + this.start_height;
