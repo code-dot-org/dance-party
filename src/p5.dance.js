@@ -665,7 +665,7 @@ module.exports = class DanceParty {
         sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
         sprite.rotation = 0;
       });
-    }
+    };
 
     if (format === "circle") {
       // Adjust radius of circle and size of the sprite according to number of
