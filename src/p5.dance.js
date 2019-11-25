@@ -636,6 +636,36 @@ module.exports = class DanceParty {
     const maxY = 400 - 40;
     const radiansToDegrees = 180 / Math.PI;
     const maxCircleRadius = 165;
+    function createColumn(group, location) {
+      for (let i=0; i<count; i++) {
+        const sprite = group[i];
+        sprite.x = location;
+        sprite.y = (i+1) * (400 / (count + 1));
+        sprite.rotation = 0;
+      }
+    }
+
+    function createRow(group, location) {
+      for (let i=0; i<count; i++) {
+        const sprite = group[i];
+        sprite.x = (i+1) * (400 / (count + 1));
+        sprite.y = location;
+        sprite.rotation = 0;
+      }
+    }
+
+    let createSquare = group => {
+      const pct = this.p5_.constrain(count / 10, 0, 1);
+      const radius = this.p5_.lerp(0, 100, pct);
+      const size = Math.ceil(Math.sqrt(count));
+      group.forEach((sprite, i) => {
+        const row = Math.floor(i / size);
+        const col = i % size;
+        sprite.x = this.p5_.lerp(200 - radius, 200 + radius, col / (size - 1));
+        sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
+        sprite.rotation = 0;
+      });
+    }
 
     if (format === "circle") {
       // Adjust radius of circle and size of the sprite according to number of
@@ -706,30 +736,27 @@ module.exports = class DanceParty {
         sprite.rotation = 0;
       });
     } else if (format === "inner") {
-      const pct = this.p5_.constrain(count / 10, 0, 1);
-      const radius = this.p5_.lerp(0, 100, pct);
-      const size = Math.ceil(Math.sqrt(count));
+      createSquare(group);
+    } else if (format === "diamond") {
+      createSquare(group);
       group.forEach((sprite, i) => {
-        const row = Math.floor(i / size);
-        const col = i % size;
-        sprite.x = this.p5_.lerp(200 - radius, 200 + radius, col / (size - 1));
-        sprite.y = this.p5_.lerp(200 - radius, 200 + radius, row / (size - 1));
-        sprite.rotation = 0;
+        const x = sprite.x;
+        const y = sprite.y;
+        sprite.x = (x - 200) * Math.cos(Math.PI/4) - (y - 200) * Math.sin(Math.PI/4) + 200;
+        sprite.y = (x - 200) * Math.sin(Math.PI/4) + (y - 200) * Math.cos(Math.PI/4) + 200;
       });
-    } else if (format === "row") {
-      for (let i=0; i<count; i++) {
-        const sprite = group[i];
-        sprite.x = (i+1) * (400 / (count + 1));
-        sprite.y = 200;
-        sprite.rotation = 0;
-      }
+    } else if (format === "left") {
+      createColumn(group, 100);
     } else if (format === "column") {
-      for (let i=0; i<count; i++) {
-        const sprite = group[i];
-        sprite.x = 200;
-        sprite.y = (i+1) * (400 / (count + 1));
-        sprite.rotation = 0;
-      }
+      createColumn(group, 200);
+    } else if (format === "right") {
+      createColumn(group, 300);
+    } else if (format === "top") {
+      createRow(group, 100);
+    } else if (format === "row") {
+      createRow(group, 200);
+    } else if (format === "bottom") {
+      createRow(group, 300);
     } else if (format === "border") {
       // First fill the four corners.
       // Then split remainder into 4 groups. Distribute group one along the top,
