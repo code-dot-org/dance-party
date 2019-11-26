@@ -258,7 +258,7 @@ test('LayoutSprites is safe to call with any layout on an empty group', async t 
     bpm: 120,
   });
 
-  ['circle', 'plus', 'x', 'grid', 'inner', 'row', 'column', 'border', 'random'].forEach(layout => {
+  ['circle', 'plus', 'x', 'grid', 'inner', 'diamond', 'top', 'row', 'bottom', 'left', 'column', 'right', 'border', 'random'].forEach(layout => {
     nativeAPI.layoutSprites('BEAR', layout);
   });
 
