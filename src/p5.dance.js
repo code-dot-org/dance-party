@@ -637,6 +637,7 @@ module.exports = class DanceParty {
     const radiansToDegrees = 180 / Math.PI;
     const maxCircleRadius = 165;
     function createColumn(group, location) {
+      let count = group.length;
       for (let i=0; i<count; i++) {
         const sprite = group[i];
         sprite.x = location;
@@ -646,6 +647,7 @@ module.exports = class DanceParty {
     }
 
     function createRow(group, location) {
+      let count = group.length;
       for (let i=0; i<count; i++) {
         const sprite = group[i];
         sprite.x = (i+1) * (400 / (count + 1));
@@ -655,6 +657,7 @@ module.exports = class DanceParty {
     }
 
     let createSquare = group => {
+      let count = group.length;
       const pct = this.p5_.constrain(count / 10, 0, 1);
       const radius = this.p5_.lerp(0, 100, pct);
       const size = Math.ceil(Math.sqrt(count));
