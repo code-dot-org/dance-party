@@ -636,26 +636,44 @@ module.exports = class DanceParty {
     const maxY = 400 - 40;
     const radiansToDegrees = 180 / Math.PI;
     const maxCircleRadius = 165;
-    function createColumn(group, location) {
+
+    /**
+     * Sets the x & y positions of a group of sprites in order to arrange them
+     * in a vertical column.
+     * @param {array<sprite>} group - The group of sprites to arrange
+     * @param {int} xLocation - The xLocation to set for all sprites
+     */
+    function createColumn(group, xLocation) {
       let count = group.length;
       for (let i=0; i<count; i++) {
         const sprite = group[i];
-        sprite.x = location;
+        sprite.x = xLocation;
         sprite.y = (i+1) * (400 / (count + 1));
         sprite.rotation = 0;
       }
     }
 
-    function createRow(group, location) {
+    /**
+     * Sets the x & y positions of a group of sprites in order to arrange them
+     * in a horizontal row.
+     * @param {array<sprite>} group - The group of sprites to arrange
+     * @param {int} yLocation - The yLocation to set for all sprites
+     */
+    function createRow(group, yLocation) {
       let count = group.length;
       for (let i=0; i<count; i++) {
         const sprite = group[i];
         sprite.x = (i+1) * (400 / (count + 1));
-        sprite.y = location;
+        sprite.y = yLocation;
         sprite.rotation = 0;
       }
     }
 
+    /**
+     * Sets the x & y positions of a group of sprites in order to arrange them
+     * in a solid square.
+     * @param {array<sprite>} group - The group of sprites to arrange
+     */
     let createSquare = group => {
       let count = group.length;
       const pct = this.p5_.constrain(count / 10, 0, 1);
@@ -742,9 +760,13 @@ module.exports = class DanceParty {
       createSquare(group);
     } else if (format === "diamond") {
       createSquare(group);
+
+      // Tilt the square 45° to create a diamond.
       group.forEach((sprite, i) => {
         const x = sprite.x;
         const y = sprite.y;
+
+        // Math.<sin,cos> expects degrees in radians.
         sprite.x = (x - 200) * Math.cos(Math.PI/4) - (y - 200) * Math.sin(Math.PI/4) + 200;
         sprite.y = (x - 200) * Math.sin(Math.PI/4) + (y - 200) * Math.cos(Math.PI/4) + 200;
       });
