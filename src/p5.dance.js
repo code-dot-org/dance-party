@@ -915,6 +915,13 @@ module.exports = class DanceParty {
     }, this);
   }
 
+  startMappingEach(group, property, range) {
+    group = this.getGroupByName_(group);
+    group.forEach(function (sprite) {
+      this.startMapping(sprite, property, range);
+    }, this);
+  }
+
   getProp(sprite, property) {
     if (!this.spriteExists_(sprite)) return;
 
