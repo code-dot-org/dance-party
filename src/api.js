@@ -131,6 +131,9 @@ module.exports = class DanceAPI {
       stopMapping: (spriteName, property, val) => {
         return nativeAPI.stopMapping(lookupSprite(spriteName), property, val);
       },
+      stopMappingEach: (group, property, val) => {
+        return nativeAPI.stopMappingEach(group, property, val);
+      },
       changeColorBy: (input, method, amount) => {
         return nativeAPI.changeColorBy(input, method, amount);
       },
