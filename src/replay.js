@@ -15,7 +15,7 @@ module.exports = {
 
     const frame = {bg, fg, context, palette};
 
-    const spritesToLog = p5.allSprites.slice(0, SPRITE_LIMIT);
+    const spritesToLog = p5.allSprites.filter(sprite => sprite.isDancer).slice(0, SPRITE_LIMIT);
     frame.sprites = spritesToLog.map((sprite) => ({
       animationFrame: sprite.animation && sprite.animation.getFrame(),
       animationLabel: sprite.getAnimationLabel(),
