@@ -17,8 +17,9 @@ const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
 
 module.exports = class Effects {
-  constructor(p5, alpha, blend, currentPalette = 'default') {
+  constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
     this.p5_ = p5;
+    this.extraImages = extraImages;
     this.blend = blend || p5.BLEND;
     this.currentPalette = currentPalette;
 
@@ -154,6 +155,51 @@ module.exports = class Effects {
             this.quad(i, j, step, p5.frameCount * 2);
             p5.pop();
           }
+        }
+      },
+    };
+
+    this.higher_power = {
+      init: function () {
+      },
+      draw: function () {
+        const numItems = 19;
+        const offsets = [
+          [0,270],[61,112],[164,1],[312,1],[428,66],[591,153],[603,323],[491,502],[369,502],[237,542],[61,438],[200,134],[341,173],[473,215],[483,340],[353,333],[193,419],[141,255],[242,248]
+        ];
+
+        let ctx = p5._renderer.drawingContext;
+        p5.background('black');
+        ctx.save();
+        let gradient = ctx.createLinearGradient(425, 425, 425, 0);
+        gradient.addColorStop(0, '#161317');
+        gradient.addColorStop(1, '#2143C5');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 425, 425);
+        ctx.restore();
+
+        p5.push();
+        p5.translate(p5.width/2, p5.height/2);
+        p5.imageMode(p5.CENTER);
+        p5.rotate(p5.frameCount);
+        p5.scale(1.7);
+        extraImages["higherPower"].drawFrame(19, 0, 0);
+        p5.pop();
+
+        const scaleContribution = Math.sin(p5.frameCount / 400);
+
+        for (let item = 0; item < numItems; item++) {
+          p5.push();
+          p5.translate(p5.width/2, p5.height/2);
+          p5.imageMode(p5.CENTER);
+          p5.rotate(-p5.frameCount * 3);
+          //p5.translate(-160 + (item%5) * 80, -160 + Math.floor(item/5) * 80);
+          p5.translate(offsets[item][0] * 0.4 - 120, offsets[item][1] * 0.4 - 120);
+          p5.rotate(p5.frameCount*3);
+          //p5.scale(0.3);
+          p5.scale(0.2 + scaleContribution * Math.sin(p5.frameCount/100 + item * 40)/2);
+          extraImages["higherPower"].drawFrame(item, 0, 0);
+          p5.pop();
         }
       },
     };
