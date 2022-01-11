@@ -24,6 +24,19 @@ To debug unit tests in the Chrome debugger:
 Open [chrome://inspect](chrome://inspect) in Chrome browser (requires Chrome 55+)
 Tap on `inspect` link under "Remote Target"
 
+### Additional build notes
+
+It appears that Node 8.15.0 should be used.  Notably, `canvas 1.6.13` requires this.  This can be achieved by running:
+```
+nvm use v8.15.0
+```
+
+It also appears that Python 2.7 should be used and must be available for installing `node-gyp`.  Techniques may vary, but this worked in one situation:
+```
+apt-get install python2.7    
+ln -s /usr/bin/python2.7 /usr/bin/python 
+```
+
 ### Adding New Characters
 To add a new character to Dance Party, follow the instructions here: https://github.com/code-dot-org/dance-spritesheets to create the spritesheet for the character.
 
