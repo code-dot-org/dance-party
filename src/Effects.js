@@ -61,6 +61,10 @@ module.exports = class Effects {
       return palette[randomNumber(0, palette.length - 1)];
     };
 
+    const getCurrentPalette = () => {
+      return this.currentPalette;
+    }
+
     this.none = {
       draw: function ({backgroundColor}) {
         p5.background(backgroundColor || "white");
@@ -160,48 +164,77 @@ module.exports = class Effects {
     };
 
     this.higher_power = {
-      init: function () {
-      },
-      draw: function () {
-        const numItems = 19;
+      init: function() {},
+      draw: function() {
+        const numSymbols = 19;
+        // The symbols are arranged to roughly fill a circle.
         const offsets = [
-          [0,270],[61,112],[164,1],[312,1],[428,66],[591,153],[603,323],[491,502],[369,502],[237,542],[61,438],[200,134],[341,173],[473,215],[483,340],[353,333],[193,419],[141,255],[242,248]
+          [0, 270],
+          [61, 112],
+          [164, 1],
+          [312, 1],
+          [428, 66],
+          [591, 153],
+          [603, 323],
+          [491, 502],
+          [369, 502],
+          [237, 542],
+          [61, 438],
+          [200, 134],
+          [341, 173],
+          [473, 215],
+          [483, 340],
+          [353, 333],
+          [193, 419],
+          [141, 255],
+          [242, 248]
         ];
 
         let ctx = p5._renderer.drawingContext;
-        p5.background('black');
+
         ctx.save();
         let gradient = ctx.createLinearGradient(425, 425, 425, 0);
-        gradient.addColorStop(0, '#161317');
-        gradient.addColorStop(1, '#2143C5');
+        gradient.addColorStop(1, "#161317");
+        gradient.addColorStop(
+          0,
+          constants.HIGHER_POWER_COLOR[getCurrentPalette()]
+        );
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 425, 425);
         ctx.restore();
 
         p5.push();
-        p5.translate(p5.width/2, p5.height/2);
+        p5.translate(p5.width / 2, p5.height / 2);
         p5.imageMode(p5.CENTER);
         p5.rotate(p5.frameCount);
         p5.scale(1.7);
         extraImages["higherPower"].drawFrame(19, 0, 0);
         p5.pop();
 
-        const scaleContribution = Math.sin(p5.frameCount / 400);
+        // There is a low frequency oscillation between equal-size symbols and
+        // different-size symbols.
+        const scaleContribution = Math.sin(p5.frameCount / 200);
 
-        for (let item = 0; item < numItems; item++) {
+        for (let symbolIndex = 0; symbolIndex < numSymbols; symbolIndex++) {
           p5.push();
-          p5.translate(p5.width/2, p5.height/2);
+          p5.translate(p5.width / 2, p5.height / 2);
           p5.imageMode(p5.CENTER);
           p5.rotate(-p5.frameCount * 3);
-          //p5.translate(-160 + (item%5) * 80, -160 + Math.floor(item/5) * 80);
-          p5.translate(offsets[item][0] * 0.4 - 120, offsets[item][1] * 0.4 - 120);
-          p5.rotate(p5.frameCount*3);
-          //p5.scale(0.3);
-          p5.scale(0.2 + scaleContribution * Math.sin(p5.frameCount/100 + item * 40)/2);
-          extraImages["higherPower"].drawFrame(item, 0, 0);
+          p5.translate(
+            offsets[symbolIndex][0] * 0.4 - 120,
+            offsets[symbolIndex][1] * 0.4 - 120
+          );
+          p5.rotate(p5.frameCount * 5);
+          p5.scale(
+            0.27 +
+              (scaleContribution *
+                Math.sin(p5.frameCount / 100 + symbolIndex * 40)) /
+                3
+          );
+          extraImages["higherPower"].drawFrame(symbolIndex, 0, 0);
           p5.pop();
         }
-      },
+      }
     };
 
     this.rainbow = {

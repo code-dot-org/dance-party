@@ -85,5 +85,17 @@ module.exports = {
     tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
     neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
     rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
+  },
+
+  HIGHER_POWER_COLOR: {
+    default: '#2143C5', // dark blue (UI says light)
+    electronic:'#5B8493', // dark teal
+    vintage: '#B5855C', // light brown
+    cool: '#242E32', // dark grey
+    warm: '#EB9629', // gold
+    iceCream: '#66605E', // light grey
+    tropical: '#D32842', // red
+    neon:  '#210C1A', // dark purple
+    rave: '#000000' // black (UI says black and white)
   }
 };

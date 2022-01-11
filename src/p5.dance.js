@@ -194,8 +194,7 @@ module.exports = class DanceParty {
   }
 
   async loadExtraImages() {
-    //const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet.png", 300, 300, 2);
-    const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet-2.png", 200, 200, 20);
+    const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet.png", 220, 220, 20);
     this.extraImages["higherPower"] = spriteSheet;
   }
 
