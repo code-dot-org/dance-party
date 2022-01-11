@@ -194,8 +194,10 @@ module.exports = class DanceParty {
   }
 
   async loadExtraImages() {
-    const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet.png", 220, 220, 20);
-    this.extraImages["higherPower"] = spriteSheet;
+    if (this.resourceLoader_.loadSpriteSheetAlt) {
+      const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet.png", 220, 220, 20);
+      this.extraImages["higherPower"] = spriteSheet;
+    }
   }
 
   onKeyDown(keyCode) {
