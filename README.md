@@ -26,9 +26,9 @@ Tap on `inspect` link under "Remote Target"
 
 ### Additional build notes
 
-It appears that Node 8.15.0 should be used.  Notably, `canvas 1.6.13` requires this.  This can be achieved by running:
+Node 14.17.1 or higher should be used.  This can be achieved by running:
 ```
-nvm use v8.15.0
+nvm use v14.17.1
 ```
 
 It also appears that Python 2.7 should be used and must be available for installing `node-gyp`.  Techniques may vary, but this worked in one situation:
