@@ -194,11 +194,8 @@ module.exports = class Effects {
 
         ctx.save();
         let gradient = ctx.createLinearGradient(425, 425, 425, 0);
-        gradient.addColorStop(1, "#161317");
-        gradient.addColorStop(
-          0,
-          constants.HIGHER_POWER_COLOR[getCurrentPalette()]
-        );
+        gradient.addColorStop(1, constants.HIGHER_POWER_COLORS[getCurrentPalette()][0]);
+        gradient.addColorStop(0, constants.HIGHER_POWER_COLORS[getCurrentPalette()][1]);
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 425, 425);
         ctx.restore();

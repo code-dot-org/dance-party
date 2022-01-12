@@ -86,16 +86,15 @@ module.exports = {
     neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
     rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
   },
-
-  HIGHER_POWER_COLOR: {
-    default: '#2143C5', // dark blue (UI says light)
-    electronic:'#5B8493', // dark teal
-    vintage: '#B5855C', // light brown
-    cool: '#242E32', // dark grey
-    warm: '#EB9629', // gold
-    iceCream: '#66605E', // light grey
-    tropical: '#D32842', // red
-    neon:  '#210C1A', // dark purple
-    rave: '#000000' // black (UI says black and white)
+  HIGHER_POWER_COLORS: {
+    default: ['#161317', '#2143C5'], // light: black to blue
+    electronic: ['#3C0A92', '#111111'], // purple to black
+    vintage: ['#310B66', '#411573'], // all purple
+    cool:  ['#161317', '#6820A6'], // black to purple
+    warm: ['#A00B64', '#121212'], // magenta to black
+    iceCream: ['#366EC7', '#1D80A7'], // all cyan
+    tropical: ['#571593', '#6820A6'], // all light purple
+    neon:  ['#2143C5', '#161317'], // blue to black
+    rave: ['#171717', '#1B1B1B'], // black and white: all black
   }
 };
