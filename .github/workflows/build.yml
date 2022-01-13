@@ -17,8 +17,6 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
       - name: Install dependencies
         run: npm install
-      - name: Bootstrap
-        run: npm run bootstrap
       - name: Build
         run: npm run build
       - name: Test
