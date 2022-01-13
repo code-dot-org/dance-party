@@ -71,7 +71,7 @@ async function testBackground(t, name, effect) {
   ['snowflakes'],
   ['sparkles'],
   ['pineapples'],
-  //['pizzas'], error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
+  ['pizzas'], // error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
   ['quads', 'vintage'],
   ['quads', 'electronic'],
   ['kaleidoscope'],
