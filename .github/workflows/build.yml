@@ -26,10 +26,10 @@ jobs:
       - name: Test
         run: npm run test
 
-      - name: Copy dist to /
-        run: cp -r dist/* .
+      - name: Set up pages
+        run: mkdir pages && cp -r dist/* pages/ && cp index.html pages/
       - name: Deploy Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: dist # The folder the action should deploy.
+          folder: pages # The folder the action should deploy.
