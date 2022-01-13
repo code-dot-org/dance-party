@@ -1,4 +1,5 @@
-[![travis-ci](https://travis-ci.org/code-dot-org/dance-party.svg?branch=main)](https://travis-ci.org/code-dot-org/dance-party/builds)
+# Dance Party
+[![Build Status](https://github.com/code-dot-org/dance-party/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/code-dot-org/dance-party/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/code-dot-org/dance-party/branch/main/graph/badge.svg)](https://codecov.io/gh/code-dot-org/dance-party)
 
 Steps to get up and running
