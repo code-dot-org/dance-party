@@ -63,7 +63,7 @@ module.exports = class Effects {
 
     const getCurrentPalette = () => {
       return this.currentPalette;
-    }
+    };
 
     this.none = {
       draw: function ({backgroundColor}) {
@@ -164,8 +164,8 @@ module.exports = class Effects {
     };
 
     this.higher_power = {
-      init: function() {},
-      draw: function() {
+      init: function () {},
+      draw: function () {
         const numSymbols = 19;
         // The symbols are arranged to roughly fill a circle.
         const offsets = [
