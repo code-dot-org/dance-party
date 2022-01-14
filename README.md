@@ -1,4 +1,5 @@
-[![travis-ci](https://travis-ci.org/code-dot-org/dance-party.svg?branch=main)](https://travis-ci.org/code-dot-org/dance-party/builds)
+# Dance Party
+[![Build Status](https://github.com/code-dot-org/dance-party/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/code-dot-org/dance-party/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/code-dot-org/dance-party/branch/main/graph/badge.svg)](https://codecov.io/gh/code-dot-org/dance-party)
 
 Steps to get up and running
@@ -23,6 +24,19 @@ To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
 Open [chrome://inspect](chrome://inspect) in Chrome browser (requires Chrome 55+)
 Tap on `inspect` link under "Remote Target"
+
+### Additional build notes
+
+Node 14.17.1 or higher should be used.  This can be achieved by running:
+```
+nvm use v14.17.1
+```
+
+It also appears that Python 2.7 should be used and must be available for installing `node-gyp`.  Techniques may vary, but this worked in one situation:
+```
+apt-get install python2.7    
+ln -s /usr/bin/python2.7 /usr/bin/python 
+```
 
 ### Adding New Characters
 To add a new character to Dance Party, follow the instructions here: https://github.com/code-dot-org/dance-spritesheets to create the spritesheet for the character.
