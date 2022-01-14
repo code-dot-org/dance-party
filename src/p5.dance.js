@@ -1241,8 +1241,7 @@ module.exports = class DanceParty {
       backgroundColor: this.world.background_color,
       bpm,
       artist,
-      title,
-      extraImages: this.extraImages
+      title
     };
 
     let currentMeasure = this.getCurrentMeasure();
