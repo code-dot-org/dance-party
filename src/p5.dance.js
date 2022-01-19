@@ -111,6 +111,8 @@ module.exports = class DanceParty {
       this.animations[costume] = [];
     });
 
+    this.extraImages = {};
+
     // Sort after spriteConfig function has executed to ensure that
     // rest moves are at the beginning and shortBurst moves are all at the end
 
@@ -156,6 +158,7 @@ module.exports = class DanceParty {
   async ensureSpritesAreLoaded(costumeNames = this.world.SPRITE_NAMES) {
     this.allSpritesLoaded = false;
     const animationData = await this.resourceLoader_.getAnimationData();
+    await this.loadExtraImages();
     await Promise.all(costumeNames.map((costume) => {
       const costumeData = animationData[costume.toLowerCase()];
       return this.loadCostumeAnimations(costume, costumeData);
@@ -188,6 +191,13 @@ module.exports = class DanceParty {
       mirror,
       animation
     );
+  }
+
+  async loadExtraImages() {
+    if (this.resourceLoader_.loadSpriteSheetAlt) {
+      const spriteSheet = await this.resourceLoader_.loadSpriteSheetAlt("higher-power-sheet.png", 220, 220, 20);
+      this.extraImages["higherPower"] = spriteSheet;
+    }
   }
 
   onKeyDown(keyCode) {
@@ -271,8 +281,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new Effects(this.p5_, 1);
-    this.fgEffects_ = new Effects(this.p5_, 0.8);
+    this.bgEffects_ = new Effects(this.p5_, 1, this.extraImages);
+    this.fgEffects_ = new Effects(this.p5_, 0.8, this.extraImages);
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
@@ -1231,7 +1241,7 @@ module.exports = class DanceParty {
       backgroundColor: this.world.background_color,
       bpm,
       artist,
-      title,
+      title
     };
 
     let currentMeasure = this.getCurrentMeasure();

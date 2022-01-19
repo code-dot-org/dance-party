@@ -42,6 +42,14 @@ module.exports = class ResourceLoader {
     return this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData);
   }
 
+  async loadSpriteSheetAlt(baseName, width, height, images) {
+    const spriteSheetUrl = `${this.assetBase_}${baseName}`;
+    if (!this.imageCache_[spriteSheetUrl]) {
+      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(spriteSheetUrl);
+    }
+    return this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], width, height, images);
+  }
+
   /**
    * Wrap p5.loadImageElement so we return a Promise
    * @param {string} url
