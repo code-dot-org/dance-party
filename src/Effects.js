@@ -166,8 +166,7 @@ module.exports = class Effects {
     this.higher_power = {
       init: function () {},
       draw: function () {
-        const numSymbols = 19;
-        // The symbols are arranged to roughly fill a circle.
+        // The symbols are arranged to roughly fill a circle.  These are [x,y] offset pairs.
         const offsets = [
           [0, 270],
           [61, 112],
@@ -212,14 +211,14 @@ module.exports = class Effects {
         // different-size symbols.
         const scaleContribution = Math.sin(p5.frameCount / 200);
 
-        for (let symbolIndex = 0; symbolIndex < numSymbols; symbolIndex++) {
+        offsets.forEach(function (offset, symbolIndex) {
           p5.push();
           p5.translate(p5.width / 2, p5.height / 2);
           p5.imageMode(p5.CENTER);
           p5.rotate(-p5.frameCount * 3);
           p5.translate(
-            offsets[symbolIndex][0] * 0.4 - 120,
-            offsets[symbolIndex][1] * 0.4 - 120
+            offset[0] * 0.4 - 120,
+            offset[1] * 0.4 - 120
           );
           p5.rotate(p5.frameCount * 5);
           p5.scale(
@@ -230,7 +229,7 @@ module.exports = class Effects {
           );
           extraImages["higherPower"].drawFrame(symbolIndex, 0, 0);
           p5.pop();
-        }
+        });
       }
     };
 
