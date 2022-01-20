@@ -59,13 +59,10 @@ it to ensure it matches expectations.
 
 ### Publishing a new version
 
-To publish a new version, the following sequence should work:
-
+To publish a new version, the following command should work:
 ```
-npm preversion
 npm version 1.0.4
-npm postversion
 ```
 With `1.0.4` replaced by the new version number that should be published.
 
-Note: make sure you are logged into `npm` first.  If not, the `npm version` step may fail with a misleading `E404` error.
+Note: make sure you are logged into `npm` first.  If not, the command may fail with a misleading `E404` error.  You can see if you're logged in with `npm whoami`, and if not logged in, can can use `npm login`.  
