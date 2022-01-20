@@ -56,3 +56,16 @@ After a new baseline is generated, manually inspect it to ensure it matches expe
 #### To Update A Baseline
 Delete the accepted baseline. Run `npm run test:visual`. After a new baseline is generated, manually inspect 
 it to ensure it matches expectations.
+
+### Publishing a new version
+
+To publish a new version, the following sequence should work:
+
+```
+npm preversion
+npm version 1.0.4
+npm postversion
+```
+With `1.0.4` replaced by the new version number that should be published.
+
+Note: make sure you are logged into `npm` first.  If not, the `npm version` step may fail with a misleading `E404` error.
