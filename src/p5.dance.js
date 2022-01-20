@@ -714,6 +714,25 @@ module.exports = class DanceParty {
         sprite.rotation = (angle - startAngle) * radiansToDegrees;
         sprite.scale = scale;
       });
+    } else if (format === "spiral") {
+      const pct = this.p5_.constrain(count / 10, 0, 1);
+      const scale = this.p5_.lerp(0.6, 0.3, pct * pct);
+      const startAngle = -Math.PI / 2;
+      // The length of the spiral gets longer as we go from up from 5 towards 40
+      // characters in the group.
+      const countConstrained = this.p5_.constrain(count, 5, 40);
+      // We go from 1 circle to 2 circles as the length of the spiral gets longer.
+      const cycles = this.p5_.lerp(1, 2, (countConstrained-5)/35);
+      const deltaAngle =  cycles * 2 * Math.PI / count;
+
+      group.forEach((sprite, i) => {
+        const angle = deltaAngle * i + startAngle;
+        const radius = this.p5_.lerp(50, maxCircleRadius, i/count);
+        sprite.x = 200 + radius * Math.cos(angle);
+        sprite.y = 200 + radius * Math.sin(angle);
+        sprite.rotation = (angle - startAngle) * radiansToDegrees;
+        sprite.scale = scale;
+      });
     } else if (format === 'plus') {
       const pct = this.p5_.constrain(count / 10, 0, 1);
       const maxRadius = this.p5_.lerp(50, maxCircleRadius, pct);
@@ -851,6 +870,24 @@ module.exports = class DanceParty {
           sprite.y = this.p5_.lerp(minY, maxY, (i + 1) / (leftCount + 1));
           sprite.rotation = 0;
         }
+      }
+    } else if (format === "infinity") {
+      if (count === 1) {
+        group[0].x = 200;
+        group[0].y = 200;
+        group[0].scale = 1;
+      } else {
+        // There will always be a smallest character in the top-left and
+        // a fullsize character in the center, with additional characters
+        // spread evenly between them.
+        group.forEach((sprite, index) => {
+          const progress = index / (count-1);
+          const offset = this.p5_.lerp(20, 200, progress);
+          const scale = this.p5_.lerp(0.2, 1, progress);
+          sprite.x = offset;
+          sprite.y = offset;
+          sprite.scale = scale;
+        });
       }
     } else if (format === "random") {
       group.forEach(function (sprite) {
