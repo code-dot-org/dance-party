@@ -718,16 +718,17 @@ module.exports = class DanceParty {
       const pct = this.p5_.constrain(count / 10, 0, 1);
       const scale = this.p5_.lerp(0.6, 0.3, pct * pct);
       const startAngle = -Math.PI / 2;
-      // The length of the spiral gets longer as we go from up from 5 towards 40
+      // The length of the spiral gets longer as we go from up from 5 towards 80
       // characters in the group.
-      const countConstrained = this.p5_.constrain(count, 5, 40);
-      // We go from 1 circle to 2 circles as the length of the spiral gets longer.
-      const cycles = this.p5_.lerp(1, 2, (countConstrained-5)/35);
+      const countConstrained = this.p5_.constrain(count, 5, 80);
+      // We go from 1 circle to 4 circles as the length of the spiral gets longer.
+      const cycles = this.p5_.lerp(1, 4, (countConstrained-5)/75);
       const deltaAngle =  cycles * 2 * Math.PI / count;
 
       group.forEach((sprite, i) => {
         const angle = deltaAngle * i + startAngle;
-        const radius = this.p5_.lerp(50, maxCircleRadius, i/count);
+        const maxRadius = this.p5_.lerp(0.75*maxCircleRadius, 2*maxCircleRadius, this.p5_.constrain(count / 80, 0, 1));
+        const radius = this.p5_.lerp(50, maxRadius, i/count);
         sprite.x = 200 + radius * Math.cos(angle);
         sprite.y = 200 + radius * Math.sin(angle);
         sprite.rotation = (angle - startAngle) * radiansToDegrees;
