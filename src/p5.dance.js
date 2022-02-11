@@ -158,11 +158,13 @@ module.exports = class DanceParty {
   async ensureSpritesAreLoaded(costumeNames = this.world.SPRITE_NAMES) {
     this.allSpritesLoaded = false;
     const animationData = await this.resourceLoader_.getAnimationData();
-    await this.loadExtraImages();
-    await Promise.all(costumeNames.map((costume) => {
+   
+    const promises = costumeNames.map((costume) => {
       const costumeData = animationData[costume.toLowerCase()];
       return this.loadCostumeAnimations(costume, costumeData);
-    }));
+    });
+    promises.push(this.loadExtraImages());
+    await Promise.all(promises);
     this.allSpritesLoaded = true;
   }
 
