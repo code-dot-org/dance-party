@@ -59,6 +59,8 @@ it to ensure it matches expectations.
 
 ### Publishing a new version
 
+First, ensure you have the `main` branch checked out locally, and that it's up to date.
+
 To publish a new version, the following command should work:
 ```
 npm version 1.0.4
