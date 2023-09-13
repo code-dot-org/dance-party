@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "build": "webpack -p",
-    "dev": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --mode=development --host=0.0.0.0",
     "codecov": "mkdir -p coverage && nyc report --reporter=text-lcov > ./coverage/unit.lcov && codecov",
     "lint": "eslint --ext .js src test",
     "test": "npm run lint && nyc npm run test:unit && npm run test:integration && npm run test:visual",
@@ -52,9 +52,9 @@
     "raw-loader": "^0.5.1",
     "sinon": "^7.1.1",
     "tape": "^4.9.1",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^2.1.5",
-    "webpack-dev-server": "^3.1.4"
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
