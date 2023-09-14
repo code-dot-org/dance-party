@@ -56,5 +56,10 @@
   "bugs": {
     "url": "https://github.com/code-dot-org/dance-party/issues"
   },
-  "homepage": "https://github.com/code-dot-org/dance-party#readme"
+  "homepage": "https://github.com/code-dot-org/dance-party#readme",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "karma-webpack": "^5.0.0"
+  }
 }
