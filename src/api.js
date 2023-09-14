@@ -2,11 +2,11 @@ module.exports = class DanceAPI {
   constructor(nativeAPI) {
     const sprites = [];
 
-    const lookupSprite = (spriteName) =>
-      sprites.find((sprite) => sprite.name === spriteName);
+    const lookupSprite = spriteName =>
+      sprites.find(sprite => sprite.name === spriteName);
 
-    const enforceUniqueName = (name) => {
-      sprites.forEach((sprite) => {
+    const enforceUniqueName = name => {
+      sprites.forEach(sprite => {
         if (sprite.name === name) {
           sprite.name = undefined;
         }
@@ -14,27 +14,27 @@ module.exports = class DanceAPI {
     };
 
     return {
-      setBackground: (color) => {
+      setBackground: color => {
         nativeAPI.setBackground(color.toString());
       },
       // DEPRECATED
       // An old block may refer to this version of the command,
       // so we're keeping it around for backwards-compat.
       // @see https://github.com/code-dot-org/dance-party/issues/469
-      setBackgroundEffect: (effect, palette = "default") => {
+      setBackgroundEffect: (effect, palette = 'default') => {
         nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
       },
-      setBackgroundEffectWithPalette: (effect, palette = "default") => {
+      setBackgroundEffectWithPalette: (effect, palette = 'default') => {
         nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
       },
       // DEPRECATED
       // An old block may refer to this version of the command,
       // so we're keeping it around for backwards-compat.
       // @see https://github.com/code-dot-org/dance-party/issues/469
-      setForegroundEffect: (effect) => {
+      setForegroundEffect: effect => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
-      setForegroundEffectExtended: (effect) => {
+      setForegroundEffectExtended: effect => {
         nativeAPI.setForegroundEffect(effect.toString());
       },
       makeAnonymousDanceSprite: (costume, location) => {
@@ -47,7 +47,7 @@ module.exports = class DanceAPI {
       makeNewDanceSpriteGroup: (n, costume, layout) => {
         nativeAPI.makeNewDanceSpriteGroup(n, costume, layout);
       },
-      getCurrentDance: (spriteName) => {
+      getCurrentDance: spriteName => {
         return nativeAPI.getCurrentDance(lookupSprite(spriteName));
       },
       changeMoveLR: (spriteName, move, dir) => {
@@ -116,10 +116,10 @@ module.exports = class DanceAPI {
       setDanceSpeedEach: (group, speed) => {
         nativeAPI.setDanceSpeedEach(group, speed);
       },
-      getEnergy: (range) => {
+      getEnergy: range => {
         return Number(nativeAPI.getEnergy(range));
       },
-      getTime: (unit) => {
+      getTime: unit => {
         return Number(nativeAPI.getTime(unit));
       },
       startMapping: (spriteName, property, val) => {
@@ -149,7 +149,7 @@ module.exports = class DanceAPI {
       changePropEachBy: (group, property, val) => {
         return nativeAPI.changePropEachBy(group, property, val);
       },
-      ai: (value) => {
+      ai: value => {
         nativeAPI.ai(value);
       },
     };
