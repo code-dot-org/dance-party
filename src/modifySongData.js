@@ -12,10 +12,7 @@ function getMeasureForTime(songMetadata, time) {
 }
 
 function clamp(min, max, val) {
-  return Math.max(
-    min,
-    Math.min(max, val)
-  );
+  return Math.max(min, Math.min(max, val));
 }
 
 function calculateMean(vals) {
@@ -50,8 +47,9 @@ function valueOrDefault(value, defaultValue) {
 function getFrequencyEnergy(energy, options = {}) {
   const numDeviations = valueOrDefault(options.numDeviations, 1.5);
   const smoothFactor = valueOrDefault(options.smoothFactor, 0.6);
-  const representativeIndexRange = valueOrDefault(options.representativeIndexRange ||
-    [0, energy.length]);
+  const representativeIndexRange = valueOrDefault(
+    options.representativeIndexRange || [0, energy.length]
+  );
 
   // Energy values are all 0+
   const nonZero = energy.slice(...representativeIndexRange).filter(e => e > 0);
@@ -71,7 +69,9 @@ function getFrequencyEnergy(energy, options = {}) {
   const min = mean - stdDev * numDeviations;
   const max = mean + stdDev * numDeviations;
 
-  const ret = energy.map(x => (clamp(min, max, x) - min) / (max - min) * 0xff);
+  const ret = energy.map(
+    x => ((clamp(min, max, x) - min) / (max - min)) * 0xff
+  );
   return smooth(ret, smoothFactor);
 }
 
@@ -86,7 +86,7 @@ function getFrequencyEnergy(energy, options = {}) {
  */
 function smooth(rg, smoothFactor) {
   for (let i = 1; i < rg.length; i++) {
-    rg[i] = rg[i-1] * smoothFactor + rg[i] * (1 - smoothFactor);
+    rg[i] = rg[i - 1] * smoothFactor + rg[i] * (1 - smoothFactor);
   }
   return rg;
 }
@@ -101,50 +101,67 @@ function smooth(rg, smoothFactor) {
  * the relevant .json files).
  */
 function modifySongData(songData) {
-  const { analysis } = songData;
+  const {analysis} = songData;
   if (!analysis) {
     return songData;
   }
 
-  let customizationOptions = Object.assign({
-    numDeviations: 1.5,
-    smoothFactor: 0.7,
-    representativeMeasureRange: [5, 12],
-    // Any of the above options can be tuned per song by setting the respective
-    // fields in songData.energyCustomization
-  }, songData.energyCustomization);
+  let customizationOptions = Object.assign(
+    {
+      numDeviations: 1.5,
+      smoothFactor: 0.7,
+      representativeMeasureRange: [5, 12],
+      // Any of the above options can be tuned per song by setting the respective
+      // fields in songData.energyCustomization
+    },
+    songData.energyCustomization
+  );
 
   // Get the indices of the songData.analysis frames that fit within our measure
   // range
-  const representativeIndices = analysis.map((item, index) => {
-    const measure = getMeasureForTime(songData, item.time);
-    if (measure >= customizationOptions.representativeMeasureRange[0] &&
-        measure < customizationOptions.representativeMeasureRange[1] + 1) {
-      return index;
-    }
-    return null;
-  }).filter(x => x !== null);
+  const representativeIndices = analysis
+    .map((item, index) => {
+      const measure = getMeasureForTime(songData, item.time);
+      if (
+        measure >= customizationOptions.representativeMeasureRange[0] &&
+        measure < customizationOptions.representativeMeasureRange[1] + 1
+      ) {
+        return index;
+      }
+      return null;
+    })
+    .filter(x => x !== null);
 
   // The first and last indices into songData.analysis
   customizationOptions.representativeIndexRange = [
     representativeIndices[0],
-    representativeIndices[representativeIndices.length - 1] + 1
+    representativeIndices[representativeIndices.length - 1] + 1,
   ];
 
   // One thing to note with the approach we've chosen: each song/energy band is
   // independently normalized around energy 128. This means even if a song is
   // very base heavy, the average bass and average treble will end up being the
   // same.
-  const bass = getFrequencyEnergy(analysis.map(x => x.energy[0]), customizationOptions);
-  const mid = getFrequencyEnergy(analysis.map(x => x.energy[1]), customizationOptions);
-  const treble = getFrequencyEnergy(analysis.map(x => x.energy[2]), customizationOptions);
+  const bass = getFrequencyEnergy(
+    analysis.map(x => x.energy[0]),
+    customizationOptions
+  );
+  const mid = getFrequencyEnergy(
+    analysis.map(x => x.energy[1]),
+    customizationOptions
+  );
+  const treble = getFrequencyEnergy(
+    analysis.map(x => x.energy[2]),
+    customizationOptions
+  );
 
   // Create a new analysis that duplicates each frame, but replaces energy values
   // with our new ones
-  const newAnalysis = analysis.map((currentFrame, i) => Object.assign({},
-    currentFrame, { energy: [bass[i], mid[i], treble[i]] }));
+  const newAnalysis = analysis.map((currentFrame, i) =>
+    Object.assign({}, currentFrame, {energy: [bass[i], mid[i], treble[i]]})
+  );
 
-  return Object.assign({}, songData, { analysis: newAnalysis });
+  return Object.assign({}, songData, {analysis: newAnalysis});
 }
 
 module.exports = modifySongData;
