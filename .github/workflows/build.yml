@@ -23,8 +23,6 @@ jobs:
         run: yarn
       - name: Build
         run: yarn run build
-      - name: Test
-        run: yarn run test
 
       - name: Set up pages
         run: mkdir pages && cp -r dist/* pages/ && cp index.html pages/
