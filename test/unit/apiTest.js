@@ -17,7 +17,10 @@ test('setBackgroundEffect calls nativeAPI.setBackgroundEffect', t => {
   const api = new DanceAPI(fakeNativeAPI);
   api.setBackgroundEffect(FAKE_EFFECT, FAKE_PALETTE);
   t.equal(fakeNativeAPI.setBackgroundEffect.callCount, 1);
-  t.deepEqual(fakeNativeAPI.setBackgroundEffect.firstCall.args, [FAKE_EFFECT, FAKE_PALETTE]);
+  t.deepEqual(fakeNativeAPI.setBackgroundEffect.firstCall.args, [
+    FAKE_EFFECT,
+    FAKE_PALETTE,
+  ]);
 });
 
 test('setBackgroundEffectWithPalette calls nativeAPI.setBackgroundEffect', t => {
@@ -28,7 +31,10 @@ test('setBackgroundEffectWithPalette calls nativeAPI.setBackgroundEffect', t => 
   const api = new DanceAPI(fakeNativeAPI);
   api.setBackgroundEffectWithPalette(FAKE_EFFECT, FAKE_PALETTE);
   t.equal(fakeNativeAPI.setBackgroundEffect.callCount, 1);
-  t.deepEqual(fakeNativeAPI.setBackgroundEffect.firstCall.args, [FAKE_EFFECT, FAKE_PALETTE]);
+  t.deepEqual(fakeNativeAPI.setBackgroundEffect.firstCall.args, [
+    FAKE_EFFECT,
+    FAKE_PALETTE,
+  ]);
 });
 
 // DEPRECATED

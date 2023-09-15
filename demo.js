@@ -7,17 +7,18 @@ import injectInterpreted from './test/helpers/injectInterpreted';
 const textareaCode = document.querySelector('#code');
 const buttonRun = document.querySelector('#run');
 
-const nativeAPI = window.nativeAPI = new DanceParty({
+const nativeAPI = (window.nativeAPI = new DanceParty({
   onPuzzleComplete: () => {},
-  playSound: (url, callback, onEnded) => setTimeout(() => {
-    callback && callback();
-  }, 0),
+  playSound: (url, callback, onEnded) =>
+    setTimeout(() => {
+      callback && callback();
+    }, 0),
   onInit: () => {
     document.querySelector('#run').style.display = 'inline';
     runCode();
   },
   container: 'dance',
-});
+}));
 
 // Note: We don't just declare
 //   async function runCode() {
@@ -27,22 +28,25 @@ const nativeAPI = window.nativeAPI = new DanceParty({
 const runCode = async function () {
   await nativeAPI.ensureSpritesAreLoaded();
 
-  const {
-    runUserSetup,
-    runUserEvents,
-    getCueList,
-  } = injectInterpreted(nativeAPI, interpreted, textareaCode.value);
+  const {runUserSetup, runUserEvents, getCueList} = injectInterpreted(
+    nativeAPI,
+    interpreted,
+    textareaCode.value
+  );
 
   // Setup event tracking.
   nativeAPI.addCues(getCueList());
-  nativeAPI.onHandleEvents = currentFrameEvents => runUserEvents(currentFrameEvents);
+  nativeAPI.onHandleEvents = currentFrameEvents =>
+    runUserEvents(currentFrameEvents);
 
   runUserSetup();
 
   nativeAPI.play(jazzy_beats);
-}
+};
 
-textareaCode.value = textareaCode.value || `var cat = makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+textareaCode.value =
+  textareaCode.value ||
+  `var cat = makeNewDanceSprite("CAT", null, {x: 200, y: 200});
 setBackgroundEffectWithPalette("disco_ball", "rand");
 
 atTimestamp(2, "measures", function () {
@@ -51,11 +55,11 @@ atTimestamp(2, "measures", function () {
 `;
 
 document.querySelector('#run').addEventListener('click', () => {
-  if (buttonRun.innerText === "Reset") {
-    buttonRun.innerText = "Run!";
+  if (buttonRun.innerText === 'Reset') {
+    buttonRun.innerText = 'Run!';
     nativeAPI.reset();
   } else {
-    buttonRun.innerText = "Reset";
+    buttonRun.innerText = 'Reset';
     runCode();
   }
 });
