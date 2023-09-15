@@ -1,4 +1,4 @@
-const ASSET_BASE = "https://curriculum.code.org/images/sprites/dance_20191106/";
+const ASSET_BASE = 'https://curriculum.code.org/images/sprites/dance_20191106/';
 
 /**
  * The resource loader class abstracts network-dependent operations, allowing
@@ -37,17 +37,29 @@ module.exports = class ResourceLoader {
   async loadSpriteSheet(baseName, frameData) {
     const spriteSheetUrl = `${this.assetBase_}${baseName}`;
     if (!this.imageCache_[spriteSheetUrl]) {
-      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(spriteSheetUrl);
+      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(
+        spriteSheetUrl
+      );
     }
-    return this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], frameData);
+    return this.p5_.loadSpriteSheet(
+      this.imageCache_[spriteSheetUrl],
+      frameData
+    );
   }
 
   async loadSpriteSheetAlt(baseName, width, height, images) {
     const spriteSheetUrl = `${this.assetBase_}${baseName}`;
     if (!this.imageCache_[spriteSheetUrl]) {
-      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(spriteSheetUrl);
+      this.imageCache_[spriteSheetUrl] = await this.loadImageElement(
+        spriteSheetUrl
+      );
     }
-    return this.p5_.loadSpriteSheet(this.imageCache_[spriteSheetUrl], width, height, images);
+    return this.p5_.loadSpriteSheet(
+      this.imageCache_[spriteSheetUrl],
+      width,
+      height,
+      images
+    );
   }
 
   /**

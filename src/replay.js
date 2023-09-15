@@ -15,8 +15,10 @@ module.exports = {
 
     const frame = {bg, fg, context, palette};
 
-    const spritesToLog = p5.allSprites.filter(sprite => sprite.isDancer).slice(0, SPRITE_LIMIT);
-    frame.sprites = spritesToLog.map((sprite) => ({
+    const spritesToLog = p5.allSprites
+      .filter(sprite => sprite.isDancer)
+      .slice(0, SPRITE_LIMIT);
+    frame.sprites = spritesToLog.map(sprite => ({
       animationFrame: sprite.animation && sprite.animation.getFrame(),
       animationLabel: sprite.getAnimationLabel(),
       height: sprite.height,
@@ -24,7 +26,10 @@ module.exports = {
       rotation: sprite.rotation,
       scale: sprite.scale,
       style: sprite.style,
-      tint: sprite.tint === undefined ? undefined : p5.hue(p5.color(sprite.tint || 0)),
+      tint:
+        sprite.tint === undefined
+          ? undefined
+          : p5.hue(p5.color(sprite.tint || 0)),
       visible: sprite.visible,
       width: sprite.width,
       x: sprite.x,
