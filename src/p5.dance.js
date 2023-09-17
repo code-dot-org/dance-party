@@ -1270,7 +1270,6 @@ module.exports = class DanceParty {
   }
 
   draw() {
-    console.log('inside dance-party draw');
     const { bpm, artist, title } = this.songMetadata_ || {};
 
     const context = {
