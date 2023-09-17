@@ -1,30 +1,49 @@
+var webpack = require('webpack');
+
 module.exports = config => {
   config.set({
     basePath: '',
-    frameworks: ['tap'],
+    frameworks: ['tap', 'webpack'],
     files: [
       {pattern: 'test/integration/index.js'},
-      {pattern: 'test/assets/sprite_sheets/**/*.*', watched: false, included: false, served: true},
+      {
+        pattern: 'test/assets/sprite_sheets/**/*.*',
+        watched: false,
+        included: false,
+        served: true,
+      },
     ],
     preprocessors: {
       'test/integration/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       mode: 'development',
-      node: {
-        fs: 'empty',
-      },
       module: {
-        rules: [{
-          enforce: 'post',
-          test: /\.js$/,
-          exclude: [
-            /(test|node_modules)\//,
-            'src/p5.dance.interpreted.js',
-          ],
-          loader: 'istanbul-instrumenter-loader'
-        }]
-      }
+        rules: [
+          {
+            enforce: 'post',
+            test: /\.js$/,
+            exclude: [
+              /(test|node_modules)\//,
+              /.*src\/p5.dance.interpreted.js/,
+            ],
+            loader: 'coverage-istanbul-loader',
+          },
+        ],
+      },
+      resolve: {
+        fallback: {
+          path: require.resolve('path-browserify'),
+          stream: require.resolve('stream-browserify'),
+          fs: false,
+        },
+        extensions: ['.jsx', '.js', '.tsx', '.ts'],
+      },
+      plugins: [
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }),
+      ],
     },
     reporters: ['tap-pretty', 'coverage'],
 
@@ -40,9 +59,7 @@ module.exports = config => {
     // Code coverage.
     coverageReporter: {
       dir: 'coverage/integration',
-      reporters: [
-        {type: 'lcovonly'},
-      ],
+      reporters: [{type: 'lcovonly'}],
     },
   });
 };

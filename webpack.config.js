@@ -9,9 +9,11 @@ module.exports = {
     libraryTarget: 'umd',
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      loader: "babel-loader",
-    }],
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+      },
+    ],
   },
 };
