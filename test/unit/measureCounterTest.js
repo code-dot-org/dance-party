@@ -10,8 +10,8 @@ test('Shows 0 for current measure when current measure is negative', async t => 
 
   // Pickup measure count determined by BPM and Delay
   const fakeSongData = {
-    "bpm": 120,
-    "delay": 4.0,
+    bpm: 120,
+    delay: 4.0,
   };
   nativeAPI.play(fakeSongData);
 

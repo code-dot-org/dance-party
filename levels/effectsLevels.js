@@ -1,7 +1,6 @@
 module.exports = {
   changeBackgroundAtTimestamp: {
-    solutions:
-      `
+    solutions: `
       var lead_dancer;
 
       whenSetup(function () {

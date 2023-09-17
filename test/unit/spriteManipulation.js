@@ -13,15 +13,15 @@ test('Sprite dance decrements and loops for prev dance', async t => {
   // Mock 4 cat animation poses
   const moveCount = 4;
   for (let i = 0; i < moveCount; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
-      name: `move${i}`
+      name: `move${i}`,
     });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // Initial value
   t.equal(sprite.current_move, 0);
@@ -45,15 +45,15 @@ test('Sprite dance increments by one and loops for next dance', async t => {
   // Mock 3 cat animation poses
   const moveCount = 3;
   for (let i = 0; i < moveCount; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
-      name: `move${i}`
+      name: `move${i}`,
     });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // Initial value
   t.equal(sprite.current_move, 0);
@@ -82,15 +82,15 @@ test('Sprite dance changes to a new dance for random', async t => {
   // Mock 3 cat animation poses
   const moveCount = 3;
   for (let i = 0; i < moveCount; i++) {
-    nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
-      name: `move${i}`
+      name: `move${i}`,
     });
   }
   nativeAPI.world.fullLengthMoveCount = moveCount;
   nativeAPI.world.restMoveCount = 1;
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // Initial value
   t.equal(sprite.current_move, 0);
@@ -103,7 +103,6 @@ test('Sprite dance changes to a new dance for random', async t => {
 });
 
 test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
-
   const subTest = async testCode => {
     const nativeAPI = await helpers.createDanceAPI();
     nativeAPI.play({
@@ -113,7 +112,7 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
     // Mock 3 cat animation poses
     const moveCount = 3;
     for (let i = 0; i < moveCount; i++) {
-      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
         rest: i === 0,
@@ -122,15 +121,15 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
 
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+    const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
-    testCode({ nativeAPI, sprite });
+    testCode({nativeAPI, sprite});
 
     nativeAPI.reset();
   };
 
   // Verify Next behavior:
-  await subTest(({ nativeAPI, sprite }) => {
+  await subTest(({nativeAPI, sprite}) => {
     // Initial value
     t.equal(sprite.current_move, 0);
     nativeAPI.changeMoveLR(sprite, 'next', 1);
@@ -145,7 +144,7 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
   });
 
   // Verify Prev behavior:
-  await subTest(({ nativeAPI, sprite }) => {
+  await subTest(({nativeAPI, sprite}) => {
     // Initial value
     t.equal(sprite.current_move, 0);
     nativeAPI.changeMoveLR(sprite, 'prev', 1);
@@ -160,7 +159,7 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
   });
 
   // Verify Rand behavior:
-  await subTest(({ nativeAPI, sprite }) => {
+  await subTest(({nativeAPI, sprite}) => {
     // Initial value
     t.equal(sprite.current_move, 0);
     nativeAPI.changeMoveLR(sprite, 1, 1);
@@ -178,11 +177,10 @@ test('Sprite dance changes with next/prev/rand avoids rest dance', async t => {
 });
 
 test('Sprite dance changes will throw with invalid parameters', async t => {
-
-  const subTest = async ({ moveCount = 3, testCode }) => {
+  const subTest = async ({moveCount = 3, testCode}) => {
     // These tests set up their own moves, assuming no initial moves
     const nativeAPI = await helpers.createDanceAPI({
-      spriteConfig: world => world.MOVE_NAMES = []
+      spriteConfig: world => (world.MOVE_NAMES = []),
     });
     nativeAPI.play({
       bpm: 120,
@@ -190,7 +188,7 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
 
     // Mock cat animation poses
     for (let i = 0; i < moveCount; i++) {
-      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
         rest: i === 0,
@@ -199,96 +197,129 @@ test('Sprite dance changes will throw with invalid parameters', async t => {
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
 
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+    const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
-    testCode({ nativeAPI, sprite });
+    testCode({nativeAPI, sprite});
 
     nativeAPI.reset();
   };
 
   // Verify invalid string parameter behavior:
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      // Passing 'some_string' should fail
-      nativeAPI.changeMoveLR(sprite, 'some_string', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: Unexpected requestedChange value: some_string");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Passing 'some_string' should fail
+        nativeAPI.changeMoveLR(sprite, 'some_string', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: Unexpected requestedChange value: some_string'
+      );
+    },
+  });
 
   // Verify invalid move index behavior for changeMoveLR():
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      // Passing 3 should fail (index is too large)
-      nativeAPI.changeMoveLR(sprite, 3, 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: Not moving to a valid full length move index!");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Passing 3 should fail (index is too large)
+        nativeAPI.changeMoveLR(sprite, 3, 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: Not moving to a valid full length move index!'
+      );
+    },
+  });
 
   // Verify invalid rand move because we don't have any different, non-resting moves:
-  await subTest({ moveCount: 2, testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      // Passing 'rand' should fail
-      nativeAPI.changeMoveLR(sprite, 'rand', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
-  }});
+  await subTest({
+    moveCount: 2,
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Passing 'rand' should fail
+        nativeAPI.changeMoveLR(sprite, 'rand', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: next/prev/rand requires that we have 2 or more selectable moves'
+      );
+    },
+  });
 
   // Verify invalid move index behavior for doMoveLR():
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      // Passing 3 should fail (index is too large)
-      nativeAPI.doMoveLR(sprite, 3, 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: Invalid move index: 3");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Passing 3 should fail (index is too large)
+        nativeAPI.doMoveLR(sprite, 3, 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(error.toString(), 'Error: Invalid move index: 3');
+    },
+  });
 
   // Verify "next" is not allowed for doMoveLR():
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      nativeAPI.doMoveLR(sprite, 'next', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: Unexpected requestedChange value: next");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        nativeAPI.doMoveLR(sprite, 'next', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: Unexpected requestedChange value: next'
+      );
+    },
+  });
 
   // Verify "prev" is not allowed for doMoveLR():
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    let error = null;
-    try {
-      nativeAPI.doMoveLR(sprite, 'prev', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: Unexpected requestedChange value: prev");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        nativeAPI.doMoveLR(sprite, 'prev', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: Unexpected requestedChange value: prev'
+      );
+    },
+  });
 
   t.end();
 });
 
 test('Sprite move sorting works reliably', async t => {
-  const subTest = async ({ moveNames, testCode }) => {
+  const subTest = async ({moveNames, testCode}) => {
     const nativeAPI = await helpers.createDanceAPI({
-      spriteConfig: world => { world.MOVE_NAMES = moveNames; },
-      resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNames),
+      spriteConfig: world => {
+        world.MOVE_NAMES = moveNames;
+      },
+      resourceLoader: new UnitTestResourceLoader(
+        constants.SPRITE_NAMES,
+        moveNames
+      ),
     });
 
     nativeAPI.p5_.noLoop();
 
-    testCode({ nativeAPI });
+    testCode({nativeAPI});
 
     nativeAPI.reset();
   };
@@ -315,14 +346,17 @@ test('Sprite move sorting works reliably', async t => {
     },
   ];
 
-  await subTest({ moveNames: moveNamesPreSorted, testCode: ({ nativeAPI }) => {
-    // The MOVE_NAMES as provided have not been changed.
-    t.deepEqual(nativeAPI.world.MOVE_NAMES, moveNamesPreSorted);
+  await subTest({
+    moveNames: moveNamesPreSorted,
+    testCode: ({nativeAPI}) => {
+      // The MOVE_NAMES as provided have not been changed.
+      t.deepEqual(nativeAPI.world.MOVE_NAMES, moveNamesPreSorted);
 
-    // The restMoveCount and fullLengthMoveCount are correct:
-    t.equal(nativeAPI.world.restMoveCount, 1);
-    t.equal(nativeAPI.world.fullLengthMoveCount, 3);
-  }});
+      // The restMoveCount and fullLengthMoveCount are correct:
+      t.equal(nativeAPI.world.restMoveCount, 1);
+      t.equal(nativeAPI.world.fullLengthMoveCount, 3);
+    },
+  });
 
   // Verify we do properly sort rest and shortBurst moves:
   const moveNamesUnSorted = [
@@ -339,20 +373,23 @@ test('Sprite move sorting works reliably', async t => {
     },
   ];
 
-  await subTest({ moveNames: moveNamesUnSorted, testCode: ({ nativeAPI }) => {
-    // The MOVE_NAMES are now in the proper order:
-    t.equal(nativeAPI.world.MOVE_NAMES[0].name, 'rest');
-    t.ok(nativeAPI.world.MOVE_NAMES[0].rest);
+  await subTest({
+    moveNames: moveNamesUnSorted,
+    testCode: ({nativeAPI}) => {
+      // The MOVE_NAMES are now in the proper order:
+      t.equal(nativeAPI.world.MOVE_NAMES[0].name, 'rest');
+      t.ok(nativeAPI.world.MOVE_NAMES[0].rest);
 
-    t.equal(nativeAPI.world.MOVE_NAMES[1].name, 'fullLength');
+      t.equal(nativeAPI.world.MOVE_NAMES[1].name, 'fullLength');
 
-    t.equal(nativeAPI.world.MOVE_NAMES[2].name, 'shortBurst');
-    t.ok(nativeAPI.world.MOVE_NAMES[2].shortBurst);
+      t.equal(nativeAPI.world.MOVE_NAMES[2].name, 'shortBurst');
+      t.ok(nativeAPI.world.MOVE_NAMES[2].shortBurst);
 
-    // The restMoveCount and fullLengthMoveCount are correct:
-    t.equal(nativeAPI.world.restMoveCount, 1);
-    t.equal(nativeAPI.world.fullLengthMoveCount, 2);
-  }});
+      // The restMoveCount and fullLengthMoveCount are correct:
+      t.equal(nativeAPI.world.restMoveCount, 1);
+      t.equal(nativeAPI.world.fullLengthMoveCount, 2);
+    },
+  });
 
   t.end();
 });
@@ -370,13 +407,18 @@ test('Sprite doMove rand will choose short burst', async t => {
   ];
 
   const nativeAPI = await helpers.createDanceAPI({
-    spriteConfig: world => { world.MOVE_NAMES = moveNamesOneFullLengthOneShortBurst; },
-    resourceLoader: new UnitTestResourceLoader(constants.SPRITE_NAMES, moveNamesOneFullLengthOneShortBurst),
+    spriteConfig: world => {
+      world.MOVE_NAMES = moveNamesOneFullLengthOneShortBurst;
+    },
+    resourceLoader: new UnitTestResourceLoader(
+      constants.SPRITE_NAMES,
+      moveNamesOneFullLengthOneShortBurst
+    ),
   });
 
   nativeAPI.p5_.noLoop();
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   t.equal(sprite.getAnimationLabel(), 'anim0');
 
@@ -391,8 +433,7 @@ test('Sprite doMove rand will choose short burst', async t => {
 });
 
 test('Sprite dance changes will allow short burst moves for doMoveLR but not changeMoveLR', async t => {
-
-  const subTest = async ({ moveCount = 3, shortMoveCount = 1, testCode }) => {
+  const subTest = async ({moveCount = 3, shortMoveCount = 1, testCode}) => {
     const nativeAPI = await helpers.createDanceAPI();
     nativeAPI.play({
       bpm: 120,
@@ -400,61 +441,65 @@ test('Sprite dance changes will allow short burst moves for doMoveLR but not cha
 
     // Mock cat animation poses
     for (let i = 0; i < moveCount; i++) {
-      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
         rest: i === 0,
-        shortBurst: i >= (moveCount - shortMoveCount),
+        shortBurst: i >= moveCount - shortMoveCount,
       });
     }
     nativeAPI.world.fullLengthMoveCount = moveCount - shortMoveCount;
     nativeAPI.world.restMoveCount = 1;
 
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+    const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
-    testCode({ nativeAPI, sprite });
+    testCode({nativeAPI, sprite});
 
     nativeAPI.reset();
   };
 
   // Verify we can call doMoveLR() with a rest, full length, and short burst move:
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    // Full length move:
-    nativeAPI.doMoveLR(sprite, 1, 1);
-    t.equal(sprite.getAnimationLabel(), 'anim1');
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      // Full length move:
+      nativeAPI.doMoveLR(sprite, 1, 1);
+      t.equal(sprite.getAnimationLabel(), 'anim1');
 
-    // Rest move:
-    nativeAPI.doMoveLR(sprite, 0, 1);
-    t.equal(sprite.getAnimationLabel(), 'anim0');
+      // Rest move:
+      nativeAPI.doMoveLR(sprite, 0, 1);
+      t.equal(sprite.getAnimationLabel(), 'anim0');
 
-    // Short burst move:
-    nativeAPI.doMoveLR(sprite, 2, 1);
-    t.equal(sprite.getAnimationLabel(), 'anim2');
-  }});
+      // Short burst move:
+      nativeAPI.doMoveLR(sprite, 2, 1);
+      t.equal(sprite.getAnimationLabel(), 'anim2');
+    },
+  });
 
   // Verify we can call changeMoveLR() with a rest or a full length, but not a short burst move:
-  await subTest({ testCode: ({ nativeAPI, sprite }) => {
-    // Full length move:
-    nativeAPI.changeMoveLR(sprite, 1, 1);
-    t.equal(sprite.getAnimationLabel(), 'anim1');
-    t.equal(sprite.current_move, 1);
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      // Full length move:
+      nativeAPI.changeMoveLR(sprite, 1, 1);
+      t.equal(sprite.getAnimationLabel(), 'anim1');
+      t.equal(sprite.current_move, 1);
 
-    // Rest move:
-    nativeAPI.changeMoveLR(sprite, 0, 1);
-    t.equal(sprite.getAnimationLabel(), 'anim0');
-    t.equal(sprite.current_move, 0);
+      // Rest move:
+      nativeAPI.changeMoveLR(sprite, 0, 1);
+      t.equal(sprite.getAnimationLabel(), 'anim0');
+      t.equal(sprite.current_move, 0);
 
-    // Short burst move:
-    let error = null;
-    try {
-      nativeAPI.changeMoveLR(sprite, 2, 1);
-    } catch (e) {
-      error = e;
-    }
-    t.notEqual(error, null, "short burst move should fail with changeMoveLR");
-    t.equal(sprite.getAnimationLabel(), 'anim0');
-    t.equal(sprite.current_move, 0);
-  }});
+      // Short burst move:
+      let error = null;
+      try {
+        nativeAPI.changeMoveLR(sprite, 2, 1);
+      } catch (e) {
+        error = e;
+      }
+      t.notEqual(error, null, 'short burst move should fail with changeMoveLR');
+      t.equal(sprite.getAnimationLabel(), 'anim0');
+      t.equal(sprite.current_move, 0);
+    },
+  });
 
   t.end();
 });
@@ -464,19 +509,19 @@ test('getCurrentDance returns current move value for initialized sprite and unde
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // Initial value
   t.equal(nativeAPI.getCurrentDance(sprite), sprite.current_move);
 
   let uninitializedSprite = {
-    style: "DOG",
+    style: 'DOG',
     current_move: 0,
     mirrorX: () => {},
     changeAnimation: () => {},
-    animation: {looping: false}
+    animation: {looping: false},
   };
 
   t.equal(nativeAPI.getCurrentDance(uninitializedSprite), undefined);
@@ -485,15 +530,14 @@ test('getCurrentDance returns current move value for initialized sprite and unde
   nativeAPI.reset();
 });
 
-
 test('setProp and getProp changes and retrieves sprite scale properties based on given values', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   t.equal(nativeAPI.setProp(sprite, 'scale', undefined), undefined);
 
@@ -506,15 +550,14 @@ test('setProp and getProp changes and retrieves sprite scale properties based on
   nativeAPI.reset();
 });
 
-
 test('setPropRandom set sprite y properties between 50 and 350', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   t.equal(sprite.y, 200);
   nativeAPI.setPropRandom(sprite, 'y');
@@ -539,15 +582,15 @@ test('changing width and height accounted for during p5 draw', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // Initial value
   t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleX(), 1);
   t.equal(nativeAPI.p5_.allSprites.get(0)._getScaleY(), 1);
 
-  nativeAPI.setProp(sprite, "width", 50);
+  nativeAPI.setProp(sprite, 'width', 50);
   nativeAPI.setProp(sprite, 'height', 75);
 
   // setProp sets the value to SIZE (300) * (val / 100)
@@ -559,12 +602,10 @@ test('changing width and height accounted for during p5 draw', async t => {
   nativeAPI.reset();
 });
 
-
 test('prev, next, and rand dance move will throw when not enough dance moves', async t => {
-
   const subTest = async ({moveCount = 1, testCode}) => {
     const nativeAPI = await helpers.createDanceAPI({
-      spriteConfig: world => world.MOVE_NAMES = []
+      spriteConfig: world => (world.MOVE_NAMES = []),
     });
     nativeAPI.play({
       bpm: 120,
@@ -572,7 +613,7 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
 
     // Mock cat animation poses
     for (let i = 0; i < moveCount; i++) {
-      nativeAPI.setAnimationSpriteSheet("CAT", i, {}, () => {});
+      nativeAPI.setAnimationSpriteSheet('CAT', i, {}, () => {});
       nativeAPI.world.MOVE_NAMES.push({
         name: `move${i}`,
         rest: i === 0,
@@ -581,48 +622,64 @@ test('prev, next, and rand dance move will throw when not enough dance moves', a
     nativeAPI.world.fullLengthMoveCount = moveCount;
     nativeAPI.world.restMoveCount = 1;
 
-    const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+    const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
-    testCode({ nativeAPI, sprite });
+    testCode({nativeAPI, sprite});
 
     nativeAPI.reset();
   };
 
   // Verify invalid number of tests:
-  await subTest({ testCode: ({nativeAPI, sprite}) => {
-    let error = null;
-    try {
-      // Requesting 'rand' when only one dance should fail
-      nativeAPI.changeMoveLR(sprite, 'rand', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Requesting 'rand' when only one dance should fail
+        nativeAPI.changeMoveLR(sprite, 'rand', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: next/prev/rand requires that we have 2 or more selectable moves'
+      );
+    },
+  });
 
   // Verify invalid move index behavior for changeMoveLR():
-  await subTest({ testCode: ({nativeAPI, sprite}) => {
-    let error = null;
-    try {
-      // Requesting 'next' when only one dance should fail
-      nativeAPI.changeMoveLR(sprite, 'next', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
-  }});
+  await subTest({
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Requesting 'next' when only one dance should fail
+        nativeAPI.changeMoveLR(sprite, 'next', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: next/prev/rand requires that we have 2 or more selectable moves'
+      );
+    },
+  });
 
   // Verify invalid rand move because we don't have any different, non-resting moves:
-  await subTest({ moveCount: 2, testCode: ({nativeAPI, sprite}) => {
-    let error = null;
-    try {
-      // Requesting 'prev' when only one dance should fail
-      nativeAPI.changeMoveLR(sprite, 'prev', 1);
-    } catch (e) {
-      error = e;
-    }
-    t.equal(error.toString(), "Error: next/prev/rand requires that we have 2 or more selectable moves");
-  }});
+  await subTest({
+    moveCount: 2,
+    testCode: ({nativeAPI, sprite}) => {
+      let error = null;
+      try {
+        // Requesting 'prev' when only one dance should fail
+        nativeAPI.changeMoveLR(sprite, 'prev', 1);
+      } catch (e) {
+        error = e;
+      }
+      t.equal(
+        error.toString(),
+        'Error: next/prev/rand requires that we have 2 or more selectable moves'
+      );
+    },
+  });
 
   t.end();
 });
@@ -632,9 +689,9 @@ test('startMapping/stopMapping adds and removes behaviors', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
 
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // This is 1 only because we have a behavior that we add to every sprite
   // (which should arguably be a different concept)
@@ -673,10 +730,10 @@ test('startMapping results in sprite properties being updated', async t => {
   nativeAPI.play({
     bpm: 120,
   });
-  nativeAPI.setAnimationSpriteSheet("CAT", 0, {}, () => {});
-  const sprite = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-  const sprite2 = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
-  const sprite3 = nativeAPI.makeNewDanceSprite("CAT", null, {x: 200, y: 200});
+  nativeAPI.setAnimationSpriteSheet('CAT', 0, {}, () => {});
+  const sprite = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
+  const sprite2 = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
+  const sprite3 = nativeAPI.makeNewDanceSprite('CAT', null, {x: 200, y: 200});
 
   // hard code the energy values at different levels
   const getEnergy = sinon.stub(nativeAPI, 'getEnergy');
@@ -713,7 +770,7 @@ test('startMapping results in sprite properties being updated', async t => {
     t.equal(sprite2.scale, initials.scale * 0.5);
     // sprite2.width should be effectively 1, but not necessarily exactly due to
     // how we do our mpping
-    t.ok(Math.abs(sprite2.width - initials.width) < 1/255);
+    t.ok(Math.abs(sprite2.width - initials.width) < 1 / 255);
     t.equal(sprite2.height, initials.height * 1.5);
 
     t.equal(sprite3.rotation, initials.rotation - 60);

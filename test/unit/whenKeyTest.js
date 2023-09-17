@@ -3,9 +3,11 @@ const helpers = require('../helpers/createDanceAPI');
 
 test('make sure we are checking all relevant keys', async t => {
   let lastEvents;
-  const nativeAPI = await helpers.createDanceAPI({ onHandleEvents: events => {
-    lastEvents = events;
-  }});
+  const nativeAPI = await helpers.createDanceAPI({
+    onHandleEvents: events => {
+      lastEvents = events;
+    },
+  });
 
   const p5 = nativeAPI.p5_;
 
