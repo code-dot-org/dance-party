@@ -314,9 +314,7 @@ module.exports = class DanceParty {
       this.songStartTime_ = new Date();
       this.performanceData_.lastPlayDelay = timeSinceLoad() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
-    }, () => {
-      this.reset();
-    });
+    }, () => {});
     this.p5_.loop();
   }
 
@@ -402,6 +400,9 @@ module.exports = class DanceParty {
     const updateSpriteFrame = () => {
       var delta = Math.min(100, 1 / (this.p5_.frameRate() + 0.01) * 1000);
       sprite.sinceLastFrame += delta;
+      // const bpm = this.songMetadata_ ? this.songMetadata_.bpm : 120;
+      // console.log('inside updateSpriteFrame in makeNewDanceSprite - bpm: ', bpm);
+      // var msPerBeat = 60 * 1000 / (bpm * (sprite.dance_speed / 2));
       var msPerBeat = 60 * 1000 / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
       var msPerFrame = msPerBeat / FRAMES;
       while (sprite.sinceLastFrame > msPerFrame) {
@@ -1272,6 +1273,7 @@ module.exports = class DanceParty {
   }
 
   draw() {
+    console.log('inside dance-party draw');
     const { bpm, artist, title } = this.songMetadata_ || {};
 
     const context = {
