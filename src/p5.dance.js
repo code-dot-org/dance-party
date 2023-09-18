@@ -109,6 +109,7 @@ module.exports = class DanceParty {
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = constants.MOVE_NAMES;
 
+    // Store a reference to the main repo's AI function.
     this.doAi = doAi;
 
     if (spriteConfig) {
@@ -1119,17 +1120,18 @@ module.exports = class DanceParty {
     }, this);
   }
 
+  // Called when executing the AI block.
   ai(value) {
-    // We can use AI to transform this value into something usable by
-    // dance party and send that back over to dance party's native
-    // handler.
-
+    // Call the main repo's doAI function which will transform this
+    // block's value into a useful response.  That response will be
+    // sent to handleAi, just below.
     const response = this.doAi(value);
-    console.log('do AI', value, response);
+    console.log('AI:', value);
   }
 
+  // Called when the main repo has a useful AI response.
   handleAi(result) {
-    console.log('handle AI', result);
+    console.log('handle AI:', result);
 
     const params = JSON.parse(result);
 
