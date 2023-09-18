@@ -8,8 +8,8 @@ git clone git@github.com:code-dot-org/dance-party.git
 cd dance-party
 nvm install
 nvm use
-npm install
-npm run dev
+yarn
+yarn run dev
 ```
 
 At this point the app will be running at localhost:8080. Open the developer tools in Chrome and you can access the API via `nativeAPI.*`
@@ -18,7 +18,7 @@ If you want to make changes locally in dance-party and have them show up in your
 - In the dance-party directory `yarn link`
 - In the apps directory `yarn link @code-dot-org/dance-party`
 
-This will set up a symlink in apps/node_modules to point at your local changes. Run `npm run build` in dance-party, and then the apps build should pick the changes up next time it builds.
+This will set up a symlink in apps/node_modules to point at your local changes. Run `yarn run build` in dance-party, and then the apps build should pick the changes up next time it builds.
 
 To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
@@ -34,27 +34,27 @@ nvm use v14.17.1
 
 It also appears that Python 2.7 should be used and must be available for installing `node-gyp`.  Techniques may vary, but this worked in one situation:
 ```
-apt-get install python2.7    
-ln -s /usr/bin/python2.7 /usr/bin/python 
+apt-get install python2.7
+ln -s /usr/bin/python2.7 /usr/bin/python
 ```
 
 ### Adding New Characters
 To add a new character to Dance Party, follow the instructions here: https://github.com/code-dot-org/dance-spritesheets to create the spritesheet for the character.
 
 ### Effects Testing
-`npm run test:visual` uses [pixelmatch](https://github.com/mapbox/pixelmatch#readme) to test for consistency in screenshots between your local branch and an accepted 
+`yarn run test:visual` uses [pixelmatch](https://github.com/mapbox/pixelmatch#readme) to test for consistency in screenshots between your local branch and an accepted
 baseline. Accepted baselines are saved in `test/visual/fixtures`.
 To debug a test failure, run `node ./test/visual/helpers/generateScreenshot.js <effectName> <pathToDirectory>`
-to output the local screenshot to the given directory. If a baseline does not exist for a given effect, the screenshot 
-from your local branch is saved as the baseline. Effects are drawn with no characters on the screen so effects appear 
+to output the local screenshot to the given directory. If a baseline does not exist for a given effect, the screenshot
+from your local branch is saved as the baseline. Effects are drawn with no characters on the screen so effects appear
 the same when drawn as backgrounds or foregrounds.
 
 #### To Add Test Coverage For a New Effects
-Add the name of the effect to the list of effects in `backgrounds.js`. Run `npm run test:visual`. 
+Add the name of the effect to the list of effects in `backgrounds.js`. Run `yarn run test:visual`.
 After a new baseline is generated, manually inspect it to ensure it matches expectations.
 
 #### To Update A Baseline
-Delete the accepted baseline. Run `npm run test:visual`. After a new baseline is generated, manually inspect 
+Delete the accepted baseline. Run `yarn run test:visual`. After a new baseline is generated, manually inspect
 it to ensure it matches expectations.
 
 ### Publishing a new version
@@ -63,8 +63,8 @@ First, ensure you have the `main` branch checked out locally, and that it's up t
 
 To publish a new version, the following command should work:
 ```
-npm version 1.0.4
+yarn version 1.0.4
 ```
 With `1.0.4` replaced by the new version number that should be published.
 
-Note: make sure you are logged into `npm` first.  If not, the command may fail with a misleading `E404` error.  You can see if you're logged in with `npm whoami`, and if not logged in, can can use `npm login`.  
+Note: make sure you are logged into `npm` first.  If not, the command may fail with a misleading `E404` error.  You can see if you're logged in with `yarn npm whoami`, and if not logged in, can can use `yarn npm login`.
