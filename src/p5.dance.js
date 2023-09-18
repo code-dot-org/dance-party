@@ -1121,28 +1121,26 @@ module.exports = class DanceParty {
   }
 
   // Called when executing the AI block.
-  ai(value) {
+  async ai(value) {
     console.log('AI:', value);
 
     // Call the main repo's doAI function which will transform this
     // block's value into a useful response.
-    this.doAi(value)
-      .then(response => response.json())
-      .then(json => {
-        const params = JSON.parse(json.content);
-        console.log('handle AI:', params);
+    const response = await this.doAi(value);
 
-        this.setBackgroundEffect(
-          params.backgroundEffect,
-          params.backgroundColor
-        );
+    const params = JSON.parse(response);
+    console.log('handle AI:', params);
 
-        this.setForegroundEffect(params.foregroundEffect);
+    this.setBackgroundEffect(
+      params.backgroundEffect,
+      params.backgroundColor
+    );
 
-        if (params.setDancer) {
-          this.makeNewDanceSprite('MOOSE', 'harold', null);
-        }
-      });
+    this.setForegroundEffect(params.foregroundEffect);
+
+    if (params.setDancer) {
+      this.makeNewDanceSprite('MOOSE', 'harold', null);
+    }
   }
 
   // Music Helpers
