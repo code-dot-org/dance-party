@@ -1122,25 +1122,27 @@ module.exports = class DanceParty {
 
   // Called when executing the AI block.
   ai(value) {
-    // Call the main repo's doAI function which will transform this
-    // block's value into a useful response.  That response will be
-    // sent to handleAi, just below.
-    const response = this.doAi(value);
     console.log('AI:', value);
-  }
 
-  // Called when the main repo has a useful AI response.
-  handleAi(result) {
-    console.log('handle AI:', result);
+    // Call the main repo's doAI function which will transform this
+    // block's value into a useful response.
+    this.doAi(value)
+      .then(response => response.json())
+      .then(json => {
+        const params = JSON.parse(json.content);
+        console.log('handle AI:', params);
 
-    const params = JSON.parse(result);
+        this.setBackgroundEffect(
+          params.backgroundEffect,
+          params.backgroundColor
+        );
 
-    this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
-    this.setForegroundEffect(params.foregroundEffect);
+        this.setForegroundEffect(params.foregroundEffect);
 
-    if (params.setDancer) {
-      this.makeNewDanceSprite('MOOSE', 'harold', null);
-    }
+        if (params.setDancer) {
+          this.makeNewDanceSprite('MOOSE', 'harold', null);
+        }
+      });
   }
 
   // Music Helpers
