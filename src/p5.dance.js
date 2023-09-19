@@ -37,7 +37,6 @@ module.exports = class DanceParty {
     onInit,
     onPuzzleComplete,
     playSound,
-    usesPreview,
     recordReplayLog,
     showMeasureLabel = true,
     container,
@@ -54,7 +53,6 @@ module.exports = class DanceParty {
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
     this.resourceLoader_ = resourceLoader;
-    this.usesPreview = usesPreview;
 
     const containerElement = document.getElementById(container);
     this.rtl = containerElement && window.getComputedStyle(containerElement).direction === "rtl";
@@ -316,11 +314,8 @@ module.exports = class DanceParty {
       this.songStartTime_ = new Date();
       this.performanceData_.lastPlayDelay = timeSinceLoad() - this.performanceData_.lastPlayCall;
       callback && callback(playSuccess);
-    }, () => {
-      if (!this.usesPreview) {
-        this.reset();
-      }
-    });
+    }, () => {}
+    );
     this.p5_.loop();
   }
 
