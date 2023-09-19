@@ -1,4 +1,8 @@
-if ((typeof process !== 'undefined') && (process.release) && (process.release.name === 'node')) {
+if (
+  typeof process !== 'undefined' &&
+  process.release &&
+  process.release.name === 'node'
+) {
   const {JSDOM} = eval("require('jsdom')"); // eslint-disable-line no-eval
   global.window = new JSDOM().window;
   global.document = window.document;

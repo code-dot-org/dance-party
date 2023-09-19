@@ -4,7 +4,7 @@ const levels = require('../../levels/effectsLevels');
 
 test('Effects: sets background at timestamp', t => {
   const level = levels.changeBackgroundAtTimestamp;
-  attempt(level.solutions, level.validationCode, (result) => {
+  attempt(level.solutions, level.validationCode, result => {
     t.true(result);
     t.end();
   });

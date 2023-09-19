@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const interpreted = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'), 'utf8');
+const interpreted = fs.readFileSync(
+  path.join(__dirname, '..', '..', 'src', 'p5.dance.interpreted.js'),
+  'utf8'
+);
 const injectInterpreted = require('../helpers/injectInterpreted');
 
 const test = require('tape');
@@ -14,12 +17,18 @@ async function runUserCode(userCode) {
   };
 }
 
-function goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, n, expectedColor) {
+function goToMeasuresAndVerifyBackgroundColor(
+  interpretedAPI,
+  t,
+  nativeAPI,
+  n,
+  expectedColor
+) {
   interpretedAPI.runUserEvents({
     any: true,
     'cue-measures': {
       [n]: true,
-    }
+    },
   });
   t.deepEqual(nativeAPI.world.background_color, expectedColor);
 }
@@ -47,7 +56,7 @@ test('conflicting everySeconds and atTimestamp cues', async t => {
       any: true,
       'cue-seconds': {
         [n]: true,
-      }
+      },
     });
     t.deepEqual(nativeAPI.world.background_color, expectedColor);
   }
@@ -75,10 +84,10 @@ test('conflicting everySeconds and atTimestamp cues', async t => {
 test('non-conflicting everySeconds cues', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   for (let i = 0; i < 4; i++) {
-    nativeAPI.setAnimationSpriteSheet("MOOSE", i, {}, () => {});
-    nativeAPI.setAnimationSpriteSheet("ROBOT", i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet('MOOSE', i, {}, () => {});
+    nativeAPI.setAnimationSpriteSheet('ROBOT', i, {}, () => {});
     nativeAPI.world.MOVE_NAMES.push({
-      name: `move${i}`
+      name: `move${i}`,
     });
   }
   nativeAPI.world.fullLengthMoveCount = 4;
@@ -97,10 +106,16 @@ test('non-conflicting everySeconds cues', async t => {
       any: true,
       'cue-seconds': {
         [n]: true,
-      }
+      },
     });
-    t.equal(nativeAPI.getGroupByName_('MOOSE')[0].current_move, expectedMooseDance);
-    t.equal(nativeAPI.getGroupByName_('ROBOT')[0].current_move, expectedRobotDance);
+    t.equal(
+      nativeAPI.getGroupByName_('MOOSE')[0].current_move,
+      expectedMooseDance
+    );
+    t.equal(
+      nativeAPI.getGroupByName_('ROBOT')[0].current_move,
+      expectedRobotDance
+    );
   }
 
   goToSecondsAndVerify(0, 0, 0);
@@ -126,7 +141,7 @@ test('conflicting atTimestamp cues, last definition wins', async t => {
     any: true,
     'cue-seconds': {
       1: true,
-    }
+    },
   });
   t.deepEqual(nativeAPI.world.background_color, 'purple');
 
@@ -144,7 +159,7 @@ test('non-conflicting atTimestamp cues, both take effect', async t => {
     any: true,
     'cue-seconds': {
       1: true,
-    }
+    },
   });
   t.deepEqual(nativeAPI.world.background_color, 'orange');
   t.deepEqual(nativeAPI.world.fg_effect, 'color_lights');
@@ -159,11 +174,41 @@ test('conflicting everyMeasures cues, rarer definition wins - rarer first', asyn
     everySeconds(1, "measures", () => setBackground("orange"));
   `);
 
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    1,
+    undefined
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    2,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    3,
+    'purple'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    4,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    5,
+    'purple'
+  );
 
   t.end();
   nativeAPI.reset();
@@ -175,11 +220,41 @@ test('conflicting everyMeasures cues, rarer definition wins - rarer last', async
     everySeconds(2, "measures", () => setBackground("purple"));
   `);
 
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    1,
+    undefined
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    2,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    3,
+    'purple'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    4,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    5,
+    'purple'
+  );
 
   t.end();
   nativeAPI.reset();
@@ -191,10 +266,34 @@ test('conflicting everyMeasures and atTimestamp cues, rarer definition wins - ra
     atTimestamp(1, "measures", () => setBackground("orange"));
   `);
 
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'purple');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    1,
+    undefined
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    2,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    3,
+    'purple'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    4,
+    'purple'
+  );
 
   t.end();
   nativeAPI.reset();
@@ -206,11 +305,41 @@ test('conflicting everyMeasures cues and atTimestamp cues, rarer definition wins
     atTimestamp(3, "measures", () => setBackground("purple"));
   `);
 
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 1, undefined);
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 2, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 3, 'orange');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 4, 'purple');
-  goToMeasuresAndVerifyBackgroundColor(interpretedAPI, t, nativeAPI, 5, 'orange');
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    1,
+    undefined
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    2,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    3,
+    'orange'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    4,
+    'purple'
+  );
+  goToMeasuresAndVerifyBackgroundColor(
+    interpretedAPI,
+    t,
+    nativeAPI,
+    5,
+    'orange'
+  );
 
   t.end();
   nativeAPI.reset();
@@ -222,7 +351,8 @@ test('silently clamp maximum event rate in seconds', async t => {
     everySeconds(0.00314, "seconds", function () {});
   `);
 
-  const assertClose = (a, b) => t.ok(Math.abs(a - b) < 1.0e-7, `${a} and ${b} were within 1.0e-7`);
+  const assertClose = (a, b) =>
+    t.ok(Math.abs(a - b) < 1.0e-7, `${a} and ${b} were within 1.0e-7`);
   const cueList = interpretedAPI.getCueList();
   assertClose(cueList.seconds[0], 0.1);
   assertClose(cueList.seconds[1], 0.2);
@@ -241,7 +371,8 @@ test('silently clamp maximum event rate in measures', async t => {
     everySeconds(0.00314, "measures", function () {});
   `);
 
-  const assertClose = (a, b) => t.ok(Math.abs(a - b) < 1e-7, `${a} and ${b} were within 1e-7`);
+  const assertClose = (a, b) =>
+    t.ok(Math.abs(a - b) < 1e-7, `${a} and ${b} were within 1e-7`);
   const cueList = interpretedAPI.getCueList();
   assertClose(cueList.measures[0], 1.1);
   assertClose(cueList.measures[1], 1.2);
