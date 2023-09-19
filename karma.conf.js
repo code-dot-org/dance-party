@@ -1,7 +1,9 @@
+var webpack = require('webpack');
+
 module.exports = config => {
   config.set({
     basePath: '',
-    frameworks: ['tap'],
+    frameworks: ['tap', 'webpack'],
     files: [
       {pattern: 'test/integration/index.js'},
       {
@@ -16,19 +18,32 @@ module.exports = config => {
     },
     webpack: {
       mode: 'development',
-      node: {
-        fs: 'empty',
-      },
       module: {
         rules: [
           {
             enforce: 'post',
             test: /\.js$/,
-            exclude: [/(test|node_modules)\//, 'src/p5.dance.interpreted.js'],
-            loader: 'istanbul-instrumenter-loader',
+            exclude: [
+              /(test|node_modules)\//,
+              /.*src\/p5.dance.interpreted.js/,
+            ],
+            loader: 'coverage-istanbul-loader',
           },
         ],
       },
+      resolve: {
+        fallback: {
+          path: require.resolve('path-browserify'),
+          stream: require.resolve('stream-browserify'),
+          fs: false,
+        },
+        extensions: ['.jsx', '.js', '.tsx', '.ts'],
+      },
+      plugins: [
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }),
+      ],
     },
     reporters: ['tap-pretty', 'coverage'],
 
