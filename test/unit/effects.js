@@ -43,7 +43,6 @@ test('Background effects', async t => {
   t.equal(spyRainbow.callCount, 1);
   t.equal(spyDisco.callCount, 1);
 
-
   nativeAPI.reset();
   t.end();
 });

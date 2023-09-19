@@ -17,7 +17,7 @@ test('sanity', async t => {
 test('i18n', async t => {
   const nativeAPI = await helpers.createDanceAPI({
     i18n: {
-      measure: () => 'hello'
+      measure: () => 'hello',
     },
   });
 

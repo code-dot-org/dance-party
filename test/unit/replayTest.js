@@ -10,7 +10,7 @@ class mockP5 {
     this.allSprites.push({
       getAnimationLabel: () => {},
       mirrorX: () => {},
-      isDancer: true
+      isDancer: true,
     });
   }
 

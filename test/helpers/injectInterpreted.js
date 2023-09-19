@@ -12,7 +12,7 @@ const DanceAPI = require('../../src/api');
  * for easier testing
  * @returns {Object} Object containing each of the functions listed in functionNames
  */
-module.exports = function (api, interpretedCode, userCode='') {
+module.exports = function (api, interpretedCode, userCode = '') {
   // This list is not exhaustive, and more can/should be added as needed
   const functionNames = [
     'atTimestamp',
@@ -25,7 +25,10 @@ module.exports = function (api, interpretedCode, userCode='') {
   ];
 
   const globals = new DanceAPI(api);
-  const code = interpretedCode + userCode + `return {${functionNames.map(s => `${s}:${s}`).join(',')}};`;
+  const code =
+    interpretedCode +
+    userCode +
+    `return {${functionNames.map(s => `${s}:${s}`).join(',')}};`;
 
   const params = [];
   const args = [];

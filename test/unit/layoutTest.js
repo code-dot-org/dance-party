@@ -140,7 +140,7 @@ test('sprites that are lower are in front of those that are higher', async t => 
     t.equal(cats.length, 36);
 
     for (let i = 1; i < cats.length; i++) {
-      t.equal(cats[i].y > cats[i-1].y, cats[i].depth > cats[i-1].depth);
+      t.equal(cats[i].y > cats[i - 1].y, cats[i].depth > cats[i - 1].depth);
     }
   });
 });
@@ -270,7 +270,7 @@ test('inner square gets bigger with count, but not after 10', async t => {
     const ducks = nativeAPI.getGroupByName_('DUCK');
 
     // cats smaller than aliens
-    t.ok((cats[1].x - cats[0].x) < (aliens[3].x - aliens[0].x));
+    t.ok(cats[1].x - cats[0].x < aliens[3].x - aliens[0].x);
 
     // aliens same size as ducks
     t.equal(aliens[3].x - aliens[0].x, ducks[5].x - ducks[0].x);
@@ -316,7 +316,6 @@ test('plus layout with count not divisible by 4', async t => {
     // third and fourth are aligned along y
     t.equal(cats[2].y, cats[3].y);
     t.ok(cats[2].x < cats[3].x);
-
   });
 });
 
@@ -342,7 +341,6 @@ test('x layout with count of 4', async t => {
     t.equal(cats[0].y, cats[2].y);
   });
 });
-
 
 test('x layout with count not divisible by 4', async t => {
   await runLayoutTest(t, nativeAPI => {

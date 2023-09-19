@@ -27,20 +27,22 @@ module.exports = class Effects {
       return Math.round(p5.random(min, max));
     }
 
-    function colorFromHue(h, s=100, l=80, a=alpha) {
-      return p5.color("hsla(" + Math.floor(h % 360) + ", " + s + "%, " + l + "%," + a + ")");
+    function colorFromHue(h, s = 100, l = 80, a = alpha) {
+      return p5.color(
+        'hsla(' + Math.floor(h % 360) + ', ' + s + '%, ' + l + '%,' + a + ')'
+      );
     }
 
-    function randomColor(s=100, l=80, a=alpha) {
+    function randomColor(s = 100, l = 80, a = alpha) {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 
-    const colorFromPalette = (n) => {
+    const colorFromPalette = n => {
       const palette = constants.PALETTES[this.currentPalette];
-      return palette[n % (palette.length)];
+      return palette[n % palette.length];
     };
 
-    const lerpColorFromPalette = (amount) => {
+    const lerpColorFromPalette = amount => {
       return lerpColorFromSpecificPalette(this.currentPalette, amount);
     };
 
@@ -50,8 +52,8 @@ module.exports = class Effects {
       const n = Math.floor(which);
       const remainder = which - n;
 
-      const prev = palette[n % (palette.length)];
-      const next = palette[(n + 1) % (palette.length)];
+      const prev = palette[n % palette.length];
+      const next = palette[(n + 1) % palette.length];
 
       return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
     };
@@ -67,8 +69,8 @@ module.exports = class Effects {
 
     this.none = {
       draw: function ({backgroundColor}) {
-        p5.background(backgroundColor || "white");
-      }
+        p5.background(backgroundColor || 'white');
+      },
     };
 
     this.disco_ball = {
@@ -81,13 +83,14 @@ module.exports = class Effects {
         };
       },
       quad: function (i, j, faceSize, rotation = 0) {
-        const k = (i + rotation) % 360 - 180;
+        const k = ((i + rotation) % 360) - 180;
         if (k < -90 - faceSize || k > 90) {
           return;
         }
         const color = lerpColorFromPalette(p5.noise(i, j, p5.frameCount / 70));
         const highlight = 50 * p5.pow(p5.cos(k), 2);
-        const brightness = p5.noise(i, j, p5.frameCount / 50) * 150 + 100 + highlight;
+        const brightness =
+          p5.noise(i, j, p5.frameCount / 50) * 150 + 100 + highlight;
         p5.fill(p5.lerpColor(color, p5.color(brightness), brightness / 255));
         const a = this.globe(k, j);
         const b = this.globe(k + faceSize, j);
@@ -102,7 +105,11 @@ module.exports = class Effects {
           this.stars.push({
             x: p5.random(0, 400),
             y: p5.random(0, 250),
-            color: p5.lerpColor(lerpColorFromPalette(p5.random()), p5.color('#fff'), 0.75),
+            color: p5.lerpColor(
+              lerpColorFromPalette(p5.random()),
+              p5.color('#fff'),
+              0.75
+            ),
           });
         }
       },
@@ -117,7 +124,7 @@ module.exports = class Effects {
         gradient.addColorStop(0, color);
         for (let i = 0; i < 5; i++) {
           let color = colorFromPalette(i);
-          gradient.addColorStop((5 - i)/5, color.toString());
+          gradient.addColorStop((5 - i) / 5, color.toString());
         }
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 425, 425);
@@ -131,7 +138,11 @@ module.exports = class Effects {
           const heightFade = p5.constrain(250 - star.y, 0, 500);
           p5.push();
           p5.translate(star.x, star.y);
-          const sparkle = p5.constrain(p5.noise(star.x / 50, star.y / 50, p5.frameCount / 50) + 0.4, 0, 1);
+          const sparkle = p5.constrain(
+            p5.noise(star.x / 50, star.y / 50, p5.frameCount / 50) + 0.4,
+            0,
+            1
+          );
           p5.drawingContext.globalAlpha = opacity * (heightFade / 100) * 0.85;
           p5.scale(1 / sparkle);
           drawSparkle(p5._renderer.drawingContext, star.color);
@@ -146,8 +157,8 @@ module.exports = class Effects {
           }
         }
 
-        p5.noiseDetail(50, .5);
-        p5.stroke("#999");
+        p5.noiseDetail(50, 0.5);
+        p5.stroke('#999');
         p5.strokeWeight(2);
         p5.line(200, 0, 200, 15);
         p5.strokeWeight(0.25);
@@ -186,15 +197,21 @@ module.exports = class Effects {
           [353, 333],
           [193, 419],
           [141, 255],
-          [242, 248]
+          [242, 248],
         ];
 
         let ctx = p5._renderer.drawingContext;
 
         ctx.save();
         let gradient = ctx.createLinearGradient(425, 425, 425, 0);
-        gradient.addColorStop(1, constants.HIGHER_POWER_COLORS[getCurrentPalette()][0]);
-        gradient.addColorStop(0, constants.HIGHER_POWER_COLORS[getCurrentPalette()][1]);
+        gradient.addColorStop(
+          1,
+          constants.HIGHER_POWER_COLORS[getCurrentPalette()][0]
+        );
+        gradient.addColorStop(
+          0,
+          constants.HIGHER_POWER_COLORS[getCurrentPalette()][1]
+        );
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 425, 425);
         ctx.restore();
@@ -204,7 +221,7 @@ module.exports = class Effects {
         p5.imageMode(p5.CENTER);
         p5.rotate(p5.frameCount);
         p5.scale(1.7);
-        extraImages["higherPower"].drawFrame(19, 0, 0);
+        extraImages['higherPower'].drawFrame(19, 0, 0);
         p5.pop();
 
         // There is a low frequency oscillation between equal-size symbols and
@@ -216,10 +233,7 @@ module.exports = class Effects {
           p5.translate(p5.width / 2, p5.height / 2);
           p5.imageMode(p5.CENTER);
           p5.rotate(-p5.frameCount * 3);
-          p5.translate(
-            offset[0] * 0.4 - 120,
-            offset[1] * 0.4 - 120
-          );
+          p5.translate(offset[0] * 0.4 - 120, offset[1] * 0.4 - 120);
           p5.rotate(p5.frameCount * 5);
           p5.scale(
             0.27 +
@@ -227,10 +241,10 @@ module.exports = class Effects {
                 Math.sin(p5.frameCount / 100 + symbolIndex * 40)) /
                 3
           );
-          extraImages["higherPower"].drawFrame(symbolIndex, 0, 0);
+          extraImages['higherPower'].drawFrame(symbolIndex, 0, 0);
           p5.pop();
         });
-      }
+      },
     };
 
     this.rainbow = {
@@ -271,7 +285,7 @@ module.exports = class Effects {
           }
         }
         p5.pop();
-      }
+      },
     };
 
     this.flowers = {
@@ -296,11 +310,14 @@ module.exports = class Effects {
         for (let i = 9; i > -1; i--) {
           p5.push();
           p5.scale(i);
-          this.drawFlower(8, lerpColorFromPalette((this.hue + i * 10) % 360 / 360));
+          this.drawFlower(
+            8,
+            lerpColorFromPalette(((this.hue + i * 10) % 360) / 360)
+          );
           p5.pop();
         }
         p5.pop();
-      }
+      },
     };
 
     this.color_cycle = {
@@ -313,7 +330,7 @@ module.exports = class Effects {
           this.update();
         }
         p5.background(lerpColorFromPalette(this.color));
-      }
+      },
     };
 
     this.disco = {
@@ -334,7 +351,10 @@ module.exports = class Effects {
         }
       },
       update: function () {
-        const numChanges = randomNumber(this.minColorChangesPerUpdate, this.maxColorChangesPerUpdate);
+        const numChanges = randomNumber(
+          this.minColorChangesPerUpdate,
+          this.maxColorChangesPerUpdate
+        );
         for (let i = 0; i < numChanges; i++) {
           const loc = randomNumber(0, this.colors.length);
           this.colors[loc] = lerpColorFromPalette(p5.random(0, 1));
@@ -354,11 +374,11 @@ module.exports = class Effects {
             (i % this.squaresPerSide) * squareWidth,
             Math.floor(i / this.squaresPerSide) * squareHeight,
             squareWidth,
-            squareHeight,
+            squareHeight
           );
         }
         p5.pop();
-      }
+      },
     };
 
     // Creates a "ripple" effect where the ripple positions can be random.
@@ -386,10 +406,14 @@ module.exports = class Effects {
             this.maxRippleWidth = 1150;
           }
           // put some initial ripples.
-          for (let i=0; i<6; i++) {
-            this.ripples.push(this.createRipple(this.maxRippleWidth * (.85 - (.15*i)), this.isRandomRipple));
+          for (let i = 0; i < 6; i++) {
+            this.ripples.push(
+              this.createRipple(
+                this.maxRippleWidth * (0.85 - 0.15 * i),
+                this.isRandomRipple
+              )
+            );
           }
-
         },
 
         draw: function ({isPeak, bpm}) {
@@ -405,7 +429,7 @@ module.exports = class Effects {
           p5.ellipseMode(p5.CENTER);
           // calculate how much the ripples have grown and draw them.
           let rippleWidthGrowth = this.getRippleGrowth(currentTime, bpm);
-          for (let i=0; i < this.ripples.length; i++) {
+          for (let i = 0; i < this.ripples.length; i++) {
             let ripple = this.ripples[i];
             ripple.width += rippleWidthGrowth;
             p5.fill(ripple.color);
@@ -413,7 +437,7 @@ module.exports = class Effects {
           }
           // remove ripples which are too big, and updated the backgroundColor to match the highest one.
           let backgroundColor = this.backgroundColor;
-          this.ripples = this.ripples.filter(function (ripple){
+          this.ripples = this.ripples.filter(function (ripple) {
             if (ripple.width < maxRippleWidth) {
               return true;
             } else {
@@ -450,11 +474,11 @@ module.exports = class Effects {
             return 0;
           }
           // Velocity of the ripple width expansion.
-          let velocity = this.maxRippleWidth/(bpm/60)/1.5;
+          let velocity = this.maxRippleWidth / (bpm / 60) / 1.5;
           // Calculate how much time has passed so we know how wide the ripple should be.
           let deltaTime = (currentTime - this.lastDrawTime) / 1000;
           return Math.floor(velocity * deltaTime);
-        }
+        },
       };
     };
 
@@ -481,7 +505,7 @@ module.exports = class Effects {
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
-      }
+      },
     };
 
     this.circles = {
@@ -502,7 +526,7 @@ module.exports = class Effects {
           p5.ellipse(0, 0, i * 100 + 75, i * 100 + 75);
         }
         p5.pop();
-      }
+      },
     };
 
     this.rain = {
@@ -532,9 +556,9 @@ module.exports = class Effects {
           p5.line(0, 0, this.drops[i].length, this.drops[i].length * 2);
           p5.pop();
           this.drops[i].y = (this.drops[i].y + this.drops[i].length) % 420;
-          this.drops[i].x = (this.drops[i].x + (this.drops[i].length / 2)) % 420;
+          this.drops[i].x = (this.drops[i].x + this.drops[i].length / 2) % 420;
         }
-      }
+      },
     };
 
     this.sparkles = {
@@ -542,7 +566,8 @@ module.exports = class Effects {
       maxSparkles: 80,
       makeRandomSparkle: function () {
         return {
-          x: randomNumber(-100, 600),y:randomNumber(0, 400),
+          x: randomNumber(-100, 600),
+          y: randomNumber(0, 400),
           color: randomColorFromPalette(),
         };
       },
@@ -550,26 +575,24 @@ module.exports = class Effects {
         if (this.sparkles.length) {
           return;
         }
-        for (let i=0;i<this.maxSparkles;i++) {
+        for (let i = 0; i < this.maxSparkles; i++) {
           this.sparkles.push(this.makeRandomSparkle());
         }
       },
-      update: function () {
-
-      },
+      update: function () {},
       draw: function ({bpm}) {
-        p5.background("#2b1e45");
-        let velocity = Math.floor(bpm/90*3);
-        for (let i = 0;i<this.maxSparkles;i++){
+        p5.background('#2b1e45');
+        let velocity = Math.floor((bpm / 90) * 3);
+        for (let i = 0; i < this.maxSparkles; i++) {
           p5.push();
-          if ((this.sparkles[i].x<10) || (this.sparkles[i].y>410)) {
-            this.sparkles[i]=this.makeRandomSparkle();
+          if (this.sparkles[i].x < 10 || this.sparkles[i].y > 410) {
+            this.sparkles[i] = this.makeRandomSparkle();
           }
 
-          this.sparkles[i].x-=velocity;
-          this.sparkles[i].y+=velocity;
-          p5.translate(this.sparkles[i].x,this.sparkles[i].y);
-          drawSparkle(p5._renderer.drawingContext,this.sparkles[i].color);
+          this.sparkles[i].x -= velocity;
+          this.sparkles[i].y += velocity;
+          p5.translate(this.sparkles[i].x, this.sparkles[i].y);
+          drawSparkle(p5._renderer.drawingContext, this.sparkles[i].color);
           p5.pop();
         }
       },
@@ -611,7 +634,7 @@ module.exports = class Effects {
           p5.text(t.text, t.x, t.y);
         });
         p5.pop();
-      }
+      },
     };
 
     this.raining_tacos = {
@@ -652,7 +675,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.pineapples = {
@@ -689,7 +712,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.splatter = {
@@ -732,7 +755,11 @@ module.exports = class Effects {
           splat.r += p5.random(1);
           this.buffer.fill(splat.color);
           for (let i = 0; i < 20; i++) {
-            this.buffer.ellipse(p5.randomGaussian(splat.x, splat.r), p5.randomGaussian(splat.y, splat.r), p5.random(2, 8));
+            this.buffer.ellipse(
+              p5.randomGaussian(splat.x, splat.r),
+              p5.randomGaussian(splat.y, splat.r),
+              p5.random(2, 8)
+            );
           }
         }
 
@@ -741,7 +768,7 @@ module.exports = class Effects {
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
         p5.pop();
-      }
+      },
     };
 
     this.swirl = {
@@ -750,21 +777,20 @@ module.exports = class Effects {
       update: function () {
         this.color = randomColorFromPalette();
       },
-      draw: function ({isPeak,bpm}) {
+      draw: function ({isPeak, bpm}) {
         if (isPeak || !this.color) {
           this.update();
         }
         p5.push();
         p5.background(this.color);
-        p5.translate(200,200);
-        let rotation=(bpm/90)*50;
-        this.angle-=rotation;
-        p5.rotate(Math.PI / 180 * this.angle);
-        p5.translate(-427,-400);
+        p5.translate(200, 200);
+        let rotation = (bpm / 90) * 50;
+        this.angle -= rotation;
+        p5.rotate((Math.PI / 180) * this.angle);
+        p5.translate(-427, -400);
         drawSwirl(p5._renderer.drawingContext);
         p5.pop();
-
-      }
+      },
     };
 
     this.spiral = {
@@ -779,21 +805,20 @@ module.exports = class Effects {
           this.color -= 1;
         }
       },
-      draw: function ({isPeak,bpm}) {
+      draw: function ({isPeak, bpm}) {
         if (isPeak) {
           this.update();
         }
         p5.background(lerpColorFromPalette(this.color));
         p5.push();
-        p5.translate(200,200);
-        let rotation=(bpm/90)*200;
-        this.angle-=rotation;
-        p5.rotate(Math.PI / 180 * this.angle);
-        p5.translate(-600,-600);
+        p5.translate(200, 200);
+        let rotation = (bpm / 90) * 200;
+        this.angle -= rotation;
+        p5.rotate((Math.PI / 180) * this.angle);
+        p5.translate(-600, -600);
         drawSpiral(p5._renderer.drawingContext);
         p5.pop();
-
-      }
+      },
     };
 
     this.spotlight = {
@@ -806,33 +831,43 @@ module.exports = class Effects {
       diameter: 0,
       swirl: null,
       init: function () {
-        this.targetX=200;
-        this.targetY=200;
+        this.targetX = 200;
+        this.targetY = 200;
         this.update();
       },
       update: function () {
-        while (Math.sqrt((this.targetY - this.y)**2 + (this.targetX - this.x)**2) < 40) {
-          this.targetX = randomNumber(50,350);
-          this.targetY = randomNumber(50,350);
+        while (
+          Math.sqrt(
+            (this.targetY - this.y) ** 2 + (this.targetX - this.x) ** 2
+          ) < 40
+        ) {
+          this.targetX = randomNumber(50, 350);
+          this.targetY = randomNumber(50, 350);
         }
-        let angleOfMovement=Math.atan2(this.targetY - this.y, this.targetX - this.x);
-        this.dx = 6*Math.cos(angleOfMovement);
-        this.dy = 6*Math.sin(angleOfMovement);
+        let angleOfMovement = Math.atan2(
+          this.targetY - this.y,
+          this.targetX - this.x
+        );
+        this.dx = 6 * Math.cos(angleOfMovement);
+        this.dy = 6 * Math.sin(angleOfMovement);
       },
       draw: function ({isPeak}) {
-        if ((isPeak) ||
-          (Math.abs(this.targetX - this.x)<4 && Math.abs(this.targetY - this.y)<4)) {
+        if (
+          isPeak ||
+          (Math.abs(this.targetX - this.x) < 4 &&
+            Math.abs(this.targetY - this.y) < 4)
+        ) {
           this.update();
         }
         p5.push();
         p5.noFill();
         p5.stroke('#000');
         p5.strokeWeight(600);
-        this.x+=this.dx+randomNumber(-1,1);
-        this.y+=this.dy+randomNumber(-1,1);
-        p5.ellipse(this.x,this.y,800,800);
+        this.x += this.dx + randomNumber(-1, 1);
+        this.y += this.dy + randomNumber(-1, 1);
+        p5.ellipse(this.x, this.y, 800, 800);
         p5.pop();
-      }
+      },
     };
 
     this.lasers = {
@@ -862,13 +897,13 @@ module.exports = class Effects {
           const angle = p5.atan2(laser.y, y);
           p5.stroke(laser.color);
           p5.line(0, 0, p5.sin(angle) * 300, p5.cos(angle) * 300);
-          laser.y = laser.y -100;
+          laser.y = laser.y - 100;
           if (laser.y <= -1400) {
             laser.y = 1750;
           }
         }
         p5.pop();
-      }
+      },
     };
 
     this.quads = {
@@ -889,8 +924,11 @@ module.exports = class Effects {
           for (let j = 0; j < 4; j++) {
             const vertex = p5.createSprite();
             vertex.draw = () => {};
-            vertex.position = p5.createVector(p5.random(0, 400), p5.random(0, 400));
-            vertex.velocity = p5.createVector(0, 2).rotate(p5.random(0,360));
+            vertex.position = p5.createVector(
+              p5.random(0, 400),
+              p5.random(0, 400)
+            );
+            vertex.velocity = p5.createVector(0, 2).rotate(p5.random(0, 360));
             shape.push(vertex);
           }
           this.shapes.push(shape);
@@ -909,11 +947,14 @@ module.exports = class Effects {
 
         for (const shape of this.shapes) {
           this.buffer.stroke(colorFromPalette(shape.color));
-          this.buffer.quad.apply(this.buffer, shape.reduce((acc, current) => {
-            current.bounceOff(this.edges);
-            acc.push(current.position.x, current.position.y);
-            return acc;
-          }, []));
+          this.buffer.quad.apply(
+            this.buffer,
+            shape.reduce((acc, current) => {
+              current.bounceOff(this.edges);
+              acc.push(current.position.x, current.position.y);
+              return acc;
+            }, [])
+          );
         }
 
         // Copy the off-screen buffer to the canvas.
@@ -921,7 +962,7 @@ module.exports = class Effects {
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
         p5.pop();
-      }
+      },
     };
 
     this.color_lights = {
@@ -958,11 +999,15 @@ module.exports = class Effects {
           p5.push();
           p5.fill(light.color);
           p5.translate(light.x, -50);
-          p5.rotate((Math.sin((p5.frameCount / 100) + light.shift + centroid / 2000) * light.arc) + light.offset);
+          p5.rotate(
+            Math.sin(p5.frameCount / 100 + light.shift + centroid / 2000) *
+              light.arc +
+              light.offset
+          );
           p5.triangle(0, 0, -75, 600, 75, 600);
           p5.pop();
         });
-      }
+      },
     };
 
     this.kaleidoscope = {
@@ -971,7 +1016,7 @@ module.exports = class Effects {
           return;
         }
 
-        this.h = Math.sqrt(3) / 2 * 100;
+        this.h = (Math.sqrt(3) / 2) * 100;
 
         this.shapes = p5.createGraphics(100, Math.ceil(this.h));
         this.shapes.noStroke();
@@ -988,10 +1033,18 @@ module.exports = class Effects {
         this.hex.scale(1 / p5.pixelDensity());
         this.hex.rotate(30);
         for (let i = 0; i < 3; i++) {
-          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
+          this.hex.drawingContext.drawImage(
+            this.shapes.elt,
+            -50 * p5.pixelDensity(),
+            0
+          );
           this.hex.scale(-1, 1);
           this.hex.rotate(60);
-          this.hex.drawingContext.drawImage(this.shapes.elt, -50 * p5.pixelDensity(), 0);
+          this.hex.drawingContext.drawImage(
+            this.shapes.elt,
+            -50 * p5.pixelDensity(),
+            0
+          );
           this.hex.rotate(60);
           this.hex.scale(-1, 1);
         }
@@ -1003,7 +1056,11 @@ module.exports = class Effects {
         for (let i = 0; i < n; i++) {
           p5.push();
           p5.scale(1 / p5.pixelDensity());
-          p5.drawingContext.drawImage(this.hex.elt, -100 * p5.pixelDensity(), -100 * p5.pixelDensity());
+          p5.drawingContext.drawImage(
+            this.hex.elt,
+            -100 * p5.pixelDensity(),
+            -100 * p5.pixelDensity()
+          );
           p5.pop();
           p5.translate(this.h * 2, 0);
         }
@@ -1072,7 +1129,7 @@ module.exports = class Effects {
         this.row(3);
 
         p5.pop();
-      }
+      },
     };
 
     this.smiling_poop = {
@@ -1105,7 +1162,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.hearts_red = {
@@ -1139,7 +1196,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.hearts_colorful = {
@@ -1174,7 +1231,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.floating_rainbows = {
@@ -1213,7 +1270,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.snowflakes = {
@@ -1224,12 +1281,12 @@ module.exports = class Effects {
           x: p5.random(-100, 400),
           y: -10,
           velocityX: p5.random(-2, 2),
-          size: p5.random(6,12),
+          size: p5.random(6, 12),
         };
         this.flake.push(flake);
         p5.noStroke();
         p5.fill('white');
-        this.flake.forEach(function (flake){
+        this.flake.forEach(function (flake) {
           p5.push();
           p5.translate(flake.x, flake.y);
           for (let i = 0; i < 5; i++) {
@@ -1244,26 +1301,26 @@ module.exports = class Effects {
         this.flake = this.flake.filter(function (flake) {
           return flake.y < 425;
         });
-      }
+      },
     };
 
     this.fireworks = {
-      particles:[],
-      minExplosion:20,
-      maxExplosion:50,
-      minPotential:200,
-      maxPotential:300,
-      buffer:null,
+      particles: [],
+      minExplosion: 20,
+      maxExplosion: 50,
+      minPotential: 200,
+      maxPotential: 300,
+      buffer: null,
 
       makeParticle: function (type, pos, vel, color, potential) {
-        return  {
-          type:type,
-          pos:pos,
-          vel:vel,
+        return {
+          type: type,
+          pos: pos,
+          vel: vel,
           gravity: p5.createVector(0.0, 0.1),
-          potential:potential,
-          acc:p5.createVector(0, 0),
-          color:color,
+          potential: potential,
+          acc: p5.createVector(0, 0),
+          color: color,
           alpha: 1,
           update: function () {
             this.acc.add(this.gravity);
@@ -1305,11 +1362,11 @@ module.exports = class Effects {
           p.update();
 
           this.buffer.push();
-          if (p.type === "rocket") {
+          if (p.type === 'rocket') {
             this.buffer.strokeWeight(3);
             this.buffer.stroke(p.color);
             this.buffer.point(p.pos.x, p.pos.y);
-          } else if (p.type === "particle") {
+          } else if (p.type === 'particle') {
             this.buffer.translate(p.pos.x, p.pos.y);
             this.buffer.drawingContext.globalAlpha = p.alpha;
             p.alpha = p5.constrain(p.alpha - 0.02, 0, 1);
@@ -1328,7 +1385,7 @@ module.exports = class Effects {
         for (var i = 0; i < this.particles.length; i++) {
           let p = this.particles[i];
 
-          if (p.type === "rocket") {
+          if (p.type === 'rocket') {
             // explode a rocket when it reaches it peak height
             if (p.vel.y <= 0) {
               ret.push(p);
@@ -1338,8 +1395,7 @@ module.exports = class Effects {
 
             // the rocket exploded to its potential or its still waiting
             totalPotential += p.potential;
-          } else if (p.type === "particle") {
-
+          } else if (p.type === 'particle') {
             // remove things when they leave the window, except allow particles
             // to fall back down into the view from above
             if (p.pos.x > 0 && p.pos.x < p5.width && p.pos.y < p5.height) {
@@ -1351,15 +1407,14 @@ module.exports = class Effects {
 
         // make sure the total potential for particles is between the min and max potential
         if (totalPotential < this.minPotential) {
-
           // fire rockets until we fill the potential
           while (totalPotential < this.maxPotential) {
             let p = this.makeParticle(
-              "rocket",
+              'rocket',
               p5.createVector(randomNumber(0, p5.height), p5.width),
               p5.createVector(0, p5.random(-9, -7)),
               randomColorFromPalette(),
-              p5.random(this.minExplosion, this.maxExplosion),
+              p5.random(this.minExplosion, this.maxExplosion)
             );
             totalPotential += p.potential;
             ret.push(p);
@@ -1371,16 +1426,18 @@ module.exports = class Effects {
       explode: function (p) {
         let ret = [];
         for (var i = 0; i < p.potential; i++) {
-          ret.push(this.makeParticle(
-            "particle",
-            p5.createVector(p.pos.x, p.pos.y),
-            p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
-            p.color,
-            1,
-          ));
+          ret.push(
+            this.makeParticle(
+              'particle',
+              p5.createVector(p.pos.x, p.pos.y),
+              p5.createVector(p5.random(-5, 5), p5.random(-5, 5)),
+              p.color,
+              1
+            )
+          );
         }
         return ret;
-      }
+      },
     };
 
     this.bubbles = {
@@ -1408,22 +1465,22 @@ module.exports = class Effects {
         this.bubble = this.bubble.filter(function (bubble) {
           return bubble.y > 0;
         });
-      }
+      },
     };
 
     this.stars = {
       star: [],
       draw: function () {
-        p5.background("#303030");
+        p5.background('#303030');
         let star = {
           x: p5.random(0, 400),
           y: p5.random(0, 400),
           size: p5.random(15, 30),
-          color: randomColorFromPalette()
+          color: randomColorFromPalette(),
         };
         this.star.push(star);
         p5.noStroke();
-        this.star.forEach(function (star){
+        this.star.forEach(function (star) {
           p5.push();
           p5.fill(star.color);
           p5.translate(star.x, star.y);
@@ -1439,7 +1496,7 @@ module.exports = class Effects {
         this.star = this.star.filter(function (star) {
           return star.size > 0.1;
         });
-      }
+      },
     };
 
     this.exploding_stars = {
@@ -1447,13 +1504,13 @@ module.exports = class Effects {
       resetStars: function () {
         for (let i = 0; i < 100; i++) {
           let theta = p5.random(0, 360);
-          let velocity = p5.random(4,12);
+          let velocity = p5.random(4, 12);
           this.stars.push({
             color: randomColor(255, 255, 100),
             x: 200,
             y: 200,
             dx: velocity * p5.cos(theta),
-            dy: velocity * p5.sin(theta)
+            dy: velocity * p5.sin(theta),
           });
         }
       },
@@ -1469,31 +1526,33 @@ module.exports = class Effects {
           star.x += star.dx;
           star.y += star.dy;
         });
-        this.stars = this.stars.filter(star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410);
-      }
+        this.stars = this.stars.filter(
+          star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
+        );
+      },
     };
 
     this.galaxy = {
       space: [],
       draw: function () {
         p5.background('black');
-        for (let i = 0; i < 3; i ++) {
+        for (let i = 0; i < 3; i++) {
           let space = {
             x: 200,
             y: 200,
-            velocity: p5.createVector(0, 1).rotate(p5.random(0,360)),
+            velocity: p5.createVector(0, 1).rotate(p5.random(0, 360)),
             size: 0.01,
-            color: randomColorFromPalette()
+            color: randomColorFromPalette(),
           };
           this.space.push(space);
         }
         p5.noStroke();
-        this.space.forEach(function (space){
+        this.space.forEach(function (space) {
           p5.push();
           p5.fill(space.color);
           p5.translate(space.x, space.y);
           p5.ellipse(0, 0, space.size, space.size);
-          let speedMultiplier = p5.pow(space.size, 2) /2;
+          let speedMultiplier = p5.pow(space.size, 2) / 2;
           space.x += space.velocity.x * speedMultiplier;
           space.y += space.velocity.y * speedMultiplier;
           space.size += 0.1;
@@ -1505,7 +1564,7 @@ module.exports = class Effects {
           }
           return true;
         });
-      }
+      },
     };
 
     this.pizzas = {
@@ -1538,15 +1597,15 @@ module.exports = class Effects {
           p5.rotate(pizza.rot);
           p5.scale(scale / (4 * p5.pixelDensity()));
           p5.drawingContext.drawImage(this.image.elt, 0, 0);
-          pizza.life --;
+          pizza.life--;
           if (pizza.life < 0) {
-            pizza.x = randomNumber(25, 375),
-            pizza.y - randomNumber(25, 375),
-            pizza.life = 200;
+            (pizza.x = randomNumber(25, 375)),
+              pizza.y - randomNumber(25, 375),
+              (pizza.life = 200);
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.smile_face = {
@@ -1579,15 +1638,15 @@ module.exports = class Effects {
           p5.rotate(smiles.rot);
           p5.scale(scale / (4 * p5.pixelDensity()));
           p5.drawingContext.drawImage(this.image.elt, 0, 0);
-          smiles.life --;
+          smiles.life--;
           if (smiles.life < 0) {
-            smiles.x = randomNumber(25, 375),
-            smiles.y - randomNumber(25, 375),
-            smiles.life = 200;
+            (smiles.x = randomNumber(25, 375)),
+              smiles.y - randomNumber(25, 375),
+              (smiles.life = 200);
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.confetti = {
@@ -1621,7 +1680,7 @@ module.exports = class Effects {
         this.confetti = this.confetti.filter(function (confetti) {
           return confetti.y < 425;
         });
-      }
+      },
     };
 
     this.growing_stars = {
@@ -1637,11 +1696,10 @@ module.exports = class Effects {
         for (var i = 0; i < this.numStars; i++) {
           this.stars.push({
             size: this.starSpacing * (this.numStars - i),
-            colorIndex: this.colorIndex
+            colorIndex: this.colorIndex,
           });
           this.colorIndex++;
         }
-
       },
 
       draw: function () {
@@ -1650,12 +1708,12 @@ module.exports = class Effects {
           drawStar(p5, 200, 200, star.size, star.size * 2.5, 5);
           star.size += 1;
         }
-        if (this.stars[0].size > (this.starSpacing * this.numStars)) {
+        if (this.stars[0].size > this.starSpacing * this.numStars) {
           this.stars.shift();
           this.stars.push({size: 0, colorIndex: this.colorIndex});
           this.colorIndex++;
         }
-      }
+      },
     };
 
     this.music_notes = {
@@ -1696,7 +1754,7 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      }
+      },
     };
 
     this.paint_drip = {
@@ -1723,7 +1781,7 @@ module.exports = class Effects {
 
       draw: function () {
         for (let i = 0; i < this.crayons.length; i++) {
-          let c = lerpColorFromSpecificPalette('neon',i/this.crayons.length);
+          let c = lerpColorFromSpecificPalette('neon', i / this.crayons.length);
           p5.fill(c);
           p5.noStroke();
           let rectHeight = this.start_height;
@@ -1732,40 +1790,56 @@ module.exports = class Effects {
           if (i < this.current_drip) {
             rectHeight = this.crayons[i].maxHeight;
             // Drip is currently moving
-          } else if (i === this.current_drip){
+          } else if (i === this.current_drip) {
             //Calculate height with regard to direction of movement
             if (this.dripping_up) {
-              rectHeight = this.crayons[i].maxHeight - (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed;
+              rectHeight =
+                this.crayons[i].maxHeight -
+                (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed;
             } else {
-              rectHeight = (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed + this.start_height;
+              rectHeight =
+                (p5.frameCount - this.crayons[i].startFrame) * this.drip_speed +
+                this.start_height;
             }
             this.current_drip_height = rectHeight;
           }
           //Draw each drip with a rectangle and ellipse
-          p5.rect((22 * i) + 7, 0, this.start_width, rectHeight);
-          p5.ellipse((22 * i) + this.start_width, rectHeight, this.drip_diameter, this.drip_diameter);
+          p5.rect(22 * i + 7, 0, this.start_width, rectHeight);
+          p5.ellipse(
+            22 * i + this.start_width,
+            rectHeight,
+            this.drip_diameter,
+            this.drip_diameter
+          );
         }
 
         // Check if the current drip is 'done'
         if (
-          !this.dripping_up && this.current_drip_height >= this.crayons[this.current_drip].maxHeight
-          || this.dripping_up && this.current_drip_height <= 30
+          (!this.dripping_up &&
+            this.current_drip_height >=
+              this.crayons[this.current_drip].maxHeight) ||
+          (this.dripping_up && this.current_drip_height <= 30)
         ) {
-          if (!this.dripping_up && this.current_drip === this.crayons.length - 1) {
+          if (
+            !this.dripping_up &&
+            this.current_drip === this.crayons.length - 1
+          ) {
             // The rightmost drip is 'done' dripping down, switch to dripping up.
             this.dripping_up = true;
-            this.current_drip_height = this.crayons[this.current_drip].maxHeight;
+            this.current_drip_height =
+              this.crayons[this.current_drip].maxHeight;
           } else if (this.dripping_up && this.current_drip === 0) {
             // The leftmost drip is 'done' dripping up, switch to dripping down.
             this.dripping_up = false;
             this.current_drip_height = 0;
           } else if (this.dripping_up) {
             // A non-edge drip is 'done' dripping up, move the next left drip.
-            this.current_drip-=1;
-            this.current_drip_height = this.crayons[this.current_drip].maxHeight;
+            this.current_drip -= 1;
+            this.current_drip_height =
+              this.crayons[this.current_drip].maxHeight;
           } else {
             // A non-edge drip is 'done' dripping down, move the next drip right.
-            this.current_drip+=1;
+            this.current_drip += 1;
             this.current_drip_height = 0;
             //Each new drip down is assigned a random maximum height.
             this.crayons[this.current_drip].maxHeight = p5.random(30, 200);
@@ -1773,7 +1847,7 @@ module.exports = class Effects {
           //Note when this drip started to calculate the height in mid-drip
           this.crayons[this.current_drip].startFrame = p5.frameCount;
         }
-      }
+      },
     };
 
     this.squiggles = {
@@ -1792,56 +1866,60 @@ module.exports = class Effects {
           this.points.push({
             x: 0,
             y: i * this.dotSpacing,
-            theta: 360 / this.period * i * this.dotSpacing,
-            color: lerpColorFromPalette(i / numPoints)
+            theta: (360 / this.period) * i * this.dotSpacing,
+            color: lerpColorFromPalette(i / numPoints),
           });
         }
       },
-      draw: function ( {bpm} ) {
+      draw: function ({bpm}) {
         p5.background('black');
         for (var i = 0; i < this.numSquiggles; i++) {
           this.points.forEach(point => {
             p5.fill(point.color);
             p5.ellipse(point.x, point.y, this.dotRadius, this.dotRadius);
-            point.x = (p5.width / (this.numSquiggles - 1) * i) + p5.sin(point.theta) * this.amplitude;
+            point.x =
+              (p5.width / (this.numSquiggles - 1)) * i +
+              p5.sin(point.theta) * this.amplitude;
             point.theta = (point.theta + bpm / 360) % 360;
           });
         }
-      }
+      },
     };
 
     this.music_wave = {
-      inc: 360/15,
+      inc: 360 / 15,
       heightFactor: 1,
       heightDivider: 200,
       yLoc: 300,
-      lineWidth: p5.width/80,
+      lineWidth: p5.width / 80,
       draw: function (context) {
         const centroid = context.centroid;
         let scale = p5.map(centroid, 5000, 8000, 0, 250);
         let angle = 0;
         p5.background('black');
-        for (let i = 0; i < p5.width; i+=this.lineWidth) {
-          p5.stroke(lerpColorFromPalette(i/p5.width));
-          let amplitude = Math.abs(scale * (this.heightFactor/this.heightDivider) * p5.cos(angle));
+        for (let i = 0; i < p5.width; i += this.lineWidth) {
+          p5.stroke(lerpColorFromPalette(i / p5.width));
+          let amplitude = Math.abs(
+            scale * (this.heightFactor / this.heightDivider) * p5.cos(angle)
+          );
           let yInitial = this.yLoc - amplitude;
           let yFinal = this.yLoc + amplitude;
           p5.line(i, yInitial, i, yFinal);
-          if ( i < p5.width/2) {
+          if (i < p5.width / 2) {
             this.heightFactor++;
           } else {
             this.heightFactor--;
           }
           angle += this.inc;
         }
-      }
+      },
     };
 
     this.emojis = {
-      emojiList : [],
-      emojiTypes : [],
+      emojiList: [],
+      emojiTypes: [],
 
-      init : function () {
+      init: function () {
         this.imageLovestruck = p5.createGraphics(100, 100);
         this.imageLovestruck.scale(3);
         drawLovestruck(this.imageLovestruck.drawingContext);
@@ -1868,8 +1946,9 @@ module.exports = class Effects {
         this.emojiTypes.push(this.imageWink);
       },
 
-      draw : function () {
-        if (p5.frameCount % 10 === 0) { // generate new emoji every 10 frames
+      draw: function () {
+        if (p5.frameCount % 10 === 0) {
+          // generate new emoji every 10 frames
           this.emojiList.push({
             x: randomNumber(0, 350),
             y: -50,
@@ -1880,11 +1959,18 @@ module.exports = class Effects {
         for (let i = 0; i < this.emojiList.length; ++i) {
           const emoji = this.emojiList[i];
           emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
-          if (emoji.y > p5.height * 1.2) { // if the emoji has fallen past 120% of the screen
+          if (emoji.y > p5.height * 1.2) {
+            // if the emoji has fallen past 120% of the screen
             this.emojiList.splice(i, 1);
           }
           p5.push();
-          p5.drawingContext.drawImage(emoji.image.elt, emoji.x, emoji.y, emoji.size, emoji.size);
+          p5.drawingContext.drawImage(
+            emoji.image.elt,
+            emoji.x,
+            emoji.y,
+            emoji.size,
+            emoji.size
+          );
           p5.pop();
         }
       },
@@ -1892,12 +1978,16 @@ module.exports = class Effects {
   }
 
   randomForegroundEffect() {
-    const effects = constants.FOREGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
+    const effects = constants.FOREGROUND_EFFECTS.filter(name =>
+      this.hasOwnProperty(name)
+    );
     return this.sample_(effects);
   }
 
   randomBackgroundEffect() {
-    const effects = constants.BACKGROUND_EFFECTS.filter(name => this.hasOwnProperty(name));
+    const effects = constants.BACKGROUND_EFFECTS.filter(name =>
+      this.hasOwnProperty(name)
+    );
     return this.sample_(effects);
   }
 

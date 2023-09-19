@@ -34,7 +34,7 @@ var MOVES = {
 var QueueType = {
   every: 'every',
   after: 'after',
-  other: 'other'
+  other: 'other',
 };
 
 // Event handlers, loops, and callbacks.
@@ -64,7 +64,7 @@ function getCueList() {
   }
   return {
     seconds: timestamps,
-    measures: measures
+    measures: measures,
   };
 }
 
@@ -89,7 +89,7 @@ function runUserEvents(events) {
   // Finally we run all other events
 
   var queues = {};
-  Object.keys(QueueType).forEach(function(key) {
+  Object.keys(QueueType).forEach(function (key) {
     queues[key] = [];
   });
 
@@ -106,7 +106,7 @@ function runUserEvents(events) {
       }
       queues[queueType].push({
         priority: inputEvents[i].priority,
-        func: inputEvents[i].func
+        func: inputEvents[i].func,
       });
     }
   }
@@ -181,7 +181,7 @@ function whenPeak(range, func) {
 function atTimestamp(timestamp, unit, func) {
   // Despite the functions name, if we call atTimestamp(4, "measures", foo), we
   // actually want to fire on the 5th measure (i.e after 4 measures have completed)
-  if (unit === "measures") {
+  if (unit === 'measures') {
     timestamp += 1;
   }
 
@@ -205,7 +205,7 @@ function everySeconds(n, unit, func) {
   // e.g. "every 4 measures" will generate events at "5, 9, 13" measures.
   // e.g. "every 0.25 seconds" will generate events at "0.25, 0.5, 0.75" seconds.
   var start, stop;
-  if (unit === "measures") {
+  if (unit === 'measures') {
     start = 1;
     // TODO: 90 seconds is the max for songs, but 90 measures is too long
     stop = 91;
@@ -252,7 +252,7 @@ function everySecondsRange(n, unit, start, stop, func) {
       func: func,
       param: timestamp,
       queueType: QueueType.every,
-      priority: n
+      priority: n,
     });
     timestamp += n;
   }
@@ -266,6 +266,6 @@ function everyVerseChorus(unit, func) {
   inputEvents.push({
     type: 'verseChorus',
     func: func,
-    param: unit
+    param: unit,
   });
 }

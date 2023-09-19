@@ -125,7 +125,7 @@ module.exports = class DanceAPI {
       startMapping: (spriteName, property, val) => {
         return nativeAPI.startMapping(lookupSprite(spriteName), property, val);
       },
-      startMappingEach: (group, property,val) => {
+      startMappingEach: (group, property, val) => {
         return nativeAPI.startMappingEach(group, property, val);
       },
       stopMapping: (spriteName, property, val) => {
@@ -148,7 +148,10 @@ module.exports = class DanceAPI {
       },
       changePropEachBy: (group, property, val) => {
         return nativeAPI.changePropEachBy(group, property, val);
-      }
+      },
+      ai: value => {
+        nativeAPI.ai(value);
+      },
     };
   }
 };
