@@ -49,6 +49,7 @@ module.exports = class DanceParty {
     i18n = {
       measure: () => 'Measure:',
     },
+    doAi,
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
@@ -107,6 +108,9 @@ module.exports = class DanceParty {
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = constants.MOVE_NAMES;
+
+    // Store a reference to the main repo's AI function.
+    this.doAi = doAi;
 
     if (spriteConfig) {
       spriteConfig(this.world);
@@ -1114,6 +1118,29 @@ module.exports = class DanceParty {
     group.forEach(function (sprite) {
       this.changePropBy(sprite, property, val);
     }, this);
+  }
+
+  // Called when executing the AI block.
+  async ai(value) {
+    console.log('AI:', value);
+
+    // Call the main repo's doAI function which will transform this
+    // block's value into a useful response.
+    const response = await this.doAi(value);
+
+    const params = JSON.parse(response);
+    console.log('handle AI:', params);
+
+    this.setBackgroundEffect(
+      params.backgroundEffect,
+      params.backgroundColor
+    );
+
+    this.setForegroundEffect(params.foregroundEffect);
+
+    if (params.setDancer) {
+      this.makeNewDanceSprite('MOOSE', 'harold', null);
+    }
   }
 
   // Music Helpers
