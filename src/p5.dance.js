@@ -352,9 +352,7 @@ module.exports = class DanceParty {
           timeSinceLoad() - this.performanceData_.lastPlayCall;
         callback && callback(playSuccess);
       },
-      () => {
-        this.reset();
-      }
+      () => {}
     );
     this.p5_.loop();
   }
