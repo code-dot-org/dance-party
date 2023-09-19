@@ -349,10 +349,11 @@ module.exports = class DanceParty {
       playSuccess => {
         this.songStartTime_ = new Date();
         this.performanceData_.lastPlayDelay =
-         timeSinceLoad() - this.performanceData_.lastPlayCall;
+          timeSinceLoad() - this.performanceData_.lastPlayCall;
         callback && callback(playSuccess);
       },
-    () => {});
+      () => {}
+    );
     this.p5_.loop();
   }
 
