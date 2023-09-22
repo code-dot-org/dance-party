@@ -150,7 +150,10 @@ module.exports = class DanceAPI {
         return nativeAPI.changePropEachBy(group, property, val);
       },
       ai: value => {
-        nativeAPI.ai(value);
+        nativeAPI.handleAi(value);
+      },
+      aiText: value => {
+        nativeAPI.aiText(value);
       },
     };
   }

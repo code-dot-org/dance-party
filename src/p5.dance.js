@@ -1118,8 +1118,23 @@ module.exports = class DanceParty {
     }, this);
   }
 
+  handleAi(params) {
+    console.log('handle AI:', params);
+
+    this.setBackgroundEffect(
+      params.backgroundEffect,
+      params.backgroundColor
+    );
+
+    this.setForegroundEffect(params.foregroundEffect);
+
+    if (params.setDancer) {
+      //this.makeNewDanceSprite('MOOSE', 'harold', null);
+    }
+  }
+
   // Called when executing the AI block.
-  async ai(value) {
+  async aiText(value) {
     console.log('AI:', value);
 
     // Call the main repo's doAI function which will transform this
