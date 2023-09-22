@@ -581,6 +581,7 @@ module.exports = class Effects {
       },
       update: function () {},
       draw: function ({bpm}) {
+        bpm = bpm || 120;
         p5.background('#2b1e45');
         let velocity = Math.floor((bpm / 90) * 3);
         for (let i = 0; i < this.maxSparkles; i++) {
