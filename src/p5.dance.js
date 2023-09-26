@@ -1118,6 +1118,7 @@ module.exports = class DanceParty {
     }, this);
   }
 
+  // Called when executing the AI block.
   ai(params) {
     console.log('handle AI:', params);
 
@@ -1135,7 +1136,7 @@ module.exports = class DanceParty {
     }
   }
 
-  // Called when executing the AI block.
+  // Called when executing the free-text AI block.
   async aiText(value) {
     console.log('AI:', value);
 
