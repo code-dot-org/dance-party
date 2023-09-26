@@ -1118,18 +1118,15 @@ module.exports = class DanceParty {
     }, this);
   }
 
-  handleAi(params) {
+  ai(params) {
     console.log('handle AI:', params);
 
-    this.setBackgroundEffect(
-      params.backgroundEffect,
-      params.backgroundColor
-    );
+    if (params?.backgroundEffect && params?.backgroundColor) {
+      this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
+    }
 
-    this.setForegroundEffect(params.foregroundEffect);
-
-    if (params.setDancer) {
-      //this.makeNewDanceSprite('MOOSE', 'harold', null);
+    if (params?.foregroundEffect) {
+      this.setForegroundEffect(params.foregroundEffect);
     }
   }
 
@@ -1144,10 +1141,7 @@ module.exports = class DanceParty {
     const params = JSON.parse(response);
     console.log('handle AI:', params);
 
-    this.setBackgroundEffect(
-      params.backgroundEffect,
-      params.backgroundColor
-    );
+    this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
 
     this.setForegroundEffect(params.foregroundEffect);
 
