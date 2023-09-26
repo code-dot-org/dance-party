@@ -1121,12 +1121,17 @@ module.exports = class DanceParty {
   ai(params) {
     console.log('handle AI:', params);
 
-    if (params?.backgroundEffect && params?.backgroundColor) {
-      this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
-    }
+    if (params) {
+      if (params.backgroundEffect && params.backgroundColor) {
+        this.setBackgroundEffect(
+          params.backgroundEffect,
+          params.backgroundColor
+        );
+      }
 
-    if (params?.foregroundEffect) {
-      this.setForegroundEffect(params.foregroundEffect);
+      if (params.foregroundEffect) {
+        this.setForegroundEffect(params.foregroundEffect);
+      }
     }
   }
 
