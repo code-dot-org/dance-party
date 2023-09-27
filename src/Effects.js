@@ -16,6 +16,7 @@ const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
 const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
+const {hexToRgb} = require('./utils');
 
 module.exports = class Effects {
   constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
@@ -486,17 +487,11 @@ module.exports = class Effects {
     this.ripples = createRipplesEffect(false);
     this.ripples_random = createRipplesEffect(true);
 
-    this.bloomingPetals = {
+    this.blooming_petals = {
       colorIndex: 0,
       petalWidth: 35,
       petals: [],
       palette: constants.PALETTES[this.currentPalette],
-      hexToRgb: function (hexColor) {
-        const R = parseInt(hexColor.substr(1, 2), 16);
-        const G = parseInt(hexColor.substr(3, 2), 16);
-        const B = parseInt(hexColor.substr(5, 2), 16);
-        return {R, G, B};
-      },
       addPetalLayer: function (color, layer) {
         for (let i = 0; i < 8; i++) {
           this.petals.push({
@@ -513,7 +508,7 @@ module.exports = class Effects {
         // bigger petals behind smaller peals.
         for (let layer = 3; layer >= 0; layer--) {
           const color = colorFromPalette(this.colorIndex);
-          this.addPetalLayer(this.hexToRgb(color), layer);
+          this.addPetalLayer(hexToRgb(color), layer);
           this.colorIndex = (this.colorIndex + 1) % this.palette.length;
         }
       },
@@ -522,7 +517,7 @@ module.exports = class Effects {
         p5.strokeWeight(2);
         if (p5.World.frameCount % 70 === 0) {
           const color = colorFromPalette(this.colorIndex);
-          this.addPetalLayer(this.hexToRgb(color), 0 /* layer */);
+          this.addPetalLayer(hexToRgb(color), 0 /* layer */);
           this.colorIndex = (this.colorIndex + 1) % this.palette.length;
         }
         this.petals.forEach(petal => {
