@@ -540,7 +540,9 @@ module.exports = class Effects {
         p5.pop();
       },
     };
-
+    this.clouds = {
+      draw: function () {},
+    };
     this.diamonds = {
       hue: 0,
       update: function () {
