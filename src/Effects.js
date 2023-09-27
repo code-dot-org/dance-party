@@ -1,4 +1,5 @@
 const constants = require('./constants');
+const drawPetal = require('./shapes/petal');
 const drawHeart = require('./shapes/heart');
 const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
@@ -485,7 +486,7 @@ module.exports = class Effects {
     this.ripples = createRipplesEffect(false);
     this.ripples_random = createRipplesEffect(true);
 
-    this.blooming = {
+    this.bloomingPetals = {
       colorIndex: 0,
       petalWidth: 35,
       petals: [],
@@ -531,24 +532,7 @@ module.exports = class Effects {
             p5.color(petal.R * 0.8, petal.G * 0.8, petal.B * 0.8)
           );
           p5.fill(p5.color(petal.R, petal.G, petal.B));
-          const leftAnchor = {
-            x: 200 + petal.length * p5.sin(petal.theta - this.petalWidth),
-            y: 200 + petal.length * p5.cos(petal.theta - this.petalWidth),
-          };
-          const rightAnchor = {
-            x: 200 + petal.length * p5.sin(petal.theta + this.petalWidth),
-            y: 200 + petal.length * p5.cos(petal.theta + this.petalWidth),
-          };
-          p5.bezier(
-            200,
-            200,
-            leftAnchor.x,
-            leftAnchor.y,
-            rightAnchor.x,
-            rightAnchor.y,
-            200,
-            200
-          );
+          drawPetal(p5, petal.length, petal.theta, this.petalWidth);
           petal.theta = (petal.theta + 0.5) % 360;
           petal.length += 2;
         });
