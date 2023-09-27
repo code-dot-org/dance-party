@@ -68,6 +68,7 @@ module.exports = {
     'flowers',
     'squiggles',
     'growing_stars',
+    'blooming',
   ],
   FOREGROUND_EFFECTS: [
     'bubbles',
