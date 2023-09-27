@@ -1119,7 +1119,25 @@ module.exports = class DanceParty {
   }
 
   // Called when executing the AI block.
-  async ai(value) {
+  ai(params) {
+    console.log('handle AI:', params);
+
+    if (params) {
+      if (params.backgroundEffect && params.backgroundColor) {
+        this.setBackgroundEffect(
+          params.backgroundEffect,
+          params.backgroundColor
+        );
+      }
+
+      if (params.foregroundEffect) {
+        this.setForegroundEffect(params.foregroundEffect);
+      }
+    }
+  }
+
+  // Called when executing the free-text AI block.
+  async aiText(value) {
     console.log('AI:', value);
 
     // Call the main repo's doAI function which will transform this
@@ -1129,10 +1147,7 @@ module.exports = class DanceParty {
     const params = JSON.parse(response);
     console.log('handle AI:', params);
 
-    this.setBackgroundEffect(
-      params.backgroundEffect,
-      params.backgroundColor
-    );
+    this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
 
     this.setForegroundEffect(params.foregroundEffect);
 
