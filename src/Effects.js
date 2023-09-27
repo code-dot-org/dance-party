@@ -16,7 +16,7 @@ const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
 const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
-const {hexToRgb} = require('./utils');
+const {hexToRgb, getP5Color} = require('./utils');
 
 module.exports = class Effects {
   constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
@@ -536,7 +536,45 @@ module.exports = class Effects {
       },
     };
     this.clouds = {
-      draw: function () {},
+      tileSize: 20,
+      noiseScale: 0.05,
+      speed: 0.015,
+      tiles: [],
+      init: function () {
+        this.tiles = [];
+        let xnoise = 0.01;
+        let ynoise = 0.01;
+        for (let x = 0; x < 400; x += this.tileSize) {
+          xnoise = 0.01;
+          for (let y = 0; y < 400; y += this.tileSize) {
+            this.tiles.push({
+              x,
+              y,
+              xnoise,
+              ynoise,
+            });
+            xnoise += this.noiseScale;
+          }
+          ynoise += this.noiseScale;
+        }
+      },
+      draw: function () {
+        let backgroundAmount = 0;
+        p5.push();
+        p5.noStroke();
+        backgroundAmount += this.speed;
+        p5.background(
+          lerpColorFromPalette(backgroundAmount)
+        );
+        this.tiles.forEach(tile => {
+          tile.alpha = p5.noise(tile.xnoise, tile.ynoise) * 255;
+          tile.xnoise += this.speed;
+          tile.ynoise += this.speed;
+          p5.fill(getP5Color(p5, '#ffffff', tile.alpha));
+          p5.rect(tile.x, tile.y, this.tileSize, this.tileSize);
+        });
+        p5.pop();
+      },
     };
     this.diamonds = {
       hue: 0,
