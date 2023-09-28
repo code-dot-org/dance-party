@@ -1119,7 +1119,7 @@ module.exports = class DanceParty {
   }
 
   // Called when executing the AI block.
-  ai(params) {
+  async ai(params) {
     console.log('handle AI:', params);
 
     if (params) {
@@ -1132,6 +1132,21 @@ module.exports = class DanceParty {
 
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
+      }
+
+      if (
+        params.dancers &&
+        params.dancers.type &&
+        params.dancers.count &&
+        params.dancers.layout
+      ) {
+        //await this.ensureSpritesAreLoaded([params.dancers.type.toUpperCase()]);
+
+        this.makeNewDanceSpriteGroup(
+          params.dancers.count,
+          params.dancers.type.toUpperCase(),
+          params.dancers.layout
+        );
       }
     }
   }
