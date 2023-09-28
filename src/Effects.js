@@ -490,7 +490,6 @@ module.exports = class Effects {
 
     this.blooming_petals = {
       colorIndex: 0,
-      petalWidth: 35,
       petals: [],
       paletteLength: 0,
       addPetalLayer: function (color, layer) {
@@ -522,6 +521,7 @@ module.exports = class Effects {
           this.addPetalLayer(hexToRgb(color), 0 /* layer */);
           this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
         }
+        const petalWidth = 35;
         this.petals.forEach(petal => {
           // Multiply each component by 0.8 to have the stroke color be
           // slightly darker than the fill color.
@@ -529,7 +529,7 @@ module.exports = class Effects {
             p5.color(petal.R * 0.8, petal.G * 0.8, petal.B * 0.8)
           );
           p5.fill(p5.color(petal.R, petal.G, petal.B));
-          drawPetal(p5, petal.length, petal.theta, this.petalWidth);
+          drawPetal(p5, petal.length, petal.theta, petalWidth);
           petal.theta = (petal.theta + 0.5) % 360;
           petal.length += 2;
         });
@@ -537,12 +537,12 @@ module.exports = class Effects {
         p5.pop();
       },
     };
+
     this.clouds = {
       tileSize: 20,
-      noiseScale: 0.05,
-      speed: 0.015,
       tiles: [],
       init: function () {
+        const noiseScale = 0.05;
         this.tiles = [];
         let xnoise = 0.01;
         let ynoise = 0.01;
@@ -555,29 +555,31 @@ module.exports = class Effects {
               xnoise,
               ynoise,
             });
-            xnoise += this.noiseScale;
+            xnoise += noiseScale;
           }
-          ynoise += this.noiseScale;
+          ynoise += noiseScale;
         }
       },
       draw: function () {
+        const speed = 0.015;
         let backgroundAmount = 0;
         p5.push();
         p5.noStroke();
-        backgroundAmount += this.speed;
+        backgroundAmount += speed;
         p5.background(
           lerpColorFromPalette(backgroundAmount)
         );
         this.tiles.forEach(tile => {
           tile.alpha = p5.noise(tile.xnoise, tile.ynoise) * 255;
-          tile.xnoise += this.speed;
-          tile.ynoise += this.speed;
+          tile.xnoise += speed;
+          tile.ynoise += speed;
           p5.fill(getP5Color(p5, '#ffffff', tile.alpha));
           p5.rect(tile.x, tile.y, this.tileSize, this.tileSize);
         });
         p5.pop();
       },
     };
+
     this.frosted_grid = {
       anchors: [],
       circles: [],
@@ -607,6 +609,7 @@ module.exports = class Effects {
         p5.pop();
       },
     };
+
     this.diamonds = {
       hue: 0,
       update: function () {
