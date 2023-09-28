@@ -75,7 +75,7 @@ test('random background effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setBackgroundEffect('rand');
-  t.equal(nativeAPI.world.bg_effect, 'swirl');
+  t.equal(nativeAPI.world.bg_effect, 'kaleidoscope');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
   t.end();

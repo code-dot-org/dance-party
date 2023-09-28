@@ -514,7 +514,7 @@ module.exports = class Effects {
           this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
         }
       },
-      draw: function () {  
+      draw: function () {
         p5.push();
         p5.strokeWeight(2);
         if (p5.World.frameCount % 70 === 0) {
