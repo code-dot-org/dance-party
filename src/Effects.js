@@ -12,6 +12,7 @@ const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
 const drawStar = require('./shapes/star');
+const drawStarburst = require('./shapes/starBurst');
 const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
@@ -612,57 +613,20 @@ module.exports = class Effects {
 
     this.starburst = {
       stars: [],
-      removedInitialStars: false,
       init: function () {
-        console.log('init');
-        const numPreviewStars = 100;
-        for (let i = 0; i < numPreviewStars; i++) {
-          const theta = randomInt(0, 360);
-          const velocity = randomInt(4, 12);
-          this.stars.push({
-            color: randomColorFromPalette(),
-            x: 200,
-            y: 200,
-            velocityX: velocity * p5.cos(theta),
-            velocityY: velocity * p5.sin(theta),
-          });
-        }
-        this.stars.forEach(star => {
-          p5.fill(star.color);
-          star.x += star.velocityX + randomInt(0,25) * star.velocityX;
-          star.y += star.velocityY + randomInt(0,25) * star.velocityY;
-          drawStar(p5, star.x, star.y, 3, 9, 5);
-        });
-        this.stars = this.stars.filter(
-          star =>
-            star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
-        );
+        this.stars = [];
+        p5.push();
+        p5.background(lerpColorFromPalette(0));
+        // A call to drawStarburst with isPreview=true will ensure background effect
+        // is displayed in preview.
+        drawStarburst(p5, true, this.stars, randomInt, randomColorFromPalette, drawStar);
+        p5.pop();
       },
       draw: function () {
-        p5.noStroke();
         p5.push();
-        const numStars = 10;
-        for (let i = 0; i < numStars; i++) {
-          const theta = randomInt(0, 360);
-          const velocity = randomInt(4, 12);
-          this.stars.push({
-            color: randomColorFromPalette(),
-            x: 200,
-            y: 200,
-            velocityX: velocity * p5.cos(theta),
-            velocityY: velocity * p5.sin(theta),
-          });
-        }
-        this.stars.forEach(star => {
-          p5.fill(star.color);
-          drawStar(p5, star.x, star.y, 3, 9, 5);
-          star.x += star.velocityX;
-          star.y += star.velocityY;
-        });
-        this.stars = this.stars.filter(
-          star =>
-            star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
-        );
+        p5.noStroke();
+        p5.background(lerpColorFromPalette(0));
+        drawStarburst(p5, false, this.stars, randomInt, randomColorFromPalette, drawStar);
         p5.pop();
       },
     };
