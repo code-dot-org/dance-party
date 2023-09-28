@@ -1119,7 +1119,7 @@ module.exports = class DanceParty {
   }
 
   // Called when executing the AI block.
-  async ai(params) {
+  ai(params) {
     console.log('handle AI:', params);
 
     if (params) {
@@ -1140,8 +1140,6 @@ module.exports = class DanceParty {
         params.dancers.count &&
         params.dancers.layout
       ) {
-        //await this.ensureSpritesAreLoaded([params.dancers.type.toUpperCase()]);
-
         this.makeNewDanceSpriteGroup(
           params.dancers.count,
           params.dancers.type.toUpperCase(),
