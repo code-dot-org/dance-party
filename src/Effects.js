@@ -504,6 +504,7 @@ module.exports = class Effects {
       },
       init: function () {
         this.paletteLength = constants.PALETTES[getCurrentPalette()].length;
+        this.petals = [];
         // initialize with enough petals to fill the screen - this is mostly
         // useful so that preview shows what the background actually looks like.
         // increment from 3 down to 0 so that petals are layered correctly with
