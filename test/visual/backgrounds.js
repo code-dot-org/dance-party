@@ -91,7 +91,10 @@ async function testBackground(t, name, effect) {
   ['ripples_random'],
   ['squiggles'],
   ['growing_stars'],
-  ['paint_drip']
+  ['paint_drip'],
+  ['blooming_petals', 'vintage'],
+  ['clouds', 'neon'],
+  // ['frosted_grid', 'vintage'], // anchor points are randomly generated, so this test will fail
 ].forEach(effect => {
   let name = effect[0] + (effect[1] ? ("_" + effect[1]) : "");
   test(`background - ${name}`, async t => {
