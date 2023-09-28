@@ -1,8 +1,9 @@
 const constants = require('./constants');
-const drawPetal = require('./shapes/petal');
+const drawFrostedGrid = require('./shapes/frostedGrid');
 const drawHeart = require('./shapes/heart');
 const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
+const drawPetal = require('./shapes/petal');
 const drawPineapple = require('./shapes/pineapple');
 const drawPizza = require('./shapes/pizza');
 const drawPoop = require('./shapes/poop');
@@ -16,7 +17,7 @@ const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
 const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
-const {hexToRgb, getP5Color} = require('./utils');
+const {hexToRgb, getP5Color, randomInt} = require('./utils');
 
 module.exports = class Effects {
   constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
@@ -491,7 +492,7 @@ module.exports = class Effects {
       colorIndex: 0,
       petalWidth: 35,
       petals: [],
-      palette: constants.PALETTES[this.currentPalette],
+      paletteLength: 0,
       addPetalLayer: function (color, layer) {
         for (let i = 0; i < 8; i++) {
           this.petals.push({
@@ -502,6 +503,7 @@ module.exports = class Effects {
         }
       },
       init: function () {
+        this.paletteLength = constants.PALETTES[getCurrentPalette()].length;
         // initialize with enough petals to fill the screen - this is mostly
         // useful so that preview shows what the background actually looks like.
         // increment from 3 down to 0 so that petals are layered correctly with
@@ -509,16 +511,16 @@ module.exports = class Effects {
         for (let layer = 3; layer >= 0; layer--) {
           const color = colorFromPalette(this.colorIndex);
           this.addPetalLayer(hexToRgb(color), layer);
-          this.colorIndex = (this.colorIndex + 1) % this.palette.length;
+          this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
         }
       },
-      draw: function () {
+      draw: function () {  
         p5.push();
         p5.strokeWeight(2);
         if (p5.World.frameCount % 70 === 0) {
           const color = colorFromPalette(this.colorIndex);
           this.addPetalLayer(hexToRgb(color), 0 /* layer */);
-          this.colorIndex = (this.colorIndex + 1) % this.palette.length;
+          this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
         }
         this.petals.forEach(petal => {
           // Multiply each component by 0.8 to have the stroke color be
@@ -573,6 +575,35 @@ module.exports = class Effects {
           p5.fill(getP5Color(p5, '#ffffff', tile.alpha));
           p5.rect(tile.x, tile.y, this.tileSize, this.tileSize);
         });
+        p5.pop();
+      },
+    };
+    this.frosted_grid = {
+      anchors: [],
+      circles: [],
+      spacing: 20,
+      init: function () {
+        this.anchors = [];
+        this.circles = [];
+        const paletteColors = constants.PALETTES[getCurrentPalette()];
+        paletteColors.forEach(color => {
+          this.anchors.push({
+            x: randomInt(0, 400),
+            y: randomInt(0, 400),
+            velocityX: randomInt(-3, 3),
+            velocityY: randomInt(-3, 3),
+            ...hexToRgb(color),
+          });
+        });
+        for (let x = 0; x < 420; x += this.spacing) {
+          for (let y = 0; y < 420; y += this.spacing) {
+            this.circles.push({x, y, red: 0, green: 0, blue: 0});
+          }
+        }
+      },
+      draw: function () {
+        p5.push();
+        drawFrostedGrid(p5, this.anchors, this.circles, this.spacing);
         p5.pop();
       },
     };
