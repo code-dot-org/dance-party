@@ -78,8 +78,8 @@ async function testBackground(t, name, effect) {
   ['kaleidoscope', 'vintage'],
   ['kaleidoscope', 'electronic'],
   ['smile_face'],
-  // 'smiling_poop', need to debug
-  // 'hearts_red', need to debug
+  ['smiling_poop'],
+  ['hearts_red'],
   ['floating_rainbows'],
   ['bubbles'],
   ['stars'],
