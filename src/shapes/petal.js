@@ -1,3 +1,5 @@
+// This shape is slightly modified from the Poetry background effect 'blooming'
+// https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L245
 module.exports = function drawBloom(p5, length, theta, petalWidth) {
   p5.beginShape();
   const leftAnchor = {

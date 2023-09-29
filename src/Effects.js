@@ -12,7 +12,7 @@ const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
 const drawStar = require('./shapes/star');
-const drawStarburst = require('./shapes/starBurst');
+const drawStarburst = require('./shapes/starburst');
 const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
@@ -489,6 +489,8 @@ module.exports = class Effects {
     this.ripples = createRipplesEffect(false);
     this.ripples_random = createRipplesEffect(true);
 
+    // This effect is slightly modified from Poetry background effect 'blooming'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L245
     this.blooming_petals = {
       colorIndex: 0,
       petals: [],
@@ -505,10 +507,10 @@ module.exports = class Effects {
       init: function () {
         this.paletteLength = constants.PALETTES[getCurrentPalette()].length;
         this.petals = [];
-        // initialize with enough petals to fill the screen - this is mostly
+        // Initialize with enough petals to fill the screen - this is mostly
         // useful so that preview shows what the background actually looks like.
-        // increment from 3 down to 0 so that petals are layered correctly with
-        // bigger petals behind smaller peals.
+        // Increment from 3 down to 0 so that petals are layered correctly with
+        // bigger petals behind smaller petals.
         for (let layer = 3; layer >= 0; layer--) {
           const color = colorFromPalette(this.colorIndex);
           this.addPetalLayer(hexToRgb(color), layer);
@@ -540,6 +542,8 @@ module.exports = class Effects {
       },
     };
 
+    // This effect is slightly modified from Poetry background effect 'clouds'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L368
     this.clouds = {
       tileSize: 20,
       tiles: [],
@@ -582,6 +586,8 @@ module.exports = class Effects {
       },
     };
 
+    // This effect is slightly modified from Poetry background effect 'fadeColors'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L181
     this.frosted_grid = {
       anchors: [],
       circles: [],
@@ -612,6 +618,8 @@ module.exports = class Effects {
       },
     };
 
+    // This background effect was inspired by the Poetry foreground effect 'starburst'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/foregroundEffects.js#L235
     this.starburst = {
       stars: [],
       init: function () {
