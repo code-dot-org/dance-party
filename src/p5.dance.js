@@ -1137,7 +1137,11 @@ module.exports = class DanceParty {
       if (
         params.dancers &&
         params.dancers.type &&
+        this.world.SPRITE_NAMES.indexOf(params.dancers.type.toUpperCase()) >=
+          0 &&
         params.dancers.count &&
+        params.dancers.count >= 0 &&
+        params.dancers.count <= 40 &&
         params.dancers.layout
       ) {
         this.makeNewDanceSpriteGroup(
