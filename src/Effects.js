@@ -18,7 +18,7 @@ const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
 const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
-const {hexToRgb, getP5Color, randomInt} = require('./utils');
+const {hexToRgb, getP5Color} = require('./utils');
 
 module.exports = class Effects {
   constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
@@ -598,10 +598,10 @@ module.exports = class Effects {
         const paletteColors = constants.PALETTES[getCurrentPalette()];
         paletteColors.forEach(color => {
           this.anchors.push({
-            x: randomInt(0, 400),
-            y: randomInt(0, 400),
-            velocityX: randomInt(-3, 3),
-            velocityY: randomInt(-3, 3),
+            x: randomNumber(0, 400),
+            y: randomNumber(0, 400),
+            velocityX: randomNumber(-3, 3),
+            velocityY: randomNumber(-3, 3),
             ...hexToRgb(color),
           });
         });
@@ -618,7 +618,7 @@ module.exports = class Effects {
       },
     };
 
-    // This background effect was inspired by the Poetry foreground effect 'starburst'
+    // This background effect is inspired by the Poetry foreground effect 'starburst'
     // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/foregroundEffects.js#L235
     this.starburst = {
       stars: [],
@@ -628,14 +628,14 @@ module.exports = class Effects {
         p5.background(lerpColorFromPalette(0));
         // A call to drawStarburst with isPreview=true will ensure background effect
         // is displayed in preview.
-        drawStarburst(p5, true, this.stars, randomInt, randomColorFromPalette, drawStar);
+        drawStarburst(p5, true, this.stars, randomNumber, randomColorFromPalette, drawStar);
         p5.pop();
       },
       draw: function () {
         p5.push();
         p5.noStroke();
         p5.background(lerpColorFromPalette(0));
-        drawStarburst(p5, false, this.stars, randomInt, randomColorFromPalette, drawStar);
+        drawStarburst(p5, false, this.stars, randomNumber, randomColorFromPalette, drawStar);
         p5.pop();
       },
     };
