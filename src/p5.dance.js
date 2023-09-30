@@ -184,6 +184,11 @@ module.exports = class DanceParty {
   }
 
   async loadCostumeAnimations(costume, costumeData) {
+    if (!this.animations[costume]) {
+      // Invalid costume, nothing to do:
+      return;
+    }
+
     if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
       // Already loaded, nothing to do:
       return;
@@ -966,7 +971,7 @@ module.exports = class DanceParty {
         sprite.rotation = 0;
       });
     } else {
-      throw new Error('Unexpected format: ' + format);
+      console.log('Unexpected layout format: ' + format);
     }
 
     // We want sprites that are lower in the canvas to show up on top of those
