@@ -78,8 +78,8 @@ async function testBackground(t, name, effect) {
   ['kaleidoscope', 'vintage'],
   ['kaleidoscope', 'electronic'],
   ['smile_face'],
-  // 'smiling_poop', need to debug
-  // 'hearts_red', need to debug
+  ['smiling_poop'],
+  ['hearts_red'],
   ['floating_rainbows'],
   ['bubbles'],
   ['stars'],
@@ -91,7 +91,10 @@ async function testBackground(t, name, effect) {
   ['ripples_random'],
   ['squiggles'],
   ['growing_stars'],
-  ['paint_drip']
+  ['paint_drip'],
+  ['blooming_petals', 'vintage'],
+  ['clouds', 'neon'],
+  ['frosted_grid', 'vintage'],
 ].forEach(effect => {
   let name = effect[0] + (effect[1] ? ("_" + effect[1]) : "");
   test(`background - ${name}`, async t => {

@@ -1,7 +1,9 @@
 const constants = require('./constants');
+const drawFrostedGrid = require('./shapes/frostedGrid');
 const drawHeart = require('./shapes/heart');
 const drawLovestruck = require('./shapes/lovestruck');
 const drawMusicNote = require('./shapes/musicNote');
+const drawPetal = require('./shapes/petal');
 const drawPineapple = require('./shapes/pineapple');
 const drawPizza = require('./shapes/pizza');
 const drawPoop = require('./shapes/poop');
@@ -10,11 +12,13 @@ const drawSmiley = require('./shapes/smiley');
 const drawSparkle = require('./shapes/sparkle');
 const drawSpiral = require('./shapes/spiral');
 const drawStar = require('./shapes/star');
+const drawStarburst = require('./shapes/starburst');
 const drawStarstruck = require('./shapes/starstruck');
 const drawSwirl = require('./shapes/swirl');
 const drawTaco = require('./shapes/taco');
 const drawTickled = require('./shapes/tickled');
 const drawWink = require('./shapes/wink');
+const {hexToRgb, getP5Color} = require('./utils');
 
 module.exports = class Effects {
   constructor(p5, alpha, extraImages, blend, currentPalette = 'default') {
@@ -484,6 +488,157 @@ module.exports = class Effects {
 
     this.ripples = createRipplesEffect(false);
     this.ripples_random = createRipplesEffect(true);
+
+    // This effect is slightly modified from Poetry background effect 'blooming'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L245
+    this.blooming_petals = {
+      colorIndex: 0,
+      petals: [],
+      paletteLength: 0,
+      addPetalLayer: function (color, layer) {
+        for (let i = 0; i < 8; i++) {
+          this.petals.push({
+            theta: 45 * i,
+            length: 10 + 140 * layer,
+            ...color,
+          });
+        }
+      },
+      init: function () {
+        this.paletteLength = constants.PALETTES[getCurrentPalette()].length;
+        this.petals = [];
+        // Initialize with enough petals to fill the screen - this is mostly
+        // useful so that preview shows what the background actually looks like.
+        // Increment from 3 down to 0 so that petals are layered correctly with
+        // bigger petals behind smaller petals.
+        for (let layer = 3; layer >= 0; layer--) {
+          const color = colorFromPalette(this.colorIndex);
+          this.addPetalLayer(hexToRgb(color), layer);
+          this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
+        }
+      },
+      draw: function () {
+        p5.push();
+        p5.strokeWeight(2);
+        if (p5.World.frameCount % 70 === 0) {
+          const color = colorFromPalette(this.colorIndex);
+          this.addPetalLayer(hexToRgb(color), 0 /* layer */);
+          this.colorIndex = (this.colorIndex + 1) % this.paletteLength;
+        }
+        const petalWidth = 35;
+        this.petals.forEach(petal => {
+          // Multiply each component by 0.8 to have the stroke color be
+          // slightly darker than the fill color.
+          p5.stroke(
+            p5.color(petal.R * 0.8, petal.G * 0.8, petal.B * 0.8)
+          );
+          p5.fill(p5.color(petal.R, petal.G, petal.B));
+          drawPetal(p5, petal.length, petal.theta, petalWidth);
+          petal.theta = (petal.theta + 0.5) % 360;
+          petal.length += 2;
+        });
+        this.petals = this.petals.filter(petal => petal.length < 700);
+        p5.pop();
+      },
+    };
+
+    // This effect is slightly modified from Poetry background effect 'clouds'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L368
+    this.clouds = {
+      tileSize: 20,
+      tiles: [],
+      init: function () {
+        const noiseScale = 0.05;
+        this.tiles = [];
+        let xnoise = 0.01;
+        let ynoise = 0.01;
+        for (let x = 0; x < 400; x += this.tileSize) {
+          xnoise = 0.01;
+          for (let y = 0; y < 400; y += this.tileSize) {
+            this.tiles.push({
+              x,
+              y,
+              xnoise,
+              ynoise,
+            });
+            xnoise += noiseScale;
+          }
+          ynoise += noiseScale;
+        }
+      },
+      draw: function () {
+        const speed = 0.015;
+        let backgroundAmount = 0;
+        p5.push();
+        p5.noStroke();
+        backgroundAmount += speed;
+        p5.background(
+          lerpColorFromPalette(backgroundAmount)
+        );
+        this.tiles.forEach(tile => {
+          tile.alpha = p5.noise(tile.xnoise, tile.ynoise) * 255;
+          tile.xnoise += speed;
+          tile.ynoise += speed;
+          p5.fill(getP5Color(p5, '#ffffff', tile.alpha));
+          p5.rect(tile.x, tile.y, this.tileSize, this.tileSize);
+        });
+        p5.pop();
+      },
+    };
+
+    // This effect is slightly modified from Poetry background effect 'fadeColors'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L181
+    this.frosted_grid = {
+      anchors: [],
+      circles: [],
+      spacing: 20,
+      init: function () {
+        this.anchors = [];
+        this.circles = [];
+        const paletteColors = constants.PALETTES[getCurrentPalette()];
+        paletteColors.forEach(color => {
+          this.anchors.push({
+            x: randomNumber(0, 400),
+            y: randomNumber(0, 400),
+            velocityX: randomNumber(-3, 3),
+            velocityY: randomNumber(-3, 3),
+            ...hexToRgb(color),
+          });
+        });
+        for (let x = 0; x < 420; x += this.spacing) {
+          for (let y = 0; y < 420; y += this.spacing) {
+            this.circles.push({x, y, red: 0, green: 0, blue: 0});
+          }
+        }
+      },
+      draw: function () {
+        p5.push();
+        drawFrostedGrid(p5, this.anchors, this.circles, this.spacing);
+        p5.pop();
+      },
+    };
+
+    // This background effect is inspired by the Poetry foreground effect 'starburst'
+    // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/foregroundEffects.js#L235
+    this.starburst = {
+      stars: [],
+      init: function () {
+        this.stars = [];
+        p5.push();
+        p5.background(lerpColorFromPalette(0));
+        // A call to drawStarburst with isPreview=true will ensure background effect
+        // is displayed in preview.
+        drawStarburst(p5, true, this.stars, randomNumber, randomColorFromPalette, drawStar);
+        p5.pop();
+      },
+      draw: function () {
+        p5.push();
+        p5.noStroke();
+        p5.background(lerpColorFromPalette(0));
+        drawStarburst(p5, false, this.stars, randomNumber, randomColorFromPalette, drawStar);
+        p5.pop();
+      },
+    };
 
     this.diamonds = {
       hue: 0,
