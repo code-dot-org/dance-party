@@ -184,6 +184,12 @@ module.exports = class DanceParty {
   }
 
   async loadCostumeAnimations(costume, costumeData) {
+    if (!this.animations[costume]) {
+      console.log('Unexpected costume: ' + costume);
+      // Invalid costume, nothing to do:
+      return;
+    }
+
     if (this.animations[costume].length === this.world.MOVE_NAMES.length) {
       // Already loaded, nothing to do:
       return;
@@ -966,7 +972,7 @@ module.exports = class DanceParty {
         sprite.rotation = 0;
       });
     } else {
-      throw new Error('Unexpected format: ' + format);
+      console.log('Unexpected layout format: ' + format);
     }
 
     // We want sprites that are lower in the canvas to show up on top of those
@@ -1132,6 +1138,23 @@ module.exports = class DanceParty {
 
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
+      }
+
+      if (
+        params.dancers &&
+        params.dancers.type &&
+        this.world.SPRITE_NAMES.indexOf(params.dancers.type.toUpperCase()) >=
+          0 &&
+        params.dancers.count &&
+        params.dancers.count >= 0 &&
+        params.dancers.count <= 40 &&
+        params.dancers.layout
+      ) {
+        this.makeNewDanceSpriteGroup(
+          params.dancers.count,
+          params.dancers.type.toUpperCase(),
+          params.dancers.layout
+        );
       }
     }
   }
