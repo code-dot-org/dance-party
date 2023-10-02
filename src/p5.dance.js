@@ -185,6 +185,7 @@ module.exports = class DanceParty {
 
   async loadCostumeAnimations(costume, costumeData) {
     if (!this.animations[costume]) {
+      console.log('Unexpected costume: ' + costume);
       // Invalid costume, nothing to do:
       return;
     }
