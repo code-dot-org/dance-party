@@ -307,6 +307,10 @@ module.exports = class DanceParty {
     this.world.keysPressed = new Set();
   }
 
+  setForegroundEffectsInPreviewMode(inPreviewMode) {
+    this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
+  }
+
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
     this.animations[sprite][moveIndex] = {
       spritesheet: spritesheet,
@@ -316,9 +320,11 @@ module.exports = class DanceParty {
   }
 
   setup() {
+    console.log('setup run');
     this.bgEffects_ = new Effects(this.p5_, 1, this.extraImages);
     this.fgEffects_ = new Effects(this.p5_, 0.8, this.extraImages);
 
+    // what is this
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
   }

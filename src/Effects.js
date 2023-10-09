@@ -26,6 +26,8 @@ module.exports = class Effects {
     this.extraImages = extraImages;
     this.blend = blend || p5.BLEND;
     this.currentPalette = currentPalette;
+    this.inPreviewMode = false;
+    const getInPreviewMode = this.getInPreviewMode.bind(this);
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -860,7 +862,7 @@ module.exports = class Effects {
           const pineapple = this.pineappleList[i];
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(pineapple.life / 20 / (7 * p5.pixelDensity()));
+          p5.scale(this.inPreviewMode() ? 2 / (7 * p5.pixelDensity()) : pineapple.life / 20 / (7 * p5.pixelDensity()));
           p5.drawingContext.drawImage(this.image.elt, -35, -65);
           pineapple.life--;
           if (pineapple.life < 0) {
@@ -871,6 +873,7 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      inPreviewMode: getInPreviewMode,
     };
 
     this.splatter = {
@@ -1310,7 +1313,7 @@ module.exports = class Effects {
           p5.push();
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
-          p5.scale(poop.life / 20);
+          p5.scale(this.inPreviewMode() ? 2 : poop.life / 20);
           drawPoop(p5._renderer.drawingContext);
           poop.life--;
           if (poop.life < 0) {
@@ -1321,6 +1324,7 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      inPreviewMode: getInPreviewMode,
     };
 
     this.hearts_red = {
@@ -1657,6 +1661,10 @@ module.exports = class Effects {
       },
     };
 
+    // doesn't quite reset between runs
+    // state of preview becomes starting point for next run
+    // i think this is true for some backgrounds (eg, rain)
+    // as well, though.
     this.exploding_stars = {
       stars: [],
       resetStars: function () {
@@ -1665,8 +1673,8 @@ module.exports = class Effects {
           let velocity = p5.random(4, 12);
           this.stars.push({
             color: randomColor(255, 255, 100),
-            x: 200,
-            y: 200,
+            x: this.inPreviewMode() ? p5.random(0, 400) : 200,
+            y: this.inPreviewMode() ? p5.random(0, 400) : 200,
             dx: velocity * p5.cos(theta),
             dy: velocity * p5.sin(theta),
           });
@@ -1688,6 +1696,7 @@ module.exports = class Effects {
           star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
         );
       },
+      inPreviewMode: getInPreviewMode
     };
 
     this.galaxy = {
@@ -2133,6 +2142,14 @@ module.exports = class Effects {
         }
       },
     };
+  }
+
+  setInPreviewMode(inPreviewMode) {
+    this.inPreviewMode = inPreviewMode;
+  }
+
+  getInPreviewMode() {
+    return this.inPreviewMode;
   }
 
   randomForegroundEffect() {
