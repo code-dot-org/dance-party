@@ -81,7 +81,7 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
-    this.world.aiBlockSuccessIndex = 0; // This helps keeps track of whether the AI block successfully executed or not.
+    this.world.aiBlockSuccess = false; // This helps keeps track of whether the AI block successfully executed or not.
 
     this.world.keysPressed = new Set();
 
@@ -188,28 +188,21 @@ module.exports = class DanceParty {
     this.userCode = userCode;
   }
 
-  // This function checks if the user's code contains an ai() block in the setup block.
-  isAiBlockInSetup() {
-    let userCode = this.userCode;
-    const setupString = 'whensetup(function () {';
-    let whenSetupBeginIndex = userCode.indexOf(setupString);
-    if (whenSetupBeginIndex === -1) {
-      return false;
-    }
-    userCode = userCode.substring(whenSetupBeginIndex + setupString.length + 1);
-    let codeInSetupBlock = '';
-    let newOpenBrace = false;
-    while (userCode.substring(0,1) != '}' || newOpenBrace) {
-      const nextChar = userCode.substring(0,1);
-      if (nextChar === '{') {
-        newOpenBrace = true;
-      } else if (nextChar === '}' && newOpenBrace) {
-        newOpenBrace = false;
-      }
-      codeInSetupBlock += nextChar;
-      userCode = userCode.substring(1);
-    }
-    return codeInSetupBlock.indexOf('ai(') !== -1;
+  getUserBlocks(userBlocks) {
+    this.userBlocks = [];
+    userBlocks.forEach(block => {
+      this.userBlocks.push(block.type);
+    });
+  }
+
+  // This function checks if the user's code contains an ai() block.
+  hasAiBlock() {
+    return this.userBlocks.includes('Dancelab_ai');
+  }
+
+  // This function checks if AI block is connected to the user program.
+  isAiBlockConnected() {
+    return this.userBlocks.includes('Dancelab_ai') && this.userCode.indexOf('ai') != -1;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
@@ -319,8 +312,9 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
-    this.world.aiBlockSuccessIndex = 0;
+    this.world.aiBlockSuccess = false;
     this.world.aiBlockNoParams = false;
+    this.userBlocks = [];
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
@@ -1158,6 +1152,7 @@ module.exports = class DanceParty {
   // Called when executing the AI block.
   ai(params) {
     console.log('handle AI:', params);
+    let aiBlockSuccessCount = 0;
 
     if (params) {
       if (params.backgroundEffect && params.backgroundColor) {
@@ -1165,12 +1160,15 @@ module.exports = class DanceParty {
           params.backgroundEffect,
           params.backgroundColor
         );
-        this.world.aiBlockSuccessIndex++;
+        aiBlockSuccessCount++;
       }
 
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
-        this.world.aiBlockSuccessIndex++;
+        aiBlockSuccessCount++;
+      }
+      if (aiBlockSuccessCount == 2) {
+        this.world.aiBlockSuccess = true;
       }
     } else if (params === undefined) {
       this.world.aiBlockNoParams = true;
