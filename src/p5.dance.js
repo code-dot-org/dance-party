@@ -81,6 +81,7 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
+    this.world.aiBlockSuccessIndex = 0;
 
     this.world.keysPressed = new Set();
 
@@ -181,6 +182,34 @@ module.exports = class DanceParty {
     promises.push(this.loadExtraImages());
     await Promise.all(promises);
     this.allSpritesLoaded = true;
+  }
+
+  getUserCode(userCode) {
+    this.userCode = userCode;
+  }
+
+  // This fun
+  isAiBlockInSetup() {
+    let userCode = this.userCode;
+    const setupString = 'whensetup(function () {';
+    let whenSetupBeginIndex = userCode.indexOf(setupString);
+    if (whenSetupBeginIndex === -1) {
+      return false;
+    }
+    userCode = userCode.substring(whenSetupBeginIndex + setupString.length + 1);
+    let codeInSetupBlock = '';
+    let newOpenBrace = false;
+    while (userCode.substring(0,1) != '}' || newOpenBrace) {
+      const nextChar = userCode.substring(0,1);
+      if (nextChar === '{') {
+        newOpenBrace = true;
+      } else if (nextChar === '}' && newOpenBrace) {
+        newOpenBrace = false;
+      }
+      codeInSetupBlock += nextChar;
+      userCode = userCode.substring(1);
+    }
+    return codeInSetupBlock.indexOf('ai(') !== -1;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
@@ -290,6 +319,8 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
+    this.world.aiBlockSuccessIndex = 0;
+    this.world.aiBlockNoParams = false;
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
@@ -1134,28 +1165,15 @@ module.exports = class DanceParty {
           params.backgroundEffect,
           params.backgroundColor
         );
+        this.world.aiBlockSuccessIndex++;
       }
 
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
+        this.world.aiBlockSuccessIndex++;
       }
-
-      if (
-        params.dancers &&
-        params.dancers.type &&
-        this.world.SPRITE_NAMES.indexOf(params.dancers.type.toUpperCase()) >=
-          0 &&
-        params.dancers.count &&
-        params.dancers.count >= 0 &&
-        params.dancers.count <= 40 &&
-        params.dancers.layout
-      ) {
-        this.makeNewDanceSpriteGroup(
-          params.dancers.count,
-          params.dancers.type.toUpperCase(),
-          params.dancers.layout
-        );
-      }
+    } else if (params === undefined) {
+      this.world.aiBlockNoParams = true;
     }
   }
 
