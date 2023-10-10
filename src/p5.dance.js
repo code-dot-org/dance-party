@@ -195,14 +195,15 @@ module.exports = class DanceParty {
     });
   }
 
-  // This function checks if the user's code contains an ai() block.
+  // This function checks if there is an AI block anywhere in workspace.
+  // Note that the AI block could be disconnected and technically not part of the user code.
   hasAiBlock() {
     return this.userBlocks.includes('Dancelab_ai');
   }
 
-  // This function checks if AI block is connected to the user program.
+  // This function checks if AI block is connected or part of the user program.
   isAiBlockConnected() {
-    return this.userBlocks.includes('Dancelab_ai') && this.userCode.indexOf('ai') != -1;
+    return this.userCode.indexOf('ai') != -1;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
