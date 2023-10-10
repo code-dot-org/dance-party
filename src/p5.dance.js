@@ -300,15 +300,16 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
+    let foregroundEffect = this.getForegroundEffect();
+    if (foregroundEffect.reset) {
+      foregroundEffect.reset();
+    }
+
     this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
     this.world.validationState = {};
     this.world.keysPressed = new Set();
-  }
-
-  setForegroundEffectsInPreviewMode(inPreviewMode) {
-    this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
@@ -334,13 +335,14 @@ module.exports = class DanceParty {
   }
 
   getForegroundEffect() {
-    if (
-      this.world.fg_effect &&
-      this.world.fg_effect !== null &&
-      this.world.fg_effect !== 'none'
-    ) {
-      return this.fgEffects_[this.world.fg_effect];
-    }
+    return this.fgEffects_[this.world.fg_effect || 'none'];
+    // if (
+    //   this.world.fg_effect &&
+    //   this.world.fg_effect !== null &&
+    //   this.world.fg_effect !== 'none'
+    // ) {
+    //   return this.fgEffects_[this.world.fg_effect];
+    // }
   }
 
   play(songData, callback) {

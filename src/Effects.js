@@ -27,7 +27,6 @@ module.exports = class Effects {
     this.blend = blend || p5.BLEND;
     this.currentPalette = currentPalette;
     this.inPreviewMode = false;
-    const getInPreviewMode = this.getInPreviewMode.bind(this);
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -862,7 +861,7 @@ module.exports = class Effects {
           const pineapple = this.pineappleList[i];
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(this.inPreviewMode() ? 2 / (7 * p5.pixelDensity()) : pineapple.life / 20 / (7 * p5.pixelDensity()));
+          p5.scale(pineapple.life / 20 / (7 * p5.pixelDensity()));
           p5.drawingContext.drawImage(this.image.elt, -35, -65);
           pineapple.life--;
           if (pineapple.life < 0) {
@@ -873,7 +872,9 @@ module.exports = class Effects {
           p5.pop();
         }
       },
-      inPreviewMode: getInPreviewMode,
+      reset: function () {
+        this.pineappleList = [];
+      },
     };
 
     this.splatter = {
@@ -1313,7 +1314,7 @@ module.exports = class Effects {
           p5.push();
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
-          p5.scale(this.inPreviewMode() ? 2 : poop.life / 20);
+          p5.scale(poop.life / 20);
           drawPoop(p5._renderer.drawingContext);
           poop.life--;
           if (poop.life < 0) {
@@ -1324,7 +1325,9 @@ module.exports = class Effects {
           p5.pop();
         }
       },
-      inPreviewMode: getInPreviewMode,
+      reset: function () {
+        this.poopList = [];
+      },
     };
 
     this.hearts_red = {
@@ -1359,6 +1362,9 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      reset: function () {
+        this.heartList = [];
+      }
     };
 
     this.hearts_colorful = {
@@ -1393,6 +1399,9 @@ module.exports = class Effects {
           }
           p5.pop();
         }
+      },
+      reset: function () {
+        this.heartList = [];
       },
     };
 
@@ -1628,6 +1637,9 @@ module.exports = class Effects {
           return bubble.y > 0;
         });
       },
+      reset: function () {
+        this.bubble = [];
+      },
     };
 
     this.stars = {
@@ -1667,14 +1679,15 @@ module.exports = class Effects {
     // as well, though.
     this.exploding_stars = {
       stars: [],
-      resetStars: function () {
+      reset: function () {
+        this.stars = [];
         for (let i = 0; i < 100; i++) {
           let theta = p5.random(0, 360);
           let velocity = p5.random(4, 12);
           this.stars.push({
             color: randomColor(255, 255, 100),
-            x: this.inPreviewMode() ? p5.random(0, 400) : 200,
-            y: this.inPreviewMode() ? p5.random(0, 400) : 200,
+            x: 200,
+            y: 200,
             dx: velocity * p5.cos(theta),
             dy: velocity * p5.sin(theta),
           });
@@ -1684,7 +1697,7 @@ module.exports = class Effects {
         p5.angleMode(p5.DEGREES);
         p5.noStroke();
         if (this.stars.length === 0) {
-          this.resetStars();
+          this.reset();
         }
         this.stars.forEach(star => {
           p5.fill(star.color);
@@ -1696,7 +1709,6 @@ module.exports = class Effects {
           star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
         );
       },
-      inPreviewMode: getInPreviewMode
     };
 
     this.galaxy = {
@@ -1848,6 +1860,9 @@ module.exports = class Effects {
           return confetti.y < 425;
         });
       },
+      reset: function () {
+        this.confetti = [];
+      },
     };
 
     this.growing_stars = {
@@ -1883,6 +1898,7 @@ module.exports = class Effects {
       },
     };
 
+    // notes show up late, not previewing by resetting notes to empty array
     this.music_notes = {
       notes: [],
       init: function () {
@@ -1934,6 +1950,12 @@ module.exports = class Effects {
       drip_diameter: 20,
       drip_speed: 7,
 
+      // doesn't do much
+      // not sure if dripping_up reset necessary
+      reset: function () {
+        this.init();
+        this.dripping_up = false;
+      },
       init: function () {
         // Reset values
         this.current_drip = 0;
@@ -2082,6 +2104,7 @@ module.exports = class Effects {
       },
     };
 
+    // preview not working
     this.emojis = {
       emojiList: [],
       emojiTypes: [],
@@ -2141,15 +2164,10 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      reset: function () {
+        this.emojiList = [];
+      }
     };
-  }
-
-  setInPreviewMode(inPreviewMode) {
-    this.inPreviewMode = inPreviewMode;
-  }
-
-  getInPreviewMode() {
-    return this.inPreviewMode;
   }
 
   randomForegroundEffect() {
