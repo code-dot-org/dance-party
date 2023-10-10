@@ -188,7 +188,7 @@ module.exports = class DanceParty {
     this.userCode = userCode;
   }
 
-  // This fun
+  // This function checks if the user's code contains an ai() block in the setup block.
   isAiBlockInSetup() {
     let userCode = this.userCode;
     const setupString = 'whensetup(function () {';
