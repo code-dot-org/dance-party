@@ -81,7 +81,7 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
-    this.world.aiBlockSuccessIndex = 0;
+    this.world.aiBlockSuccessIndex = 0; // This helps keeps track of whether the AI block successfully executed or not.
 
     this.world.keysPressed = new Set();
 
