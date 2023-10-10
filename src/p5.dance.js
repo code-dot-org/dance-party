@@ -315,7 +315,6 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.world.aiBlockSuccess = false;
     this.world.aiBlockNoParams = false;
-    this.userBlocks = [];
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
