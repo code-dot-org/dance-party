@@ -189,26 +189,26 @@ module.exports = class DanceParty {
   }
 
   getUserBlocks() {
-    return this.userBlocks.map(b => b.type);
+    return this.userBlocksWithNextBlocks.map(b => b.type);
   }
 
   getUserBlocksWithNextBlock() {
-    return this.userBlocks;
+    return this.userBlocksWithNextBlocks;
   }
 
   setUserBlocks(userBlocks) {
-    this.userBlocks = [];
+    this.userBlocksWithNextBlocks = [];
     userBlocks.forEach(b => {
       var block = {type: b.type};
       block.nextBlock = b.childBlocks_[0] ? b.childBlocks_[0].type : '';
-      this.userBlocks.push(block);
+      this.userBlocksWithNextBlocks.push(block);
     });
   }
 
   // This function checks if there is an AI block anywhere in workspace.
   // Note that the AI block could be disconnected and technically not part of the user code.
   hasAiBlock() {
-    return this.userBlocks.includes('Dancelab_ai');
+    return this.getUserBlocks().includes('Dancelab_ai');
   }
 
   // This function checks if AI block is connected or part of the user program
