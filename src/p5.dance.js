@@ -362,6 +362,10 @@ module.exports = class DanceParty {
     }
   }
 
+  getCurrentPalette() {
+    return this.bgEffects_.currentPalette || 'default';
+  }
+
   play(songData, callback) {
     if (!this.allSpritesLoaded) {
       throw new Error(
