@@ -323,8 +323,15 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
-    this.world.aiBlockSuccess = false;
-    this.world.aiBlockNoParams = false;
+
+    // If there are multiple AI blocks in a workspace, this value is set to `false`
+    // if any of the AI blocks do not execute successfully.
+    this.world.aiBlockSuccess = true;
+
+    // If there are multiple AI blocks in a workspace, this value is set to `false`
+    // if any of them have undefined parameters.
+    this.world.aiBlockHasParams = true;
+
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
@@ -1181,11 +1188,11 @@ module.exports = class DanceParty {
         this.setForegroundEffect(params.foregroundEffect);
         aiBlockSuccessCount++;
       }
-      if (aiBlockSuccessCount == 2) {
-        this.world.aiBlockSuccess = true;
+      if (aiBlockSuccessCount != 2) {
+        this.world.aiBlockSuccess = false;
       }
     } else if (params === undefined) {
-      this.world.aiBlockNoParams = true;
+      this.world.aiBlockHasParams = false;
     }
   }
 
