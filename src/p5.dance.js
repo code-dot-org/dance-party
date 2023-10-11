@@ -81,7 +81,6 @@ module.exports = class DanceParty {
 
     this.world.bg_effect = null;
     this.world.fg_effect = null;
-    this.world.aiBlockSuccess = false; // This helps keeps track of whether the AI block successfully executed or not.
 
     this.world.keysPressed = new Set();
 
@@ -189,19 +188,19 @@ module.exports = class DanceParty {
   }
 
   getUserBlocks() {
-    return this.userBlocksWithNextBlocks.map(b => b.type);
+    return this.userBlocksWithNextBlock.map(b => b.type);
   }
 
   getUserBlocksWithNextBlock() {
-    return this.userBlocksWithNextBlocks;
+    return this.userBlocksWithNextBlock;
   }
 
   setUserBlocks(userBlocks) {
-    this.userBlocksWithNextBlocks = [];
+    this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
       var block = {type: b.type};
       block.nextBlock = b.childBlocks_[0] ? b.childBlocks_[0].type : '';
-      this.userBlocksWithNextBlocks.push(block);
+      this.userBlocksWithNextBlock.push(block);
     });
   }
 
