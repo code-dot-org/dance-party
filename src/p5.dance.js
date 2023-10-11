@@ -184,14 +184,24 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  getUserCode(userCode) {
+  setUserCode(userCode) {
     this.userCode = userCode;
   }
 
-  getUserBlocks(userBlocks) {
+  getUserBlocks() {
+    return this.userBlocks.map(b => b.type);
+  }
+
+  getUserBlocksWithNextBlock() {
+    return this.userBlocks;
+  }
+
+  setUserBlocks(userBlocks) {
     this.userBlocks = [];
-    userBlocks.forEach(block => {
-      this.userBlocks.push(block.type);
+    userBlocks.forEach(b => {
+      var block = {type: b.type};
+      block.nextBlock = b.childBlocks_[0] ? b.childBlocks_[0].type : '';
+      this.userBlocks.push(block);
     });
   }
 
@@ -201,9 +211,10 @@ module.exports = class DanceParty {
     return this.userBlocks.includes('Dancelab_ai');
   }
 
-  // This function checks if AI block is connected or part of the user program.
+  // This function checks if AI block is connected or part of the user program
+  // and can be called after `hasAiBlock()` to ensure AI block is in workspace.
   isAiBlockConnected() {
-    return this.userCode.indexOf('ai') != -1;
+    return this.userCode.indexOf('ai(') != -1;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
