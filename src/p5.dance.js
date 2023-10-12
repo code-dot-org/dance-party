@@ -228,7 +228,7 @@ module.exports = class DanceParty {
       if (topBlock.nextBlockType === 'Dancelab_ai') {
         return true;
       }
-      topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlock.nextBlockType && b.id == topBlock.nextBlockId);
+      topBlock = this.userBlocksWithNextBlock.find(b => b.id == topBlock.nextBlockId);
     }
     return false;
   }
