@@ -214,8 +214,7 @@ module.exports = class DanceParty {
   // For example, if the given block is a 'When up pressed' event block, this function checks
   // if the AI block is included within the event block.
   isAiBlockChildOfTopBlock(topBlockType) {
-    const topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
-    let block = topBlock;
+    let block = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
     while (block.nextBlockType) {
       if (block.nextBlockType === 'Dancelab_ai') {
         return true;
@@ -333,12 +332,12 @@ module.exports = class DanceParty {
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
 
-    // If there are multiple AI blocks in a workspace, this value is set to `false`
-    // if any of the AI blocks do not execute successfully.
-    this.world.aiBlockSuccess = true;
+    // This value is set to `true` if any of the AI blocks in a user program
+    // do not execute successfully.
+    this.world.aiBlockFailure = false;
 
-    // If there are multiple AI blocks in a workspace, this value is set to `false`
-    // if any of them have undefined parameters.
+    // This value is set to `false` if any of the AI blocks in a user program
+    // are called without defined parameters.
     this.world.aiBlockHasParams = true;
 
     while (this.p5_.allSprites.length > 0) {
@@ -1198,7 +1197,7 @@ module.exports = class DanceParty {
         aiBlockSuccessCount++;
       }
       if (aiBlockSuccessCount != 2) {
-        this.world.aiBlockSuccess = false;
+        this.world.aiBlockFailure = true;
       }
     } else if (params === undefined) {
       this.world.aiBlockHasParams = false;
