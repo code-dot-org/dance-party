@@ -210,8 +210,8 @@ module.exports = class DanceParty {
     return this.getUserBlocks().includes('Dancelab_ai');
   }
 
-  // This function checks if AI block is connected or part of the user program
-  // and can be called after `hasAiBlock()` to ensure AI block is in workspace.
+  // This function checks if AI block is 'connected', i.e., the AI block is part of the
+  // user program.
   isAiBlockConnected() {
     return this.userCode.indexOf('ai(') != -1;
   }
