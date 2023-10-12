@@ -183,10 +183,6 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  setUserCode(userCode) {
-    this.userCode = userCode;
-  }
-
   setUserBlocks(userBlocks) {
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
@@ -211,12 +207,6 @@ module.exports = class DanceParty {
   // Note that the AI block could be disconnected and technically not part of the user code.
   hasAiBlock() {
     return this.getUserBlocks().includes('Dancelab_ai');
-  }
-
-  // This function checks if AI block is 'connected', i.e., the AI block is part of the
-  // user program.
-  isAiBlockConnected() {
-    return this.userCode.indexOf('ai(') != -1;
   }
 
   // This function checks if the AI block is one of the children blocks of the given 'top' block.
