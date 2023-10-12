@@ -183,7 +183,8 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  setUserBlocks(userBlocks) {
+  // block shape: {type: string, id: string, nextBlockType: string, nextBlockId: string}
+  setUserBlocksWithNextBlock(userBlocks) {
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
       var block = {type: b.type, id: b.id};
@@ -195,7 +196,7 @@ module.exports = class DanceParty {
     });
   }
 
-  getUserBlocks() {
+  getUserBlockTypes() {
     return this.userBlocksWithNextBlock.map(b => b.type);
   }
 
@@ -206,19 +207,20 @@ module.exports = class DanceParty {
   // This function checks if there is an AI block anywhere in workspace.
   // Note that the AI block could be disconnected and technically not part of the user code.
   hasAiBlock() {
-    return this.getUserBlocks().includes('Dancelab_ai');
+    return this.getUserBlockTypes().includes('Dancelab_ai');
   }
 
   // This function checks if the AI block is one of the children blocks of the given 'top' block.
   // For example, if the given block is a 'When up pressed' event block, this function checks
   // if the AI block is included within the event block.
   isAiBlockChildOfTopBlock(topBlockType) {
-    let topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
-    while (topBlock.nextBlockType) {
-      if (topBlock.nextBlockType === 'Dancelab_ai') {
+    const topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
+    let block = topBlock;
+    while (block.nextBlockType) {
+      if (block.nextBlockType === 'Dancelab_ai') {
         return true;
       }
-      topBlock = this.userBlocksWithNextBlock.find(b => b.id == topBlock.nextBlockId);
+      block = this.userBlocksWithNextBlock.find(b => b.id == block.nextBlockId);
     }
     return false;
   }
