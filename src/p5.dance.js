@@ -216,6 +216,9 @@ module.exports = class DanceParty {
     return this.userCode.indexOf('ai(') != -1;
   }
 
+  // This function checks if the AI block is one of the children blocks of the given 'top' block.
+  // For example, if the given block is a 'When up pressed' event block, this function checks
+  // if the AI block is included within the event block.
   isAiBlockChildOfTopBlock(topBlockType) {
     let userBlocksWithNextBlock = [...this.userBlocksWithNextBlock];
     let topBlock = userBlocksWithNextBlock.find(b => b.type === topBlockType);
