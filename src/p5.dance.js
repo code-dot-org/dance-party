@@ -195,9 +195,6 @@ module.exports = class DanceParty {
       if (b.childBlocks_[0]) {
         block.nextBlockType = b.childBlocks_[0].type;
         block.nextBlockId = b.childBlocks_[0].id;
-      } else {
-        block.nextBlockType = '';
-        block.nextBlockId = '';
       }
       this.userBlocksWithNextBlock.push(block);
     });
@@ -228,15 +225,11 @@ module.exports = class DanceParty {
   // if the AI block is included within the event block.
   isAiBlockChildOfTopBlock(topBlockType) {
     let topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
-    let hasNextBlock = topBlock.nextBlock !== '';
-    while (hasNextBlock) {
-      const nextBlockType = topBlock.nextBlockType;
-      const nextBlockId = topBlock.nextBlockId;
-      if (nextBlockType === 'Dancelab_ai') {
+    while (topBlock.nextBlockType) {
+      if (topBlock.nextBlockType === 'Dancelab_ai') {
         return true;
       }
-      topBlock = this.userBlocksWithNextBlock.find(b => b.type === nextBlockType && b.id == nextBlockId);
-      hasNextBlock = topBlock.nextBlockType !== '';
+      topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlock.nextBlockType && b.id == topBlock.nextBlockId);
     }
     return false;
   }
