@@ -188,7 +188,6 @@ module.exports = class DanceParty {
   }
 
   setUserBlocks(userBlocks) {
-    console.log('userBlocks', userBlocks);
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
       var block = {type: b.type, id: b.id};
