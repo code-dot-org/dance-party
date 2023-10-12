@@ -216,6 +216,23 @@ module.exports = class DanceParty {
     return this.userCode.indexOf('ai(') != -1;
   }
 
+  isAiBlockChildOfTopBlock(topBlockType) {
+    let userBlocksWithNextBlock = [...this.userBlocksWithNextBlock];
+    let topBlock = userBlocksWithNextBlock.find(b => b.type === topBlockType);
+    let hasNextBlock = topBlock.nextBlock !== '';
+    while (hasNextBlock) {
+      const nextBlock = topBlock.nextBlock;
+      if (nextBlock === 'Dancelab_ai') {
+        return true;
+      }
+      const index = userBlocksWithNextBlock.indexOf(topBlock);
+      userBlocksWithNextBlock.splice(index, 1);
+      topBlock = userBlocksWithNextBlock.find(b => b.type === nextBlock);
+      hasNextBlock = topBlock.nextBlock !== '';
+    }
+    return false;
+  }
+
   async loadCostumeAnimations(costume, costumeData) {
     if (!this.animations[costume]) {
       console.log('Unexpected costume: ' + costume);
