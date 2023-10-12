@@ -188,10 +188,17 @@ module.exports = class DanceParty {
   }
 
   setUserBlocks(userBlocks) {
+    console.log('userBlocks', userBlocks);
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
-      var block = {type: b.type};
-      block.nextBlock = b.childBlocks_[0] ? b.childBlocks_[0].type : '';
+      var block = {type: b.type, id: b.id};
+      if (b.childBlocks_[0]) {
+        block.nextBlockType = b.childBlocks_[0].type;
+        block.nextBlockId = b.childBlocks_[0].id;
+      } else {
+        block.nextBlockType = '';
+        block.nextBlockId = '';
+      }
       this.userBlocksWithNextBlock.push(block);
     });
   }
@@ -220,18 +227,16 @@ module.exports = class DanceParty {
   // For example, if the given block is a 'When up pressed' event block, this function checks
   // if the AI block is included within the event block.
   isAiBlockChildOfTopBlock(topBlockType) {
-    let userBlocksWithNextBlock = [...this.userBlocksWithNextBlock];
-    let topBlock = userBlocksWithNextBlock.find(b => b.type === topBlockType);
+    let topBlock = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
     let hasNextBlock = topBlock.nextBlock !== '';
     while (hasNextBlock) {
-      const nextBlock = topBlock.nextBlock;
-      if (nextBlock === 'Dancelab_ai') {
+      const nextBlockType = topBlock.nextBlockType;
+      const nextBlockId = topBlock.nextBlockId;
+      if (nextBlockType === 'Dancelab_ai') {
         return true;
       }
-      const index = userBlocksWithNextBlock.indexOf(topBlock);
-      userBlocksWithNextBlock.splice(index, 1);
-      topBlock = userBlocksWithNextBlock.find(b => b.type === nextBlock);
-      hasNextBlock = topBlock.nextBlock !== '';
+      topBlock = this.userBlocksWithNextBlock.find(b => b.type === nextBlockType && b.id == nextBlockId);
+      hasNextBlock = topBlock.nextBlockType !== '';
     }
     return false;
   }
