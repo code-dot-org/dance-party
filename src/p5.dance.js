@@ -187,14 +187,6 @@ module.exports = class DanceParty {
     this.userCode = userCode;
   }
 
-  getUserBlocks() {
-    return this.userBlocksWithNextBlock.map(b => b.type);
-  }
-
-  getUserBlocksWithNextBlock() {
-    return this.userBlocksWithNextBlock;
-  }
-
   setUserBlocks(userBlocks) {
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
@@ -202,6 +194,14 @@ module.exports = class DanceParty {
       block.nextBlock = b.childBlocks_[0] ? b.childBlocks_[0].type : '';
       this.userBlocksWithNextBlock.push(block);
     });
+  }
+
+  getUserBlocks() {
+    return this.userBlocksWithNextBlock.map(b => b.type);
+  }
+
+  getUserBlocksWithNextBlock() {
+    return this.userBlocksWithNextBlock;
   }
 
   // This function checks if there is an AI block anywhere in workspace.
