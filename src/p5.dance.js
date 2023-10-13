@@ -183,7 +183,13 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  // block shape: {type: string, id: string, nextBlockType: string, nextBlockId: string}
+  // This function receives the user's blocks from the main Blockly workspace and
+  // stores the following properties for each block:
+  // {type: string, id: string, nextBlockType: string, nextBlockId: string}
+  // The next block is the block that is connected to the bottom of the given block.
+  // If there is no next block, nextBlockType and nextBlockId are assigned ''.
+  // This function is used to check if a block is connected to another given block,
+  // For example, is the AI block connected to the 'setup' block?
   setUserBlocksWithNextBlock(userBlocks) {
     this.userBlocksWithNextBlock = [];
     userBlocks.forEach(b => {
