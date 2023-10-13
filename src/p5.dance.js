@@ -332,10 +332,6 @@ module.exports = class DanceParty {
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
 
-    // This value is set to `true` if any of the AI blocks in a user program
-    // do not execute successfully.
-    this.world.aiBlockFailure = false;
-
     // This value is set to `false` if any of the AI blocks in a user program
     // are called without defined parameters.
     this.world.aiBlockHasParams = true;
@@ -1181,7 +1177,6 @@ module.exports = class DanceParty {
   // Called when executing the AI block.
   ai(params) {
     console.log('handle AI:', params);
-    let aiBlockSuccessCount = 0;
 
     if (params) {
       if (params.backgroundEffect && params.backgroundColor) {
@@ -1189,15 +1184,10 @@ module.exports = class DanceParty {
           params.backgroundEffect,
           params.backgroundColor
         );
-        aiBlockSuccessCount++;
       }
 
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
-        aiBlockSuccessCount++;
-      }
-      if (aiBlockSuccessCount != 2) {
-        this.world.aiBlockFailure = true;
       }
     } else if (params === undefined) {
       this.world.aiBlockHasParams = false;
