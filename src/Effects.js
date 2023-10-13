@@ -688,6 +688,7 @@ module.exports = class Effects {
       },
     };
 
+    // looks good in production
     this.rain = {
       drops: [],
       init: function () {
@@ -799,6 +800,8 @@ module.exports = class Effects {
       },
     };
 
+    // reset clicked with no tacos on the screen
+    // doesn't preview any tacos
     this.raining_tacos = {
       tacos: [],
       init: function () {
@@ -806,9 +809,12 @@ module.exports = class Effects {
           return;
         }
         for (let i = 0; i < 10; i++) {
+          const yMin = getInPreviewMode() ? 0 : -400;
+          const yMax = getInPreviewMode() ? 400 : 0;
+
           this.tacos.push({
             x: randomNumber(20, 380),
-            y: randomNumber(-400, 0),
+            y: randomNumber(yMin, yMax),
             rot: randomNumber(0, 359),
             speed: 3,
             size: 5,
@@ -819,7 +825,9 @@ module.exports = class Effects {
         drawTaco(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = context.centroid;
+        const centroid = getInPreviewMode() ?
+          6500 :
+          context.centroid;
         for (let i = 0; i < this.tacos.length; i++) {
           p5.push();
           const taco = this.tacos[i];
@@ -838,6 +846,9 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      reset: function () {
+        this.tacos = [];
+      }
     };
 
     this.pineapples = {
@@ -862,9 +873,15 @@ module.exports = class Effects {
         for (let i = 0; i < this.pineappleList.length; i++) {
           p5.push();
           const pineapple = this.pineappleList[i];
+
+          // added. randomNumber(10, 120) copied from life reset below
+          const scale = getInPreviewMode() ?
+            randomNumber(10, 120) / 20 / (7 * p5.pixelDensity()) :
+            pineapple.life / 20 / (7 * p5.pixelDensity());
+
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(pineapple.life / 20 / (7 * p5.pixelDensity()));
+          p5.scale(scale); // changed
           p5.drawingContext.drawImage(this.image.elt, -35, -65);
           pineapple.life--;
           if (pineapple.life < 0) {
@@ -986,6 +1003,7 @@ module.exports = class Effects {
       },
     };
 
+    // looks ok?
     this.spotlight = {
       x: 200,
       y: 200,
@@ -1130,6 +1148,7 @@ module.exports = class Effects {
       },
     };
 
+    // looks good?
     this.color_lights = {
       lights: [],
       newLight: function (x, arc, offset) {
@@ -1297,6 +1316,7 @@ module.exports = class Effects {
       },
     };
 
+    // hitting reset removes poops from screen
     this.smiling_poop = {
       poopList: [],
       init: function () {
@@ -1314,10 +1334,14 @@ module.exports = class Effects {
       },
       draw: function () {
         for (const poop of this.poopList) {
+          const scale = getInPreviewMode() ?
+            randomNumber(10, 120) / 20 :
+            poop.life / 20;
+
           p5.push();
           p5.translate(poop.x, poop.y);
           p5.rotate(poop.rot);
-          p5.scale(poop.life / 20);
+          p5.scale(scale);
           drawPoop(p5._renderer.drawingContext);
           poop.life--;
           if (poop.life < 0) {
@@ -1333,6 +1357,7 @@ module.exports = class Effects {
       },
     };
 
+    // seems fine as is in production (doesn't reset though)
     this.hearts_red = {
       heartList: [],
       init: function () {
@@ -1370,6 +1395,7 @@ module.exports = class Effects {
       }
     };
 
+    // seems fine as is in production (doesn't reset though)
     this.hearts_colorful = {
       heartList: [],
       init: function () {
@@ -1408,16 +1434,21 @@ module.exports = class Effects {
       },
     };
 
+    // init happens on setting of foreground
+    // reset happens on reset() (before each run)?
     this.floating_rainbows = {
       rainbows: [],
       init: function () {
         if (this.rainbows.length) {
           return;
         }
+
+        const yMin = getInPreviewMode() ? 0 : 400;
+        const yMax = getInPreviewMode() ? 400 : 800;
         for (let i = 0; i < 15; i++) {
           this.rainbows.push({
             x: randomNumber(10, 390),
-            y: randomNumber(400, 800),
+            y: randomNumber(yMin, yMax),
             rot: randomNumber(0, 359),
             speed: 2,
             size: randomNumber(1.5, 3),
@@ -1428,7 +1459,10 @@ module.exports = class Effects {
         drawRainbow(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = context.centroid;
+        const centroid = getInPreviewMode() ?
+          6500 :
+          context.centroid;
+
         for (let i = 0; i < this.rainbows.length; i++) {
           p5.push();
           const rainbows = this.rainbows[i];
@@ -1445,6 +1479,9 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      reset: function () {
+        this.rainbows = [];
+      }
     };
 
     this.snowflakes = {
@@ -1618,10 +1655,10 @@ module.exports = class Effects {
       bubble: [],
       draw: function () {
         if (getInPreviewMode()) {
-          for (let i = 1; i < 200; i++) {
+          for (let i = 0; i < 200; i++) {
             let bubble = {
               x: p5.random(-100, 400),
-              y: p5.random(-100, 400),
+              y: p5.random(-100, 400), // changed
               velocityX: p5.random(-2, 2),
               size: p5.random(6, 12, 18),
               color: randomColor(100, 50, 0.25),
@@ -1630,7 +1667,6 @@ module.exports = class Effects {
           }
 
           p5.noStroke();
-
           this.bubble.forEach(function (bubble) {
             p5.push();
             p5.fill(bubble.color);
@@ -1646,8 +1682,6 @@ module.exports = class Effects {
           });
 
         } else {
-          // reset here?
-          // prob don't want to...
           let bubble = {
             x: p5.random(-100, 400),
             y: 410,
@@ -1708,10 +1742,8 @@ module.exports = class Effects {
       },
     };
 
-    // doesn't quite reset between runs
-    // state of preview becomes starting point for next run
-    // i think this is true for some backgrounds (eg, rain)
-    // as well, though.
+    // reset button is putting all the stars in the middle
+    // instead of spreading out
     this.exploding_stars = {
       stars: [],
       reset: function () {
@@ -1719,10 +1751,17 @@ module.exports = class Effects {
         for (let i = 0; i < 100; i++) {
           let theta = p5.random(0, 360);
           let velocity = p5.random(4, 12);
+
+          const x = getInPreviewMode() ?
+            randomNumber(0, 400) :
+            200;
+          const y = getInPreviewMode() ?
+            randomNumber(0, 400) :
+            200;
           this.stars.push({
             color: randomColor(255, 255, 100),
-            x: 200,
-            y: 200,
+            x: x,
+            y: y,
             dx: velocity * p5.cos(theta),
             dy: velocity * p5.sin(theta),
           });
@@ -1801,7 +1840,9 @@ module.exports = class Effects {
         drawPizza(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = context.centroid;
+        const centroid = getInPreviewMode() ?
+          6500 :
+          context.centroid;
         for (let i = 0; i < this.pizza.length; i++) {
           p5.push();
           const pizza = this.pizza[i];
@@ -1842,7 +1883,10 @@ module.exports = class Effects {
         drawSmiley(this.image.drawingContext, 0.8);
       },
       draw: function (context) {
-        const centroid = context.centroid;
+        const centroid = getInPreviewMode() ?
+          6500 :
+          context.centroid;
+
         for (let i = 0; i < this.smiles.length; i++) {
           p5.push();
           const smiles = this.smiles[i];
@@ -1866,34 +1910,69 @@ module.exports = class Effects {
     this.confetti = {
       confetti: [],
       draw: function () {
-        let confetti = {
-          x: p5.random(-100, 400),
-          y: -10,
-          velocityX: p5.random(-2, 2),
-          size: p5.random(6, 12, 18),
-          // https://github.com/Automattic/node-canvas/issues/702
-          // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
-          spin: 1,
-          color: randomColor(255, 255, 100),
-        };
-        this.confetti.push(confetti);
-        p5.noStroke();
-        this.confetti.forEach(function (confetti) {
-          p5.push();
-          p5.fill(confetti.color);
-          p5.translate(confetti.x, confetti.y);
-          const scaleX = p5.sin(confetti.spin);
-          p5.scale(scaleX, 1);
-          confetti.spin += 20;
-          p5.rect(0, 0, 4, confetti.size);
-          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
-          confetti.y += fallSpeed;
-          confetti.x += confetti.velocityX;
-          p5.pop();
-        });
-        this.confetti = this.confetti.filter(function (confetti) {
-          return confetti.y < 425;
-        });
+        if (getInPreviewMode()) {
+          for (let i = 0; i < 200; i++) {
+            let confetti = {
+              x: p5.random(-100, 400),
+              y: p5.random(-100, 400), // changed
+              velocityX: p5.random(-2, 2),
+              size: p5.random(6, 12, 18),
+              // https://github.com/Automattic/node-canvas/issues/702
+              // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
+              spin: 90, //changed
+              color: randomColor(255, 255, 100),
+            };
+
+            this.confetti.push(confetti);
+          }
+
+          p5.noStroke();
+          this.confetti.forEach(function (confetti) {
+            p5.push();
+            p5.fill(confetti.color);
+            p5.translate(confetti.x, confetti.y);
+            const scaleX = p5.sin(confetti.spin);
+            p5.scale(scaleX, 1);
+            confetti.spin += 20;
+            p5.rect(0, 0, 4, confetti.size);
+            let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+            confetti.y += fallSpeed;
+            confetti.x += confetti.velocityX;
+            p5.pop();
+          });
+          this.confetti = this.confetti.filter(function (confetti) {
+            return confetti.y < 425;
+          });
+        } else {
+          let confetti = {
+            x: p5.random(-100, 400),
+            y: -10,
+            velocityX: p5.random(-2, 2),
+            size: p5.random(6, 12, 18),
+            // https://github.com/Automattic/node-canvas/issues/702
+            // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
+            spin: 1,
+            color: randomColor(255, 255, 100),
+          };
+          this.confetti.push(confetti);
+          p5.noStroke();
+          this.confetti.forEach(function (confetti) {
+            p5.push();
+            p5.fill(confetti.color);
+            p5.translate(confetti.x, confetti.y);
+            const scaleX = p5.sin(confetti.spin);
+            p5.scale(scaleX, 1);
+            confetti.spin += 20;
+            p5.rect(0, 0, 4, confetti.size);
+            let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+            confetti.y += fallSpeed;
+            confetti.x += confetti.velocityX;
+            p5.pop();
+          });
+          this.confetti = this.confetti.filter(function (confetti) {
+            return confetti.y < 425;
+          });
+        }
       },
       reset: function () {
         this.confetti = [];
@@ -1933,17 +2012,19 @@ module.exports = class Effects {
       },
     };
 
-    // notes show up late, not previewing by resetting notes to empty array
+    // looks ok, double check though
     this.music_notes = {
       notes: [],
       init: function () {
+        const yMax = getInPreviewMode() ? 390 : 0;
+        const yMin = getInPreviewMode() ? 0 : -400;
         if (this.notes.length) {
           return;
         }
         for (let i = 0; i < 20; i++) {
           this.notes.push({
             x: randomNumber(10, 390),
-            y: randomNumber(-400, 0),
+            y: randomNumber(yMin, yMax),
             rot: randomNumber(0, 359),
             speed: 2,
             size: randomNumber(1.5, 3),
@@ -1954,27 +2035,53 @@ module.exports = class Effects {
         drawMusicNote(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = context.centroid;
-        for (let i = 0; i < this.notes.length; i++) {
-          p5.push();
-          const notes = this.notes[i];
-          let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
-          scale = p5.constrain(scale, 0, 3);
-          p5.translate(notes.x, notes.y);
-          p5.rotate(notes.rot);
-          p5.scale(scale / (4 * p5.pixelDensity()));
-          p5.drawingContext.drawImage(this.image.elt, 0, 0);
-          notes.y += notes.speed;
-          notes.rot++;
-          if (notes.y > 410) {
-            notes.x = randomNumber(10, 390);
-            notes.y = -50;
+        if (getInPreviewMode()) {
+          // changed
+          const centroid = 6500;
+          for (let i = 0; i < this.notes.length; i++) {
+            p5.push();
+            const notes = this.notes[i];
+            let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
+            scale = p5.constrain(scale, 0, 3);
+            p5.translate(notes.x, notes.y);
+            p5.rotate(notes.rot);
+            p5.scale(scale / (4 * p5.pixelDensity()));
+            p5.drawingContext.drawImage(this.image.elt, 0, 0);
+            notes.y += notes.speed;
+            notes.rot++;
+            if (notes.y > 410) {
+              notes.x = randomNumber(10, 390);
+              notes.y = -50;
+            }
+            p5.pop();
           }
-          p5.pop();
+        } else {
+          const centroid = context.centroid;
+          for (let i = 0; i < this.notes.length; i++) {
+            p5.push();
+            const notes = this.notes[i];
+            let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
+            scale = p5.constrain(scale, 0, 3);
+            p5.translate(notes.x, notes.y);
+            p5.rotate(notes.rot);
+            p5.scale(scale / (4 * p5.pixelDensity()));
+            p5.drawingContext.drawImage(this.image.elt, 0, 0);
+            notes.y += notes.speed;
+            notes.rot++;
+            if (notes.y > 410) {
+              notes.x = randomNumber(10, 390);
+              notes.y = -50;
+            }
+            p5.pop();
+          }
         }
       },
+      reset: function () {
+        this.notes = [];
+      }
     };
 
+    // to do
     this.paint_drip = {
       current_drip: 0,
       current_drip_height: 0,
@@ -2172,31 +2279,59 @@ module.exports = class Effects {
       },
 
       draw: function () {
-        if (p5.frameCount % 10 === 0) {
-          // generate new emoji every 10 frames
-          this.emojiList.push({
-            x: randomNumber(0, 350),
-            y: -50,
-            size: randomNumber(50, 90),
-            image: this.emojiTypes[randomNumber(0, 4)],
-          });
-        }
-        for (let i = 0; i < this.emojiList.length; ++i) {
-          const emoji = this.emojiList[i];
-          emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
-          if (emoji.y > p5.height * 1.2) {
-            // if the emoji has fallen past 120% of the screen
-            this.emojiList.splice(i, 1);
+        if (getInPreviewMode()) {
+          for (let i = 0; i < 12; i++) {
+            this.emojiList.push({
+              x: randomNumber(0, 350),
+              y: randomNumber(0, 350), // changed
+              size: randomNumber(50, 90),
+              image: this.emojiTypes[randomNumber(0, 4)],
+            });
           }
-          p5.push();
-          p5.drawingContext.drawImage(
-            emoji.image.elt,
-            emoji.x,
-            emoji.y,
-            emoji.size,
-            emoji.size
-          );
-          p5.pop();
+          for (let i = 0; i < this.emojiList.length; ++i) {
+            const emoji = this.emojiList[i];
+            emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+            if (emoji.y > p5.height * 1.2) {
+              // if the emoji has fallen past 120% of the screen
+              this.emojiList.splice(i, 1);
+            }
+            p5.push();
+            p5.drawingContext.drawImage(
+              emoji.image.elt,
+              emoji.x,
+              emoji.y,
+              emoji.size,
+              emoji.size
+            );
+            p5.pop();
+          }
+        } else {
+          if (p5.frameCount % 10 === 0) {
+            // generate new emoji every 10 frames
+            this.emojiList.push({
+              x: randomNumber(0, 350),
+              y: -50,
+              size: randomNumber(50, 90),
+              image: this.emojiTypes[randomNumber(0, 4)],
+            });
+          }
+          for (let i = 0; i < this.emojiList.length; ++i) {
+            const emoji = this.emojiList[i];
+            emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+            if (emoji.y > p5.height * 1.2) {
+              // if the emoji has fallen past 120% of the screen
+              this.emojiList.splice(i, 1);
+            }
+            p5.push();
+            p5.drawingContext.drawImage(
+              emoji.image.elt,
+              emoji.x,
+              emoji.y,
+              emoji.size,
+              emoji.size
+            );
+            p5.pop();
+          }
         }
       },
       reset: function () {
