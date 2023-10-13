@@ -623,6 +623,8 @@ module.exports = class DanceParty {
   }
 
   doMoveLR(sprite, move, dir) {
+    console.log('doMoveLR', this.contextType, this.contextKey);
+
     if (!this.spriteExists_(sprite)) {
       return;
     }
@@ -1177,6 +1179,12 @@ module.exports = class DanceParty {
     if (params.setDancer) {
       this.makeNewDanceSprite('MOOSE', 'harold', null);
     }
+  }
+
+  setFuncContext(type, key) {
+    console.log('SetFuncContext', type, key);
+    this.contextType = type;
+    this.contextKey = key;
   }
 
   // Music Helpers
