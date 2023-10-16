@@ -155,6 +155,9 @@ module.exports = class DanceAPI {
       aiText: value => {
         nativeAPI.aiText(value);
       },
+      setFuncContext: (type, param) => {
+        nativeAPI.setFuncContext(type, param);
+      },
     };
   }
 };

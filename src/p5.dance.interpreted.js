@@ -107,6 +107,8 @@ function runUserEvents(events) {
       queues[queueType].push({
         priority: inputEvents[i].priority,
         func: inputEvents[i].func,
+        eventType: eventType,
+        param: param
       });
     }
   }
@@ -123,7 +125,9 @@ function runUserEvents(events) {
   }
 
   function executeFuncs(item) {
+    setFuncContext(item.eventType, item.param);
     item.func();
+    setFuncContext(null, null);
   }
 
   queues[QueueType.every].sort(prioritySort).forEach(executeFuncs);
