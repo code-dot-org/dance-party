@@ -296,7 +296,7 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.world.aiBlockCalled = false;
     this.world.aiBlockContextUserEventKey = null;
-    // This value is set to `false` if any of the AI blocks in a user program
+    // This value is set to `true` if any of the AI blocks in a user program
     // are called without defined parameters.
     this.world.aiBlockHasInvalidParams = false;
 
