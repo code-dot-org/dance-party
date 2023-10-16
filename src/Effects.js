@@ -688,7 +688,6 @@ module.exports = class Effects {
       },
     };
 
-    // looks good in production
     this.rain = {
       drops: [],
       init: function () {
@@ -884,7 +883,7 @@ module.exports = class Effects {
 
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
-          p5.scale(scale); // changed
+          p5.scale(scale);
           p5.drawingContext.drawImage(this.image.elt, -35, -65);
           pineapple.life--;
           if (pineapple.life < 0) {
@@ -1011,7 +1010,6 @@ module.exports = class Effects {
       },
     };
 
-    // looks ok?
     this.spotlight = {
       x: 200,
       y: 200,
@@ -1156,7 +1154,6 @@ module.exports = class Effects {
       },
     };
 
-    // looks good?
     this.color_lights = {
       lights: [],
       newLight: function (x, arc, offset) {
@@ -1406,7 +1403,6 @@ module.exports = class Effects {
       }
     };
 
-    // seems fine as is in production (doesn't reset though)
     this.hearts_colorful = {
       heartList: [],
       init: function () {
@@ -1439,9 +1435,6 @@ module.exports = class Effects {
           }
           p5.pop();
         }
-      },
-      reset: function () {
-        this.heartList = [];
       },
     };
 
@@ -1992,7 +1985,7 @@ module.exports = class Effects {
       },
     };
 
-    // looks ok, double check though
+    // reset with no notes on screen not previewing correctly :/
     this.music_notes = {
       notes: [],
       init: function () {
@@ -2070,13 +2063,13 @@ module.exports = class Effects {
           this.crayons.push({maxHeight: 0, startFrame: 0});
         }
       },
-
       draw: function () {
         for (let i = 0; i < this.crayons.length; i++) {
           let c = lerpColorFromSpecificPalette('neon', i / this.crayons.length);
           p5.fill(c);
           p5.noStroke();
-          let rectHeight = this.start_height;
+          let rectHeight = this.getPreviewCustomizations().getRectHeight();
+
 
           // Drip is to the left of moving drip and should be stationary at full height
           if (i < this.current_drip) {
@@ -2103,6 +2096,10 @@ module.exports = class Effects {
             this.drip_diameter,
             this.drip_diameter
           );
+        }
+
+        if (getInPreviewMode()) {
+          return;
         }
 
         // Check if the current drip is 'done'
@@ -2140,6 +2137,12 @@ module.exports = class Effects {
           this.crayons[this.current_drip].startFrame = p5.frameCount;
         }
       },
+      // buggy, maybe skip advance drawing in preview?
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getRectHeight: () => p5.random(30, 200)} :
+          {getRectHeight: () => this.start_height};
+      }
     };
 
     this.squiggles = {
