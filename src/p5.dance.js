@@ -1190,7 +1190,6 @@ module.exports = class DanceParty {
   }
 
   setFuncContext(type, key) {
-    this.world.userEventTriggeredType = type;
     this.contextType = type;
     this.contextKey = key;
   }
