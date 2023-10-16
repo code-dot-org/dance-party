@@ -181,17 +181,10 @@ module.exports = class DanceParty {
     promises.push(this.loadExtraImages());
     await Promise.all(promises);
     this.allSpritesLoaded = true;
-  }
+  }  
 
-  setUserBlocks(userBlocks) {
-    this.userBlocks = [];
-    userBlocks.forEach(block => {
-      this.userBlocks.push(block.type);
-    });
-  }
-
-  getUserBlocks() {
-    return this.userBlocks;
+  getUserBlockTypes() {
+    return this.userBlockTypes;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
@@ -358,13 +351,13 @@ module.exports = class DanceParty {
     return this.bgEffects_.currentPalette || 'default';
   }
 
-  play(songData, callback) {
+  play(userBlockTypes,songData, callback) {
     if (!this.allSpritesLoaded) {
       throw new Error(
         'play() called before ensureSpritesAreLoaded() has completed!'
       );
     }
-
+    this.userBlockTypes = userBlockTypes;
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
