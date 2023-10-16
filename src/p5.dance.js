@@ -305,7 +305,7 @@ module.exports = class DanceParty {
     this.world.aiBlockContextUserEventKey = null;
     // This value is set to `false` if any of the AI blocks in a user program
     // are called without defined parameters.
-    this.world.aiBlockHasParams = true;
+    this.world.aiBlockHasInvalidParams = false;
 
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
@@ -1165,7 +1165,7 @@ module.exports = class DanceParty {
         this.setForegroundEffect(params.foregroundEffect);
       }
     } else if (params === undefined) {
-      this.world.aiBlockHasParams = false;
+      this.world.aiBlockHasInvalidParams = true;
     }
   }
 
