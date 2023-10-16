@@ -113,4 +113,5 @@ module.exports = {
     neon: ['#2143C5', '#161317'], // blue to black
     rave: ['#171717', '#1B1B1B'], // black and white: all black
   },
+  KEY_WENT_DOWN_EVENT_TYPE: 'this.p5_.keyWentDown',
 };

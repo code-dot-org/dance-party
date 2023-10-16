@@ -1149,7 +1149,7 @@ module.exports = class DanceParty {
   ai(params) {
     this.world.aiBlockCalled = true;
     console.log('handle AI:', params);
-    if (this.contextType === 'this.p5_.keyWentDown' && this.contextKey) {
+    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
       this.world.aiBlockContextUserEventKey = this.contextKey;
     }
 
@@ -1378,8 +1378,8 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
-        events['this.p5_.keyWentDown'][key] = true;
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
     }
