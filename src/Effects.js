@@ -805,9 +805,9 @@ module.exports = class Effects {
     this.raining_tacos = {
       tacos: [],
       init: function () {
-        if (this.tacos.length) {
-          return;
-        }
+        // if (this.tacos.length) {
+        //   return;
+        // }
         for (let i = 0; i < 10; i++) {
           this.tacos.push({
             x: randomNumber(20, 380),
@@ -843,6 +843,7 @@ module.exports = class Effects {
       },
       reset: function () {
         this.tacos = [];
+        this.init();
       },
       getPreviewCustomizations: function () {
         return getInPreviewMode() ?
@@ -879,11 +880,7 @@ module.exports = class Effects {
         for (let i = 0; i < this.pineappleList.length; i++) {
           p5.push();
           const pineapple = this.pineappleList[i];
-
-          // added. randomNumber(10, 120) copied from life reset below
-          const scale = getInPreviewMode() ?
-            randomNumber(10, 120) / 20 / (7 * p5.pixelDensity()) :
-            pineapple.life / 20 / (7 * p5.pixelDensity());
+          const scale = this.getPreviewCustomizations().getScale(pineapple);
 
           p5.translate(pineapple.x, pineapple.y);
           p5.rotate(pineapple.rot);
@@ -900,6 +897,11 @@ module.exports = class Effects {
       },
       reset: function () {
         this.pineappleList = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getScale: () => randomNumber(10, 120) / 20 / (7 * p5.pixelDensity())} :
+          {getScale: pineapple => pineapple.life / 20 / (7 * p5.pixelDensity())};
       },
     };
 
@@ -1340,9 +1342,7 @@ module.exports = class Effects {
       },
       draw: function () {
         for (const poop of this.poopList) {
-          const scale = getInPreviewMode() ?
-            randomNumber(10, 120) / 20 :
-            poop.life / 20;
+          const scale = this.getPreviewCustomizations().getScale(poop);
 
           p5.push();
           p5.translate(poop.x, poop.y);
@@ -1360,6 +1360,11 @@ module.exports = class Effects {
       },
       reset: function () {
         this.poopList = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getScale: () => randomNumber(10, 120) / 20} :
+          {getScale: poop => poop.life / 20};
       },
     };
 
@@ -1449,12 +1454,11 @@ module.exports = class Effects {
           return;
         }
 
-        const yMin = getInPreviewMode() ? 0 : 400;
-        const yMax = getInPreviewMode() ? 400 : 800;
+        // check if y is varying
         for (let i = 0; i < 15; i++) {
           this.rainbows.push({
             x: randomNumber(10, 390),
-            y: randomNumber(yMin, yMax),
+            y: this.getPreviewCustomizations().y,
             rot: randomNumber(0, 359),
             speed: 2,
             size: randomNumber(1.5, 3),
@@ -1465,9 +1469,7 @@ module.exports = class Effects {
         drawRainbow(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = getInPreviewMode() ?
-          6500 :
-          context.centroid;
+        const centroid = this.getPreviewCustomizations().getCentroid(context);
 
         for (let i = 0; i < this.rainbows.length; i++) {
           p5.push();
@@ -1487,7 +1489,18 @@ module.exports = class Effects {
       },
       reset: function () {
         this.rainbows = [];
-      }
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {
+            y: randomNumber(0, 400),
+            getCentroid: () => 6500,
+          } :
+          {
+            y: randomNumber(400, 800),
+            getCentroid: context => context.centroid,
+          };
+      },
     };
 
     this.snowflakes = {
@@ -1660,12 +1673,11 @@ module.exports = class Effects {
     this.bubbles = {
       bubble: [],
       draw: function () {
-        const bubblesToDraw = getInPreviewMode() ? 200 : 1;
-        for (let i = 0; i < bubblesToDraw; i++) {
-          const y = getInPreviewMode() ? p5.random(-100, 400) : 410;
+        const numBubblesToDraw = this.getPreviewCustomizations().numBubblesToDraw;
+        for (let i = 0; i < numBubblesToDraw; i++) {
           let bubble = {
             x: p5.random(-100, 400),
-            y: y,
+            y: this.getPreviewCustomizations().y,
             velocityX: p5.random(-2, 2),
             size: p5.random(6, 12, 18),
             color: randomColor(100, 50, 0.25),
@@ -1691,6 +1703,11 @@ module.exports = class Effects {
       reset: function () {
         this.bubble = [];
       },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numBubblesToDraw: 200, y: p5.random(-100, 400)} :
+          {numBubblesToDraw: 1, y: 410};
+      }
     };
 
     this.stars = {
@@ -1734,16 +1751,10 @@ module.exports = class Effects {
           let theta = p5.random(0, 360);
           let velocity = p5.random(4, 12);
 
-          const x = getInPreviewMode() ?
-            randomNumber(0, 400) :
-            200;
-          const y = getInPreviewMode() ?
-            randomNumber(0, 400) :
-            200;
           this.stars.push({
             color: randomColor(255, 255, 100),
-            x: x,
-            y: y,
+            x: this.getPreviewCustomizations().x,
+            y: this.getPreviewCustomizations().y,
             dx: velocity * p5.cos(theta),
             dy: velocity * p5.sin(theta),
           });
@@ -1765,6 +1776,11 @@ module.exports = class Effects {
           star => star.x > -10 && star.x < 410 && star.y > -10 && star.y < 410
         );
       },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {x: randomNumber(0, 400), y: randomNumber(0, 400)} :
+          {x: 200, y: 200};
+      }
     };
 
     this.galaxy = {
@@ -1822,9 +1838,7 @@ module.exports = class Effects {
         drawPizza(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = getInPreviewMode() ?
-          6500 :
-          context.centroid;
+        const centroid = this.getPreviewCustomizations().getCentroid(context);
         for (let i = 0; i < this.pizza.length; i++) {
           p5.push();
           const pizza = this.pizza[i];
@@ -1842,6 +1856,11 @@ module.exports = class Effects {
           }
           p5.pop();
         }
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getCentroid: () => 6500} :
+          {getCentroid: context => context.centroid};
       },
     };
 
@@ -1865,9 +1884,7 @@ module.exports = class Effects {
         drawSmiley(this.image.drawingContext, 0.8);
       },
       draw: function (context) {
-        const centroid = getInPreviewMode() ?
-          6500 :
-          context.centroid;
+        const centroid = this.getPreviewCustomizations().getCentroid(context);
 
         for (let i = 0; i < this.smiles.length; i++) {
           p5.push();
@@ -1887,14 +1904,19 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getCentroid: () => 6500} :
+          {getCentroid: context => context.centroid};
+      },
     };
 
     this.confetti = {
       confetti: [],
       draw: function () {
-        const bubblesToDraw = getInPreviewMode() ? 200 : 1;
-        for (let i = 0; i < bubblesToDraw; i++) {
-          const spin = getInPreviewMode() ? p5.random(1, 80) : 1;
+        const numConfettiToDraw = this.getPreviewCustomizations().numConfettiToDraw;
+        for (let i = 0; i < numConfettiToDraw; i++) {
+          const spin = this.getPreviewCustomizations().spin;
           let confetti = {
             x: p5.random(-100, 400),
             y: p5.random(-100, 400), // changed
@@ -1902,7 +1924,7 @@ module.exports = class Effects {
             size: p5.random(6, 12, 18),
             // https://github.com/Automattic/node-canvas/issues/702
             // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
-            spin: spin, //changed
+            spin: spin,
             color: randomColor(255, 255, 100),
           };
 
@@ -1930,6 +1952,11 @@ module.exports = class Effects {
       reset: function () {
         this.confetti = [];
       },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numConfettiToDraw: 200, spin: p5.random(1, 80)} :
+          {numConfettiToDraw: 1, spin: 1};
+      }
     };
 
     this.growing_stars = {
@@ -1969,15 +1996,13 @@ module.exports = class Effects {
     this.music_notes = {
       notes: [],
       init: function () {
-        const yMax = getInPreviewMode() ? 390 : 0;
-        const yMin = getInPreviewMode() ? 0 : -400;
         if (this.notes.length) {
           return;
         }
         for (let i = 0; i < 20; i++) {
           this.notes.push({
             x: randomNumber(10, 390),
-            y: randomNumber(yMin, yMax),
+            y: this.getPreviewCustomizations().y,
             rot: randomNumber(0, 359),
             speed: 2,
             size: randomNumber(1.5, 3),
@@ -1988,7 +2013,7 @@ module.exports = class Effects {
         drawMusicNote(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = getInPreviewMode() ? 6500 : context.centroid;
+        const centroid = this.getPreviewCustomizations().getCentroid(context);
         for (let i = 0; i < this.notes.length; i++) {
           p5.push();
           const notes = this.notes[i];
@@ -2009,7 +2034,12 @@ module.exports = class Effects {
       },
       reset: function () {
         this.notes = [];
-      }
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {y: randomNumber(0, 390), getCentroid: () => 6500} :
+          {y: randomNumber (-400, 0), getCentroid: context => context.centroid};
+      },
     };
 
     // to do
@@ -2209,26 +2239,7 @@ module.exports = class Effects {
       },
 
       draw: function () {
-        if (getInPreviewMode()) {
-          for (let i = 0; i < 12; i++) {
-            this.emojiList.push({
-              x: randomNumber(0, 350),
-              y: randomNumber(0, 350),
-              size: randomNumber(50, 90),
-              image: this.emojiTypes[randomNumber(0, 4)],
-            });
-          }
-        } else {
-          if (p5.frameCount % 10 === 0) {
-            // generate new emoji every 10 frames
-            this.emojiList.push({
-              x: randomNumber(0, 350),
-              y: -50,
-              size: randomNumber(50, 90),
-              image: this.emojiTypes[randomNumber(0, 4)],
-            });
-          }
-        }
+        this.getPreviewCustomizations().addEmojis();
 
         for (let i = 0; i < this.emojiList.length; ++i) {
           const emoji = this.emojiList[i];
@@ -2247,10 +2258,38 @@ module.exports = class Effects {
           );
           p5.pop();
         }
-        },
+      },
       reset: function () {
         this.emojiList = [];
-      }
+      },
+      getPreviewCustomizations: function () {
+        if (getInPreviewMode()) {
+          const addEmojisPreview = () => {
+            for (let i = 0; i < 12; i++) {
+              this.emojiList.push({
+                x: randomNumber(0, 350),
+                y: randomNumber(0, 350),
+                size: randomNumber(50, 90),
+                image: this.emojiTypes[randomNumber(0, 4)],
+              });
+            }
+          };
+          return {addEmojis: addEmojisPreview};
+        } else {
+          const addEmojisDefault = () => {
+            if (p5.frameCount % 10 === 0) {
+              // generate new emoji every 10 frames
+              this.emojiList.push({
+                x: randomNumber(0, 350),
+                y: -50,
+                size: randomNumber(50, 90),
+                image: this.emojiTypes[randomNumber(0, 4)],
+              });
+            }
+          };
+          return {addEmojis: addEmojisDefault};
+        }
+      },
     };
   }
 
