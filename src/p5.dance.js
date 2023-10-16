@@ -183,6 +183,10 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
+  getUserBlockTypes() {
+    return this.userBlockTypes;
+  }
+
   async loadCostumeAnimations(costume, costumeData) {
     if (!this.animations[costume]) {
       console.log('Unexpected costume: ' + costume);
@@ -290,6 +294,12 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
+    this.world.aiBlockCalled = false;
+    this.world.aiBlockContextUserEventKey = null;
+    // This value is set to `true` if any of the AI blocks in a user program
+    // are called without defined parameters.
+    this.world.aiBlockHasInvalidParams = false;
+
     while (this.p5_.allSprites.length > 0) {
       this.p5_.allSprites[0].remove();
     }
@@ -337,13 +347,17 @@ module.exports = class DanceParty {
     }
   }
 
-  play(songData, callback) {
+  getCurrentPalette() {
+    return this.bgEffects_.currentPalette || 'default';
+  }
+
+  play(songData, callback, userBlockTypes) {
     if (!this.allSpritesLoaded) {
       throw new Error(
         'play() called before ensureSpritesAreLoaded() has completed!'
       );
     }
-
+    this.userBlockTypes = userBlockTypes;
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
       replayLog.reset();
@@ -1126,7 +1140,12 @@ module.exports = class DanceParty {
 
   // Called when executing the AI block.
   ai(params) {
+    this.world.aiBlockCalled = true;
     console.log('handle AI:', params);
+    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
+      // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
+      this.world.aiBlockContextUserEventKey = this.contextKey;
+    }
 
     if (params) {
       if (params.backgroundEffect && params.backgroundColor) {
@@ -1139,23 +1158,8 @@ module.exports = class DanceParty {
       if (params.foregroundEffect) {
         this.setForegroundEffect(params.foregroundEffect);
       }
-
-      if (
-        params.dancers &&
-        params.dancers.type &&
-        this.world.SPRITE_NAMES.indexOf(params.dancers.type.toUpperCase()) >=
-          0 &&
-        params.dancers.count &&
-        params.dancers.count >= 0 &&
-        params.dancers.count <= 40 &&
-        params.dancers.layout
-      ) {
-        this.makeNewDanceSpriteGroup(
-          params.dancers.count,
-          params.dancers.type.toUpperCase(),
-          params.dancers.layout
-        );
-      }
+    } else if (params === undefined) {
+      this.world.aiBlockHasInvalidParams = true;
     }
   }
 
@@ -1177,6 +1181,11 @@ module.exports = class DanceParty {
     if (params.setDancer) {
       this.makeNewDanceSprite('MOOSE', 'harold', null);
     }
+  }
+
+  setFuncContext(type, key) {
+    this.contextType = type;
+    this.contextKey = key;
   }
 
   // Music Helpers
@@ -1363,8 +1372,8 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events['this.p5_.keyWentDown'] = events['this.p5_.keyWentDown'] || {};
-        events['this.p5_.keyWentDown'][key] = true;
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
     }
