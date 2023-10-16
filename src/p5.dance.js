@@ -1148,7 +1148,7 @@ module.exports = class DanceParty {
   // Called when executing the AI block.
   ai(params) {
     this.world.aiBlockCalled = true;
-    console.log('handle AI:', params);    
+    console.log('handle AI:', params);
     if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
       // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
       this.world.aiBlockContextUserEventKey = this.contextKey;
