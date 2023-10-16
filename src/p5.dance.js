@@ -351,7 +351,7 @@ module.exports = class DanceParty {
     return this.bgEffects_.currentPalette || 'default';
   }
 
-  play(userBlockTypes,songData, callback) {
+  play(songData, callback, userBlockTypes) {
     if (!this.allSpritesLoaded) {
       throw new Error(
         'play() called before ensureSpritesAreLoaded() has completed!'
