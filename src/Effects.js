@@ -809,12 +809,9 @@ module.exports = class Effects {
           return;
         }
         for (let i = 0; i < 10; i++) {
-          const yMin = getInPreviewMode() ? 0 : -400;
-          const yMax = getInPreviewMode() ? 400 : 0;
-
           this.tacos.push({
             x: randomNumber(20, 380),
-            y: randomNumber(yMin, yMax),
+            y: this.getPreviewCustomizations().y,
             rot: randomNumber(0, 359),
             speed: 3,
             size: 5,
@@ -825,9 +822,7 @@ module.exports = class Effects {
         drawTaco(this.image.drawingContext);
       },
       draw: function (context) {
-        const centroid = getInPreviewMode() ?
-          6500 :
-          context.centroid;
+        const centroid = this.getPreviewCustomizations().getCentroid(context);
         for (let i = 0; i < this.tacos.length; i++) {
           p5.push();
           const taco = this.tacos[i];
@@ -848,7 +843,18 @@ module.exports = class Effects {
       },
       reset: function () {
         this.tacos = [];
-      }
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {
+            y: randomNumber(0, 400),
+            getCentroid: () => 6500,
+          } :
+          {
+            y: randomNumber(-400, 0),
+            getCentroid: context => context.centroid,
+          };
+      },
     };
 
     this.pineapples = {
