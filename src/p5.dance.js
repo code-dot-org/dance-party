@@ -181,7 +181,7 @@ module.exports = class DanceParty {
     promises.push(this.loadExtraImages());
     await Promise.all(promises);
     this.allSpritesLoaded = true;
-  }  
+  }
 
   getUserBlockTypes() {
     return this.userBlockTypes;
