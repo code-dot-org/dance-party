@@ -183,51 +183,15 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  // This function receives the user's blocks from the main Blockly workspace and
-  // stores the following properties for each block:
-  // {type: string, id: string, nextBlockType: string, nextBlockId: string}
-  // The next block is the block that is connected to the bottom of the given block.
-  // If there is no next block, nextBlockType and nextBlockId are assigned ''.
-  // This function is used to check if a block is connected to another given block,
-  // For example, is the AI block connected to the 'setup' block?
-  setUserBlocksWithNextBlock(userBlocks) {
-    this.userBlocksWithNextBlock = [];
-    userBlocks.forEach(b => {
-      var block = {type: b.type, id: b.id};
-      if (b.childBlocks_[0]) {
-        block.nextBlockType = b.childBlocks_[0].type;
-        block.nextBlockId = b.childBlocks_[0].id;
-      }
-      this.userBlocksWithNextBlock.push(block);
+  setUserBlocks(userBlocks) {
+    this.userBlocks = [];
+    userBlocks.forEach(block => {
+      this.userBlocks.push(block.type);
     });
   }
 
-  getUserBlockTypes() {
-    return this.userBlocksWithNextBlock.map(b => b.type);
-  }
-
-  getUserBlocksWithNextBlock() {
-    return this.userBlocksWithNextBlock;
-  }
-
-  // This function checks if there is an AI block anywhere in workspace.
-  // Note that the AI block could be disconnected and technically not part of the user code.
-  hasAiBlock() {
-    return this.getUserBlockTypes().includes('Dancelab_ai');
-  }
-
-  // This function checks if the AI block is one of the children blocks of the given 'top' block.
-  // For example, if the given block is a 'When up pressed' event block, this function checks
-  // if the AI block is included within the event block.
-  isAiBlockChildOfTopBlock(topBlockType) {
-    let block = this.userBlocksWithNextBlock.find(b => b.type === topBlockType);
-    while (block.nextBlockType) {
-      if (block.nextBlockType === 'Dancelab_ai') {
-        return true;
-      }
-      block = this.userBlocksWithNextBlock.find(b => b.id == block.nextBlockId);
-    }
-    return false;
+  getUserBlocks() {
+    return this.userBlocks;
   }
 
   async loadCostumeAnimations(costume, costumeData) {
@@ -337,7 +301,8 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
-
+    this.world.aiBlockCalled = false;
+    this.world.aiBlockContextUserEventKey = null;
     // This value is set to `false` if any of the AI blocks in a user program
     // are called without defined parameters.
     this.world.aiBlockHasParams = true;
@@ -1182,7 +1147,11 @@ module.exports = class DanceParty {
 
   // Called when executing the AI block.
   ai(params) {
+    this.world.aiBlockCalled = true;
     console.log('handle AI:', params);
+    if (this.contextType === 'this.p5_.keyWentDown' && this.contextKey) {
+      this.world.aiBlockContextUserEventKey = this.contextKey;
+    }
 
     if (params) {
       if (params.backgroundEffect && params.backgroundColor) {
@@ -1218,6 +1187,12 @@ module.exports = class DanceParty {
     if (params.setDancer) {
       this.makeNewDanceSprite('MOOSE', 'harold', null);
     }
+  }
+
+  setFuncContext(type, key) {
+    this.world.userEventTriggeredType = type;
+    this.contextType = type;
+    this.contextKey = key;
   }
 
   // Music Helpers
