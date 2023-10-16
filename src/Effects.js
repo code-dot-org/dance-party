@@ -1654,57 +1654,33 @@ module.exports = class Effects {
     this.bubbles = {
       bubble: [],
       draw: function () {
-        if (getInPreviewMode()) {
-          for (let i = 0; i < 200; i++) {
-            let bubble = {
-              x: p5.random(-100, 400),
-              y: p5.random(-100, 400), // changed
-              velocityX: p5.random(-2, 2),
-              size: p5.random(6, 12, 18),
-              color: randomColor(100, 50, 0.25),
-            };
-            this.bubble.push(bubble);
-          }
-
-          p5.noStroke();
-          this.bubble.forEach(function (bubble) {
-            p5.push();
-            p5.fill(bubble.color);
-            p5.translate(bubble.x, bubble.y);
-            p5.ellipse(0, 0, bubble.size, bubble.size);
-            let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
-            bubble.y -= fallSpeed;
-            bubble.x += bubble.velocityX;
-            p5.pop();
-          });
-          this.bubble = this.bubble.filter(function (bubble) {
-            return bubble.y > 0;
-          });
-
-        } else {
+        const bubblesToDraw = getInPreviewMode() ? 200 : 1;
+        for (let i = 0; i < bubblesToDraw; i++) {
+          const y = getInPreviewMode() ? p5.random(-100, 400) : 410;
           let bubble = {
             x: p5.random(-100, 400),
-            y: 410,
+            y: y,
             velocityX: p5.random(-2, 2),
             size: p5.random(6, 12, 18),
             color: randomColor(100, 50, 0.25),
           };
           this.bubble.push(bubble);
-          p5.noStroke();
-          this.bubble.forEach(function (bubble) {
-            p5.push();
-            p5.fill(bubble.color);
-            p5.translate(bubble.x, bubble.y);
-            p5.ellipse(0, 0, bubble.size, bubble.size);
-            let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
-            bubble.y -= fallSpeed;
-            bubble.x += bubble.velocityX;
-            p5.pop();
-          });
-          this.bubble = this.bubble.filter(function (bubble) {
-            return bubble.y > 0;
-          });
         }
+
+        p5.noStroke();
+        this.bubble.forEach(function (bubble) {
+          p5.push();
+          p5.fill(bubble.color);
+          p5.translate(bubble.x, bubble.y);
+          p5.ellipse(0, 0, bubble.size, bubble.size);
+          let fallSpeed = p5.map(bubble.size, 6, 12, 1, 3);
+          bubble.y -= fallSpeed;
+          bubble.x += bubble.velocityX;
+          p5.pop();
+        });
+        this.bubble = this.bubble.filter(function (bubble) {
+          return bubble.y > 0;
+        });
       },
       reset: function () {
         this.bubble = [];
@@ -1910,69 +1886,40 @@ module.exports = class Effects {
     this.confetti = {
       confetti: [],
       draw: function () {
-        if (getInPreviewMode()) {
-          for (let i = 0; i < 200; i++) {
-            let confetti = {
-              x: p5.random(-100, 400),
-              y: p5.random(-100, 400), // changed
-              velocityX: p5.random(-2, 2),
-              size: p5.random(6, 12, 18),
-              // https://github.com/Automattic/node-canvas/issues/702
-              // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
-              spin: 90, //changed
-              color: randomColor(255, 255, 100),
-            };
-
-            this.confetti.push(confetti);
-          }
-
-          p5.noStroke();
-          this.confetti.forEach(function (confetti) {
-            p5.push();
-            p5.fill(confetti.color);
-            p5.translate(confetti.x, confetti.y);
-            const scaleX = p5.sin(confetti.spin);
-            p5.scale(scaleX, 1);
-            confetti.spin += 20;
-            p5.rect(0, 0, 4, confetti.size);
-            let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
-            confetti.y += fallSpeed;
-            confetti.x += confetti.velocityX;
-            p5.pop();
-          });
-          this.confetti = this.confetti.filter(function (confetti) {
-            return confetti.y < 425;
-          });
-        } else {
+        const bubblesToDraw = getInPreviewMode() ? 200 : 1;
+        for (let i = 0; i < bubblesToDraw; i++) {
+          const spin = getInPreviewMode() ? p5.random(1, 80) : 1;
           let confetti = {
             x: p5.random(-100, 400),
-            y: -10,
+            y: p5.random(-100, 400), // changed
             velocityX: p5.random(-2, 2),
             size: p5.random(6, 12, 18),
             // https://github.com/Automattic/node-canvas/issues/702
             // Bug with node-canvas prevents scaling with a value of 0, so spin initializes to 1
-            spin: 1,
+            spin: spin, //changed
             color: randomColor(255, 255, 100),
           };
+
           this.confetti.push(confetti);
-          p5.noStroke();
-          this.confetti.forEach(function (confetti) {
-            p5.push();
-            p5.fill(confetti.color);
-            p5.translate(confetti.x, confetti.y);
-            const scaleX = p5.sin(confetti.spin);
-            p5.scale(scaleX, 1);
-            confetti.spin += 20;
-            p5.rect(0, 0, 4, confetti.size);
-            let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
-            confetti.y += fallSpeed;
-            confetti.x += confetti.velocityX;
-            p5.pop();
-          });
-          this.confetti = this.confetti.filter(function (confetti) {
-            return confetti.y < 425;
-          });
         }
+
+        p5.noStroke();
+        this.confetti.forEach(function (confetti) {
+          p5.push();
+          p5.fill(confetti.color);
+          p5.translate(confetti.x, confetti.y);
+          const scaleX = p5.sin(confetti.spin);
+          p5.scale(scaleX, 1);
+          confetti.spin += 20;
+          p5.rect(0, 0, 4, confetti.size);
+          let fallSpeed = p5.map(confetti.size, 6, 12, 1, 3);
+          confetti.y += fallSpeed;
+          confetti.x += confetti.velocityX;
+          p5.pop();
+        });
+        this.confetti = this.confetti.filter(function (confetti) {
+          return confetti.y < 425;
+        });
       },
       reset: function () {
         this.confetti = [];
@@ -2035,45 +1982,23 @@ module.exports = class Effects {
         drawMusicNote(this.image.drawingContext);
       },
       draw: function (context) {
-        if (getInPreviewMode()) {
-          // changed
-          const centroid = 6500;
-          for (let i = 0; i < this.notes.length; i++) {
-            p5.push();
-            const notes = this.notes[i];
-            let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
-            scale = p5.constrain(scale, 0, 3);
-            p5.translate(notes.x, notes.y);
-            p5.rotate(notes.rot);
-            p5.scale(scale / (4 * p5.pixelDensity()));
-            p5.drawingContext.drawImage(this.image.elt, 0, 0);
-            notes.y += notes.speed;
-            notes.rot++;
-            if (notes.y > 410) {
-              notes.x = randomNumber(10, 390);
-              notes.y = -50;
-            }
-            p5.pop();
+        const centroid = getInPreviewMode() ? 6500 : context.centroid;
+        for (let i = 0; i < this.notes.length; i++) {
+          p5.push();
+          const notes = this.notes[i];
+          let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
+          scale = p5.constrain(scale, 0, 3);
+          p5.translate(notes.x, notes.y);
+          p5.rotate(notes.rot);
+          p5.scale(scale / (4 * p5.pixelDensity()));
+          p5.drawingContext.drawImage(this.image.elt, 0, 0);
+          notes.y += notes.speed;
+          notes.rot++;
+          if (notes.y > 410) {
+            notes.x = randomNumber(10, 390);
+            notes.y = -50;
           }
-        } else {
-          const centroid = context.centroid;
-          for (let i = 0; i < this.notes.length; i++) {
-            p5.push();
-            const notes = this.notes[i];
-            let scale = p5.map(centroid, 5000, 8000, 0, notes.size);
-            scale = p5.constrain(scale, 0, 3);
-            p5.translate(notes.x, notes.y);
-            p5.rotate(notes.rot);
-            p5.scale(scale / (4 * p5.pixelDensity()));
-            p5.drawingContext.drawImage(this.image.elt, 0, 0);
-            notes.y += notes.speed;
-            notes.rot++;
-            if (notes.y > 410) {
-              notes.x = randomNumber(10, 390);
-              notes.y = -50;
-            }
-            p5.pop();
-          }
+          p5.pop();
         }
       },
       reset: function () {
@@ -2246,7 +2171,6 @@ module.exports = class Effects {
       },
     };
 
-    // preview not working
     this.emojis = {
       emojiList: [],
       emojiTypes: [],
@@ -2283,27 +2207,10 @@ module.exports = class Effects {
           for (let i = 0; i < 12; i++) {
             this.emojiList.push({
               x: randomNumber(0, 350),
-              y: randomNumber(0, 350), // changed
+              y: randomNumber(0, 350),
               size: randomNumber(50, 90),
               image: this.emojiTypes[randomNumber(0, 4)],
             });
-          }
-          for (let i = 0; i < this.emojiList.length; ++i) {
-            const emoji = this.emojiList[i];
-            emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
-            if (emoji.y > p5.height * 1.2) {
-              // if the emoji has fallen past 120% of the screen
-              this.emojiList.splice(i, 1);
-            }
-            p5.push();
-            p5.drawingContext.drawImage(
-              emoji.image.elt,
-              emoji.x,
-              emoji.y,
-              emoji.size,
-              emoji.size
-            );
-            p5.pop();
           }
         } else {
           if (p5.frameCount % 10 === 0) {
@@ -2315,25 +2222,26 @@ module.exports = class Effects {
               image: this.emojiTypes[randomNumber(0, 4)],
             });
           }
-          for (let i = 0; i < this.emojiList.length; ++i) {
-            const emoji = this.emojiList[i];
-            emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
-            if (emoji.y > p5.height * 1.2) {
-              // if the emoji has fallen past 120% of the screen
-              this.emojiList.splice(i, 1);
-            }
-            p5.push();
-            p5.drawingContext.drawImage(
-              emoji.image.elt,
-              emoji.x,
-              emoji.y,
-              emoji.size,
-              emoji.size
-            );
-            p5.pop();
-          }
         }
-      },
+
+        for (let i = 0; i < this.emojiList.length; ++i) {
+          const emoji = this.emojiList[i];
+          emoji.y += p5.pow(emoji.size, 0.25); // emoji falls at a rate fourth root to its size
+          if (emoji.y > p5.height * 1.2) {
+            // if the emoji has fallen past 120% of the screen
+            this.emojiList.splice(i, 1);
+          }
+          p5.push();
+          p5.drawingContext.drawImage(
+            emoji.image.elt,
+            emoji.x,
+            emoji.y,
+            emoji.size,
+            emoji.size
+          );
+          p5.pop();
+        }
+        },
       reset: function () {
         this.emojiList = [];
       }
