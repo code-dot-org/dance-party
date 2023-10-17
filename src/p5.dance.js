@@ -301,7 +301,7 @@ module.exports = class DanceParty {
     }
 
     let foregroundEffect = this.getForegroundEffect();
-    if (foregroundEffect.reset) {
+    if (foregroundEffect && foregroundEffect.reset) {
       foregroundEffect.reset();
     }
 
@@ -339,14 +339,13 @@ module.exports = class DanceParty {
   }
 
   getForegroundEffect() {
-    return this.fgEffects_[this.world.fg_effect || 'none'];
-    // if (
-    //   this.world.fg_effect &&
-    //   this.world.fg_effect !== null &&
-    //   this.world.fg_effect !== 'none'
-    // ) {
-    //   return this.fgEffects_[this.world.fg_effect];
-    // }
+    if (
+      this.world.fg_effect &&
+      this.world.fg_effect !== null &&
+      this.world.fg_effect !== 'none'
+    ) {
+      return this.fgEffects_[this.world.fg_effect];
+    }
   }
 
   play(songData, callback) {
