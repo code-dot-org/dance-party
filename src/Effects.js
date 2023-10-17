@@ -1317,7 +1317,6 @@ module.exports = class Effects {
       },
     };
 
-    // hitting reset removes poops from screen
     this.smiling_poop = {
       poopList: [],
       init: function () {
@@ -1978,7 +1977,6 @@ module.exports = class Effects {
       },
     };
 
-    // reset with no notes on screen not previewing correctly :/
     this.music_notes = {
       notes: [],
       init: function () {
@@ -2122,7 +2120,6 @@ module.exports = class Effects {
           this.crayons[this.current_drip].startFrame = p5.frameCount;
         }
       },
-      // buggy, maybe skip advance drawing in preview?
       getPreviewCustomizations: function () {
         return getInPreviewMode() ?
           {getRectHeight: () => p5.random(30, 200)} :
