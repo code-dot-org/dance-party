@@ -325,11 +325,9 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    console.log('setup run');
     this.bgEffects_ = new Effects(this.p5_, 1, this.extraImages);
     this.fgEffects_ = new Effects(this.p5_, 0.8, this.extraImages);
 
-    // what is this
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
   }

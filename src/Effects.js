@@ -74,7 +74,6 @@ module.exports = class Effects {
       return this.currentPalette;
     };
 
-    // figure out what to do here with foregrounds
     this.none = {
       draw: function ({backgroundColor}) {
         p5.background(backgroundColor || 'white');
@@ -799,14 +798,12 @@ module.exports = class Effects {
       },
     };
 
-    // reset clicked with no tacos on the screen
-    // doesn't preview any tacos
     this.raining_tacos = {
       tacos: [],
       init: function () {
-        // if (this.tacos.length) {
-        //   return;
-        // }
+        if (this.tacos.length) {
+          return;
+        }
         for (let i = 0; i < 10; i++) {
           this.tacos.push({
             x: randomNumber(20, 380),
@@ -842,7 +839,6 @@ module.exports = class Effects {
       },
       reset: function () {
         this.tacos = [];
-        this.init();
       },
       getPreviewCustomizations: function () {
         return getInPreviewMode() ?
@@ -1365,7 +1361,6 @@ module.exports = class Effects {
       },
     };
 
-    // seems fine as is in production (doesn't reset though)
     this.hearts_red = {
       heartList: [],
       init: function () {
@@ -1436,10 +1431,11 @@ module.exports = class Effects {
           p5.pop();
         }
       },
+      reset: function () {
+        this.heartList = [];
+      }
     };
 
-    // init happens on setting of foreground
-    // reset happens on reset() (before each run)?
     this.floating_rainbows = {
       rainbows: [],
       init: function () {
@@ -1447,7 +1443,6 @@ module.exports = class Effects {
           return;
         }
 
-        // check if y is varying
         for (let i = 0; i < 15; i++) {
           this.rainbows.push({
             x: randomNumber(10, 390),
@@ -1734,8 +1729,6 @@ module.exports = class Effects {
       },
     };
 
-    // reset button is putting all the stars in the middle
-    // instead of spreading out
     this.exploding_stars = {
       stars: [],
       reset: function () {
@@ -2035,7 +2028,6 @@ module.exports = class Effects {
       },
     };
 
-    // to do
     this.paint_drip = {
       current_drip: 0,
       current_drip_height: 0,
@@ -2046,8 +2038,6 @@ module.exports = class Effects {
       drip_diameter: 20,
       drip_speed: 7,
 
-      // doesn't do much
-      // not sure if dripping_up reset necessary
       reset: function () {
         this.init();
         this.dripping_up = false;
@@ -2069,7 +2059,6 @@ module.exports = class Effects {
           p5.fill(c);
           p5.noStroke();
           let rectHeight = this.getPreviewCustomizations().getRectHeight();
-
 
           // Drip is to the left of moving drip and should be stationary at full height
           if (i < this.current_drip) {
@@ -2096,10 +2085,6 @@ module.exports = class Effects {
             this.drip_diameter,
             this.drip_diameter
           );
-        }
-
-        if (getInPreviewMode()) {
-          return;
         }
 
         // Check if the current drip is 'done'
