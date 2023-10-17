@@ -1,6 +1,6 @@
 {
   "name": "@code-dot-org/dance-party",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
