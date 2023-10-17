@@ -1904,7 +1904,7 @@ module.exports = class Effects {
           const spin = this.getPreviewCustomizations().spin;
           let confetti = {
             x: p5.random(-100, 400),
-            y: p5.random(-100, 400), // changed
+            y: this.getPreviewCustomizations().y,
             velocityX: p5.random(-2, 2),
             size: p5.random(6, 12, 18),
             // https://github.com/Automattic/node-canvas/issues/702
@@ -1939,8 +1939,8 @@ module.exports = class Effects {
       },
       getPreviewCustomizations: function () {
         return getInPreviewMode() ?
-          {numConfettiToDraw: 200, spin: p5.random(1, 80)} :
-          {numConfettiToDraw: 1, spin: 1};
+          {numConfettiToDraw: 200, spin: p5.random(1, 80), y: p5.random(-100, 400)} :
+          {numConfettiToDraw: 1, spin: 1, y: -10};
       }
     };
 
