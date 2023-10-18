@@ -2250,6 +2250,10 @@ module.exports = class Effects {
       getPreviewCustomizations: function () {
         if (getInPreviewMode()) {
           const addEmojisPreview = () => {
+            if (this.emojiList.length) {
+              return;
+            }
+
             for (let i = 0; i < 12; i++) {
               this.emojiList.push({
                 x: randomNumber(0, 350),
