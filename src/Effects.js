@@ -1730,7 +1730,7 @@ module.exports = class Effects {
 
     this.exploding_stars = {
       stars: [],
-      reset: function () {
+      init: function () {
         this.stars = [];
         for (let i = 0; i < 100; i++) {
           let theta = p5.random(0, 360);
@@ -1749,7 +1749,7 @@ module.exports = class Effects {
         p5.angleMode(p5.DEGREES);
         p5.noStroke();
         if (this.stars.length === 0) {
-          this.reset();
+          this.init();
         }
         this.stars.forEach(star => {
           p5.fill(star.color);
