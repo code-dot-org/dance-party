@@ -27,6 +27,12 @@ module.exports = class DanceAPI {
       setBackgroundEffectWithPalette: (effect, palette = 'default') => {
         nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
       },
+      // A function that duplicates the `setBackgroundEffectWithPalette` above for the
+      // AI version of Dance Party that includes additional color palettes and background effects
+      // not included in the original Dance Party 'set background effect' block.
+      setBackgroundEffectWithPaletteAI: (effect, palette = 'default') => {
+        nativeAPI.setBackgroundEffect(effect.toString(), palette.toString());
+      },
       // DEPRECATED
       // An old block may refer to this version of the command,
       // so we're keeping it around for backwards-compat.

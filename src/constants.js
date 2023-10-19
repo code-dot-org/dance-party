@@ -71,6 +71,7 @@ module.exports = {
     'blooming_petals',
     'clouds',
     'frosted_grid',
+    'starburst',
   ],
   FOREGROUND_EFFECTS: [
     'bubbles',
@@ -101,6 +102,20 @@ module.exports = {
     tropical: ['#eb6493', '#72d7fb', '#7efaaa', '#fffe5c', '#ee8633'],
     neon: ['#e035a1', '#a12dd3', '#58b0ed', '#75e847', '#fdf457'],
     rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
+    // Color palettes from poetry lab - a few of the color values have been changed
+    // so that the sprite dancers are more visible or 'pop' against the background.
+    grayscale: ['#000000', '#333333', '#626C7D', '#999999', '#CCCCCC', '#EEEEEE', '#FFFFFF'],
+    sky: ['#3878A4', '#82A9B1', '#ECCEC4', '#F8B8A8', '#E4929C', '#7D7095'],
+    ocean: ['#82A9B1', '#3FABE3', '#2C7DBB', '#1D57A0', '#144188', '#061F4B'],
+    sunrise: ['#F5DC72', '#FC9103', '#F48363', '#F15C4C', '#372031'],
+    sunset: ['#530075', '#921499', '#E559BB', '#F7B9DD', '#307087', '#123F50'],
+    spring: ['#303F06', '#385202', '#547607', '#85AF4C', '#C1E876', '#D7FF6B'],
+    summer: ['#FAD0AE', '#F69F88', '#EE6E51', '#BC4946', '#425D19', '#202E14'],
+    autumn: ['#484F0C', '#AEA82E', '#F5DC72', '#D46324', '#731B31', '#4A173C'],
+    winter: ['#EAECE8', '#E3DDDF', '#D3CEDC', '#A2B6BF', '#626C7D', '#809EC5'],
+    twinkling: ['#F5DC72', '#FC9103', '#BF623C', '#B83604', '#7E1301'],
+    rainbow: ['#A800FF', '#0079FF', '#00F11D', '#FF7F00', '#FF0900'],
+    roses: ['#4C0606', '#86003C', '#E41F7B', '#FF8BA0 ', '#FFB6B3'],
   },
   HIGHER_POWER_COLORS: {
     default: ['#161317', '#2143C5'], // light: black to blue
