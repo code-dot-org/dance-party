@@ -310,11 +310,20 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
+    let foregroundEffect = this.getForegroundEffect();
+    if (foregroundEffect && foregroundEffect.reset) {
+      foregroundEffect.reset();
+    }
+
     this.world.background_color = null;
     this.world.fg_effect = null;
     this.world.bg_effect = null;
     this.world.validationState = {};
     this.world.keysPressed = new Set();
+  }
+
+  setForegroundEffectsInPreviewMode(inPreviewMode) {
+    this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
