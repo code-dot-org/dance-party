@@ -201,6 +201,13 @@ function atTimestampNotAfter(timestamp, unit, func) {
   atTimestampEventGenerator(timestamp, unit, func, false);
 }
 
+/**
+ * Add events for code to execute at a specified time.
+ * @param {number} timestamp
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ * @param {boolean} afterMeasure - If unit is "measures", set event to occur at end of measure (supports legacy block)
+ */
 function atTimestampEventGenerator(timestamp, unit, func, afterMeasure) {
   if (unit === 'measures' && afterMeasure) {
     timestamp += 1;
