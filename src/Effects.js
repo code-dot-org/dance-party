@@ -652,17 +652,23 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
+        const centroidValue = this.getPreviewCustomizations().getCentroid(centroid);
         p5.push();
         p5.rectMode(p5.CENTER);
         p5.translate(200, 200);
         p5.rotate(45);
         p5.noFill();
-        p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
+        p5.strokeWeight(p5.map(centroidValue, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
           p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getCentroid: () => 2000} :
+          {getCentroid: centroid => centroid};
       },
     };
 
@@ -1568,9 +1574,21 @@ module.exports = class Effects {
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
 
-        p5.pop();
-
         this.particles = this.nextParticles();
+
+        // starts to look crazy on reset
+        // pop() order got switched, not sure if a problem
+        if (getInPreviewMode()) {
+          console.log(this.particles);
+          // Copy the off-screen buffer to the canvas.
+          p5.scale(1 / p5.pixelDensity());
+          for (let i = 0; i < 100; i++) {
+            this.drawParticles();
+          }
+          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
+        }
+
+        p5.pop();
       },
 
       drawParticles: function () {
@@ -1655,6 +1673,10 @@ module.exports = class Effects {
         }
         return ret;
       },
+
+      reset: function() {
+        this.particles = [];
+      }
     };
 
     this.bubbles = {

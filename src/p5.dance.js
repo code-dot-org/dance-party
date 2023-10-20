@@ -322,8 +322,9 @@ module.exports = class DanceParty {
     this.world.keysPressed = new Set();
   }
 
-  setForegroundEffectsInPreviewMode(inPreviewMode) {
+  setEffectsInPreviewMode(inPreviewMode) {
     this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
+    this.bgEffects_ && this.bgEffects_.setInPreviewMode(inPreviewMode);
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
