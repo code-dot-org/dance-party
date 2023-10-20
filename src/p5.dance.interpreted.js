@@ -178,14 +178,38 @@ function whenPeak(range, func) {
 }
 
 /**
+ * Execute code at a specified time, either in measures or seconds.
+ * One idiosyncrasy: despite the function's name, if we call atTimestamp(4, "measures", foo),
+ * we actually fire on the 5th measure (i.e after 4 measures have completed).
  * @param {number} timestamp
  * @param {string} unit - Should be "measures" or "seconds"
  * @param {function} func - Code to run when event fires
  */
 function atTimestamp(timestamp, unit, func) {
-  // Despite the functions name, if we call atTimestamp(4, "measures", foo), we
-  // actually want to fire on the 5th measure (i.e after 4 measures have completed)
-  if (unit === 'measures') {
+  atTimestampEventGenerator(timestamp, unit, func, true);
+}
+
+/**
+ * Execute code at a specified time, either in measures or seconds.
+ * Has "NotAfter" suffix to distinguish from "atTimestamp",
+ * which executes code **AFTER** x measures (if time is specified in measures).
+ * @param {number} timestamp
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ */
+function atTimestampNotAfter(timestamp, unit, func) {
+  atTimestampEventGenerator(timestamp, unit, func, false);
+}
+
+/**
+ * Add events for code to execute at a specified time.
+ * @param {number} timestamp
+ * @param {string} unit - Should be "measures" or "seconds"
+ * @param {function} func - Code to run when event fires
+ * @param {boolean} afterMeasure - If unit is "measures", set event to occur at end of measure (supports legacy block)
+ */
+function atTimestampEventGenerator(timestamp, unit, func, afterMeasure) {
+  if (unit === 'measures' && afterMeasure) {
     timestamp += 1;
   }
 
