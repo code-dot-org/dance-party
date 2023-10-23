@@ -1172,26 +1172,6 @@ module.exports = class DanceParty {
     }
   }
 
-  // Called when executing the free-text AI block.
-  async aiText(value) {
-    console.log('AI:', value);
-
-    // Call the main repo's doAI function which will transform this
-    // block's value into a useful response.
-    const response = await this.doAi(value);
-
-    const params = JSON.parse(response);
-    console.log('handle AI:', params);
-
-    this.setBackgroundEffect(params.backgroundEffect, params.backgroundColor);
-
-    this.setForegroundEffect(params.foregroundEffect);
-
-    if (params.setDancer) {
-      this.makeNewDanceSprite('MOOSE', 'harold', null);
-    }
-  }
-
   setFuncContext(type, key) {
     this.contextType = type;
     this.contextKey = key;
