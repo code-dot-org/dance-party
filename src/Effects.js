@@ -1802,38 +1802,60 @@ module.exports = class Effects {
     };
 
     this.galaxy = {
-      space: [],
+      asteroid: [],
       draw: function () {
         p5.background('black');
-        for (let i = 0; i < 3; i++) {
+        const numAsteroidsToDraw = this.getPreviewCustomizations().numAsteroidsToDraw;
+        for (let i = 0; i < numAsteroidsToDraw; i++) {
           let space = {
-            x: 200,
-            y: 200,
+            x: this.getPreviewCustomizations().x,
+            y: this.getPreviewCustomizations().y,
             velocity: p5.createVector(0, 1).rotate(p5.random(0, 360)),
-            size: 0.01,
+            size: 3,
             color: randomColorFromPalette(),
           };
-          this.space.push(space);
+          this.asteroid.push(space);
         }
         p5.noStroke();
-        this.space.forEach(function (space) {
+
+        this.asteroid.forEach(asteroid => {
           p5.push();
-          p5.fill(space.color);
-          p5.translate(space.x, space.y);
-          p5.ellipse(0, 0, space.size, space.size);
-          let speedMultiplier = p5.pow(space.size, 2) / 2;
-          space.x += space.velocity.x * speedMultiplier;
-          space.y += space.velocity.y * speedMultiplier;
-          space.size += 0.1;
+          p5.fill(asteroid.color);
+          p5.translate(asteroid.x, asteroid.y);
+          p5.ellipse(0, 0, asteroid.size, asteroid.size);
+          let speedMultiplier = p5.pow(asteroid.size, 2) / 2;
+          asteroid.x += this.getPreviewCustomizations().getMovementDistance(asteroid.velocity.x, speedMultiplier);
+          asteroid.y += this.getPreviewCustomizations().getMovementDistance(asteroid.velocity.y, speedMultiplier);
+          asteroid.size += 0.1;
           p5.pop();
         });
-        this.space = this.space.filter(function (space) {
-          if (space.x < -5 || space.x > 405 || space.y < -5 || space.y > 405) {
+        this.asteroid = this.asteroid.filter(function (asteroid) {
+          if (asteroid.x < -5 || asteroid.x > 405 || asteroid.y < -5 || asteroid.y > 405) {
             return false;
           }
           return true;
         });
       },
+      reset: function () {
+        this.asteroid = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {
+            numAsteroidsToDraw: 200,
+            size: 3,
+            x: randomNumber(0, 400),
+            y: randomNumber(0, 400),
+            getMovementDistance: () => 0,
+          } :
+          {
+            numAsteroidsToDraw: 3,
+            size: 0.1,
+            x: 200,
+            y: 200,
+            getMovementDistance: (dimension, multiplier) => dimension * multiplier
+          };
+      }
     };
 
     this.pizzas = {
