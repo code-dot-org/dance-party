@@ -1734,13 +1734,17 @@ module.exports = class Effects {
       star: [],
       draw: function () {
         p5.background('#303030');
-        let star = {
-          x: p5.random(0, 400),
-          y: p5.random(0, 400),
-          size: p5.random(15, 30),
-          color: randomColorFromPalette(),
-        };
-        this.star.push(star);
+        const numStarsToDraw = this.getPreviewCustomizations().numStarsToDraw;
+        for (let i = 0; i < numStarsToDraw; i++) {
+          let star = {
+            x: p5.random(0, 400),
+            y: p5.random(0, 400),
+            size: p5.random(15, 30),
+            color: randomColorFromPalette(),
+          };
+          this.star.push(star);
+        }
+
         p5.noStroke();
         this.star.forEach(function (star) {
           p5.push();
@@ -1759,6 +1763,14 @@ module.exports = class Effects {
           return star.size > 0.1;
         });
       },
+      reset: function () {
+        this.star = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numStarsToDraw: 30} :
+          {numStarsToDraw: 1};
+      }
     };
 
     this.exploding_stars = {
