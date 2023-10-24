@@ -1847,14 +1847,14 @@ module.exports = class Effects {
         p5.background('black');
         const numAsteroidsToDraw = this.getPreviewCustomizations().numAsteroidsToDraw;
         for (let i = 0; i < numAsteroidsToDraw; i++) {
-          let space = {
+          let asteroid = {
             x: this.getPreviewCustomizations().x,
             y: this.getPreviewCustomizations().y,
             velocity: p5.createVector(0, 1).rotate(p5.random(0, 360)),
             size: 3,
             color: randomColorFromPalette(),
           };
-          this.asteroid.push(space);
+          this.asteroid.push(asteroid);
         }
         p5.noStroke();
 
@@ -1890,7 +1890,7 @@ module.exports = class Effects {
           } :
           {
             numAsteroidsToDraw: 3,
-            size: 0.1,
+            size: 0.01,
             x: 200,
             y: 200,
             getMovementDistance: (dimension, multiplier) => dimension * multiplier
