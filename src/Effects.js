@@ -1073,7 +1073,6 @@ module.exports = class Effects {
           for (let i = 0; i < numLasersToDraw; i++) {
             let laser = {
               y: this.getPreviewCustomizations().getY(i),
-              z: 400,
               color: this.getPreviewCustomizations().getColor(i)
             };
             this.laser.push(laser);
