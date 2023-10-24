@@ -54,6 +54,7 @@ module.exports = class DanceParty {
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
   }) {
+    console.log('WILLIAM SHAKESPEARE !!');
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
@@ -320,10 +321,15 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.validationState = {};
     this.world.keysPressed = new Set();
+    this.setForegroundEffectsInPreviewMode(false);
   }
 
   setForegroundEffectsInPreviewMode(inPreviewMode) {
     this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
+  }
+
+  getForegroundEffectsInPreviewMode() {
+    return this.fgEffects_ && this.fgEffects_.getInPreviewMode();
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
@@ -358,6 +364,32 @@ module.exports = class DanceParty {
 
   getCurrentPalette() {
     return this.bgEffects_.currentPalette || 'default';
+  }
+
+  livePreview(songData) {
+    if (!this.getForegroundEffectsInPreviewMode()) {
+      console.warn('livePreview() called while not in preview mode!');
+      this.setForegroundEffectsInPreviewMode(true);
+    }
+    this.songMetadata_ = modifySongData(songData);
+    this.analysisPosition_ = 0;
+    this.songStartTime_ = new Date();
+    this.p5_.loop();
+  }
+
+  staticPreview() {
+    if (!this.getForegroundEffectsInPreviewMode()) {
+      console.warn('staticPreview() called while not in preview mode!');
+      this.setForegroundEffectsInPreviewMode(true);
+    }
+    // Force preview draw to occur **after** any
+    // draw iterations already queued up.
+    // redraw() (rather than draw()) is p5's recommended way
+    // of drawing once.
+    setTimeout(() => {
+      this.p5_.redraw();
+      this.setForegroundEffectsInPreviewMode(false);
+    }, 0);
   }
 
   play(songData, callback, userBlockTypes) {
@@ -1151,7 +1183,10 @@ module.exports = class DanceParty {
   ai(params) {
     this.world.aiBlockCalled = true;
     console.log('handle AI:', params);
-    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
+    if (
+      this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE &&
+      this.contextKey
+    ) {
       // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
       this.world.aiBlockContextUserEventKey = this.contextKey;
     }
@@ -1361,7 +1396,8 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] =
+          events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
         events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
