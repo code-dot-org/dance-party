@@ -1851,7 +1851,7 @@ module.exports = class Effects {
             x: this.getPreviewCustomizations().x,
             y: this.getPreviewCustomizations().y,
             velocity: p5.createVector(0, 1).rotate(p5.random(0, 360)),
-            size: 3,
+            size: this.getPreviewCustomizations().size,
             color: randomColorFromPalette(),
           };
           this.asteroid.push(asteroid);
