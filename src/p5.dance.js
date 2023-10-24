@@ -54,7 +54,6 @@ module.exports = class DanceParty {
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
   }) {
-    console.log('WILLIAM SHAKESPEARE !!');
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
     this.showMeasureLabel = showMeasureLabel;
