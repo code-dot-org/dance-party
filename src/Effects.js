@@ -1598,29 +1598,28 @@ module.exports = class Effects {
       },
 
       draw: function () {
+        // Note: the fireworks effect is really an overlay of many draws.
+        // As a result, the typical "single" draw call to generate a preview
+        // actually requires us to draw several times (adding a layer each time)
+        // in order to generate an appropriate visualization.
+        const numLayersToDraw = this.getPreviewCustomizations().numLayersToDraw;
+        for (let i = 0; i < numLayersToDraw; i++) {
+          this.drawLayer();
+        }
+      },
+
+      drawLayer: function () {
         p5.background(0);
         this.buffer.background(0, 25);
 
         p5.push();
         this.drawParticles();
 
+        this.particles = this.nextParticles();
+
         // Copy the off-screen buffer to the canvas.
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
-
-        this.particles = this.nextParticles();
-
-        // starts to look crazy on reset
-        // pop() order got switched, not sure if a problem
-        if (getInPreviewMode()) {
-          console.log(this.particles);
-          // Copy the off-screen buffer to the canvas.
-          p5.scale(1 / p5.pixelDensity());
-          for (let i = 0; i < 100; i++) {
-            this.drawParticles();
-          }
-          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
-        }
 
         p5.pop();
       },
@@ -1708,9 +1707,15 @@ module.exports = class Effects {
         return ret;
       },
 
-      reset: function() {
+      reset: function () {
         this.particles = [];
-      }
+      },
+
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numLayersToDraw: 250} :
+          {numLayersToDraw: 1};
+      },
     };
 
     this.bubbles = {
