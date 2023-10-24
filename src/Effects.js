@@ -1615,13 +1615,13 @@ module.exports = class Effects {
         p5.push();
         this.drawParticles();
 
-        this.particles = this.nextParticles();
-
         // Copy the off-screen buffer to the canvas.
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
 
         p5.pop();
+
+        this.particles = this.nextParticles();
       },
 
       drawParticles: function () {
