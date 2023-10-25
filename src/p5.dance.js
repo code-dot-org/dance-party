@@ -320,7 +320,6 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.validationState = {};
     this.world.keysPressed = new Set();
-    this.setForegroundEffectsInPreviewMode(false);
   }
 
   setForegroundEffectsInPreviewMode(inPreviewMode) {
