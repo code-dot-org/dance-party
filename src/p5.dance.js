@@ -366,10 +366,6 @@ module.exports = class DanceParty {
   }
 
   livePreview(songData) {
-    if (!this.getForegroundEffectsInPreviewMode()) {
-      console.warn('livePreview() called while not in preview mode!');
-      this.setForegroundEffectsInPreviewMode(true);
-    }
     this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
