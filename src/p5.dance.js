@@ -327,10 +327,6 @@ module.exports = class DanceParty {
     this.bgEffects_ && this.bgEffects_.setInPreviewMode(inPreviewMode);
   }
 
-  getForegroundEffectsInPreviewMode() {
-    return this.fgEffects_ && this.fgEffects_.getInPreviewMode();
-  }
-
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
     this.animations[sprite][moveIndex] = {
       spritesheet: spritesheet,
@@ -370,21 +366,6 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
     this.p5_.loop();
-  }
-
-  staticPreview() {
-    if (!this.getForegroundEffectsInPreviewMode()) {
-      console.warn('staticPreview() called while not in preview mode!');
-      this.setForegroundEffectsInPreviewMode(true);
-    }
-    // Force preview draw to occur **after** any
-    // draw iterations already queued up.
-    // redraw() (rather than draw()) is p5's recommended way
-    // of drawing once.
-    setTimeout(() => {
-      this.p5_.redraw();
-      this.setForegroundEffectsInPreviewMode(false);
-    }, 0);
   }
 
   play(songData, callback, userBlockTypes) {
@@ -1178,10 +1159,7 @@ module.exports = class DanceParty {
   ai(params) {
     this.world.aiBlockCalled = true;
     console.log('handle AI:', params);
-    if (
-      this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE &&
-      this.contextKey
-    ) {
+    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
       // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
       this.world.aiBlockContextUserEventKey = this.contextKey;
     }
@@ -1391,8 +1369,7 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events[constants.KEY_WENT_DOWN_EVENT_TYPE] =
-          events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
         events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
