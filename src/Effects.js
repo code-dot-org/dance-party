@@ -652,17 +652,23 @@ module.exports = class Effects {
         if (isPeak) {
           this.update();
         }
+        const centroidValue = this.getPreviewCustomizations().getCentroid(centroid);
         p5.push();
         p5.rectMode(p5.CENTER);
         p5.translate(200, 200);
         p5.rotate(45);
         p5.noFill();
-        p5.strokeWeight(p5.map(centroid, 0, 4000, 0, 50));
+        p5.strokeWeight(p5.map(centroidValue, 0, 4000, 0, 50));
         for (let i = 5; i > -1; i--) {
           p5.stroke(lerpColorFromPalette(((this.hue + i * 10) % 360) / 360));
           p5.rect(0, 0, i * 100 + 50, i * 100 + 50);
         }
         p5.pop();
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {getCentroid: () => 2000} :
+          {getCentroid: centroid => centroid};
       },
     };
 
@@ -1063,23 +1069,23 @@ module.exports = class Effects {
       draw: function () {
         p5.background('black');
         if (this.laser.length < 32) {
-          let laser = {
-            w: 200,
-            x: 200,
-            y: 1750,
-            z: 400,
-            color: lerpColorFromPalette(p5.frameCount / 16),
-          };
-          this.laser.push(laser);
+          const numLasersToDraw = this.getPreviewCustomizations().numLasersToDraw;
+          for (let i = 0; i < numLasersToDraw; i++) {
+            let laser = {
+              y: this.getPreviewCustomizations().getY(i),
+              color: this.getPreviewCustomizations().getColor(i)
+            };
+            this.laser.push(laser);
+          }
         }
         p5.push();
         p5.translate(200, 180);
-        for (const laser of this.laser) {
-          let y = 200 * p5.sin(p5.frameCount);
-          if (y < 0) {
-            y *= -1;
+        for (const [index, laser] of this.laser.entries()) {
+          let x = this.getPreviewCustomizations().getX(index);
+          if (x < 0) {
+            x *= -1;
           }
-          const angle = p5.atan2(laser.y, y);
+          const angle = p5.atan2(laser.y, x);
           p5.stroke(laser.color);
           p5.line(0, 0, p5.sin(angle) * 300, p5.cos(angle) * 300);
           laser.y = laser.y - 100;
@@ -1088,6 +1094,28 @@ module.exports = class Effects {
           }
         }
         p5.pop();
+      },
+      reset: function () {
+        this.laser = [];
+      },
+      // Note to future readers: at the time of writing,
+      // this implementation felt particularly hacky relative to other preview customizations.
+      // It's more challenging than many others, because the effect is "less random" than many other previews.
+      // Definitely open to alternative implementations as time allows!
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {
+            numLasersToDraw: 32,
+            getY: iterationNum => 1750 - (iterationNum * 100),
+            getColor: iterationNum => lerpColorFromPalette(iterationNum / 16),
+            getX: iterationNum => 200 * p5.sin(iterationNum),
+          } :
+          {
+            numLasersToDraw: 1,
+            getY: () => 1750,
+            getColor: () => lerpColorFromPalette(p5.frameCount / 16),
+            getX: () => 200 * p5.sin(p5.frameCount),
+          };
       },
     };
 
@@ -1494,13 +1522,16 @@ module.exports = class Effects {
       flake: [],
       draw: function () {
         p5.background(lerpColorFromPalette(0.5));
-        let flake = {
-          x: p5.random(-100, 400),
-          y: -10,
-          velocityX: p5.random(-2, 2),
-          size: p5.random(6, 12),
-        };
-        this.flake.push(flake);
+        const numSnowflakesToDraw = this.getPreviewCustomizations().numSnowflakesToDraw;
+        for (let i = 0; i < numSnowflakesToDraw; i++) {
+          let flake = {
+            x: p5.random(-100, 400),
+            y: this.getPreviewCustomizations().y,
+            velocityX: p5.random(-2, 2),
+            size: p5.random(6, 12),
+          };
+          this.flake.push(flake);
+        }
         p5.noStroke();
         p5.fill('white');
         this.flake.forEach(function (flake) {
@@ -1518,6 +1549,14 @@ module.exports = class Effects {
         this.flake = this.flake.filter(function (flake) {
           return flake.y < 425;
         });
+      },
+      reset: function () {
+        this.flake = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numSnowflakesToDraw: 200, y: p5.random(-100, 400)} :
+          {numSnowflakesToDraw: 1, y: -10};
       },
     };
 
@@ -1701,13 +1740,17 @@ module.exports = class Effects {
       star: [],
       draw: function () {
         p5.background('#303030');
-        let star = {
-          x: p5.random(0, 400),
-          y: p5.random(0, 400),
-          size: p5.random(15, 30),
-          color: randomColorFromPalette(),
-        };
-        this.star.push(star);
+        const numStarsToDraw = this.getPreviewCustomizations().numStarsToDraw;
+        for (let i = 0; i < numStarsToDraw; i++) {
+          let star = {
+            x: p5.random(0, 400),
+            y: p5.random(0, 400),
+            size: p5.random(15, 30),
+            color: randomColorFromPalette(),
+          };
+          this.star.push(star);
+        }
+
         p5.noStroke();
         this.star.forEach(function (star) {
           p5.push();
@@ -1726,6 +1769,14 @@ module.exports = class Effects {
           return star.size > 0.1;
         });
       },
+      reset: function () {
+        this.star = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {numStarsToDraw: 30} :
+          {numStarsToDraw: 1};
+      }
     };
 
     this.exploding_stars = {
@@ -1769,38 +1820,60 @@ module.exports = class Effects {
     };
 
     this.galaxy = {
-      space: [],
+      asteroid: [],
       draw: function () {
         p5.background('black');
-        for (let i = 0; i < 3; i++) {
-          let space = {
-            x: 200,
-            y: 200,
+        const numAsteroidsToDraw = this.getPreviewCustomizations().numAsteroidsToDraw;
+        for (let i = 0; i < numAsteroidsToDraw; i++) {
+          let asteroid = {
+            x: this.getPreviewCustomizations().x,
+            y: this.getPreviewCustomizations().y,
             velocity: p5.createVector(0, 1).rotate(p5.random(0, 360)),
-            size: 0.01,
+            size: this.getPreviewCustomizations().size,
             color: randomColorFromPalette(),
           };
-          this.space.push(space);
+          this.asteroid.push(asteroid);
         }
         p5.noStroke();
-        this.space.forEach(function (space) {
+
+        this.asteroid.forEach(asteroid => {
           p5.push();
-          p5.fill(space.color);
-          p5.translate(space.x, space.y);
-          p5.ellipse(0, 0, space.size, space.size);
-          let speedMultiplier = p5.pow(space.size, 2) / 2;
-          space.x += space.velocity.x * speedMultiplier;
-          space.y += space.velocity.y * speedMultiplier;
-          space.size += 0.1;
+          p5.fill(asteroid.color);
+          p5.translate(asteroid.x, asteroid.y);
+          p5.ellipse(0, 0, asteroid.size, asteroid.size);
+          let speedMultiplier = p5.pow(asteroid.size, 2) / 2;
+          asteroid.x += this.getPreviewCustomizations().getMovementDistance(asteroid.velocity.x, speedMultiplier);
+          asteroid.y += this.getPreviewCustomizations().getMovementDistance(asteroid.velocity.y, speedMultiplier);
+          asteroid.size += 0.1;
           p5.pop();
         });
-        this.space = this.space.filter(function (space) {
-          if (space.x < -5 || space.x > 405 || space.y < -5 || space.y > 405) {
+        this.asteroid = this.asteroid.filter(function (asteroid) {
+          if (asteroid.x < -5 || asteroid.x > 405 || asteroid.y < -5 || asteroid.y > 405) {
             return false;
           }
           return true;
         });
       },
+      reset: function () {
+        this.asteroid = [];
+      },
+      getPreviewCustomizations: function () {
+        return getInPreviewMode() ?
+          {
+            numAsteroidsToDraw: 200,
+            size: 3,
+            x: randomNumber(0, 400),
+            y: randomNumber(0, 400),
+            getMovementDistance: () => 0,
+          } :
+          {
+            numAsteroidsToDraw: 3,
+            size: 0.01,
+            x: 200,
+            y: 200,
+            getMovementDistance: (dimension, multiplier) => dimension * multiplier
+          };
+      }
     };
 
     this.pizzas = {
