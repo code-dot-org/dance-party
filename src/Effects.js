@@ -1694,10 +1694,6 @@ module.exports = class Effects {
         }
         return ret;
       },
-
-      reset: function() {
-        this.particles = [];
-      }
     };
 
     this.bubbles = {
