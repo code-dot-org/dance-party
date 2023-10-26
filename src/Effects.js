@@ -1607,20 +1607,6 @@ module.exports = class Effects {
         p5.scale(1 / p5.pixelDensity());
         p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
 
-        this.particles = this.nextParticles();
-
-        // starts to look crazy on reset
-        // pop() order got switched, not sure if a problem
-        if (getInPreviewMode()) {
-          console.log(this.particles);
-          // Copy the off-screen buffer to the canvas.
-          p5.scale(1 / p5.pixelDensity());
-          for (let i = 0; i < 100; i++) {
-            this.drawParticles();
-          }
-          p5.drawingContext.drawImage(this.buffer.elt, 0, 0);
-        }
-
         p5.pop();
 
         this.particles = this.nextParticles();
