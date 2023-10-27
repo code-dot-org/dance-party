@@ -117,8 +117,9 @@ module.exports = {
     rainbow: ['#A800FF', '#0079FF', '#00F11D', '#FF7F00', '#FF0900'],
     roses: ['#4C0606', '#86003C', '#E41F7B', '#FF8BA0 ', '#FFB6B3'],
   },
+  // These are the colors specifically agreed to by Coldplay representatives. DO NOT UPDATE.
   HIGHER_POWER_COLORS: {
-    default: ['#161317', '#2143C5'], // light: black to blue
+    default: ['#161317', '#2143C5'], // Light color palette: black to blue
     electronic: ['#3C0A92', '#111111'], // purple to black
     vintage: ['#310B66', '#411573'], // all purple
     cool: ['#161317', '#6820A6'], // black to purple
@@ -127,18 +128,21 @@ module.exports = {
     tropical: ['#571593', '#6820A6'], // all light purple
     neon: ['#2143C5', '#161317'], // blue to black
     rave: ['#171717', '#1B1B1B'], // black and white: all black
-    grayscale: [],
-    sky: [],
-    ocean: [],
-    sunrise: [],
-    sunset: [],
-    spring: [],
-    summer: [],
-    autumn: [],
-    winter: [],
-    twinkling: [],
-    rainbow: [],
-    roses: [],
+
+    // Color palettes from poetry lab - note that the colors used are the same as those above since
+    // these are the colors agreed to by Coldplay representatives. DO NOT UPDATE.
+    grayscale: ['#171717', '#1B1B1B'], // black and white: all black
+    sky: ['#366EC7', '#1D80A7'], // all cyan
+    ocean: ['#161317', '#2143C5'], // black to blue
+    sunrise: ['#571593', '#6820A6'], // all light purple
+    sunset: ['#310B66', '#411573'], // all purple
+    spring: ['#366EC7', '#1D80A7'], // all cyan
+    summer: ['#571593', '#6820A6'], // all light purple
+    autumn: ['#3C0A92', '#111111'], // purple to black
+    winter: ['#2143C5', '#161317'], // blue to black
+    twinkling: ['#571593', '#6820A6'], // all light purple
+    rainbow: ['#161317', '#6820A6'], // black to purple
+    roses: ['#A00B64', '#121212'], // magenta to black
   },
   KEY_WENT_DOWN_EVENT_TYPE: 'this.p5_.keyWentDown',
 };
