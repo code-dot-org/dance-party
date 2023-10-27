@@ -127,6 +127,18 @@ module.exports = {
     tropical: ['#571593', '#6820A6'], // all light purple
     neon: ['#2143C5', '#161317'], // blue to black
     rave: ['#171717', '#1B1B1B'], // black and white: all black
+    grayscale: [],
+    sky: [],
+    ocean: [],
+    sunrise: [],
+    sunset: [],
+    spring: [],
+    summer: [],
+    autumn: [],
+    winter: [],
+    twinkling: [],
+    rainbow: [],
+    roses: [],
   },
   KEY_WENT_DOWN_EVENT_TYPE: 'this.p5_.keyWentDown',
 };
