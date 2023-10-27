@@ -117,7 +117,8 @@ module.exports = {
     rainbow: ['#A800FF', '#0079FF', '#00F11D', '#FF7F00', '#FF0900'],
     roses: ['#4C0606', '#86003C', '#E41F7B', '#FF8BA0 ', '#FFB6B3'],
   },
-  // These are the colors specifically agreed to by Coldplay representatives. DO NOT UPDATE.
+  // Please DO NOT UPDATE these colors.
+  // They were chosen specifically for this theme and should not be changed.
   HIGHER_POWER_COLORS: {
     default: ['#161317', '#2143C5'], // Light color palette: black to blue
     electronic: ['#3C0A92', '#111111'], // purple to black
@@ -128,9 +129,6 @@ module.exports = {
     tropical: ['#571593', '#6820A6'], // all light purple
     neon: ['#2143C5', '#161317'], // blue to black
     rave: ['#171717', '#1B1B1B'], // black and white: all black
-
-    // Color palettes from poetry lab - note that the colors used are the same as those above since
-    // these are the colors agreed to by Coldplay representatives. DO NOT UPDATE.
     grayscale: ['#171717', '#1B1B1B'], // black and white: all black
     sky: ['#366EC7', '#1D80A7'], // all cyan
     ocean: ['#161317', '#2143C5'], // black to blue
