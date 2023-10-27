@@ -361,6 +361,13 @@ module.exports = class DanceParty {
     return this.bgEffects_.currentPalette || 'default';
   }
 
+  livePreview(songData) {
+    this.songMetadata_ = modifySongData(songData);
+    this.analysisPosition_ = 0;
+    this.songStartTime_ = new Date();
+    this.p5_.loop();
+  }
+
   play(songData, callback, userBlockTypes) {
     if (!this.allSpritesLoaded) {
       throw new Error(
