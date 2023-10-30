@@ -14,11 +14,11 @@ yarn run dev
 
 At this point the app will be running at localhost:8080. Open the developer tools in Chrome and you can access the API via `nativeAPI.*`
 
-If you want to make changes locally in dance-party and have them show up in your apps build, do the following
-- In the dance-party directory `yarn link`
-- In the apps directory `yarn link @code-dot-org/dance-party`
+If you want to make changes locally in dance-party and have them show up in your apps build, do the following:
+- In the `code-dot-org/apps` directory, run `yarn link <path to dance-party>`
 
-This will set up a symlink in apps/node_modules to point at your local changes. Run `yarn run build` in dance-party, and then the apps build should pick the changes up next time it builds.
+For example if your `dance-party` and `code-dot-org` projects are stored in your root directory, you would run `yarn link ~/dance-party`.
+Note that there will be local changes in `package.json` and `yarn.lock`.
 
 To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
