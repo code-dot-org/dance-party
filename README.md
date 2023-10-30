@@ -18,7 +18,7 @@ If you want to make changes locally in dance-party and have them show up in your
 - In the `code-dot-org/apps` directory, run `yarn link <path to dance-party>`
 
 For example if your `dance-party` and `code-dot-org` projects are stored in your root directory, you would run `yarn link ~/dance-party`.
-Note that there will be local changes in `package.json` and `yarn.lock`.
+Note that there will be local changes in `package.json` and `yarn.lock` that you want to make sure you don't commit.
 
 To debug unit tests in the Chrome debugger:
 `node --inspect --debug-brk ./node_modules/.bin/tape ./test/unit/*.js`
