@@ -49,7 +49,6 @@ module.exports = class DanceParty {
     i18n = {
       measure: () => 'Measure:',
     },
-    doAi,
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
@@ -108,9 +107,6 @@ module.exports = class DanceParty {
 
     this.world.SPRITE_NAMES = constants.SPRITE_NAMES;
     this.world.MOVE_NAMES = constants.MOVE_NAMES;
-
-    // Store a reference to the main repo's AI function.
-    this.doAi = doAi;
 
     if (spriteConfig) {
       spriteConfig(this.world);
