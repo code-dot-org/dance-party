@@ -74,7 +74,8 @@ module.exports = class DanceParty {
       },
       validationCallback: () => {},
     };
-    // This function will be used for validation to check sequencing of user blocks in workspacd.
+    // This function will be used for validation to check the sequence of two
+    // user blocks in the workspace.
     this.isChildBlockOfTopBlock = isChildBlockOfTopBlock;
 
     this.onPuzzleComplete_ = onPuzzleComplete;
@@ -182,7 +183,9 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = true;
   }
 
-  // userBlocks is an array of block objects that are used in the user's workspace
+  /**
+    @param userBlocks {BlockSvg[]} BlockSvg array from user's workspace
+  */
   setUserBlocks(userBlocks) {
     this.userBlocks = userBlocks;
   }
@@ -191,6 +194,7 @@ module.exports = class DanceParty {
     return this.userBlocks;
   }
 
+  // userBlockTypes is an array of strings that represent block types that are used in the user's workspace.
   getUserBlockTypes() {
     return this.userBlockTypes;
   }
@@ -382,7 +386,7 @@ module.exports = class DanceParty {
         'play() called before ensureSpritesAreLoaded() has completed!'
       );
     }
-    // userBlockTypes is an array of block types (strings) that are used in the user's workspace
+    // userBlockTypes is an array of strings that represent blocks that are used in the user's workspace.
     this.userBlockTypes = userBlockTypes;
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
