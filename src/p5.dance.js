@@ -52,6 +52,7 @@ module.exports = class DanceParty {
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
+    isChildBlockOfTopBlock,
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -73,6 +74,8 @@ module.exports = class DanceParty {
       },
       validationCallback: () => {},
     };
+    // This function will be used for validation to check sequencing of user blocks in workspacd.
+    this.isChildBlockOfTopBlock = isChildBlockOfTopBlock;
 
     this.onPuzzleComplete_ = onPuzzleComplete;
     this.playSound_ = playSound;
@@ -177,6 +180,15 @@ module.exports = class DanceParty {
     promises.push(this.loadExtraImages());
     await Promise.all(promises);
     this.allSpritesLoaded = true;
+  }
+
+  // userBlocks is an array of block objects that are used in the user's workspace
+  setUserBlocks(userBlocks) {
+    this.userBlocks = userBlocks;
+  }
+
+  getUserBlocks() {
+    return this.userBlocks;
   }
 
   getUserBlockTypes() {
@@ -370,6 +382,7 @@ module.exports = class DanceParty {
         'play() called before ensureSpritesAreLoaded() has completed!'
       );
     }
+    // userBlockTypes is an array of block types (strings) that are used in the user's workspace
     this.userBlockTypes = userBlockTypes;
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
