@@ -386,7 +386,7 @@ module.exports = class DanceParty {
         'play() called before ensureSpritesAreLoaded() has completed!'
       );
     }
-    // userBlockTypes is an array of strings that represent blocks used in the user's workspace.
+    // userBlockTypes is an array of strings that represent block types used in the user's workspace.
     this.userBlockTypes = userBlockTypes;
     this.resetPerformanceDataForRun_();
     if (this.recordReplayLog_) {
