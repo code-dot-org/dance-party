@@ -145,6 +145,9 @@ module.exports = class DanceParty {
 
     this.songStartTime_ = 0;
 
+    // Whether to loop analysis events. Used in live preview.
+    this.loopAnalysisEvents = false;
+
     new P5(p5Inst => {
       this.p5_ = p5Inst;
       this.resourceLoader_.initWithP5(p5Inst);
@@ -321,6 +324,7 @@ module.exports = class DanceParty {
     this.world.keysPressed = new Set();
     this.world.spriteGroupsCalledToChangeMove = [];
     this.world.spriteStyles = [];
+    this.loopAnalysisEvents = false;
   }
 
   setEffectsInPreviewMode(inPreviewMode) {
@@ -366,6 +370,7 @@ module.exports = class DanceParty {
     this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
+    this.loopAnalysisEvents = true;
     this.p5_.loop();
   }
 
@@ -1394,6 +1399,13 @@ module.exports = class DanceParty {
         }
       }
       this.analysisPosition_++;
+    }
+
+    // If we've reached the end of the analysis events and are looping, reset
+    // to the beginning. This is only used in live preview (where there is no song playback).
+    if (this.loopAnalysisEvents && this.analysisPosition_ >= length) {
+      this.analysisPosition_ = 0;
+      this.songStartTime_ = Date.now();
     }
 
     while (
