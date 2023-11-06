@@ -83,6 +83,10 @@ module.exports = class DanceParty {
 
     this.world.keysPressed = new Set();
 
+    // These variables are used for validation support.
+    this.world.spriteGroupsCalledToChangeMove = [];
+    this.world.spriteStyles = [];
+
     this.peakThisFrame_ = false;
     this.energy_ = 0;
     this.centroid_ = 0;
@@ -293,6 +297,7 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
+    // The following three world variables are used for validation support.
     this.world.aiBlockCalled = false;
     this.world.aiBlockContextUserEventKey = null;
     // This value is set to `true` if any of the AI blocks in a user program
@@ -319,7 +324,8 @@ module.exports = class DanceParty {
     this.world.bg_effect = null;
     this.world.validationState = {};
     this.world.keysPressed = new Set();
-
+    this.world.spriteGroupsCalledToChangeMove = [];
+    this.world.spriteStyles = [];
     this.loopAnalysisEvents = false;
   }
 
@@ -454,6 +460,7 @@ module.exports = class DanceParty {
     }
 
     sprite.style = costume;
+    this.world.spriteStyles.push(costume);
     this.getGroupByName_(costume).add(sprite);
 
     sprite.mirroring = 1;
@@ -703,6 +710,7 @@ module.exports = class DanceParty {
   }
 
   changeMoveEachLR(group, move, dir) {
+    this.world.spriteGroupsCalledToChangeMove.push(group);
     group = this.getGroupByName_(group);
     if (move === 'rand' && group.length > 0) {
       move = this.getNewChangedMove(move, group[0].current_move, false);
