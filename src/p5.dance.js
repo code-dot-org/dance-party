@@ -83,6 +83,7 @@ module.exports = class DanceParty {
 
     this.world.keysPressed = new Set();
 
+    // These variables are used for validation support.
     this.world.spriteGroupsCalledToChangeMove = [];
     this.world.spriteStyles = [];
 
@@ -296,6 +297,7 @@ module.exports = class DanceParty {
     this.allSpritesLoaded = false;
     this.songStartTime_ = 0;
     this.analysisPosition_ = 0;
+    // The following three world variables are used for validation support.
     this.world.aiBlockCalled = false;
     this.world.aiBlockContextUserEventKey = null;
     // This value is set to `true` if any of the AI blocks in a user program
