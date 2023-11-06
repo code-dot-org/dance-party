@@ -144,6 +144,7 @@ module.exports = class DanceParty {
 
     // Whether to loop analysis events. Used in live preview.
     this.loopAnalysisEvents = false;
+    this.livePreviewStopTime = 0;
 
     new P5(p5Inst => {
       this.p5_ = p5Inst;
@@ -321,6 +322,7 @@ module.exports = class DanceParty {
     this.world.keysPressed = new Set();
 
     this.loopAnalysisEvents = false;
+    this.livePreviewStopTime = 0;
   }
 
   setEffectsInPreviewMode(inPreviewMode) {
@@ -362,11 +364,19 @@ module.exports = class DanceParty {
     return this.bgEffects_.currentPalette || 'default';
   }
 
-  livePreview(songData) {
+  /**
+   * Starts a live preview of the animation only (no audio).
+   *
+   * @param {Object} songData - song metadata for the preview
+   * @param {number | undefined} durationMs - (optional) duration to run the preview for in milliseconds.
+   *    If no duration is provided, the preview will run continuously until reset() is called
+   */
+  livePreview(songData, durationMs) {
     this.songMetadata_ = modifySongData(songData);
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
     this.loopAnalysisEvents = true;
+    this.livePreviewStopTime = durationMs === undefined ? 0 : Date.now() + durationMs;
     this.p5_.loop();
   }
 
@@ -1561,6 +1571,11 @@ module.exports = class DanceParty {
 
     if (Object.keys(events).length && this.onHandleEvents) {
       this.onHandleEvents(events);
+    }
+
+    // Stop live preview animation if necessary.
+    if (this.livePreviewStopTime && Date.now() > this.livePreviewStopTime) {
+      this.p5_.noLoop();
     }
   }
 };
