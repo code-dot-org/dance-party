@@ -46,6 +46,7 @@ module.exports = class DanceParty {
     showMeasureLabel = true,
     container,
     spriteConfig,
+    logger,
     i18n = {
       measure: () => 'Measure:',
     },
@@ -150,6 +151,8 @@ module.exports = class DanceParty {
     this.loopAnalysisEvents = false;
     this.livePreviewStopTime = 0;
 
+    this.logger = logger;
+
     new P5(p5Inst => {
       this.p5_ = p5Inst;
       this.resourceLoader_.initWithP5(p5Inst);
@@ -193,7 +196,7 @@ module.exports = class DanceParty {
 
   async loadCostumeAnimations(costume, costumeData) {
     if (!this.animations[costume]) {
-      console.log('Unexpected costume: ' + costume);
+      this.logWarning('Unexpected costume: ' + costume);
       // Invalid costume, nothing to do:
       return;
     }
@@ -425,6 +428,17 @@ module.exports = class DanceParty {
     if (constants.RANDOM_EFFECT_KEY === palette) {
       palette = this.bgEffects_.randomBackgroundPalette();
     }
+
+    if (this.bgEffects_[effect] === undefined) {
+      this.logWarning('Unknown background effect: ' + effect);
+      return;
+    }
+
+    if (constants.PALETTES[palette] === undefined) {
+      this.logWarning('Unknown palette: ' + palette);
+      return;
+    }
+
     this.world.bg_effect = effect;
     this.bgEffects_.currentPalette = palette;
 
@@ -437,6 +451,12 @@ module.exports = class DanceParty {
     if (constants.RANDOM_EFFECT_KEY === effect) {
       effect = this.fgEffects_.randomForegroundEffect();
     }
+
+    if (this.fgEffects_[effect] === undefined) {
+      this.logWarning('Unknown foreground effect: ' + effect);
+      return;
+    }
+
     this.world.fg_effect = effect;
 
     if (this.fgEffects_[effect].init) {
@@ -1023,7 +1043,7 @@ module.exports = class DanceParty {
         sprite.rotation = 0;
       });
     } else {
-      console.log('Unexpected layout format: ' + format);
+      this.logWarning('Unexpected layout format: ' + format);
     }
 
     // We want sprites that are lower in the canvas to show up on top of those
@@ -1473,6 +1493,11 @@ module.exports = class DanceParty {
 
   registerValidation(callback) {
     this.world.validationCallback = callback;
+  }
+
+  logWarning(message) {
+    this.logger && this.logger.logWarning(message);
+    console.warn(message);
   }
 
   draw() {
