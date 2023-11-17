@@ -1,4 +1,5 @@
 const test = require('tape');
+const sinon = require('sinon');
 const helpers = require('../helpers/createDanceAPI');
 
 test('setBackground clears the bgEffect and sets background_color', async t => {
@@ -136,4 +137,67 @@ test('random foreground effect', async t => {
 
   t.end();
   nativeAPI.reset();
+});
+
+test('logs invalid background effect', async t => {
+  const invalidEffect = 'invalid';
+  const loggerSpy = {
+    logWarning: sinon.spy(),
+  };
+  const consoleSpy = sinon.spy(console, 'warn');
+  const nativeAPI = await helpers.createDanceAPI({
+    logger: loggerSpy
+  });
+
+  nativeAPI.setBackgroundEffect(invalidEffect);
+  t.equal(consoleSpy.callCount, 1);
+  t.equal(loggerSpy.logWarning.callCount, 1);
+  const warningMessage = loggerSpy.logWarning.firstCall.args[0];
+  t.true(warningMessage.includes(invalidEffect));
+
+  t.end();
+  nativeAPI.reset();
+  sinon.restore();
+});
+
+test('logs invalid foreground effect', async t => {
+  const invalidEffect = 'invalid';
+  const loggerSpy = {
+    logWarning: sinon.spy(),
+  };
+  const consoleSpy = sinon.spy(console, 'warn');
+  const nativeAPI = await helpers.createDanceAPI({
+    logger: loggerSpy
+  });
+
+  nativeAPI.setForegroundEffect(invalidEffect);
+  t.equal(consoleSpy.callCount, 1);
+  t.equal(loggerSpy.logWarning.callCount, 1);
+  const warningMessage = loggerSpy.logWarning.firstCall.args[0];
+  t.true(warningMessage.includes(invalidEffect));
+
+  t.end();
+  nativeAPI.reset();
+  sinon.restore();
+});
+
+test('logs invalid background palette', async t => {
+  const invalidPalette = 'invalid';
+  const loggerSpy = {
+    logWarning: sinon.spy(),
+  };
+  const consoleSpy = sinon.spy(console, 'warn');
+  const nativeAPI = await helpers.createDanceAPI({
+    logger: loggerSpy
+  });
+
+  nativeAPI.setBackgroundEffect('color_cycle', invalidPalette);
+  t.equal(consoleSpy.callCount, 1);
+  t.equal(loggerSpy.logWarning.callCount, 1);
+  const warningMessage = loggerSpy.logWarning.firstCall.args[0];
+  t.true(warningMessage.includes(invalidPalette));
+
+  t.end();
+  nativeAPI.reset();
+  sinon.restore();
 });
