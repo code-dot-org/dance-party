@@ -140,7 +140,7 @@ test('random foreground effect', async t => {
 });
 
 test('logs invalid background effect', async t => {
-  const invalidEffect = 'invalid';
+  const invalidEffect = 'invalidBg';
   const loggerSpy = {
     logWarning: sinon.spy(),
   };
@@ -161,7 +161,7 @@ test('logs invalid background effect', async t => {
 });
 
 test('logs invalid foreground effect', async t => {
-  const invalidEffect = 'invalid';
+  const invalidEffect = 'invalidFg';
   const loggerSpy = {
     logWarning: sinon.spy(),
   };
@@ -182,7 +182,7 @@ test('logs invalid foreground effect', async t => {
 });
 
 test('logs invalid background palette', async t => {
-  const invalidPalette = 'invalid';
+  const invalidPalette = 'invalidPalette';
   const loggerSpy = {
     logWarning: sinon.spy(),
   };
