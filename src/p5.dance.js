@@ -60,6 +60,7 @@ module.exports = class DanceParty {
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
     this.resourceLoader_ = resourceLoader;
+    this.inPreviewMode = false;
 
     const containerElement = document.getElementById(container);
     this.rtl =
@@ -335,9 +336,12 @@ module.exports = class DanceParty {
     this.livePreviewStopTime = 0;
   }
 
-  setEffectsInPreviewMode(inPreviewMode) {
-    this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
-    this.bgEffects_ && this.bgEffects_.setInPreviewMode(inPreviewMode);
+  setEffectsInPreviewMode = inPreviewMode => {
+    this.inPreviewMode = inPreviewMode;
+  }
+
+  getEffectsInPreviewMode = () => {
+    return this.inPreviewMode;
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
@@ -349,8 +353,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new BackgroundEffects(this.p5_, 1, this.extraImages);
-    this.fgEffects_ = new ForegroundEffects(this.p5_, 0.8);
+    this.bgEffects_ = new BackgroundEffects(this.p5_, 1, this.getEffectsInPreviewMode, this.extraImages);
+    this.fgEffects_ = new ForegroundEffects(this.p5_, 0.8, this.getEffectsInPreviewMode);
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);

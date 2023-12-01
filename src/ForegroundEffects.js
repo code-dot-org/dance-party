@@ -1,4 +1,5 @@
 const constants = require('./constants');
+const utils = require('./utils');
 
 const rain = require('./effects/foreground/rain');
 const rainingTacos = require('./effects/foreground/rainingTacos');
@@ -19,10 +20,8 @@ const paintDrip = require('./effects/foreground/paintDrip');
 const emojis = require('./effects/foreground/emojis');
 
 module.exports = class ForegroundEffects {
-  constructor(p5, alpha) {
+  constructor(p5, alpha, getEffectsInPreviewMode) {
     this.p5_ = p5;
-    this.inPreviewMode = false;
-    const getInPreviewMode = this.getInPreviewMode.bind(this);
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -53,51 +52,32 @@ module.exports = class ForegroundEffects {
     // selecting "none" as a foreground is a no-op,
     // whereas selecting it as a background actually draws a white background.
     this.none = {
-      draw: function () {
-      }
+      draw: function () {},
     };
 
     this.rain = rain(p5, randomNumber);
-    this.raining_tacos = rainingTacos(p5, randomNumber, getInPreviewMode);
-    this.pineapples = pineapples(p5, randomNumber, getInPreviewMode);
+    this.raining_tacos = rainingTacos(p5, randomNumber, getEffectsInPreviewMode);
+    this.pineapples = pineapples(p5, randomNumber, getEffectsInPreviewMode);
     this.spotlight = spotlight(p5, randomNumber);
     this.color_lights = colorLights(p5, randomNumber, randomColor);
-    this.smiling_poop = smilingPoop(p5, randomNumber, getInPreviewMode);
+    this.smiling_poop = smilingPoop(p5, randomNumber, getEffectsInPreviewMode);
     this.hearts_red = heartsRed(p5, randomNumber);
     this.hearts_colorful = heartsColorful(p5, randomNumber, randomColor);
-    this.floating_rainbows = floatingRainbows(p5, randomNumber, getInPreviewMode);
-    this.bubbles = bubbles(p5, randomColor, getInPreviewMode);
-    this.exploding_stars = explodingStars(p5, randomNumber, randomColor, getInPreviewMode);
-    this.pizzas = pizzas(p5, randomNumber, getInPreviewMode);
-    this.smile_face = smileFace(p5, randomNumber, getInPreviewMode);
-    this.confetti = confetti(p5, randomColor, getInPreviewMode);
-    this.music_notes = musicNotes(p5, randomNumber, getInPreviewMode);
-    this.paint_drip = paintDrip(p5, lerpColorFromSpecificPalette, getInPreviewMode);
-    this.emojis = emojis(p5, randomNumber, getInPreviewMode);
-  }
-
-  setInPreviewMode(inPreviewMode) {
-    this.inPreviewMode = inPreviewMode;
-  }
-
-  getInPreviewMode() {
-    return this.inPreviewMode;
+    this.floating_rainbows = floatingRainbows(p5, randomNumber, getEffectsInPreviewMode);
+    this.bubbles = bubbles(p5, randomColor, getEffectsInPreviewMode);
+    this.exploding_stars = explodingStars(p5, randomNumber, randomColor, getEffectsInPreviewMode);
+    this.pizzas = pizzas(p5, randomNumber, getEffectsInPreviewMode);
+    this.smile_face = smileFace(p5, randomNumber, getEffectsInPreviewMode);
+    this.confetti = confetti(p5, randomColor, getEffectsInPreviewMode);
+    this.music_notes = musicNotes(p5, randomNumber, getEffectsInPreviewMode);
+    this.paint_drip = paintDrip(p5, lerpColorFromSpecificPalette, getEffectsInPreviewMode);
+    this.emojis = emojis(p5, randomNumber, getEffectsInPreviewMode);
   }
 
   randomForegroundEffect() {
     const effects = constants.FOREGROUND_EFFECTS.filter(name =>
       this.hasOwnProperty(name)
     );
-    return this.sample_(effects);
-  }
-
-  /**
-   * Randomly pick one element out of an array.
-   * @param {Array.<T>} collection
-   * @returns {T}
-   * @private
-   */
-  sample_(collection) {
-    return collection[Math.floor(this.p5_.random(0, collection.length))];
+    return utils.sample(effects);
   }
 };

@@ -1,3 +1,11 @@
+/**
+ * Randomly pick one element out of an array.
+ * @param {Array.<T>} collection
+ * @returns {T}
+ * @private
+ */
+const sample = (collection) => collection[Math.floor(Math.random() * collection.length)];
+
 module.exports = {
   hexToRgb: function (hexColor) {
     const R = parseInt(hexColor.substr(1, 2), 16);
@@ -19,4 +27,5 @@ module.exports = {
     }
     return color;
   },
+  sample,
 };

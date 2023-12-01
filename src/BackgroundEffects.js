@@ -1,4 +1,5 @@
 const constants = require('./constants');
+const utils = require('./utils');
 
 const discoBall = require('./effects/background/discoBall');
 const higherPower = require('./effects/background/higherPower');
@@ -30,13 +31,9 @@ const squiggles = require('./effects/background/squiggles');
 const musicWave = require('./effects/background/musicWave');
 
 module.exports = class BackgroundEffects {
-  constructor(p5, alpha, extraImages) {
+  constructor(p5, alpha, getEffectsInPreviewMode, extraImages) {
     this.p5_ = p5;
-    this.extraImages = extraImages;
     this.currentPalette = 'default';
-    this.inPreviewMode = false;
-    const getInPreviewMode = this.getInPreviewMode.bind(this);
-
 
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
@@ -96,51 +93,33 @@ module.exports = class BackgroundEffects {
     this.clouds = clouds(p5, lerpColorFromPalette);
     this.frosted_grid = frostedGrid(p5, getCurrentPalette, randomNumber);
     this.starburst = starburst(p5, lerpColorFromPalette, randomColorFromPalette, randomNumber);
-    this.diamonds = diamonds(p5, lerpColorFromPalette, getInPreviewMode);
+    this.diamonds = diamonds(p5, lerpColorFromPalette, getEffectsInPreviewMode);
     this.circles = circles(p5, lerpColorFromPalette);
     this.sparkles = sparkles(p5, randomColorFromPalette, randomNumber);
-    this.text = text(p5, lerpColorFromPalette, colorFromHue, randomNumber, getInPreviewMode);
+    this.text = text(p5, lerpColorFromPalette, colorFromHue, randomNumber, getEffectsInPreviewMode);
     this.splatter = splatter(p5, randomColorFromPalette);
     this.swirl = swirl(p5, randomColorFromPalette);
     this.spiral = spiral(p5, lerpColorFromPalette);
-    this.lasers = lasers(p5, lerpColorFromPalette, getInPreviewMode);
+    this.lasers = lasers(p5, lerpColorFromPalette, getEffectsInPreviewMode);
     this.quads = quads(p5, colorFromPalette);
     this.kaleidoscope = kaleidoscope(p5, colorFromPalette);
-    this.snowflakes = snowflakes(p5, lerpColorFromPalette, getInPreviewMode);
+    this.snowflakes = snowflakes(p5, lerpColorFromPalette, getEffectsInPreviewMode);
     this.fireworks = fireworks(p5, randomColorFromPalette, randomNumber);
-    this.stars = stars(p5, randomColorFromPalette, getInPreviewMode);
-    this.galaxy = galaxy(p5, randomColorFromPalette, randomNumber, getInPreviewMode);
+    this.stars = stars(p5, randomColorFromPalette, getEffectsInPreviewMode);
+    this.galaxy = galaxy(p5, randomColorFromPalette, randomNumber, getEffectsInPreviewMode);
     this.growing_stars = growingStars(p5, colorFromPalette);
     this.squiggles = squiggles(p5, lerpColorFromPalette);
     this.music_wave = musicWave(p5, lerpColorFromPalette);
-  }
-
-  setInPreviewMode(inPreviewMode) {
-    this.inPreviewMode = inPreviewMode;
-  }
-
-  getInPreviewMode() {
-    return this.inPreviewMode;
   }
 
   randomBackgroundEffect() {
     const effects = constants.BACKGROUND_EFFECTS.filter(name =>
       this.hasOwnProperty(name)
     );
-    return this.sample_(effects);
+    return utils.sample(effects);
   }
 
   randomBackgroundPalette() {
-    return this.sample_(Object.keys(constants.PALETTES));
-  }
-
-  /**
-   * Randomly pick one element out of an array.
-   * @param {Array.<T>} collection
-   * @returns {T}
-   * @private
-   */
-  sample_(collection) {
-    return collection[Math.floor(this.p5_.random(0, collection.length))];
+    return utils.sample(Object.keys(constants.PALETTES));
   }
 };
