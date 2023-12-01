@@ -1,5 +1,5 @@
-const drawStarburst = require('../shapes/starburst');
-const drawStar = require('../shapes/star');
+const drawStarburst = require('../../shapes/starburst');
+const drawStar = require('../../shapes/star');
 
 // This background effect is inspired by the Poetry foreground effect 'starburst'
 // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/foregroundEffects.js#L235

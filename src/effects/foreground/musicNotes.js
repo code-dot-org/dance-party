@@ -1,4 +1,4 @@
-const drawMusicNote = require('../shapes/musicNote');
+const drawMusicNote = require('../../shapes/musicNote');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {

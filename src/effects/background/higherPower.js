@@ -1,4 +1,4 @@
-const constants = require("../constants");
+const constants = require("../../constants");
 
 module.exports = function (p5, getCurrentPalette, extraImages) {
   return {

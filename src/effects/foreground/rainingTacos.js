@@ -1,4 +1,4 @@
-const drawTaco = require('../shapes/taco');
+const drawTaco = require('../../shapes/taco');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {

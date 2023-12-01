@@ -1,4 +1,4 @@
-const drawStar = require('../shapes/star');
+const drawStar = require('../../shapes/star');
 
 module.exports = function (p5, colorFromPalette) {
   return {

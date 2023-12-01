@@ -1,4 +1,4 @@
-const drawSwirl = require('../shapes/swirl');
+const drawSwirl = require('../../shapes/swirl');
 
 module.exports = function (p5, randomColorFromPalette) {
   return {

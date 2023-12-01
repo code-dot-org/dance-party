@@ -1,4 +1,4 @@
-const drawSparkle = require("../shapes/sparkle");
+const drawSparkle = require("../../shapes/sparkle");
 
 module.exports = function (p5, lerpColorFromPalette, colorFromPalette) {
   return {

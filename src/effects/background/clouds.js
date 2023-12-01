@@ -1,4 +1,4 @@
-const {getP5Color} = require('../utils');
+const {getP5Color} = require('../../utils');
 
 // This effect is slightly modified from Poetry background effect 'clouds'
 // https://github.com/code-dot-org/code-dot-org/blob/381e9b93f7cbd081738dfa7adbc9e7ce4e169a0c/apps/src/p5lab/poetry/commands/backgroundEffects.js#L368

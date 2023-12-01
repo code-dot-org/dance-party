@@ -1,4 +1,4 @@
-const drawPoop = require('../shapes/poop');
+const drawPoop = require('../../shapes/poop');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {

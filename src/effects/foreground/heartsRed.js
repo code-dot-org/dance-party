@@ -1,4 +1,4 @@
-const drawHeart = require('../shapes/heart');
+const drawHeart = require('../../shapes/heart');
 
 module.exports = function (p5, randomNumber) {
   return {

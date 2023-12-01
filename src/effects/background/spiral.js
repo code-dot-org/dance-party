@@ -1,4 +1,4 @@
-const drawSpiral = require('../shapes/spiral');
+const drawSpiral = require('../../shapes/spiral');
 
 module.exports = function (p5, lerpColorFromPalette) {
   return {

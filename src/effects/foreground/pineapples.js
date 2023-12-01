@@ -1,4 +1,4 @@
-const drawPineapple = require('../shapes/pineapple');
+const drawPineapple = require('../../shapes/pineapple');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {

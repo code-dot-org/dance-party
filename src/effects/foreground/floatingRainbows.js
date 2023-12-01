@@ -1,4 +1,4 @@
-const drawRainbow = require('../shapes/rainbow');
+const drawRainbow = require('../../shapes/rainbow');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {

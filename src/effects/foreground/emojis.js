@@ -1,8 +1,8 @@
-const drawLovestruck = require('../shapes/lovestruck');
-const drawSmiley = require('../shapes/smiley');
-const drawStarstruck = require('../shapes/starstruck');
-const drawTickled = require('../shapes/tickled');
-const drawWink = require('../shapes/wink');
+const drawLovestruck = require('../../shapes/lovestruck');
+const drawSmiley = require('../../shapes/smiley');
+const drawStarstruck = require('../../shapes/starstruck');
+const drawTickled = require('../../shapes/tickled');
+const drawWink = require('../../shapes/wink');
 
 module.exports = function (p5, randomNumber, getInPreviewMode) {
   return {
