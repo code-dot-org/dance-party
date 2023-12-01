@@ -43,5 +43,5 @@ module.exports = function (p5, lerpColorFromPalette) {
       });
       p5.pop();
     },
-  }
+  };
 };
