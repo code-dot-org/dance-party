@@ -1,11 +1,13 @@
 const DanceParty = require('./p5.dance');
-const Effects = require('./Effects');
+const BackgroundEffects = require('./BackgroundEffects');
+const ForegroundEffects = require('./ForegroundEffects');
 const ResourceLoader = require('./ResourceLoader');
 const constants = require('./constants');
 
 module.exports = {
   DanceParty,
-  Effects,
+  BackgroundEffects,
+  ForegroundEffects,
   ResourceLoader,
   constants,
 };
