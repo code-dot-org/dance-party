@@ -336,11 +336,11 @@ module.exports = class DanceParty {
     this.livePreviewStopTime = 0;
   }
 
-  setEffectsInPreviewMode = inPreviewMode => {
+  setEffectsInPreviewMode(inPreviewMode) {
     this.inPreviewMode = inPreviewMode;
   }
 
-  getEffectsInPreviewMode = () => {
+  getEffectsInPreviewMode() {
     return this.inPreviewMode;
   }
 
@@ -353,8 +353,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new BackgroundEffects(this.p5_, 1, this.getEffectsInPreviewMode, this.extraImages);
-    this.fgEffects_ = new ForegroundEffects(this.p5_, 0.8, this.getEffectsInPreviewMode);
+    this.bgEffects_ = new BackgroundEffects(this.p5_, 1, this.getEffectsInPreviewMode.bind(this), this.extraImages);
+    this.fgEffects_ = new ForegroundEffects(this.p5_, 0.8, this.getEffectsInPreviewMode.bind(this));
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
