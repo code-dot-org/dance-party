@@ -1,4 +1,4 @@
-const createBackgroundScreenshot = require('./createBackgroundScreenshot');
+const createBackgroundScreenshot = require('./createEffectScreenshot');
 /**
  * Run: 'node ./test/visual/helpers/generateScreenshot.js <effectName> <pathToDirectory> <optional_palette>'
  *

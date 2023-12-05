@@ -28,4 +28,5 @@ module.exports = {
     return color;
   },
   sample,
+  noOp: () => {},
 };

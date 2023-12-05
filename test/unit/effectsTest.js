@@ -1,5 +1,6 @@
 const test = require('tape');
 const sinon = require('sinon');
+const utils = require('../../src/utils');
 const helpers = require('../helpers/createDanceAPI');
 
 test('setBackground clears the bgEffect and sets background_color', async t => {
@@ -73,32 +74,33 @@ test('other background effects', async t => {
 
 test('random background effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.p5_.randomSeed(0);
+  sinon.stub(Math, 'random').returns(0);
 
   nativeAPI.setBackgroundEffect('rand');
-  t.equal(nativeAPI.world.bg_effect, 'kaleidoscope');
+  t.equal(nativeAPI.world.bg_effect, 'circles');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
   t.end();
   nativeAPI.reset();
+  sinon.restore();
 });
 
-test('rainbow foreground effect updates with specified effect', async t => {
+test('rainbow background effect updates with specified effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
   // Initial Values
-  t.equal(nativeAPI.world.fg_effect, null);
+  t.equal(nativeAPI.world.bg_effect, null);
 
-  nativeAPI.setForegroundEffect('rainbow');
+  nativeAPI.setBackgroundEffect('rainbow');
 
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 0, 0]);
-  t.deepEqual(nativeAPI.getForegroundEffect().current, 0);
-  nativeAPI.getForegroundEffect().update();
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 0, 1]);
-  t.equal(nativeAPI.getForegroundEffect().current, 1);
-  nativeAPI.getForegroundEffect().update();
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 1, 1]);
-  t.equal(nativeAPI.getForegroundEffect().current, 2);
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 0, 0]);
+  t.deepEqual(nativeAPI.getBackgroundEffect().current, 0);
+  nativeAPI.getBackgroundEffect().update();
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 0, 1]);
+  t.equal(nativeAPI.getBackgroundEffect().current, 1);
+  nativeAPI.getBackgroundEffect().update();
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 1, 1]);
+  t.equal(nativeAPI.getBackgroundEffect().current, 2);
 
   t.end();
   nativeAPI.reset();
@@ -121,7 +123,7 @@ test('setting fg effect to none clears the fg effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.setForegroundEffect('color_lights');
   nativeAPI.setForegroundEffect('none');
-  t.equal(nativeAPI.getForegroundEffect(), undefined);
+  t.equal(nativeAPI.getForegroundEffect().draw, utils.noOp);
 
   t.end();
   nativeAPI.reset();
@@ -129,14 +131,15 @@ test('setting fg effect to none clears the fg effect', async t => {
 
 test('random foreground effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  nativeAPI.p5_.randomSeed(0);
+  sinon.stub(Math, 'random').returns(0);
 
   nativeAPI.setForegroundEffect('rand');
-  t.equal(nativeAPI.world.fg_effect, 'pineapples');
+  t.equal(nativeAPI.world.fg_effect, 'bubbles');
   nativeAPI.getForegroundEffect().draw({bpm: 120});
 
   t.end();
   nativeAPI.reset();
+  sinon.restore();
 });
 
 test('logs invalid background effect', async t => {

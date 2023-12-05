@@ -52,7 +52,7 @@ module.exports = class ForegroundEffects {
     // selecting "none" as a foreground is a no-op,
     // whereas selecting it as a background actually draws a white background.
     this.none = {
-      draw: function () {},
+      draw: utils.noOp,
     };
 
     this.rain = rain(p5, randomNumber);
