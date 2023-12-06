@@ -35,10 +35,12 @@ module.exports = class BackgroundEffects {
     this.p5_ = p5;
     this.currentPalette = 'default';
 
+    // Duplicated in ForegroundEffects
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
     }
 
+    // Duplicated in ForegroundEffects
     function colorFromHue(h, s = 100, l = 80, a = alpha) {
       return p5.color(
         'hsla(' + Math.floor(h % 360) + ', ' + s + '%, ' + l + '%,' + a + ')'
@@ -111,6 +113,7 @@ module.exports = class BackgroundEffects {
     return this.sample_(Object.keys(constants.PALETTES));
   }
 
+  // Duplicated in ForegroundEffects
   /**
    * Randomly pick one element out of an array.
    * @param {Array.<T>} collection
