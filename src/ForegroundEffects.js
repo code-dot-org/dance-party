@@ -23,10 +23,12 @@ module.exports = class ForegroundEffects {
   constructor(p5, alpha, getEffectsInPreviewMode) {
     this.p5_ = p5;
 
+    // Duplicated in BackgroundEffects
     function randomNumber(min, max) {
       return Math.round(p5.random(min, max));
     }
 
+    // Duplicated in BackgroundEffects
     function colorFromHue(h, s = 100, l = 80, a = alpha) {
       return p5.color(
         'hsla(' + Math.floor(h % 360) + ', ' + s + '%, ' + l + '%,' + a + ')'
@@ -36,18 +38,6 @@ module.exports = class ForegroundEffects {
     function randomColor(s = 100, l = 80, a = alpha) {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
-
-    const lerpColorFromSpecificPalette = (paletteName, amount) => {
-      const palette = constants.PALETTES[paletteName];
-      const which = amount * palette.length;
-      const n = Math.floor(which);
-      const remainder = which - n;
-
-      const prev = palette[n % palette.length];
-      const next = palette[(n + 1) % palette.length];
-
-      return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
-    };
 
     // selecting "none" as a foreground is a no-op,
     // whereas selecting it as a background actually draws a white background.
@@ -70,7 +60,7 @@ module.exports = class ForegroundEffects {
     this.smile_face = smileFace(p5, randomNumber, getEffectsInPreviewMode);
     this.confetti = confetti(p5, randomColor, getEffectsInPreviewMode);
     this.music_notes = musicNotes(p5, randomNumber, getEffectsInPreviewMode);
-    this.paint_drip = paintDrip(p5, lerpColorFromSpecificPalette, getEffectsInPreviewMode);
+    this.paint_drip = paintDrip(p5, getEffectsInPreviewMode);
     this.emojis = emojis(p5, randomNumber, getEffectsInPreviewMode);
   }
 
@@ -78,6 +68,17 @@ module.exports = class ForegroundEffects {
     const effects = constants.FOREGROUND_EFFECTS.filter(name =>
       this.hasOwnProperty(name)
     );
-    return utils.sample(effects);
+    return this.sample_(effects);
+  }
+
+  // Duplicated in BackgroundEffects
+  /**
+   * Randomly pick one element out of an array.
+   * @param {Array.<T>} collection
+   * @returns {T}
+   * @private
+   */
+  sample_(collection) {
+    return collection[Math.floor(this.p5_.random(0, collection.length))];
   }
 };

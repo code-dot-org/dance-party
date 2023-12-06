@@ -1,4 +1,6 @@
-module.exports = function (p5, lerpColorFromSpecificPalette, getInPreviewMode) {
+const utils = require('../../utils');
+
+module.exports = function (p5, getInPreviewMode) {
   return {
     current_drip: 0,
     current_drip_height: 0,
@@ -26,7 +28,7 @@ module.exports = function (p5, lerpColorFromSpecificPalette, getInPreviewMode) {
     },
     draw: function () {
       for (let i = 0; i < this.crayons.length; i++) {
-        let c = lerpColorFromSpecificPalette('neon', i / this.crayons.length);
+        let c = utils.lerpColorFromSpecificPalette(p5, 'neon', i / this.crayons.length);
         p5.fill(c);
         p5.noStroke();
         let rectHeight = this.getPreviewCustomizations().getRectHeight();

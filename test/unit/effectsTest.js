@@ -74,15 +74,14 @@ test('other background effects', async t => {
 
 test('random background effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  sinon.stub(Math, 'random').returns(0);
+  nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setBackgroundEffect('rand');
-  t.equal(nativeAPI.world.bg_effect, 'circles');
+  t.equal(nativeAPI.world.bg_effect, 'kaleidoscope');
   nativeAPI.getBackgroundEffect().draw({bpm: 120});
 
   t.end();
   nativeAPI.reset();
-  sinon.restore();
 });
 
 test('rainbow background effect updates with specified effect', async t => {
@@ -131,15 +130,14 @@ test('setting fg effect to none clears the fg effect', async t => {
 
 test('random foreground effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
-  sinon.stub(Math, 'random').returns(0);
+  nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setForegroundEffect('rand');
-  t.equal(nativeAPI.world.fg_effect, 'bubbles');
-  nativeAPI.getForegroundEffect().draw({bpm: 120});
+  t.equal(nativeAPI.world.fg_effect, 'pineapples');
+  nativeAPI.getForegroundEffect().draw();
 
   t.end();
   nativeAPI.reset();
-  sinon.restore();
 });
 
 test('logs invalid background effect', async t => {

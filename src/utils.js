@@ -1,11 +1,4 @@
-/**
- * Randomly pick one element out of an array.
- * @param {Array.<T>} collection
- * @returns {T}
- * @private
- */
-const sample = (collection) => collection[Math.floor(Math.random() * collection.length)];
-
+const constants = require("./constants");
 module.exports = {
   hexToRgb: function (hexColor) {
     const R = parseInt(hexColor.substr(1, 2), 16);
@@ -27,6 +20,16 @@ module.exports = {
     }
     return color;
   },
-  sample,
+  lerpColorFromSpecificPalette: function (p5, paletteName, amount) {
+    const palette = constants.PALETTES[paletteName];
+    const which = amount * palette.length;
+    const n = Math.floor(which);
+    const remainder = which - n;
+
+    const prev = palette[n % palette.length];
+    const next = palette[(n + 1) % palette.length];
+
+    return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
+  },
   noOp: () => {},
 };

@@ -51,19 +51,7 @@ module.exports = class BackgroundEffects {
     };
 
     const lerpColorFromPalette = amount => {
-      return lerpColorFromSpecificPalette(this.currentPalette, amount);
-    };
-
-    const lerpColorFromSpecificPalette = (paletteName, amount) => {
-      const palette = constants.PALETTES[paletteName];
-      const which = amount * palette.length;
-      const n = Math.floor(which);
-      const remainder = which - n;
-
-      const prev = palette[n % palette.length];
-      const next = palette[(n + 1) % palette.length];
-
-      return p5.lerpColor(p5.color(prev), p5.color(next), remainder);
+      return utils.lerpColorFromSpecificPalette(p5, this.currentPalette, amount);
     };
 
     const randomColorFromPalette = () => {
@@ -116,10 +104,20 @@ module.exports = class BackgroundEffects {
     const effects = constants.BACKGROUND_EFFECTS.filter(name =>
       this.hasOwnProperty(name)
     );
-    return utils.sample(effects);
+    return this.sample_(effects);
   }
 
   randomBackgroundPalette() {
-    return utils.sample(Object.keys(constants.PALETTES));
+    return this.sample_(Object.keys(constants.PALETTES));
+  }
+
+  /**
+   * Randomly pick one element out of an array.
+   * @param {Array.<T>} collection
+   * @returns {T}
+   * @private
+   */
+  sample_(collection) {
+    return collection[Math.floor(this.p5_.random(0, collection.length))];
   }
 };

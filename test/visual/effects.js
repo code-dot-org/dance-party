@@ -61,14 +61,12 @@ async function testEffect(t, name, effect, type) {
   ['fireworks'],
   ['flowers'],
   ['lasers'],
-  //'strobe',
   // 'text', Font rendering differences across devices cause problems
   ['splatter'],
   ['spiral'],
   ['snowflakes'],
   ['sparkles'],
   ['pineapples'],
-  //['pizzas'], error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
   ['quads', 'vintage'],
   ['quads', 'electronic'],
   ['kaleidoscope'],
@@ -107,6 +105,7 @@ async function testEffect(t, name, effect, type) {
   ['raining_tacos'],
   ['smile_face'],
   ['spotlight'],
+  //['pizzas'], error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
 ].forEach(effect => {
   test(`foreground - ${effect}`, async t => {
     await testEffect(t, effect, effect, 'foreground');
