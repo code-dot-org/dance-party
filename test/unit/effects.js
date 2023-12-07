@@ -1,6 +1,7 @@
 const test = require('tape');
 const sinon = require('sinon');
 const helpers = require('../helpers/createDanceAPI');
+const constants = require("../../src/constants");
 
 test('Background effects', async t => {
   const nativeAPI = await helpers.createDanceAPI();
@@ -42,6 +43,26 @@ test('Background effects', async t => {
   t.equal(spyNone.callCount, 2);
   t.equal(spyRainbow.callCount, 1);
   t.equal(spyDisco.callCount, 1);
+
+  nativeAPI.reset();
+  t.end();
+});
+
+test('All supported foreground effects exist', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  const missingEffects = constants.FOREGROUND_EFFECTS.filter(effect => !nativeAPI.fgEffects_.hasOwnProperty(effect));
+  t.equal(missingEffects.length, 0);
+
+  nativeAPI.reset();
+  t.end();
+});
+
+test('All supported background effects exist', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  const missingEffects = constants.BACKGROUND_EFFECTS.filter(effect => !nativeAPI.bgEffects_.hasOwnProperty(effect));
+  t.equal(missingEffects.length, 0);
 
   nativeAPI.reset();
   t.end();

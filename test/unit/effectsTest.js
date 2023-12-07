@@ -77,8 +77,8 @@ test('random background effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setBackgroundEffect('rand');
-  t.equal(nativeAPI.world.bg_effect, 'kaleidoscope');
-  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+  t.equal(nativeAPI.world.bg_effect, 'disco_ball');
+  nativeAPI.getBackgroundEffect().draw();
 
   t.end();
   nativeAPI.reset();
@@ -133,7 +133,7 @@ test('random foreground effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setForegroundEffect('rand');
-  t.equal(nativeAPI.world.fg_effect, 'pineapples');
+  t.equal(nativeAPI.world.fg_effect, 'exploding_stars');
   nativeAPI.getForegroundEffect().draw();
 
   t.end();
