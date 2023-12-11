@@ -31,7 +31,7 @@ const squiggles = require('./effects/background/squiggles');
 const musicWave = require('./effects/background/musicWave');
 
 module.exports = class BackgroundEffects {
-  constructor(p5, alpha, getEffectsInPreviewMode, extraImages) {
+  constructor(p5, getEffectsInPreviewMode, extraImages) {
     this.p5_ = p5;
     this.currentPalette = 'default';
 
@@ -41,7 +41,7 @@ module.exports = class BackgroundEffects {
     }
 
     // Duplicated in ForegroundEffects
-    function colorFromHue(h, s = 100, l = 80, a = alpha) {
+    function colorFromHue(h, s = 100, l = 80, a = constants.EFFECT_OPACITY.BACKGROUND) {
       return p5.color(
         'hsla(' + Math.floor(h % 360) + ', ' + s + '%, ' + l + '%,' + a + ')'
       );

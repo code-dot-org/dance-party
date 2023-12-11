@@ -20,7 +20,7 @@ const paintDrip = require('./effects/foreground/paintDrip');
 const emojis = require('./effects/foreground/emojis');
 
 module.exports = class ForegroundEffects {
-  constructor(p5, alpha, getEffectsInPreviewMode) {
+  constructor(p5, getEffectsInPreviewMode) {
     this.p5_ = p5;
 
     // Duplicated in BackgroundEffects
@@ -29,13 +29,13 @@ module.exports = class ForegroundEffects {
     }
 
     // Duplicated in BackgroundEffects
-    function colorFromHue(h, s = 100, l = 80, a = alpha) {
+    function colorFromHue(h, s = 100, l = 80, a = constants.EFFECT_OPACITY.FOREGROUND) {
       return p5.color(
         'hsla(' + Math.floor(h % 360) + ', ' + s + '%, ' + l + '%,' + a + ')'
       );
     }
 
-    function randomColor(s = 100, l = 80, a = alpha) {
+    function randomColor(s = 100, l = 80, a = constants.EFFECT_OPACITY.FOREGROUND) {
       return colorFromHue(randomNumber(0, 359), s, l, a);
     }
 

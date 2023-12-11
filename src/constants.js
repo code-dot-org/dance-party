@@ -47,49 +47,49 @@ module.exports = {
     'blooming_petals',
     'circles',
     'clouds',
-    'color_cycle',
+    'color_cycle', // Colors
     'diamonds',
-    'disco',
+    'disco', // Squares
     'disco_ball',
     'fireworks',
     'flowers',
     'frosted_grid',
-    'galaxy',
+    'galaxy', // Space
     'growing_stars',
     'kaleidoscope',
-    'lasers',
-    'music_wave',
-    'quads',
+    'lasers', // Laser Dance Floor
+    'music_wave', // Waves
+    'quads', // Angles
     'rainbow',
     'ripples',
     'ripples_random',
-    'snowflakes',
+    'snowflakes', // Snow
     'sparkles',
     'spiral',
-    'splatter',
+    'splatter', // Paint Splatter
     'squiggles',
     'starburst',
     'stars',
-    'swirl',
-    'text'
+    'swirl', // Hypno
+    'text' // Song Names
   ],
   FOREGROUND_EFFECTS: [
     'bubbles',
-    'color_lights',
+    'color_lights', // Stage Lights
     'confetti',
     'emojis',
-    'exploding_stars',
-    'floating_rainbows',
-    'hearts_colorful',
-    'hearts_red',
+    'exploding_stars', // Starburst
+    'floating_rainbows', // Rainbows
+    'hearts_colorful', // Colorful Hearts
+    'hearts_red', // Hearts
     'music_notes',
     'paint_drip',
     'pineapples',
     'pizzas',
     'rain',
-    'raining_tacos',
-    'smile_face',
-    'smiling_poop',
+    'raining_tacos', // Tacos
+    'smile_face', // Smiles
+    'smiling_poop', // Poop
     'spotlight'
   ],
   PALETTES: {
@@ -143,4 +143,8 @@ module.exports = {
     roses: ['#A00B64', '#121212'], // magenta to black
   },
   KEY_WENT_DOWN_EVENT_TYPE: 'this.p5_.keyWentDown',
+  EFFECT_OPACITY: {
+    BACKGROUND: 1,
+    FOREGROUND: 0.8,
+  },
 };

@@ -353,8 +353,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new BackgroundEffects(this.p5_, 1, this.getEffectsInPreviewMode.bind(this), this.extraImages);
-    this.fgEffects_ = new ForegroundEffects(this.p5_, 0.8, this.getEffectsInPreviewMode.bind(this));
+    this.bgEffects_ = new BackgroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this), this.extraImages);
+    this.fgEffects_ = new ForegroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this));
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
