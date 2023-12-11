@@ -43,7 +43,7 @@ module.exports = {
     {name: 'XSlide', mirror: false, shortBurst: true},
   ],
   RANDOM_EFFECT_KEY: 'rand',
-  BACKGROUND_EFFECTS: [
+  BACKGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
     'blooming_petals',
     'circles',
     'clouds',
@@ -73,7 +73,7 @@ module.exports = {
     'swirl', // Hypno
     'text' // Song Names
   ],
-  FOREGROUND_EFFECTS: [
+  FOREGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
     'bubbles',
     'color_lights', // Stage Lights
     'confetti',
