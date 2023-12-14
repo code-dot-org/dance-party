@@ -2,7 +2,7 @@ const test = require('tape');
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
-const createBackgroundScreenshot = require('./helpers/createBackgroundScreenshot');
+const createEffectScreenshot = require('./helpers/createEffectScreenshot');
 
 const fixturePath = 'test/visual/fixtures/';
 const tempDir = fs.mkdtempSync(fixturePath);
@@ -15,18 +15,18 @@ function readPNG(pngPath){
   });
 }
 
-async function createScreenshot([effectName, palette]) {
-  await createBackgroundScreenshot(effectName, tempDir, palette);
+async function createScreenshot([effectName, palette], type) {
+  await createEffectScreenshot(effectName, tempDir, palette, type);
 
   // If there is no accepted image for this background (ex: it's a new background),
   // use this screenshot as accepted image
   if (!fs.existsSync(`${fixturePath}${effectName}.png`)) {
-    await createBackgroundScreenshot(effectName, fixturePath, palette);
+    await createEffectScreenshot(effectName, fixturePath, palette, type);
   }
 }
 
-async function testBackground(t, name, effect) {
-  await createScreenshot(effect);
+async function testEffect(t, name, effect, type) {
+  await createScreenshot(effect, type);
 
   const [actual, expected] = await Promise.all([
     readPNG(`${tempDir}/${name}.png`),
@@ -39,6 +39,7 @@ async function testBackground(t, name, effect) {
   t.equal(pixelDiff, 0, name);
 }
 
+// backgrounds
 [
   ['none'],
   ['swirl'],
@@ -60,38 +61,26 @@ async function testBackground(t, name, effect) {
   ['fireworks'],
   ['flowers'],
   ['lasers'],
-  //'strobe',
-  ['rain'],
   // 'text', Font rendering differences across devices cause problems
-  ['raining_tacos'],
   ['splatter'],
   ['spiral'],
-  ['spotlight'],
-  ['color_lights'],
   ['snowflakes'],
   ['sparkles'],
   ['pineapples'],
-  //['pizzas'], error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
   ['quads', 'vintage'],
   ['quads', 'electronic'],
   ['kaleidoscope'],
   ['kaleidoscope', 'vintage'],
   ['kaleidoscope', 'electronic'],
-  ['smile_face'],
   ['smiling_poop'],
   ['hearts_red'],
-  ['floating_rainbows'],
-  ['bubbles'],
   ['stars'],
   ['galaxy'],
-  ['confetti'],
-  ['music_notes'],
   ['music_wave'],
   ['ripples'],
   ['ripples_random'],
   ['squiggles'],
   ['growing_stars'],
-  ['paint_drip'],
   ['blooming_petals', 'vintage'],
   ['clouds', 'neon'],
   ['frosted_grid', 'vintage'],
@@ -99,7 +88,27 @@ async function testBackground(t, name, effect) {
   let name = effect[0] + (effect[1] ? ("_" + effect[1]) : "");
   test(`background - ${name}`, async t => {
 
-    await testBackground(t, name, effect);
+    await testEffect(t, name, effect, 'background');
+    t.end();
+  });
+});
+
+// foregrounds
+[
+  ['bubbles'],
+  ['color_lights'],
+  ['confetti'],
+  ['floating_rainbows'],
+  ['music_notes'],
+  ['paint_drip'],
+  ['rain'],
+  ['raining_tacos'],
+  ['smile_face'],
+  ['spotlight'],
+  //['pizzas'], error with Node 14 & Canvas 2.8.0: "node: cairo-arc.c:189: _cairo_arc_in_direction: Assertion `angle_max >= angle_min' failed."
+].forEach(effect => {
+  test(`foreground - ${effect}`, async t => {
+    await testEffect(t, effect, effect, 'foreground');
     t.end();
   });
 });

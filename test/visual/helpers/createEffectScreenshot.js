@@ -3,9 +3,13 @@ const parseDataURL = require('data-urls');
 const fs = require('fs');
 
 /*
-  Set the background to given effect and save a screenshot to pathname
+  Set the effect and save a screenshot to pathname
  */
-async function createBackgroundScreenshot(effectName, pathname, palette){
+async function createEffectScreenshot(effectName, pathname, palette, type) {
+  if (!['foreground', 'background'].includes(type)) {
+    throw new Error('Effect type must be foreground or background');
+  }
+
   let nativeAPI;
   try {
     nativeAPI = await helpers.createDanceAPI();
@@ -15,10 +19,19 @@ async function createBackgroundScreenshot(effectName, pathname, palette){
   }
   nativeAPI.p5_.randomSeed(0);
   nativeAPI.p5_.noiseSeed(0);
-  nativeAPI.setBackgroundEffect(effectName, palette);
+
+  if (type === 'foreground') {
+    nativeAPI.setForegroundEffect(effectName);
+  } else {
+    nativeAPI.setBackgroundEffect(effectName, palette);
+  }
+
   for (let i = 0; i < 100; i++) {
     nativeAPI.p5_.background('#fff');
-    nativeAPI.getBackgroundEffect().draw({bpm: 0, centroid: 7000, artist: 'artist', title: 'title', isPeak: i % 6 === 0});
+    const effect = type === 'foreground' ?
+      nativeAPI.getForegroundEffect() :
+      nativeAPI.getBackgroundEffect();
+    effect.draw({bpm: 0, centroid: 7000, artist: 'artist', title: 'title', isPeak: i % 6 === 0});
   }
 
   const buffer = parseDataURL(nativeAPI.p5_.canvas.toDataURL()).body;
@@ -33,4 +46,4 @@ async function createBackgroundScreenshot(effectName, pathname, palette){
   nativeAPI.reset();
 }
 
-module.exports = createBackgroundScreenshot;
+module.exports = createEffectScreenshot;

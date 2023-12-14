@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars, curly, eqeqeq */
 
 const P5 = require('./loadP5');
-const Effects = require('./Effects');
+const BackgroundEffects = require('./BackgroundEffects');
+const ForegroundEffects = require('./ForegroundEffects');
 const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
@@ -59,6 +60,7 @@ module.exports = class DanceParty {
     this.showMeasureLabel = showMeasureLabel;
     this.i18n = i18n;
     this.resourceLoader_ = resourceLoader;
+    this.inPreviewMode = false;
 
     const containerElement = document.getElementById(container);
     this.rtl =
@@ -335,8 +337,11 @@ module.exports = class DanceParty {
   }
 
   setEffectsInPreviewMode(inPreviewMode) {
-    this.fgEffects_ && this.fgEffects_.setInPreviewMode(inPreviewMode);
-    this.bgEffects_ && this.bgEffects_.setInPreviewMode(inPreviewMode);
+    this.inPreviewMode = inPreviewMode;
+  }
+
+  getEffectsInPreviewMode() {
+    return this.inPreviewMode;
   }
 
   setAnimationSpriteSheet(sprite, moveIndex, spritesheet, mirror, animation) {
@@ -348,8 +353,8 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new Effects(this.p5_, 1, this.extraImages);
-    this.fgEffects_ = new Effects(this.p5_, 0.8, this.extraImages);
+    this.bgEffects_ = new BackgroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this), this.extraImages);
+    this.fgEffects_ = new ForegroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this));
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
@@ -360,13 +365,7 @@ module.exports = class DanceParty {
   }
 
   getForegroundEffect() {
-    if (
-      this.world.fg_effect &&
-      this.world.fg_effect !== null &&
-      this.world.fg_effect !== 'none'
-    ) {
-      return this.fgEffects_[this.world.fg_effect];
-    }
+    return this.fgEffects_[this.world.fg_effect || 'none'];
   }
 
   getCurrentPalette() {
@@ -1568,7 +1567,6 @@ module.exports = class DanceParty {
 
     if (this.getForegroundEffect()) {
       this.p5_.push();
-      this.p5_.blendMode(this.fgEffects_.blend);
       this.getForegroundEffect().draw(context);
       this.p5_.pop();
     }

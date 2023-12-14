@@ -1,6 +1,8 @@
 const test = require('tape');
 const sinon = require('sinon');
+const utils = require('../../src/utils');
 const helpers = require('../helpers/createDanceAPI');
+const constants = require("../../src/constants");
 
 test('setBackground clears the bgEffect and sets background_color', async t => {
   const nativeAPI = await helpers.createDanceAPI();
@@ -76,29 +78,29 @@ test('random background effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setBackgroundEffect('rand');
-  t.equal(nativeAPI.world.bg_effect, 'kaleidoscope');
-  nativeAPI.getBackgroundEffect().draw({bpm: 120});
+  t.equal(nativeAPI.world.bg_effect, 'disco_ball');
+  nativeAPI.getBackgroundEffect().draw();
 
   t.end();
   nativeAPI.reset();
 });
 
-test('rainbow foreground effect updates with specified effect', async t => {
+test('rainbow background effect updates with specified effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
 
   // Initial Values
-  t.equal(nativeAPI.world.fg_effect, null);
+  t.equal(nativeAPI.world.bg_effect, null);
 
-  nativeAPI.setForegroundEffect('rainbow');
+  nativeAPI.setBackgroundEffect('rainbow');
 
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 0, 0]);
-  t.deepEqual(nativeAPI.getForegroundEffect().current, 0);
-  nativeAPI.getForegroundEffect().update();
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 0, 1]);
-  t.equal(nativeAPI.getForegroundEffect().current, 1);
-  nativeAPI.getForegroundEffect().update();
-  t.deepEqual(nativeAPI.getForegroundEffect().lengths, [0, 0, 0, 0, 0, 1, 1]);
-  t.equal(nativeAPI.getForegroundEffect().current, 2);
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 0, 0]);
+  t.deepEqual(nativeAPI.getBackgroundEffect().current, 0);
+  nativeAPI.getBackgroundEffect().update();
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 0, 1]);
+  t.equal(nativeAPI.getBackgroundEffect().current, 1);
+  nativeAPI.getBackgroundEffect().update();
+  t.deepEqual(nativeAPI.getBackgroundEffect().lengths, [0, 0, 0, 0, 0, 1, 1]);
+  t.equal(nativeAPI.getBackgroundEffect().current, 2);
 
   t.end();
   nativeAPI.reset();
@@ -121,7 +123,7 @@ test('setting fg effect to none clears the fg effect', async t => {
   const nativeAPI = await helpers.createDanceAPI();
   nativeAPI.setForegroundEffect('color_lights');
   nativeAPI.setForegroundEffect('none');
-  t.equal(nativeAPI.getForegroundEffect(), undefined);
+  t.equal(nativeAPI.getForegroundEffect().draw, utils.noOp);
 
   t.end();
   nativeAPI.reset();
@@ -132,8 +134,8 @@ test('random foreground effect', async t => {
   nativeAPI.p5_.randomSeed(0);
 
   nativeAPI.setForegroundEffect('rand');
-  t.equal(nativeAPI.world.fg_effect, 'pineapples');
-  nativeAPI.getForegroundEffect().draw({bpm: 120});
+  t.equal(nativeAPI.world.fg_effect, 'exploding_stars');
+  nativeAPI.getForegroundEffect().draw();
 
   t.end();
   nativeAPI.reset();
@@ -201,3 +203,70 @@ test('logs invalid background palette', async t => {
   nativeAPI.reset();
   sinon.restore();
 });
+
+
+test('Set background effect to none, unknown, and known effects', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+  nativeAPI.play({
+    bpm: 120,
+  });
+
+  const spyNone = sinon.spy(nativeAPI.bgEffects_.none, 'draw');
+  const spyRainbow = sinon.spy(nativeAPI.bgEffects_.rainbow, 'draw');
+  const spyDisco = sinon.spy(nativeAPI.bgEffects_.disco, 'draw');
+
+  t.equal(spyNone.callCount, 0);
+  t.equal(spyRainbow.callCount, 0);
+  t.equal(spyDisco.callCount, 0);
+
+  nativeAPI.draw();
+
+  t.equal(spyNone.callCount, 1);
+  t.equal(spyRainbow.callCount, 0);
+  t.equal(spyDisco.callCount, 0);
+
+  nativeAPI.setBackgroundEffect('rainbow');
+  nativeAPI.draw();
+
+  t.equal(spyNone.callCount, 1);
+  t.equal(spyRainbow.callCount, 1);
+  t.equal(spyDisco.callCount, 0);
+
+  nativeAPI.setBackgroundEffect('disco');
+  nativeAPI.draw();
+
+  t.equal(spyNone.callCount, 1);
+  t.equal(spyRainbow.callCount, 1);
+  t.equal(spyDisco.callCount, 1);
+
+  nativeAPI.setBackground('blue');
+  nativeAPI.draw();
+
+  t.equal(spyNone.callCount, 2);
+  t.equal(spyRainbow.callCount, 1);
+  t.equal(spyDisco.callCount, 1);
+
+  nativeAPI.reset();
+  t.end();
+});
+
+test('All supported foreground effects exist', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  const missingEffects = constants.FOREGROUND_EFFECTS.filter(effect => !nativeAPI.fgEffects_.hasOwnProperty(effect));
+  t.equal(missingEffects.length, 0);
+
+  nativeAPI.reset();
+  t.end();
+});
+
+test('All supported background effects exist', async t => {
+  const nativeAPI = await helpers.createDanceAPI();
+
+  const missingEffects = constants.BACKGROUND_EFFECTS.filter(effect => !nativeAPI.bgEffects_.hasOwnProperty(effect));
+  t.equal(missingEffects.length, 0);
+
+  nativeAPI.reset();
+  t.end();
+});
+

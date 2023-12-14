@@ -43,54 +43,54 @@ module.exports = {
     {name: 'XSlide', mirror: false, shortBurst: true},
   ],
   RANDOM_EFFECT_KEY: 'rand',
-  BACKGROUND_EFFECTS: [
+  BACKGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
+    'blooming_petals',
     'circles',
-    'color_cycle',
+    'clouds',
+    'color_cycle', // Colors
     'diamonds',
+    'disco', // Squares
     'disco_ball',
     'fireworks',
-    'swirl',
+    'flowers',
+    'frosted_grid',
+    'galaxy', // Space
+    'growing_stars',
     'kaleidoscope',
-    'lasers',
-    'splatter',
+    'lasers', // Laser Dance Floor
+    'music_wave', // Waves
+    'quads', // Angles
     'rainbow',
-    'snowflakes',
-    'text',
-    'galaxy',
-    'sparkles',
-    'spiral',
-    'disco',
-    'stars',
-    'music_wave',
     'ripples',
     'ripples_random',
-    'quads',
-    'flowers',
+    'snowflakes', // Snow
+    'sparkles',
+    'spiral',
+    'splatter', // Paint Splatter
     'squiggles',
-    'growing_stars',
-    'blooming_petals',
-    'clouds',
-    'frosted_grid',
     'starburst',
+    'stars',
+    'swirl', // Hypno
+    'text' // Song Names
   ],
-  FOREGROUND_EFFECTS: [
+  FOREGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
     'bubbles',
+    'color_lights', // Stage Lights
     'confetti',
-    'hearts_red',
+    'emojis',
+    'exploding_stars', // Starburst
+    'floating_rainbows', // Rainbows
+    'hearts_colorful', // Colorful Hearts
+    'hearts_red', // Hearts
     'music_notes',
+    'paint_drip',
     'pineapples',
     'pizzas',
-    'smiling_poop',
     'rain',
-    'floating_rainbows',
-    'smile_face',
-    'spotlight',
-    'color_lights',
-    'raining_tacos',
-    'emojis',
-    'hearts_colorful',
-    'exploding_stars',
-    'paint_drip',
+    'raining_tacos', // Tacos
+    'smile_face', // Smiles
+    'smiling_poop', // Poop
+    'spotlight'
   ],
   PALETTES: {
     default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
@@ -143,4 +143,8 @@ module.exports = {
     roses: ['#A00B64', '#121212'], // magenta to black
   },
   KEY_WENT_DOWN_EVENT_TYPE: 'this.p5_.keyWentDown',
+  EFFECT_OPACITY: {
+    BACKGROUND: 1,
+    FOREGROUND: 0.8,
+  },
 };
