@@ -33,9 +33,9 @@ The following table includes functions and variables that are used in the 2019 D
 
 Note that `world` variables are accessed in `.level` files with `World`, e.g., `World.spriteStyles`, and functions defined in `p5.dance.js` are accessed in `.level` files with `nativeAPI`, e.g., `nativeAPI.pass()`. Functions and variables defined in `api.js` are accessed as is, e.g., `sprites`.
 
-Validation code is usually configured via levelbuilder by content editors. However, Dance Party validation code has been written by engineers because of the lack of documentation and the unfriendly API.
+Validation code is usually configured via levelbuilder by content editors. However, Dance Party validation code has been written by engineers because of the lack of documentation and the unfriendly API. For easier reference, the following google docs contain all of the validation code for the two Dance Party progressions compiled from the .level files. ([Example of .level validation code from Dance Party AI Edition level 2](https://github.com/code-dot-org/code-dot-org/blob/dabc4880015ccc2ec30334132a420eb53f79369d/dashboard/config/levels/custom/dance/dance_ai_dancer_and_dance_move.level#L62))
 
-[Link to Dance Party 2019 validation code](https://docs.google.com/document/d/1rZrUCeuy6KIRC8a44reu6QpNTCA_gCxHeDX6IFal96g/edit)  
-[Link to Dance Party: AI Edition validation code](https://docs.google.com/document/d/1BErRvFN3lOoJPUMKS_xrbTjDUs55khh2Uwhfvy5SVIs/edit)
+[Dance Party 2019 validation code (google doc)](https://docs.google.com/document/d/1rZrUCeuy6KIRC8a44reu6QpNTCA_gCxHeDX6IFal96g/edit)  
+[Dance Party: AI Edition validation code (google doc)](https://docs.google.com/document/d/1BErRvFN3lOoJPUMKS_xrbTjDUs55khh2Uwhfvy5SVIs/edit)
 
 When Dance Party is migrated to `lab2`, there is strong interest in revamping validation support so that content editors have better documentation and support in writing validation code more independently.
