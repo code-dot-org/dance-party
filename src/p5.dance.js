@@ -324,7 +324,9 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
-    this.externalLayer?.setSource(null);
+    if (this.externalLayer) {
+      this.externalLayer.setSource(null);
+    }
 
     let foregroundEffect = this.getForegroundEffect();
     if (foregroundEffect && foregroundEffect.reset) {

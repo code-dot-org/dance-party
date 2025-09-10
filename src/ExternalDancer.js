@@ -38,7 +38,7 @@ class ExternalDancerLayer {
       this.graphics &&
       (this.graphics.elt ||
         this.graphics.canvas ||
-        this.graphics._renderer?.canvas);
+        (this.graphics._renderer && this.graphics._renderer.canvas));
     if (el && el.parentNode) el.parentNode.removeChild(el);
     if (this.p5 && Array.isArray(this.p5._elements)) {
       this.p5._elements = this.p5._elements.filter(e => e !== this.graphics);
@@ -58,7 +58,7 @@ class ExternalDancerLayer {
       this.graphics &&
       (this.graphics.elt ||
         this.graphics.canvas ||
-        this.graphics._renderer?.canvas);
+        (this.graphics._renderer && this.graphics._renderer.canvas));
     if (el && el.parentNode) el.parentNode.removeChild(el);
     if (this.p5 && Array.isArray(this.p5._elements)) {
       this.p5._elements = this.p5._elements.filter(e => e !== this.graphics);
