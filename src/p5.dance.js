@@ -7,6 +7,7 @@ const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
 const ResourceLoader = require('./ResourceLoader');
+const ExternalDancerLayer = require('./ExternalDancer');
 
 function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
@@ -54,6 +55,7 @@ module.exports = class DanceParty {
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
+    externalRendererFactory = () => null,
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -154,6 +156,8 @@ module.exports = class DanceParty {
     this.livePreviewStopTime = 0;
 
     this.logger = logger;
+
+    this.createExternalRenderer = externalRendererFactory;
 
     new P5(p5Inst => {
       this.p5_ = p5Inst;
@@ -320,6 +324,8 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
+    this.externalLayer?.setSource(null);
+
     let foregroundEffect = this.getForegroundEffect();
     if (foregroundEffect && foregroundEffect.reset) {
       foregroundEffect.reset();
@@ -353,11 +359,28 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new BackgroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this), this.extraImages);
-    this.fgEffects_ = new ForegroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this));
+    this.bgEffects_ = new BackgroundEffects(
+      this.p5_,
+      this.getEffectsInPreviewMode.bind(this),
+      this.extraImages
+    );
+    this.fgEffects_ = new ForegroundEffects(
+      this.p5_,
+      this.getEffectsInPreviewMode.bind(this)
+    );
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
+
+    const externalRenderer = this.createExternalRenderer();
+    if (externalRenderer) {
+      this.externalLayer = new ExternalDancerLayer(
+        this.p5_,
+        this.p5_.width,
+        this.p5_.height,
+        externalRenderer
+      );
+    }
   }
 
   getBackgroundEffect() {
@@ -384,7 +407,8 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
     this.loopAnalysisEvents = true;
-    this.livePreviewStopTime = durationMs === undefined ? 0 : Date.now() + durationMs;
+    this.livePreviewStopTime =
+      durationMs === undefined ? 0 : Date.now() + durationMs;
     this.p5_.loop();
   }
 
@@ -496,7 +520,6 @@ module.exports = class DanceParty {
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
-    sprite.previous_move = 0; // I don't think this is used?
 
     for (var i = 0; i < this.animations[costume].length; i++) {
       sprite.addAnimation('anim' + i, this.animations[costume][i].animation);
@@ -520,9 +543,26 @@ module.exports = class DanceParty {
         sprite.sinceLastFrame -= msPerFrame;
         sprite.looping_frame++;
         if (sprite.animation.looping) {
-          sprite.animation.changeFrame(
-            sprite.looping_frame % sprite.animation.images.length
-          );
+          const animationLength = sprite.animation.images.length;
+          const currentMeasure = this.getCurrentMeasure();
+          if (currentMeasure < 1) {
+            sprite.earlyStart = true;
+            const measureTick =
+              (Math.max(0, currentMeasure) * sprite.dance_speed * 2) % 1;
+            const measureFrame = Math.min(
+              animationLength - 1,
+              Math.floor(measureTick * animationLength)
+            );
+            sprite.animation.changeFrame(measureFrame);
+          } else {
+            if (!sprite.hasStarted && sprite.earlyStart) {
+              sprite.looping_frame = 0;
+              sprite.hasStarted = true;
+            }
+            sprite.animation.changeFrame(
+              sprite.looping_frame % animationLength
+            );
+          }
         } else {
           sprite.animation.nextFrame();
         }
@@ -541,7 +581,6 @@ module.exports = class DanceParty {
           currentFrame === sprite.animation.getLastFrame() &&
           !sprite.animation.looping
         ) {
-          //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
           sprite.changeAnimation('anim' + sprite.current_move);
           sprite.animation.changeFrame(
             sprite.looping_frame % sprite.animation.images.length
@@ -686,6 +725,7 @@ module.exports = class DanceParty {
     if (sprite.animation.looping) {
       sprite.looping_frame = 0;
     }
+    sprite.sinceLastFrame = 0;
     sprite.animation.looping = true;
     sprite.current_move = move;
     sprite.alternatingMoveInfo = undefined;
@@ -1197,8 +1237,10 @@ module.exports = class DanceParty {
   // Called when executing the AI block.
   ai(params) {
     this.world.aiBlockCalled = true;
-    console.log('handle AI:', params);
-    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
+    if (
+      this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE &&
+      this.contextKey
+    ) {
       // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
       this.world.aiBlockContextUserEventKey = this.contextKey;
     }
@@ -1263,12 +1305,14 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
+    sprite.depth = this.getAdjustedSpriteDepth(sprite);
+  }
 
+  getAdjustedSpriteDepth(sprite) {
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
     // (Both X and Y range from 0-399 pixels.)
-    sprite.depth =
-      10000 * sprite.scale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
+    return 10000 * sprite.scale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
   }
 
   // Behaviors
@@ -1408,7 +1452,8 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] =
+          events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
         events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
@@ -1499,6 +1544,17 @@ module.exports = class DanceParty {
     console.warn(message);
   }
 
+  setExternalLayerSource(dancerName) {
+    if (!this.externalLayer) {
+      return;
+    }
+    const base = 'https://curriculum.code.org/media/musiclab/generate/dancers/';
+    const url = dancerName ? `${base}${dancerName}.json` : null;
+    this.externalLayer.setSource({url}).catch(err => {
+      console.error('Error loading external layer source', err);
+    });
+  }
+
   draw() {
     const {bpm, artist, title} = this.songMetadata_ || {};
 
@@ -1554,7 +1610,43 @@ module.exports = class DanceParty {
       });
     }
 
-    this.p5_.drawSprites();
+    if (!this.externalLayer) {
+      this.p5_.drawSprites();
+    } else {
+      // Draw sprites in two passes, before and after the external layer.
+      // This is done so that sprites that are larger (or lower down) on
+      // on the canvas appear in front of the external layer, creating an
+      // illusion of depth.
+      const sprites = this.p5_.allSprites.sort((a, b) => a.depth - b.depth);
+
+      // Mock sprite in the center of the canvas with default scale.
+      const mockSprite = {x: 200, y: 200, scale: 1};
+      const layerDepthCutoff = this.getAdjustedSpriteDepth(mockSprite);
+
+      const highDepth = sprites.filter(s => s.depth >= layerDepthCutoff);
+      const lowDepth = sprites.filter(s => s.depth < layerDepthCutoff);
+
+      for (const s of lowDepth) this.p5_.drawSprite(s);
+
+      const total = this.externalLayer.getDurationFrames() || 0;
+      if (total) {
+        // Align animations to a half-measure cycle, similar to dancers.
+        const measureTick = (this.getCurrentMeasure() * 2) % 1;
+        const frameIndexToDraw = Math.floor(measureTick * total);
+
+        this.externalLayer.render(frameIndexToDraw, {
+          mode: 'fit',
+          scale: 0.75,
+          align: {x: 'center', y: 'center'},
+          clearBeforeDraw: true,
+        });
+
+        this.p5_.image(this.externalLayer.graphics, 0, 0);
+      }
+
+      for (const s of highDepth) this.p5_.drawSprite(s);
+    }
+
     if (this.recordReplayLog_) {
       replayLog.logFrame({
         bg: this.world.bg_effect,

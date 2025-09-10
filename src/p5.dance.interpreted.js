@@ -108,7 +108,7 @@ function runUserEvents(events) {
         priority: inputEvents[i].priority,
         func: inputEvents[i].func,
         eventType: eventType,
-        param: param
+        param: param,
       });
     }
   }
@@ -296,4 +296,11 @@ function everyVerseChorus(unit, func) {
     func: func,
     param: unit,
   });
+}
+
+/**
+ * Use the external render to create a "Generated Dancer" on the canvas.
+ */
+function setGeneratedDancer(dancerName) {
+  setExternalLayerSource(dancerName);
 }
