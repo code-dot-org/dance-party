@@ -3,8 +3,9 @@
 
 class ExternalDancerLayer {
   constructor(p5, worldW, worldH, renderer) {
-    if (!p5 || !renderer)
+    if (!p5 || !renderer) {
       throw new Error('ExternalDancerLayer requires p5 and a renderer');
+    }
     this.p5 = p5;
     this.renderer = renderer;
 
@@ -27,7 +28,9 @@ class ExternalDancerLayer {
   }
 
   render(frameIndex, layout) {
-    if (!this.graphics || !this.renderer) return;
+    if (!this.graphics || !this.renderer) {
+      return;
+    }
     // The renderer paints directly into graphics.drawingContext
     this.renderer.renderFrame(frameIndex, layout);
   }
@@ -39,7 +42,9 @@ class ExternalDancerLayer {
       (this.graphics.elt ||
         this.graphics.canvas ||
         (this.graphics._renderer && this.graphics._renderer.canvas));
-    if (el && el.parentNode) el.parentNode.removeChild(el);
+    if (el && el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
     if (this.p5 && Array.isArray(this.p5._elements)) {
       this.p5._elements = this.p5._elements.filter(e => e !== this.graphics);
     }
@@ -59,7 +64,9 @@ class ExternalDancerLayer {
       (this.graphics.elt ||
         this.graphics.canvas ||
         (this.graphics._renderer && this.graphics._renderer.canvas));
-    if (el && el.parentNode) el.parentNode.removeChild(el);
+    if (el && el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
     if (this.p5 && Array.isArray(this.p5._elements)) {
       this.p5._elements = this.p5._elements.filter(e => e !== this.graphics);
     }
