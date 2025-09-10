@@ -52,7 +52,7 @@ class ExternalDancerLayer {
   dispose() {
     try {
       this.renderer && this.renderer.dispose && this.renderer.dispose();
-    } catch {}
+    } catch (e) {}
 
     const el =
       this.graphics &&
