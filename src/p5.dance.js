@@ -1546,15 +1546,12 @@ module.exports = class DanceParty {
     console.warn(message);
   }
 
-  setExternalLayerSource(dancerName) {
+  setExternalLayerSource(source) {
     if (!this.externalLayer) {
       return;
     }
-    const base = 'https://curriculum.code.org/media/musiclab/generate/dancers/';
-    const url = dancerName ? `${base}${dancerName}.json` : null;
-    this.externalLayer.setSource({url}).catch(err => {
-      console.error('Error loading external layer source', err);
-    });
+
+    this.externalLayer.setSource(source);
   }
 
   draw() {
@@ -1622,7 +1619,7 @@ module.exports = class DanceParty {
       const sprites = this.p5_.allSprites.sort((a, b) => a.depth - b.depth);
 
       // Mock sprite in the center of the canvas with default scale.
-      const mockSprite = {x: 200, y: 200, scale: 1};
+      const mockSprite = {x: 200, y: 200, scale: 4 / 3};
       const layerDepthCutoff = this.getAdjustedSpriteDepth(mockSprite);
 
       const highDepth = sprites.filter(s => s.depth >= layerDepthCutoff);
@@ -1633,12 +1630,12 @@ module.exports = class DanceParty {
       const total = this.externalLayer.getDurationFrames() || 0;
       if (total) {
         // Align animations to a half-measure cycle, similar to dancers.
-        const measureTick = (this.getCurrentMeasure() * 2) % 1;
+        const measureTick = (this.getCurrentMeasure() / (total / 96)) % 1;
         const frameIndexToDraw = Math.floor(measureTick * total);
 
         this.externalLayer.render(frameIndexToDraw, {
           mode: 'fit',
-          scale: 0.75,
+          scale: 1,
           align: {x: 'center', y: 'center'},
           clearBeforeDraw: true,
         });
