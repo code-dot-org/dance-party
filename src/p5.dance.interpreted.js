@@ -301,6 +301,6 @@ function everyVerseChorus(unit, func) {
 /**
  * Use the external render to create a "Generated Dancer" on the canvas.
  */
-function setGeneratedDancer(dancerName) {
-  setExternalLayerSource(dancerName);
+function setGeneratedDancer(moveName) {
+  setExternalLayerSource(moveName);
 }

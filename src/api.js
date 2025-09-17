@@ -161,8 +161,8 @@ module.exports = class DanceAPI {
       setFuncContext: (type, param) => {
         nativeAPI.setFuncContext(type, param);
       },
-      setExternalLayerSource: dancerName => {
-        nativeAPI.setExternalLayerSource(dancerName);
+      setExternalLayerSource: source => {
+        nativeAPI.setExternalLayerSource(source);
       },
     };
   }

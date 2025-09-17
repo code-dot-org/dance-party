@@ -12,7 +12,7 @@ class ExternalDancerLayer {
     this.graphics = this.p5.createGraphics(worldW, worldH);
     this.graphics.pixelDensity(1);
 
-    // Hand the renderer our mid-layer 2D context
+    // Hand the renderer our mid-layer 2D context.
     this.renderer.init(this.graphics.drawingContext);
   }
 
