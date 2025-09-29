@@ -547,6 +547,8 @@ module.exports = class DanceParty {
         if (sprite.animation.looping) {
           const animationLength = sprite.animation.images.length;
           const currentMeasure = this.getCurrentMeasure();
+          // If a song has a pickup, we want to start the dance animation
+          // with the correct frame so that the dancer is in sync with the music.
           if (currentMeasure < 1) {
             sprite.earlyStart = true;
             const measureTick =
@@ -557,6 +559,8 @@ module.exports = class DanceParty {
             );
             sprite.animation.changeFrame(measureFrame);
           } else {
+            // Once we reach the first measure, we reset so the sprite
+            // uses the normal looping behavior.
             if (!sprite.hasStarted && sprite.earlyStart) {
               sprite.looping_frame = 0;
               sprite.hasStarted = true;
