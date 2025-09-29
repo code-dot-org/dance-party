@@ -32,6 +32,7 @@ const WATCHED_RANGES = [0, 1, 2];
 
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
+const GENERATED_DANCER_SCALE = 0.75;
 
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
@@ -629,6 +630,82 @@ module.exports = class DanceParty {
     return sprite;
   }
 
+  makeGeneratedDancer(name, location) {
+    if (!this.externalLayer) {
+      this.logWarning('No external renderer available for generated dancer');
+      return;
+    }
+
+    if (!location) {
+      location = {
+        x: 200,
+        y: 200,
+      };
+    }
+
+    var sprite = this.p5_.createSprite(location.x, location.y);
+    sprite.isGenDancer = true;
+
+    if (name) {
+      sprite.name = name;
+    }
+
+    sprite.scale = GENERATED_DANCER_SCALE;
+    sprite.mirroring = 1;
+    sprite.looping_move = 0;
+    sprite.looping_frame = 0;
+    sprite.current_move = 0;
+
+    this.sprites_.add(sprite);
+    sprite.speed = 10;
+    sprite.sinceLastFrame = 0;
+    sprite.dance_speed = 1;
+    sprite.previous_speed = 1;
+    sprite.behaviors = [];
+
+    // Add behavior to control animation
+    const updateSpriteFrame = () => {
+      var delta = Math.min(100, (1 / (this.p5_.frameRate() + 0.01)) * 1000);
+      sprite.sinceLastFrame += delta;
+      var msPerBeat =
+        (60 * 1000) / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
+      var msPerFrame = msPerBeat / FRAMES;
+      while (sprite.sinceLastFrame > msPerFrame) {
+        sprite.sinceLastFrame -= msPerFrame;
+        sprite.looping_frame++;
+        const animationLength = this.externalLayer.getDurationFrames();
+        const currentMeasure = this.getCurrentMeasure();
+        const measureTick =
+          (Math.max(0, currentMeasure) * sprite.dance_speed * 2) % 1;
+        const measureFrame = Math.min(
+          animationLength - 1,
+          Math.floor(measureTick * animationLength)
+        );
+
+        this.externalLayer.render(measureFrame);
+      }
+    };
+
+    this.addBehavior_(
+      sprite,
+      new Behavior(updateSpriteFrame, 'updateSpriteFrame')
+    );
+
+    sprite.draw = () => {
+      if (this.externalLayer) {
+        this.p5_.image(
+          this.externalLayer.graphics,
+          sprite.x - location.x,
+          sprite.y - location.y
+        );
+      }
+    };
+
+    this.adjustSpriteDepth_(sprite);
+
+    return sprite;
+  }
+
   makeNewDanceSpriteGroup(n, costume, layout) {
     var tempGroup = this.p5_.createGroup();
     for (var i = 0; i < n; i++) {
@@ -1115,6 +1192,9 @@ module.exports = class DanceParty {
 
     if (property === 'scale') {
       sprite.scale = val / 100;
+      if (sprite.isGenDancer) {
+        sprite.scale *= GENERATED_DANCER_SCALE;
+      }
       this.adjustSpriteDepth_(sprite);
     } else if (property === 'width' || property === 'height') {
       sprite[property] = SIZE * (val / 100);
@@ -1314,11 +1394,19 @@ module.exports = class DanceParty {
     sprite.depth = this.getAdjustedSpriteDepth(sprite);
   }
 
+  getGeneratedDancerSprites() {
+    return this.p5_.allSprites.filter(sprite => sprite.isGenDancer);
+  }
+
   getAdjustedSpriteDepth(sprite) {
+    let spriteScale = sprite.scale;
+    if (sprite.isGenDancer) {
+      spriteScale /= GENERATED_DANCER_SCALE;
+    }
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
     // (Both X and Y range from 0-399 pixels.)
-    return 10000 * sprite.scale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
+    return 10000 * spriteScale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
   }
 
   // Behaviors
@@ -1613,42 +1701,7 @@ module.exports = class DanceParty {
       });
     }
 
-    if (!this.externalLayer) {
-      this.p5_.drawSprites();
-    } else {
-      // Draw sprites in two passes, before and after the external layer.
-      // This is done so that sprites that are larger (or lower down) on
-      // on the canvas appear in front of the external layer, creating an
-      // illusion of depth.
-      const sprites = this.p5_.allSprites.sort((a, b) => a.depth - b.depth);
-
-      // Mock sprite in the center of the canvas with default scale.
-      const mockSprite = {x: 200, y: 200, scale: 4 / 3};
-      const layerDepthCutoff = this.getAdjustedSpriteDepth(mockSprite);
-
-      const highDepth = sprites.filter(s => s.depth >= layerDepthCutoff);
-      const lowDepth = sprites.filter(s => s.depth < layerDepthCutoff);
-
-      for (const s of lowDepth) this.p5_.drawSprite(s);
-
-      const total = this.externalLayer.getDurationFrames() || 0;
-      if (total) {
-        // Align animations to a half-measure cycle, similar to dancers.
-        const measureTick = (this.getCurrentMeasure() / (total / 96)) % 1;
-        const frameIndexToDraw = Math.floor(measureTick * total);
-
-        this.externalLayer.render(frameIndexToDraw, {
-          mode: 'fit',
-          scale: 1,
-          align: {x: 'center', y: 'center'},
-          clearBeforeDraw: true,
-        });
-
-        this.p5_.image(this.externalLayer.graphics, 0, 0);
-      }
-
-      for (const s of highDepth) this.p5_.drawSprite(s);
-    }
+    this.p5_.drawSprites();
 
     if (this.recordReplayLog_) {
       replayLog.logFrame({

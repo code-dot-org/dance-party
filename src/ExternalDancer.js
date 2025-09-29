@@ -27,12 +27,12 @@ class ExternalDancerLayer {
     );
   }
 
-  render(frameIndex, layout) {
+  render(frameIndex) {
     if (!this.graphics || !this.renderer) {
       return;
     }
     // The renderer paints directly into graphics.drawingContext
-    this.renderer.renderFrame(frameIndex, layout);
+    this.renderer.renderFrame(frameIndex);
   }
 
   resize(worldW, worldH) {
