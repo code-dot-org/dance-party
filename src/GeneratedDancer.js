@@ -1,10 +1,39 @@
 // Thin p5 adapter: owns a p5.Graphics mid-layer and gives its 2D context
 // to the external renderer. CommonJS to match the rest of dance-party.
 
-class ExternalDancerLayer {
+// Map of move IDs to move names.
+const movesById = {
+  0: 'rest',
+  1: 'clap_high',
+  2: 'clown',
+  3: 'dab',
+  4: 'double_jam',
+  5: 'drop',
+  6: 'floss',
+  7: 'fresh',
+  8: 'kick',
+  9: 'roll',
+  10: 'this_or_that',
+  11: 'thriller',
+  12: 'xarmsside',
+  13: 'xarmsup',
+  14: 'xjump',
+  15: 'xclapside',
+  16: 'xheadhips',
+  17: 'xhighkick',
+  18: 'xbend',
+  19: 'xfever',
+  20: 'xhop',
+  21: 'xknee',
+  22: 'xkneel',
+  23: 'xole',
+  24: 'xslide',
+};
+
+class GeneratedDancer {
   constructor(p5, worldW, worldH, renderer) {
     if (!p5 || !renderer) {
-      throw new Error('ExternalDancerLayer requires p5 and a renderer');
+      throw new Error('GeneratedDancer requires p5 and a renderer');
     }
     this.p5 = p5;
     this.renderer = renderer;
@@ -17,6 +46,9 @@ class ExternalDancerLayer {
   }
 
   async setSource(src) {
+    if (typeof src === 'number') {
+      src = movesById[src] || movesById[0];
+    }
     return this.renderer.setSource(src);
   }
 
@@ -77,4 +109,4 @@ class ExternalDancerLayer {
   }
 }
 
-module.exports = ExternalDancerLayer;
+module.exports = GeneratedDancer;

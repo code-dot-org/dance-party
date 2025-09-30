@@ -7,7 +7,7 @@ const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
 const ResourceLoader = require('./ResourceLoader');
-const ExternalDancerLayer = require('./ExternalDancer');
+const GeneratedDancer = require('./GeneratedDancer');
 
 function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
@@ -325,8 +325,8 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
-    if (this.externalLayer) {
-      this.externalLayer.setSource(null);
+    if (this.generatedDancer) {
+      this.generatedDancer.setSource(null);
     }
 
     let foregroundEffect = this.getForegroundEffect();
@@ -377,7 +377,7 @@ module.exports = class DanceParty {
 
     const externalRenderer = this.createExternalRenderer();
     if (externalRenderer) {
-      this.externalLayer = new ExternalDancerLayer(
+      this.generatedDancer = new GeneratedDancer(
         this.p5_,
         this.p5_.width,
         this.p5_.height,
@@ -495,6 +495,9 @@ module.exports = class DanceParty {
   //
 
   makeNewDanceSprite(costume, name, location) {
+    if (costume === 'GENERATED_DANCER') {
+      return this.makeGeneratedDancer(location);
+    }
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
     if (this.world.SPRITE_NAMES.indexOf(costume) < 0) {
@@ -630,8 +633,8 @@ module.exports = class DanceParty {
     return sprite;
   }
 
-  makeGeneratedDancer(name, location) {
-    if (!this.externalLayer) {
+  makeGeneratedDancer(location) {
+    if (!this.generatedDancer) {
       this.logWarning('No external renderer available for generated dancer');
       return;
     }
@@ -646,10 +649,6 @@ module.exports = class DanceParty {
     var sprite = this.p5_.createSprite(location.x, location.y);
     sprite.isGenDancer = true;
 
-    if (name) {
-      sprite.name = name;
-    }
-
     sprite.scale = GENERATED_DANCER_SCALE;
     sprite.mirroring = 1;
     sprite.looping_move = 0;
@@ -663,6 +662,8 @@ module.exports = class DanceParty {
     sprite.previous_speed = 1;
     sprite.behaviors = [];
 
+    this.setGeneratedDancerMove('rest');
+
     // Add behavior to control animation
     const updateSpriteFrame = () => {
       var delta = Math.min(100, (1 / (this.p5_.frameRate() + 0.01)) * 1000);
@@ -673,7 +674,7 @@ module.exports = class DanceParty {
       while (sprite.sinceLastFrame > msPerFrame) {
         sprite.sinceLastFrame -= msPerFrame;
         sprite.looping_frame++;
-        const animationLength = this.externalLayer.getDurationFrames();
+        const animationLength = this.generatedDancer.getDurationFrames();
         const currentMeasure = this.getCurrentMeasure();
         const measureTick =
           (Math.max(0, currentMeasure) * sprite.dance_speed * 2) % 1;
@@ -682,7 +683,7 @@ module.exports = class DanceParty {
           Math.floor(measureTick * animationLength)
         );
 
-        this.externalLayer.render(measureFrame);
+        this.generatedDancer.render(measureFrame);
       }
     };
 
@@ -692,9 +693,9 @@ module.exports = class DanceParty {
     );
 
     sprite.draw = () => {
-      if (this.externalLayer) {
+      if (this.generatedDancer) {
         this.p5_.image(
-          this.externalLayer.graphics,
+          this.generatedDancer.graphics,
           sprite.x - location.x,
           sprite.y - location.y
         );
@@ -793,6 +794,10 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
+    if (sprite.isGenDancer) {
+      this.generatedDancer.setSource(move);
+      return;
+    }
     // Number of valid full length moves
     const {fullLengthMoveCount} = this.world;
     if (typeof move === 'number') {
@@ -851,8 +856,14 @@ module.exports = class DanceParty {
     if (typeof group === 'object') {
       return group;
     }
+    if (group === 'GENERATED_DANCER' && this.generatedDancer) {
+      return this.p5_.allSprites.filter(sprite => sprite.isGenDancer);
+    }
+
     if (group === 'all') {
-      return this.p5_.allSprites.filter(sprite => sprite.isDancer);
+      return this.p5_.allSprites.filter(
+        sprite => sprite.isDancer || sprite.isGenDancer
+      );
     }
 
     if (!this.sprites_by_type_.hasOwnProperty(group)) {
@@ -1638,12 +1649,12 @@ module.exports = class DanceParty {
     console.warn(message);
   }
 
-  setExternalLayerSource(source) {
-    if (!this.externalLayer) {
+  setGeneratedDancerMove(source) {
+    if (!this.generatedDancer) {
       return;
     }
 
-    this.externalLayer.setSource(source);
+    this.generatedDancer.setSource(source);
   }
 
   draw() {

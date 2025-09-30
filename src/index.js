@@ -3,12 +3,12 @@ const BackgroundEffects = require('./BackgroundEffects');
 const ForegroundEffects = require('./ForegroundEffects');
 const ResourceLoader = require('./ResourceLoader');
 const constants = require('./constants');
-const ExternalDancerLayer = require('./ExternalDancer');
+const GeneratedDancer = require('./GenderatedDancer');
 
 module.exports = {
   DanceParty,
   BackgroundEffects,
-  ExternalDancerLayer,
+  GeneratedDancer,
   ForegroundEffects,
   ResourceLoader,
   constants,

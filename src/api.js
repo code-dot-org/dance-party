@@ -161,32 +161,6 @@ module.exports = class DanceAPI {
       setFuncContext: (type, param) => {
         nativeAPI.setFuncContext(type, param);
       },
-      setExternalLayerSource: source => {
-        nativeAPI.setExternalLayerSource(source);
-      },
-      makeGeneratedDancer: location => {
-        nativeAPI.setExternalLayerSource('rest');
-        const name = 'generatedDancer';
-        enforceUniqueName(name);
-        sprites.push(nativeAPI.makeGeneratedDancer(name, location));
-      },
-      setGeneratedDancerMove: moveName => {
-        nativeAPI.setExternalLayerSource(moveName);
-      },
-      setGeneratedDancerProp: (property, val) => {
-        nativeAPI.setPropEach(
-          nativeAPI.getGeneratedDancerSprites(),
-          property,
-          val
-        );
-      },
-      changeGeneratedDancerPropBy: (property, val) => {
-        nativeAPI.changePropEachBy(
-          nativeAPI.getGeneratedDancerSprites(),
-          property,
-          val
-        );
-      },
     };
   }
 };
