@@ -857,7 +857,7 @@ module.exports = class DanceParty {
       return group;
     }
     if (group === 'GENERATED_DANCER' && this.generatedDancer) {
-      return this.p5_.allSprites.filter(sprite => sprite.isGenDancer);
+      return this.getGeneratedDancerSprites();
     }
 
     if (group === 'all') {
@@ -1410,10 +1410,9 @@ module.exports = class DanceParty {
   }
 
   getAdjustedSpriteDepth(sprite) {
-    let spriteScale = sprite.scale;
-    if (sprite.isGenDancer) {
-      spriteScale /= GENERATED_DANCER_SCALE;
-    }
+    const spriteScale = sprite.isGenDancer
+      ? sprite.scale / GENERATED_DANCER_SCALE
+      : sprite.scale;
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
     // (Both X and Y range from 0-399 pixels.)

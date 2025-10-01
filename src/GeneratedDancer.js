@@ -69,27 +69,14 @@ class GeneratedDancer {
 
   resize(worldW, worldH) {
     // detach old <canvas> to avoid DOM leaks
-    const el =
-      this.graphics &&
-      (this.graphics.elt ||
-        this.graphics.canvas ||
-        (this.graphics._renderer && this.graphics._renderer.canvas));
-    if (el && el.parentNode) {
-      el.parentNode.removeChild(el);
-    }
-    if (this.p5 && Array.isArray(this.p5._elements)) {
-      this.p5._elements = this.p5._elements.filter(e => e !== this.graphics);
-    }
-
+    this.dispose();
     this.graphics = this.p5.createGraphics(worldW, worldH);
     this.graphics.pixelDensity(1);
     this.renderer.init(this.graphics.drawingContext);
   }
 
   dispose() {
-    try {
-      this.renderer && this.renderer.dispose && this.renderer.dispose();
-    } catch (e) {}
+    this.renderer.dispose();
 
     const el =
       this.graphics &&
