@@ -1,7 +1,7 @@
 // Thin p5 adapter: owns a p5.Graphics mid-layer and gives its 2D context
 // to the external renderer. CommonJS to match the rest of dance-party.
 
-// Map of move IDs to move names.
+// Map of move IDs to move names. These values are used to fetch source animation JSON.
 const movesById = {
   0: 'rest',
   1: 'clap_high',

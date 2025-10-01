@@ -32,6 +32,9 @@ const WATCHED_RANGES = [0, 1, 2];
 
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
+
+// Scale factor make the generated dancer appear the same size as other dance sprites.
+// At 1.0 scale, the rendered frame takes up the entire canvas.
 const GENERATED_DANCER_SCALE = 0.75;
 
 // NOTE: min and max are inclusive
@@ -325,9 +328,7 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
-    if (this.generatedDancer) {
-      this.generatedDancer.setSource(null);
-    }
+    this.setGeneratedDancerMove('rest');
 
     let foregroundEffect = this.getForegroundEffect();
     if (foregroundEffect && foregroundEffect.reset) {
@@ -794,10 +795,6 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
-    if (sprite.isGenDancer) {
-      this.generatedDancer.setSource(move);
-      return;
-    }
     // Number of valid full length moves
     const {fullLengthMoveCount} = this.world;
     if (typeof move === 'number') {
@@ -809,12 +806,17 @@ module.exports = class DanceParty {
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
-    sprite.changeAnimation('anim' + move);
-    if (sprite.animation.looping) {
-      sprite.looping_frame = 0;
+
+    if (sprite.isGenDancer) {
+      this.setGeneratedDancerMove(move);
+    } else {
+      sprite.changeAnimation('anim' + move);
+      if (sprite.animation.looping) {
+        sprite.looping_frame = 0;
+      }
+      sprite.animation.looping = true;
     }
     sprite.sinceLastFrame = 0;
-    sprite.animation.looping = true;
     sprite.current_move = move;
     sprite.alternatingMoveInfo = undefined;
   }
