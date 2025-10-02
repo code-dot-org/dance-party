@@ -108,7 +108,7 @@ function runUserEvents(events) {
         priority: inputEvents[i].priority,
         func: inputEvents[i].func,
         eventType: eventType,
-        param: param
+        param: param,
       });
     }
   }

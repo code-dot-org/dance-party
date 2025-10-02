@@ -7,6 +7,7 @@ const replayLog = require('./replay');
 const constants = require('./constants');
 const modifySongData = require('./modifySongData');
 const ResourceLoader = require('./ResourceLoader');
+const GeneratedDancer = require('./GeneratedDancer');
 
 function Behavior(func, id, extraArgs) {
   if (!extraArgs) {
@@ -32,6 +33,10 @@ const WATCHED_RANGES = [0, 1, 2];
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 
+// Scale factor make the generated dancer appear the same size as other dance sprites.
+// At 1.0 scale, the rendered frame takes up the entire canvas.
+const GENERATED_DANCER_SCALE = 0.75;
+
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -54,6 +59,7 @@ module.exports = class DanceParty {
     // For testing: Can provide a custom resource loader class
     // to load fixtures and/or isolate us entirely from network activity
     resourceLoader = new ResourceLoader(),
+    externalRendererFactory = () => null,
   }) {
     this.onHandleEvents = onHandleEvents;
     this.onInit = onInit;
@@ -154,6 +160,8 @@ module.exports = class DanceParty {
     this.livePreviewStopTime = 0;
 
     this.logger = logger;
+
+    this.createExternalRenderer = externalRendererFactory;
 
     new P5(p5Inst => {
       this.p5_ = p5Inst;
@@ -320,6 +328,8 @@ module.exports = class DanceParty {
       backgroundEffect.reset();
     }
 
+    this.setGeneratedDancerMove('rest');
+
     let foregroundEffect = this.getForegroundEffect();
     if (foregroundEffect && foregroundEffect.reset) {
       foregroundEffect.reset();
@@ -353,11 +363,28 @@ module.exports = class DanceParty {
   }
 
   setup() {
-    this.bgEffects_ = new BackgroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this), this.extraImages);
-    this.fgEffects_ = new ForegroundEffects(this.p5_, this.getEffectsInPreviewMode.bind(this));
+    this.bgEffects_ = new BackgroundEffects(
+      this.p5_,
+      this.getEffectsInPreviewMode.bind(this),
+      this.extraImages
+    );
+    this.fgEffects_ = new ForegroundEffects(
+      this.p5_,
+      this.getEffectsInPreviewMode.bind(this)
+    );
 
     this.performanceData_.initTime = timeSinceLoad();
     this.onInit && this.onInit(this);
+
+    const externalRenderer = this.createExternalRenderer();
+    if (externalRenderer) {
+      this.generatedDancer = new GeneratedDancer(
+        this.p5_,
+        this.p5_.width,
+        this.p5_.height,
+        externalRenderer
+      );
+    }
   }
 
   getBackgroundEffect() {
@@ -384,7 +411,8 @@ module.exports = class DanceParty {
     this.analysisPosition_ = 0;
     this.songStartTime_ = new Date();
     this.loopAnalysisEvents = true;
-    this.livePreviewStopTime = durationMs === undefined ? 0 : Date.now() + durationMs;
+    this.livePreviewStopTime =
+      durationMs === undefined ? 0 : Date.now() + durationMs;
     this.p5_.loop();
   }
 
@@ -468,6 +496,9 @@ module.exports = class DanceParty {
   //
 
   makeNewDanceSprite(costume, name, location) {
+    if (costume === 'GENERATED_DANCER') {
+      return this.makeGeneratedDancer(location);
+    }
     // Default to first dancer if selected a dancer that doesn't exist
     // to account for low-bandwidth mode limited character set
     if (this.world.SPRITE_NAMES.indexOf(costume) < 0) {
@@ -496,7 +527,6 @@ module.exports = class DanceParty {
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
     sprite.current_move = 0;
-    sprite.previous_move = 0; // I don't think this is used?
 
     for (var i = 0; i < this.animations[costume].length; i++) {
       sprite.addAnimation('anim' + i, this.animations[costume][i].animation);
@@ -520,9 +550,30 @@ module.exports = class DanceParty {
         sprite.sinceLastFrame -= msPerFrame;
         sprite.looping_frame++;
         if (sprite.animation.looping) {
-          sprite.animation.changeFrame(
-            sprite.looping_frame % sprite.animation.images.length
-          );
+          const animationLength = sprite.animation.images.length;
+          const currentMeasure = this.getCurrentMeasure();
+          // If a song has a pickup, we want to start the dance animation
+          // with the correct frame so that the dancer is in sync with the music.
+          if (currentMeasure < 1) {
+            sprite.earlyStart = true;
+            const measureTick =
+              (Math.max(0, currentMeasure) * sprite.dance_speed * 2) % 1;
+            const measureFrame = Math.min(
+              animationLength - 1,
+              Math.floor(measureTick * animationLength)
+            );
+            sprite.animation.changeFrame(measureFrame);
+          } else {
+            // Once we reach the first measure, we reset so the sprite
+            // uses the normal looping behavior.
+            if (!sprite.hasStarted && sprite.earlyStart) {
+              sprite.looping_frame = 0;
+              sprite.hasStarted = true;
+            }
+            sprite.animation.changeFrame(
+              sprite.looping_frame % animationLength
+            );
+          }
         } else {
           sprite.animation.nextFrame();
         }
@@ -541,7 +592,6 @@ module.exports = class DanceParty {
           currentFrame === sprite.animation.getLastFrame() &&
           !sprite.animation.looping
         ) {
-          //changeMoveLR(sprite, sprite.current_move, sprite.mirroring);
           sprite.changeAnimation('anim' + sprite.current_move);
           sprite.animation.changeFrame(
             sprite.looping_frame % sprite.animation.images.length
@@ -577,6 +627,80 @@ module.exports = class DanceParty {
     sprite.setScale = function (scale) {
       sprite.scale = scale;
       this.adjustSpriteDepth_(sprite);
+    };
+
+    this.adjustSpriteDepth_(sprite);
+
+    return sprite;
+  }
+
+  makeGeneratedDancer(location) {
+    if (!this.generatedDancer) {
+      this.logWarning('No external renderer available for generated dancer');
+      return;
+    }
+
+    if (!location) {
+      location = {
+        x: 200,
+        y: 200,
+      };
+    }
+
+    var sprite = this.p5_.createSprite(location.x, location.y);
+    sprite.isGenDancer = true;
+
+    sprite.scale = GENERATED_DANCER_SCALE;
+    sprite.mirroring = 1;
+    sprite.looping_move = 0;
+    sprite.looping_frame = 0;
+    sprite.current_move = 0;
+
+    this.sprites_.add(sprite);
+    sprite.speed = 10;
+    sprite.sinceLastFrame = 0;
+    sprite.dance_speed = 1;
+    sprite.previous_speed = 1;
+    sprite.behaviors = [];
+
+    this.setGeneratedDancerMove('rest');
+
+    // Add behavior to control animation
+    const updateSpriteFrame = () => {
+      var delta = Math.min(100, (1 / (this.p5_.frameRate() + 0.01)) * 1000);
+      sprite.sinceLastFrame += delta;
+      var msPerBeat =
+        (60 * 1000) / (this.songMetadata_.bpm * (sprite.dance_speed / 2));
+      var msPerFrame = msPerBeat / FRAMES;
+      while (sprite.sinceLastFrame > msPerFrame) {
+        sprite.sinceLastFrame -= msPerFrame;
+        sprite.looping_frame++;
+        const animationLength = this.generatedDancer.getDurationFrames();
+        const currentMeasure = this.getCurrentMeasure();
+        const measureTick =
+          (Math.max(0, currentMeasure) * sprite.dance_speed * 2) % 1;
+        const measureFrame = Math.min(
+          animationLength - 1,
+          Math.floor(measureTick * animationLength)
+        );
+
+        this.generatedDancer.render(measureFrame);
+      }
+    };
+
+    this.addBehavior_(
+      sprite,
+      new Behavior(updateSpriteFrame, 'updateSpriteFrame')
+    );
+
+    sprite.draw = () => {
+      if (this.generatedDancer) {
+        this.p5_.image(
+          this.generatedDancer.graphics,
+          sprite.x - location.x,
+          sprite.y - location.y
+        );
+      }
     };
 
     this.adjustSpriteDepth_(sprite);
@@ -682,11 +806,17 @@ module.exports = class DanceParty {
     }
     sprite.mirroring = dir;
     sprite.mirrorX(dir);
-    sprite.changeAnimation('anim' + move);
-    if (sprite.animation.looping) {
-      sprite.looping_frame = 0;
+
+    if (sprite.isGenDancer) {
+      this.setGeneratedDancerMove(move);
+    } else {
+      sprite.changeAnimation('anim' + move);
+      if (sprite.animation.looping) {
+        sprite.looping_frame = 0;
+      }
+      sprite.animation.looping = true;
     }
-    sprite.animation.looping = true;
+    sprite.sinceLastFrame = 0;
     sprite.current_move = move;
     sprite.alternatingMoveInfo = undefined;
   }
@@ -728,8 +858,14 @@ module.exports = class DanceParty {
     if (typeof group === 'object') {
       return group;
     }
+    if (group === 'GENERATED_DANCER' && this.generatedDancer) {
+      return this.getGeneratedDancerSprites();
+    }
+
     if (group === 'all') {
-      return this.p5_.allSprites.filter(sprite => sprite.isDancer);
+      return this.p5_.allSprites.filter(
+        sprite => sprite.isDancer || sprite.isGenDancer
+      );
     }
 
     if (!this.sprites_by_type_.hasOwnProperty(group)) {
@@ -1069,6 +1205,9 @@ module.exports = class DanceParty {
 
     if (property === 'scale') {
       sprite.scale = val / 100;
+      if (sprite.isGenDancer) {
+        sprite.scale *= GENERATED_DANCER_SCALE;
+      }
       this.adjustSpriteDepth_(sprite);
     } else if (property === 'width' || property === 'height') {
       sprite[property] = SIZE * (val / 100);
@@ -1197,8 +1336,10 @@ module.exports = class DanceParty {
   // Called when executing the AI block.
   ai(params) {
     this.world.aiBlockCalled = true;
-    console.log('handle AI:', params);
-    if (this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE && this.contextKey) {
+    if (
+      this.contextType === constants.KEY_WENT_DOWN_EVENT_TYPE &&
+      this.contextKey
+    ) {
       // Note that this.contextKey is the key that was pressed to trigger this AI block, e.g., 'up', 'down',...
       this.world.aiBlockContextUserEventKey = this.contextKey;
     }
@@ -1263,12 +1404,21 @@ module.exports = class DanceParty {
     if (!this.spriteExists_(sprite)) {
       return;
     }
+    sprite.depth = this.getAdjustedSpriteDepth(sprite);
+  }
 
+  getGeneratedDancerSprites() {
+    return this.p5_.allSprites.filter(sprite => sprite.isGenDancer);
+  }
+
+  getAdjustedSpriteDepth(sprite) {
+    const spriteScale = sprite.isGenDancer
+      ? sprite.scale / GENERATED_DANCER_SCALE
+      : sprite.scale;
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
     // (Both X and Y range from 0-399 pixels.)
-    sprite.depth =
-      10000 * sprite.scale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
+    return 10000 * spriteScale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
   }
 
   // Behaviors
@@ -1408,7 +1558,8 @@ module.exports = class DanceParty {
 
     for (let key of WATCHED_KEYS) {
       if (this.p5_.keyWentDown(key)) {
-        events[constants.KEY_WENT_DOWN_EVENT_TYPE] = events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
+        events[constants.KEY_WENT_DOWN_EVENT_TYPE] =
+          events[constants.KEY_WENT_DOWN_EVENT_TYPE] || {};
         events[constants.KEY_WENT_DOWN_EVENT_TYPE][key] = true;
         this.world.keysPressed.add(key);
       }
@@ -1499,6 +1650,14 @@ module.exports = class DanceParty {
     console.warn(message);
   }
 
+  setGeneratedDancerMove(source) {
+    if (!this.generatedDancer) {
+      return;
+    }
+
+    this.generatedDancer.setSource(source);
+  }
+
   draw() {
     const {bpm, artist, title} = this.songMetadata_ || {};
 
@@ -1555,6 +1714,7 @@ module.exports = class DanceParty {
     }
 
     this.p5_.drawSprites();
+
     if (this.recordReplayLog_) {
       replayLog.logFrame({
         bg: this.world.bg_effect,
