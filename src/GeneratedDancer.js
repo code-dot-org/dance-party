@@ -76,7 +76,7 @@ class GeneratedDancer {
   }
 
   dispose() {
-    this.renderer.dispose();
+    this.renderer.destroyAnim();
 
     const el =
       this.graphics &&
