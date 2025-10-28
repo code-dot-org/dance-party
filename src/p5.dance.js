@@ -683,8 +683,12 @@ module.exports = class DanceParty {
           animationLength - 1,
           Math.floor(measureTick * animationLength)
         );
+        // If the current measure is odd, mirror the generated dancer.
+        const shouldMirror = Math.floor(currentMeasure * 2) % 2 === 1;
+        const mirror = shouldMirror ? -1 : 1;
+        this.generatedDancer.setMirror(mirror);
 
-        this.generatedDancer.render(measureFrame);
+        this.generatedDancer.render(measureFrame, mirror);
       }
     };
 
@@ -695,6 +699,7 @@ module.exports = class DanceParty {
 
     sprite.draw = () => {
       if (this.generatedDancer) {
+        sprite.mirrorX(this.generatedDancer.getMirror());
         this.p5_.image(
           this.generatedDancer.graphics,
           sprite.x - location.x,
