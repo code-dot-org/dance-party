@@ -40,7 +40,7 @@ class GeneratedDancer {
 
     this.graphics = this.p5.createGraphics(worldW, worldH);
     this.graphics.pixelDensity(1);
-    this.shouldMirror = 1;
+    this.shouldMirror = false;
     this.mirror = 1;
 
     // Hand the renderer our mid-layer 2D context.
