@@ -40,8 +40,7 @@ class GeneratedDancer {
 
     this.graphics = this.p5.createGraphics(worldW, worldH);
     this.graphics.pixelDensity(1);
-    this.shouldMirror = false;
-    this.mirror = 1;
+    this.danceMove = null;
 
     // Hand the renderer our mid-layer 2D context.
     this.renderer.init(this.graphics.drawingContext);
@@ -51,19 +50,7 @@ class GeneratedDancer {
     if (typeof src === 'number') {
       src = movesById[src] || movesById[0];
     }
-    const movesToMirror = new Set([
-      'rest',
-      'clap_high',
-      'dab',
-      'drop',
-      'floss',
-      'fresh',
-      'kick',
-      'roll',
-      'thriller',
-    ]);
-    this.shouldMirror = movesToMirror.has(src);
-
+    this.danceMove = src;
     return this.renderer.setSource(src);
   }
 
@@ -74,12 +61,12 @@ class GeneratedDancer {
     );
   }
 
-  render(frameIndex, mirror) {
+  render(frameIndex) {
     if (!this.graphics || !this.renderer) {
       return;
     }
     // The renderer paints directly into graphics.drawingContext
-    this.renderer.renderFrame(frameIndex, mirror);
+    this.renderer.renderFrame(frameIndex);
   }
 
   resize(worldW, worldH) {
@@ -110,12 +97,22 @@ class GeneratedDancer {
     this.p5 = null;
   }
 
-  getMirror() {
-    return this.mirror;
-  }
-
-  setMirror(mirror) {
-    this.mirror = this.shouldMirror ? mirror : 1;
+  shouldMirror(currentMeasure) {
+    const movesToMirror = new Set([
+      'rest',
+      'clap_high',
+      'dab',
+      'drop',
+      'floss',
+      'fresh',
+      'kick',
+      'roll',
+      'thriller',
+    ]);
+    return (
+      movesToMirror.has(this.danceMove) &&
+      Math.floor(currentMeasure * 2) % 2 === 1
+    );
   }
 }
 
