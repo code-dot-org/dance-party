@@ -683,7 +683,6 @@ module.exports = class DanceParty {
           animationLength - 1,
           Math.floor(measureTick * animationLength)
         );
-
         this.generatedDancer.render(measureFrame);
       }
     };
@@ -695,6 +694,9 @@ module.exports = class DanceParty {
 
     sprite.draw = () => {
       if (this.generatedDancer) {
+        sprite.mirrorX(
+          this.generatedDancer.shouldMirror(this.getCurrentMeasure()) ? -1 : 1
+        );
         this.p5_.image(
           this.generatedDancer.graphics,
           sprite.x - location.x,
@@ -1654,7 +1656,7 @@ module.exports = class DanceParty {
     if (!this.generatedDancer) {
       return;
     }
-
+    this.danceMove = source;
     this.generatedDancer.setSource(source);
   }
 
