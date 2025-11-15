@@ -42,9 +42,9 @@ class GeneratedDancer {
 
     // Create a canvas to render into.  With a pixel density of 2, this will be 600px in width and height.
     const pixelDensity = this.p5._pixelDensity;
-    const imageWidth = pixelDensity * worldW * constants.GENERATED_DANCER_SCALE;
+    const imageWidth = worldW * pixelDensity * constants.GENERATED_DANCER_SCALE;
     const imageHeight =
-      pixelDensity * worldH * constants.GENERATED_DANCER_SCALE;
+      worldH * pixelDensity * constants.GENERATED_DANCER_SCALE;
 
     this.graphics = this.p5.createGraphics(imageWidth, imageHeight);
     this.graphics.pixelDensity(1);
