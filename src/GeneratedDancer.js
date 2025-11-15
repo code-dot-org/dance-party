@@ -1,9 +1,7 @@
 const constants = require('./constants');
 
-
 // Thin p5 adapter: owns a p5.Graphics mid-layer and gives its 2D context
 // to the external renderer. CommonJS to match the rest of dance-party.
-
 
 // Map of move IDs to move names. These values are used to fetch source animation JSON.
 const movesById = {
@@ -45,7 +43,8 @@ class GeneratedDancer {
     // Create a canvas to render into.  With a pixel density of 2, this will be 600px in width and height.
     const pixelDensity = this.p5._pixelDensity;
     const imageWidth = pixelDensity * worldW * constants.GENERATED_DANCER_SCALE;
-    const imageHeight = pixelDensity * worldH * constants.GENERATED_DANCER_SCALE;
+    const imageHeight =
+      pixelDensity * worldH * constants.GENERATED_DANCER_SCALE;
 
     this.graphics = this.p5.createGraphics(imageWidth, imageHeight);
     this.graphics.pixelDensity(1);
