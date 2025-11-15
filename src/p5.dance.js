@@ -1203,6 +1203,9 @@ module.exports = class DanceParty {
 
     if (property === 'scale') {
       sprite.scale = val / 100;
+      if (sprite.isGenDancer) {
+        sprite.scale /= this.p5_._pixelDensity;
+      }
       this.adjustSpriteDepth_(sprite);
     } else if (property === 'width' || property === 'height') {
       sprite[property] = SIZE * (val / 100);
@@ -1408,7 +1411,7 @@ module.exports = class DanceParty {
 
   getAdjustedSpriteDepth(sprite) {
     const spriteScale = sprite.isGenDancer
-      ? 1 / this.p5_._pixelDensity
+      ? sprite.scale * this.p5_._pixelDensity
       : sprite.scale;
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
