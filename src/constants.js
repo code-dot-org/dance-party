@@ -43,7 +43,8 @@ module.exports = {
     {name: 'XSlide', mirror: false, shortBurst: true},
   ],
   RANDOM_EFFECT_KEY: 'rand',
-  BACKGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
+  BACKGROUND_EFFECTS: [
+    // Effect name in Code.org Dance Party (if different than key listed here)
     'blooming_petals',
     'circles',
     'clouds',
@@ -71,9 +72,10 @@ module.exports = {
     'starburst',
     'stars',
     'swirl', // Hypno
-    'text' // Song Names
+    'text', // Song Names
   ],
-  FOREGROUND_EFFECTS: [ // Effect name in Code.org Dance Party (if different than key listed here)
+  FOREGROUND_EFFECTS: [
+    // Effect name in Code.org Dance Party (if different than key listed here)
     'bubbles',
     'color_lights', // Stage Lights
     'confetti',
@@ -90,7 +92,7 @@ module.exports = {
     'raining_tacos', // Tacos
     'smile_face', // Smiles
     'smiling_poop', // Poop
-    'spotlight'
+    'spotlight',
   ],
   PALETTES: {
     default: ['#ffa899', '#99aaff', '#99ffac', '#fcff99', '#ffdd99'],
@@ -104,7 +106,15 @@ module.exports = {
     rave: ['#000000', '#5b6770', '#c6cacd', '#e7e8ea', '#ffffff'],
     // Color palettes from poetry lab - a few of the color values have been changed
     // so that the sprite dancers are more visible or 'pop' against the background.
-    grayscale: ['#000000', '#333333', '#626C7D', '#999999', '#CCCCCC', '#EEEEEE', '#FFFFFF'],
+    grayscale: [
+      '#000000',
+      '#333333',
+      '#626C7D',
+      '#999999',
+      '#CCCCCC',
+      '#EEEEEE',
+      '#FFFFFF',
+    ],
     sky: ['#3878A4', '#82A9B1', '#ECCEC4', '#F8B8A8', '#E4929C', '#7D7095'],
     ocean: ['#82A9B1', '#3FABE3', '#2C7DBB', '#1D57A0', '#144188', '#061F4B'],
     sunrise: ['#F5DC72', '#FC9103', '#F48363', '#F15C4C', '#372031'],
@@ -147,4 +157,7 @@ module.exports = {
     BACKGROUND: 1,
     FOREGROUND: 0.8,
   },
+  // Scale factor: make the generated dancer appear the same size as other dance sprites.
+  // At 1.0 scale, the rendered frame takes up the entire canvas.
+  GENERATED_DANCER_SCALE: 0.75,
 };

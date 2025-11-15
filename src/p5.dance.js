@@ -33,10 +33,6 @@ const WATCHED_RANGES = [0, 1, 2];
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 
-// Scale factor make the generated dancer appear the same size as other dance sprites.
-// At 1.0 scale, the rendered frame takes up the entire canvas.
-const GENERATED_DANCER_SCALE = 0.75;
-
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -650,7 +646,7 @@ module.exports = class DanceParty {
     var sprite = this.p5_.createSprite(location.x, location.y);
     sprite.isGenDancer = true;
 
-    sprite.scale = GENERATED_DANCER_SCALE;
+    sprite.scale = 1 / this.p5_._pixelDensity;
     sprite.mirroring = 1;
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
@@ -697,6 +693,7 @@ module.exports = class DanceParty {
         sprite.mirrorX(
           this.generatedDancer.shouldMirror(this.getCurrentMeasure()) ? -1 : 1
         );
+
         this.p5_.image(
           this.generatedDancer.graphics,
           sprite.x - location.x,
@@ -1207,9 +1204,6 @@ module.exports = class DanceParty {
 
     if (property === 'scale') {
       sprite.scale = val / 100;
-      if (sprite.isGenDancer) {
-        sprite.scale *= GENERATED_DANCER_SCALE;
-      }
       this.adjustSpriteDepth_(sprite);
     } else if (property === 'width' || property === 'height') {
       sprite[property] = SIZE * (val / 100);
@@ -1415,7 +1409,7 @@ module.exports = class DanceParty {
 
   getAdjustedSpriteDepth(sprite) {
     const spriteScale = sprite.isGenDancer
-      ? sprite.scale / GENERATED_DANCER_SCALE
+      ? 1 / this.p5_._pixelDensity
       : sprite.scale;
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
