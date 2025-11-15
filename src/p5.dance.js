@@ -693,7 +693,6 @@ module.exports = class DanceParty {
         sprite.mirrorX(
           this.generatedDancer.shouldMirror(this.getCurrentMeasure()) ? -1 : 1
         );
-
         this.p5_.image(
           this.generatedDancer.graphics,
           sprite.x - location.x,
