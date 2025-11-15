@@ -1278,7 +1278,11 @@ module.exports = class DanceParty {
   }
 
   changePropBy(sprite, property, val) {
-    this.setProp(sprite, property, this.getProp(sprite, property) + val);
+    const currentValue = this.getProp(sprite, property);
+    const currentValueAdjusted = sprite.isGenDancer
+      ? currentValue * this.p5_._pixelDensity
+      : currentValue;
+    this.setProp(sprite, property, currentValueAdjusted + val);
   }
 
   setTintEach(group, val) {
