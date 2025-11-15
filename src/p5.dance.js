@@ -695,11 +695,7 @@ module.exports = class DanceParty {
         );
         this.p5_.push();
         this.p5_.scale(1 / this.p5_._pixelDensity);
-        this.p5_.image(
-          this.generatedDancer.graphics,
-          sprite.x - location.x,
-          sprite.y - location.y
-        );
+        this.p5_.image(this.generatedDancer.graphics, 0, 0);
         this.p5_.pop();
       }
     };
