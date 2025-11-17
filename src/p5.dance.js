@@ -33,10 +33,6 @@ const WATCHED_RANGES = [0, 1, 2];
 const SIZE = constants.SIZE;
 const FRAMES = constants.FRAMES;
 
-// Scale factor make the generated dancer appear the same size as other dance sprites.
-// At 1.0 scale, the rendered frame takes up the entire canvas.
-const GENERATED_DANCER_SCALE = 0.75;
-
 // NOTE: min and max are inclusive
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -650,7 +646,7 @@ module.exports = class DanceParty {
     var sprite = this.p5_.createSprite(location.x, location.y);
     sprite.isGenDancer = true;
 
-    sprite.scale = GENERATED_DANCER_SCALE;
+    sprite.scale = 1;
     sprite.mirroring = 1;
     sprite.looping_move = 0;
     sprite.looping_frame = 0;
@@ -697,11 +693,10 @@ module.exports = class DanceParty {
         sprite.mirrorX(
           this.generatedDancer.shouldMirror(this.getCurrentMeasure()) ? -1 : 1
         );
-        this.p5_.image(
-          this.generatedDancer.graphics,
-          sprite.x - location.x,
-          sprite.y - location.y
-        );
+        this.p5_.push();
+        this.p5_.scale(1 / this.p5_._pixelDensity);
+        this.p5_.image(this.generatedDancer.graphics, 0, 0);
+        this.p5_.pop();
       }
     };
 
@@ -1207,9 +1202,6 @@ module.exports = class DanceParty {
 
     if (property === 'scale') {
       sprite.scale = val / 100;
-      if (sprite.isGenDancer) {
-        sprite.scale *= GENERATED_DANCER_SCALE;
-      }
       this.adjustSpriteDepth_(sprite);
     } else if (property === 'width' || property === 'height') {
       sprite[property] = SIZE * (val / 100);
@@ -1414,13 +1406,10 @@ module.exports = class DanceParty {
   }
 
   getAdjustedSpriteDepth(sprite) {
-    const spriteScale = sprite.isGenDancer
-      ? sprite.scale / GENERATED_DANCER_SCALE
-      : sprite.scale;
     // Bias scale heavily (especially since it largely hovers around 1.0) but use
     // Y coordinate as the first tie-breaker and X coordinate as the second.
     // (Both X and Y range from 0-399 pixels.)
-    return 10000 * spriteScale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
+    return 10000 * sprite.scale + (100 * sprite.y) / 400 + (1 * sprite.x) / 400;
   }
 
   // Behaviors
